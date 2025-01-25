@@ -1,0 +1,36 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+<navigation-bar title="格物观展" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view>
+  <view class="museum-detail">
+    <view class="museum-detail-pic">
+      <image src="{{museumInfo.img}}" mode="aspectFill" />
+    </view>
+    <!-- <view class="museum-detail-info">
+      <view class="museum-detail-group-title">
+        <text>博物馆详情</text>
+      </view>
+    </view> -->
+  </view>
+  <block wx:for="{{museumInfo.zhanlan_list}}" wx:key="cityid">
+    <view class="city-item" style="background: url({{item.img}}) no-repeat center center / cover">
+      <!-- <image class="city-item-img" src="{{item.img}}" mode="aspectFill" /> -->
+      <view class="city-item-mask"></view>
+      <text class="city-item-name">{{item.cityname}}</text>
+      <view class="city-name-pinyin">{{item.citypinyin}}</view>
+      <view class="city-museum">
+        <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeklEQVR4nO3VMQqAMAxA0RzM0RPr6FqoeqkvLoKFqmnTLPavoTwbhIooAgZgAQIwas5qgbRgAj4ANqACKAMrgG+gIZAHgZn2TSfkkgCbgxPFPXJXNppfZVYYrea33r6mdn7VIUnqqyteDf/965oG7LRvdX2P8IJcHr4DY+hS2pbIobEAAAAASUVORK5CYII="
+          alt="museum"
+          class="city-museum-icon"
+        />
+        <text class="city-museum-text">{{item.museumList.length}}个博物馆</text>
+        
+      </view>
+      <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADoklEQVR4nO2aS08UQRDHx4CwBqO8IZ70SCDop1AIIugN1BsELjyiXgHP6smExM+hIUaNGBM1PhDBGAEXTz4ORryJEDA/U1AdOnF2dnemZ3cgVLJhQ/VUVU9VdVX9ez1vn/YoAdVAN3ATmAIWgV/Aun7k+4LyZE0XUOUlgYAUcBl4CPwlf9oEHgCXgPJibOAQcBX4bhm1BkwDY+qZJnnjwEH9VOn/hDcOPNFnDH0DrsjLKdQmOoDPlgFvgD7gaAhZlUA/MGPJWwba4w6jO5bCt8Bph/LbgHeW/Enn3gEa1XCh38AQUOJUybaeEmAEWLW83eBK+Al1N3rqtDgRHKyzFVhSnWmxIarAOkvga6DWmbXZdVcBz1S35GRjlJww4fQCqHBubXYbKoCXVpjlnzNWYks4VcdiaW521FhRMRnmiDWJHXtO5Jgzq2pTWz7FztSJIS8hBIxayZ89xIBrVp0IdcQCs8D70AnqQ0ApMKe2jeaS4KbtCF3sgHkrv1xupl3lfg3szbR52zohHBTQBdebAQ5YJ2lv0MJHuqjPgdJ64IPKk1PnWFSZQsCAyrzvBcwTm9qR5t0AFsozbBdKmW82fO0EzqvCx1GVxe0Z4KnK6/Rj3lLmWFRFcXsGuK6ybvgxZQQVOhdFSSE8w0703PVjflJmU1Sj4/YM0KwyFv2YK8qMta9y4RmgVp//4ceUk0CozJXROXpmPsTz5frsWpI2Mud6IysFCq0GK7QWQ4ZWXVBo7Zlkn1Jmlwuj4/CEIeBC0PFrCuK4t8sLYrcyp6MoidMTPi3K2UzNmGkaK73kNo3VVtN4JNMiAZSF+pPoCSFgUGVOeZkIuKiLZrzkDlazKrcn26grqLjQmQSOuh0q90vWawiF9tGdhwUfXikg7Rp8mFfbhnN5IGVhvSNeQoidF7yU86WQhVYIKNYau5XZ7TkF/AmF7uj9hHkDNbFZmVtflVZbbocRkFLgGAWSiwFiH9Z8Q/+WR3kbUgPMtUKdc2uDC99z1b0c+cJHL3rSVpiddGZtcE6kVad05cddCW6wwmxVAeVSJ8L/P2KvWIkt4VTvWknKOgBQQLndYcWWYmfqxFZix3r3rrevxu0oFjsQ5lcMmgeDVtthQsnZbXEu3hlVVNzQurbXE4o7NettU5l+5HuLDkUTutbgBKbtGC7WLyAEBOgVQFlHgHxpQyfTnqJswI8EUBYsVqY24J42jD+tH9XI948ynuqazozzxD55u5/+AWLhtyt70n7CAAAAAElFTkSuQmCC"
+          alt="museum"
+          class="city-museum-arrow"
+        />
+    </view>
+  </block>
+</view>
+</page-meta>  

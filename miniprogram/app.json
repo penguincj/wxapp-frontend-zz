@@ -1,6 +1,10 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/index/index",  
+    "pages/citylist/index",
+    "pages/museumlist/index",
+    "pages/museumdetail/index",
+    "pages/exhibitionlist/index",
     "pages/logs/logs"
   ],
   "window": {
@@ -18,5 +22,6 @@
   },
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "requiredBackgroundModes": ["audio", "backgroundAudioManager", "location"]
 }

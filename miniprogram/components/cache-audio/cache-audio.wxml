@@ -1,0 +1,7 @@
+<view>
+	<button bindtap="handleDownloadFile">离线下载</button>
+	<view>
+		进度：{{progress}}
+	</view>
+
+</view>

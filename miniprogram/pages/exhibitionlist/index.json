@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "exhibition-list": "/components/exhibition-list/exhibition-list",
+    "audio-player": "/components/audio-player/audio-player",
+    "cache-audio": "/components/cache-audio/cache-audio"
+  }
+}

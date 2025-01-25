@@ -68,7 +68,7 @@ Component({
             ios: !isAndroid,
             innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
             leftWidth: `width: ${res.windowWidth - rect.left }px`,
-            safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``
+            safeAreaTop: isDevtools || isAndroid ? `;height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``
           })
         }
       })
@@ -92,7 +92,7 @@ Component({
         displayStyle
       })
     },
-    back() {
+    handleBack() {
       const data = this.data
       if (data.delta) {
         wx.navigateBack({

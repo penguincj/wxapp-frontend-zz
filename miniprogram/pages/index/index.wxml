@@ -1,28 +1,43 @@
-<!--index.wxml-->
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-        </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+<navigation-bar title="格物观展" back="{{false}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view>
+  <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
+  <view class="page-section page-section-spacing swiper full-height">
+    <view class="icon-group">
+      <view class="icon-group-item">
+        <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAADaklEQVR4nO2ZW4hNURjHt7kYJuOuoWlILlOmDEWTMCJJoXmQRI0H6bx6VJ48eJi8MI/kUookFKXIg0u5RyMeNCGFkMvInWF+Ws6erFlnrbXPzVnrnLN/j6dv7e+//metb39r7SCIiYlxAVAFdAF7gaFBOQFMAC7yj6vApKAcAOYCT0nlBdAalDLARuArZr4Dm4NSA6gEOkkfUReqg1IAGAdcIHOuAPWGZ0YS+AAwG3hi0NgHbAUSwE9DzDNgXlEaAKwHPhv0vQWWSbGLgNeG2G/ApqIxABgC7AD6DdruA1M14xqBO5Y5iZ6h0msDgJHAaYuus8Aoy/gRwCnL+HPAGC8NAGYBPQY9YjXsBCqk+BpgH7BLrBrp94ow1rSCerwzAFgFfLDs4Q4lvgG4LsUcVl97wDrgSzqTdWYAyf2+Dfht0PEcmK+MWQy81MSeAYYrsXMMXaN7A0ju15MWDdeAicoY2ytPcFmtEcB44JJXBgDTgQeW/EflfxMYBhxKU7t4boOST9SLg14YAKwE3hvy/hJbQomfDNzORHzYPM3Q5E6EDZQbA0h2bmKSOj4CazRmvSM7XokaoNGwAugtqAFALXDMku8h0KQUx+0Ws9JFvFnaNHqawpw2avM1+caIJXxeNCdSfB1wgvwhjshrNbrqwjeHiXu6jjPTybdZevSBY2uVFD8zojhmi1hJW7I4Zoszx/JsJ5+wvLJSLi6A1ZZmKB/0qwU2zYuWlMIcNfEa4IBFyBtgSQbNUL7pkltqSccCQ4M1wJHIukCyRb1heUg3MEWKHxseUApNSuss6b9lGXdX1j8IYGGEg8dlB4EW4DHuSGmdpaZLGGRbwUt1+/2HZe91Kie2DZbLjkKS0jqnuS37BtUFzHv+E9CufMzYg190q2cOSW97OAcd++XA6rC4yKvgJtAsxdRncygpEI+AaQYTmpW6IOa4W3vrTPK2pVXtw8PfxAWlz4j61aIzQepRxDxGm2K0iAvJiI8ZPtGra51zguJD2zqXkwHG1tmpAUHh8xpb53Ix4C+xAblCniiWvN4IcZXXGyGu8nojxFVeb4S4yuuNEFd5vRHiKq83Qlzl9UaIq7zeCHGV1xshrvJ6I8RVXm+EuMrrjRBXeb0R4irvfxPiiiBXKHJiA3KFcjcgJiYmJiYmJihV/gCxwZYhYXUknAAAAABJRU5ErkJggg=="
+          alt="top-menu"
+          class="icon-group-item-img"
+          bindtap="goToCityList"
+          mode="aspectFill" />
+      </view>
     </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
-    </view>
+    <swiper indicator-dots autoplay="{{false}}" interval="{{false}}" duration="{{500}}" style="height: 100%;">
+      <block wx:for="{{backgrounds}}">
+        <swiper-item>
+          <view class="swiper-item swiper-item-{{item.cityid}}">
+            <image class="swiper-item-img" src="{{item.img}}" mode="aspectFill" />
+            <view class="swiper-item-bg"></view>
+            <view class="swiper-item-text">
+              <text class="swiper-item-text-text">{{item.cityname}}</text>
+              <text class="swiper-item-text-text-2">{{item.citypinyin}}</text>
+            </view>
+            <view class="swiper-item-museum">
+              <block wx:for="{{item.museumList}}" wx:key="museumid">
+                <view class="swiper-item-museum-item">
+                  <!-- <image class="swiper-item-museum-item-img" src="{{item.img}}" mode="aspectFill" /> -->
+                  <text class="swiper-item-museum-item-text">{{item.name}}</text>
+                </view>
+              </block>
+              <view class="swiper-item-museum-more">
+                <text class="swiper-item-museum-more-text" bindtap="goToMuseumList">更多博物馆</text>
+              </view>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
   </view>
-</scroll-view>
+</view>
+</page-meta>

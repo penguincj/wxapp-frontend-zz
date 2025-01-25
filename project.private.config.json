@@ -3,5 +3,47 @@
   "projectname": "wxapp-frontend",
   "setting": {
     "compileHotReLoad": true
+  },
+  "libVersion": "3.7.5",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/exhibitionlist/index",
+          "pathName": "pages/exhibitionlist/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/museumdetail/index",
+          "pathName": "pages/museumdetail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/museumlist/index",
+          "pathName": "pages/museumlist/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/logs/logs",
+          "pathName": "pages/logs/logs",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/citylist/index",
+          "pathName": "pages/citylist/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
   }
 }
