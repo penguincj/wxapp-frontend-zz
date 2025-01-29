@@ -1,8 +1,8 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "loc-select": "/components/loc-select/loc-select",
-    "swiper-card1": "/components/swiper-card1/swiper-card1",
+    "exhibition-list": "/components/exhibition-list/exhibition-list",
+    "audio-player": "/components/audio-player/audio-player",
     "cache-audio": "/components/cache-audio/cache-audio"
   }
 }

@@ -1,0 +1,8 @@
+<view class="bottom-bar">
+  <block wx:for="{{icons}}">
+    <view class="bottom-bar-group" key="{{item.id}}">
+      <image class="bottom-bar-img" src="{{currentkey === item.id ? item.iconClicked : item.icon}}" mode="aspectFix" />
+      <view class="bottom-bar-text {{currentkey === item.id ? 'bottom-bar-text-blod' : ''}}">{{item.name}}</view>
+    </view>
+  </block>
+</view>

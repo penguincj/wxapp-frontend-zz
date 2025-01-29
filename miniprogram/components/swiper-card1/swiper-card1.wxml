@@ -1,0 +1,38 @@
+<view class="swiper-card-one">
+  <view class="title-line">
+    <view class="title">
+      <view class="title-name">首推展览</view>
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+    </view>
+    
+    <view class="date-group">
+      <view class="date">
+        <span class="date-month">01</span>
+        <span class="date-fenge">/</span>
+        <span class="date-day">18</span>
+      </view>
+      <span class="date-week">周六</span>
+    </view>
+  </view>
+  <view class="page-section page-section-spacing swiper">
+    <swiper indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{cardConfig}}" wx:key="{{item.id}}">
+          <swiper-item>
+            <view class="swiper-item">
+              <image src="{{item.img}}" class="item-img" mode="aspectFill" />
+              <view class="exhibition-type">{{item.type}}</view>
+              <view class="item-desc-group">
+                <view class="desc-title">{{item.name}}</view>
+                <view class="desc-desc">{{item.desc}}</view>
+                <view class="desc-opendate">
+                <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
+                {{item.opendate}}
+                </view>
+              </view>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+  </view>
+</view>
