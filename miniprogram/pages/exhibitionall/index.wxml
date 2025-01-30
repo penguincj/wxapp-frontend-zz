@@ -1,0 +1,24 @@
+<!-- index.wxml -->
+<page-meta page-style="">
+	<navigation-bar
+	 title="格物观展"
+	 loading="{{loading}}"
+	 color="black"
+	 background="#FFF"
+	 style="text-align: center;"
+	/>
+	<view class="page-exhibition-all">
+		<block wx:for="{{exhibitions}}" wx:key="{{item.id}}">
+			<view class="exhibition-item">
+				<image src="{{item.img}}" class="item-img" mode="aspectFill" />
+				<view class="item-desc-group">
+					<view class="line-one">
+						<span class="desc-title">{{item.name}}</span>
+					</view>
+					<view class="desc-desc">{{item.opendate}}</view>
+				</view>
+			</view>
+		</block>
+	</view>
+</page-meta>
+

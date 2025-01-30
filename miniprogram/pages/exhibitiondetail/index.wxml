@@ -1,0 +1,82 @@
+<!-- index.wxml -->
+<page-meta page-style="">
+<navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view class="page-exhibition-detail">
+  <view class="museum-info">
+    <image src="/static/images/shouye.jpg" class="museum-img" mode="aspectFill" />
+    <view class="museum-text-group">
+      <view class="title">
+        {{exhibitionInfo.name}}
+        <view class="zhanlan-type">常设展</view>
+      </view>
+      <image src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
+      <view class="desc">{{exhibitionInfo.intro}}</view>
+      <view class="line"></view>
+      <view class="group-two">
+        <view class="address text-flex">
+          <image src="/static/images/dingwei-gray.png" class="museum-icon" mode="aspectFill" />
+          {{exhibitionInfo.address}}
+        </view>
+        <view class="open-date text-flex">
+          <image src="/static/images/date-gray.png" class="museum-icon" mode="aspectFill" />
+          开放时间：{{exhibitionInfo.open_time}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="exhibition-intro">
+    <view class="title-line">
+      <view class="title">
+        <view class="title-name">展览介绍</view>
+        <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+      </view>
+    </view>
+    <view class="intro-content">
+      <view class="text">本次艺术展汇集全球新锐艺术家作品，通过装置本次艺术展汇集全球新锐艺术家作品，通过装置本次艺术展汇集全球新锐艺术家作品，通过装置</view>
+      <image class="arrow-img" src="/static/images/arrow-bottom.png" mode="aspectFix" />
+    </view>
+    <view class="ticket-group">
+      <view>
+        <text class="title">展览票</text>
+        <text class="tehui">限时特惠中</text>
+      </view>
+      <view class="price">¥120</view>
+    </view>
+  </view>
+  <view class="jiangjie-area">
+    <view class="title-line">
+      <view class="title">
+        <view class="title-name">导览讲解</view>
+        <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+      </view>
+    </view>
+    <view class="jiangjie-card">
+      <block wx:for="{{exhibitionInfo.jiangjie_list}}" wx:key="id">
+        <view class="card-group">
+          <image class="card-bg" src="/static/images/btn2.png" mode="aspectFix" />
+          <view class="card-content-line-one">
+            <view class="first-area">
+              <image class="avatar" src="{{item.avatar}}" mode="aspectFix" />
+              <text class="name">{{item.name}}</text>
+              <text class="fenge">|</text>
+              <text class="title">{{item.title}}</text>
+            </view>
+            <view class="sec-area">
+              <text class="price"><text class="unit">¥</text>{{item.price}}</text>
+              <text class="time"><text class="unit">/</text>{{item.dur}}分钟</text>
+            </view>
+          </view>
+          <view class="card-content-line-two">
+            <view class="type">{{item.type}}</view>
+            <view class="btn-group">
+              <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
+              <view class="loc-name white">试听</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  
+</view>
+</page-meta>  

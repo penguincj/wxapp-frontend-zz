@@ -1,12 +1,11 @@
 // index.ts
 // 获取应用实例
 // const app = getApp<IAppOption>()
-const museumList = [{
+const cityList1 = [{
   img: 'https://gewugo.com/storage/image/VC25139145565967.jpg',
   cityname: '北京',
   cityid: 1,
   museumname: '故宫博物院',
-  desc: '北京故宫博物院，是在明清皇宫及其收藏北京故宫博物院，是在明清皇宫及其收藏',
   museumList: [{
     name: '故宫博物院',
     img: 'https://gewugo.com/storage/image/VC25139145565967.jpg',
@@ -20,7 +19,6 @@ const museumList = [{
   cityname: '浙江',
   cityid: 2,
   museumname: '浙江省博物院',
-  desc: '北京故宫博物院，是在明清皇宫及其收藏北京故宫博物院，是在明清皇宫及其收藏',
   museumList: [{
     name: '浙江省博物院',
     img: 'https://gewugo.com/storage/image/JC25139211818586.jpg',
@@ -34,7 +32,6 @@ const museumList = [{
   cityname: '上海',
   cityid: 3,
   museumname: '上海博物院',
-  desc: '北京故宫博物院，是在明清皇宫及其收藏北京故宫博物院，是在明清皇宫及其收藏',
   museumList: [{
     name: '上海博物院',
     img: 'https://gewugo.com/storage/image/TC25139182181174.jpg',
@@ -45,39 +42,28 @@ const museumList = [{
   citypinyin: 'shanghai',
 }]
 Component({
-  data: { 
-    museumList: museumList,
-    topBarHeight: 0,
-    safeHeight: 0,
-    windowHeight: 0,
-    statusBarHeight:0,
+  data: {
+    citylists: [] as any,
+    loading: false
   },
   methods: {
 
   },
   pageLifetimes: {
     show() {
-      console.log('show');
-      const info = wx.getMenuButtonBoundingClientRect();
-      const windowInfo = wx.getWindowInfo();
-      if (info && info.bottom) {
-        this.setData({
-          topBarHeight: info.bottom,
-          safeHeight: windowInfo.safeArea.height,
-          windowHeight: windowInfo.screenHeight,
-          statusBarHeight: windowInfo.statusBarHeight,
-        })
-      }
-
-      console.log('info',info);
-      console.log('windowInfo',windowInfo);
+     this.setData({
+      citylists: cityList1,
+     })
     }
   },
   lifetimes: {
     attached() {
-
-    
+      setTimeout(() => {
+        this.setData({
+          loading: false,
+        })
+      }, 1000)
     },
   },
 
-})
+});

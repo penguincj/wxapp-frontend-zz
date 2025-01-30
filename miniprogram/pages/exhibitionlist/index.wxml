@@ -1,6 +1,6 @@
 <!-- index.wxml -->
-<page-meta page-style="overflow: hidden; background: #f6f6f6">
-<navigation-bar title="格物观展" loading="{{loading}}" back="{{false}}" color="black" background="#f6f6f6" style="text-align: center;"></navigation-bar>
+<page-meta page-style="background: #ffffff">
+<navigation-bar title="格物观展" loading="{{loading}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
 <view class="exhibition-list-page">
   <view>
     <loc-select
@@ -11,5 +11,12 @@
   <view class="swiper-card-area">
     <swiper-card1></swiper-card1>
   </view>
+  <view>
+    <swiper-card2></swiper-card2>
+  </view>
+  <view class="swiper-card3-area">
+    <swiper-card3></swiper-card3>
+  </view>
+  <bottom-bar></bottom-bar>
 </view>
 </page-meta>  

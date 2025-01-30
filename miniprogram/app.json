@@ -5,6 +5,8 @@
     "pages/museumlist/index",
     "pages/museumdetail/index",
     "pages/exhibitionlist/index",
+    "pages/exhibitionall/index",
+    "pages/exhibitiondetail/index",
     "pages/logs/logs"
   ],
   "window": {
