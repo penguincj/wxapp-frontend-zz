@@ -1,34 +1,87 @@
-.audio_container {
+
+.audio_player-comp {
   position: relative;
-}
-
-/*按钮大小  */
-.audioOpen {
-  width: 70rpx;
-  height: 70rpx;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 20rpx;
-}
-
-.slider_container {
-  position: absolute;
-  top: 6rpx;
-  left: 0;
   width: 100%;
-  height: 55rpx;
-  z-index: 100;
+
+  .slider_container {
+    position: relative;
+    top: 6rpx;
+    left: 0;
+    width: 528rpx;
+    height: 55rpx;
+    z-index: 100;
+    margin-left: 111rpx;
+    // padding-bottom: 55rpx;
+  }
+  /*按钮大小  */
+  .audioOpen {
+    width: 70rpx;
+    height: 70rpx;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20rpx;
+  }
+
+  .time-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40rpx;
+    box-sizing: border-box;
+    height: 32rpx;
+    margin-top: -44rpx;
+    .time-current {
+      font-size: 32rpx;
+      line-height: 32rpx;
+      font-family: D-DIN;
+      color: #9AA7B1;
+    }
+    .total-time {
+      font-size: 32rpx;
+      font-family: D-DIN;
+      color: #9AA7B1;
+    }
+  }
+
+
+  .time_current {
+    // margin-top: -80rpx;
+    font-size: 32rpx;
+    color: #848484;
+    transform: translateX(-40rpx);
+  }
+  .menu-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80rpx 40rpx 0 40rpx;
+
+    .back-icon {
+      width: 44rpx;
+      height: 44rpx;
+    }
+    .reverse {
+      transform: rotateY(180deg);
+    }
+    .play-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 394rpx;
+      .prev-icon {
+        width: 49rpx;
+        height: 46rpx;
+      }
+      .play-icon {
+        width: 128rpx;
+        height: 128rpx;
+      }
+      
+    }
+  }
+  
 }
 
-.current_group {
-  padding: 0rpx 180rpx 20rpx 80rpx;
-}
-
-.time_current {
-  margin-top: -80rpx;
-  font-size: 20rpx;
-  color: #848484;
-  transform: translateX(-40rpx);
-}

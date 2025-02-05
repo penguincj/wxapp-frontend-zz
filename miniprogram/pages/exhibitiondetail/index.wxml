@@ -63,7 +63,7 @@
             </view>
             <view class="sec-area">
               <text class="price"><text class="unit">¥</text>{{item.price}}</text>
-              <text class="time"><text class="unit">/</text>{{item.dur}}分钟</text>
+              <text class="time"><text class="per">/</text>{{item.dur}}分钟</text>
             </view>
           </view>
           <view class="card-content-line-two">

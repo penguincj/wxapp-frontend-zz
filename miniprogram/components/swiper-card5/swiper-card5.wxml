@@ -1,0 +1,29 @@
+<view class="swiper-card-five">
+  <view class="title">
+    {{title}}
+  </view>
+	<view class="page-section page-section-spacing swiper">
+		<swiper
+		 indicator-dots="{{indicatorDots}}"
+		 autoplay="{{autoplay}}"
+		 interval="{{interval}}"
+		 duration="{{duration}}"
+     bindchange="swiperChange"
+     current="{{swiperCurrent}}" 
+		>
+			<block wx:for="{{cardConfig}}" wx:key="unique">
+				<swiper-item>
+					<view class="swiper-item">
+						<image src="{{item.img}}" class="item-img" mode="aspectFill" />
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+  <view class="dots-group">
+      <block wx:for="{{cardConfig}}" wx:key="{{item.id}}">
+        <image src="/static/images/dot1{{item.id === swiperCurrent ? '-active': ''}}.png" class="dot-img" mode="aspectFill" />
+      </block>
+    </view>
+</view>
+

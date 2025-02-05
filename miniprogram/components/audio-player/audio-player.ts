@@ -8,20 +8,14 @@
 
 Component({
     properties: {
+        isPlay: {
+          type: Boolean,
+          value: false
+        },
         //是否自动播放
         autoplay: {
             type: Boolean,
             value: false
-        },
-        //滑块左侧已选择部分的线条颜色
-        activeColor: {
-            type: String,
-            value: '#7C7C7C'
-        },
-        //滑块右侧背景条的颜色
-        backgroundColor: {
-            type: String,
-            value: '#E5E5E5'
         },
         //音频地址
         audiourl: {
@@ -81,6 +75,39 @@ Component({
         bgAudioManager: null as any,
     },
     methods: {
+      handlePlayChange() {
+        console.log('in compont audio player', this.data.isPlaying);
+        this.setData({
+          isPlaying: !this.data.isPlaying,
+        });
+        this.triggerEvent('PlayStateChange', {
+          state: !this.properties.isPlay,
+        })
+      },
+      handleBackProgress() {
+        console.log('in compont audio player handleBackProgress');
+        this.triggerEvent('BackProgress');
+
+      },
+      handleForwordProgress() {
+        console.log('in compont audio player handleForwordProgress');
+        this.triggerEvent('ForwordProgress');
+      },
+      handlePlayNext() {
+        console.log('in compont audio player handlePlayNext');
+        this.triggerEvent('PlayNext');
+      },
+      handlePlayPrev() {
+        console.log('in compont audio player handlePlayPrev');
+        this.triggerEvent('PlayPrev');
+      },
+      handlePlayRate() {
+        console.log('in compont audio player handlePlayRate');
+        this.triggerEvent('PlayRate', {
+          rate: 1,
+        });
+      }
+      
         // calTimeTxt(time: number) {
         //     return time +'00:12';
         // },

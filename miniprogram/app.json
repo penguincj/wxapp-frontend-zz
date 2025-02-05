@@ -7,8 +7,13 @@
     "pages/exhibitionlist/index",
     "pages/exhibitionall/index",
     "pages/exhibitiondetail/index",
+    "pages/exhibitlist/index",
+    "pages/exhibitdetail/index",
     "pages/logs/logs"
   ],
+  "usingComponents": {
+    "player-comp": "components/player-comp"
+  },
   "window": {
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"

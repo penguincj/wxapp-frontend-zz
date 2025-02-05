@@ -1,0 +1,88 @@
+<!-- index.wxml -->
+<page-meta page-style="">
+<navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view class="page-exhibit-detail">
+  <view class="top-swiper-area">
+    <swiper-unit></swiper-unit>
+  </view>
+  <view class="images-area">
+    <swiper-card5 
+      title="金佛壁龛像：工艺顶峰见证"
+    ></swiper-card5>
+  </view>
+  <view class="audio-player-area">
+    <audio-player
+      audiourl="https://gewugo.com/storage/file/CB26976399343756.mp3"
+      videotitle="videotitle"
+      coverurl="https://gewugo.com/storage/image/NC06525637302482.jpg"
+      isPlay="{{isPlay}}"
+      duration="{{duration}}"
+      sliderIndex="{{sliderIndex}}"
+      currentTimeText="{{currentTimeText}}"
+      totalTimeText="{{totalTimeText}}"
+      bindPlayStateChange="handlePlayStateChange"
+      bindBackProgress="handleBackProgress"
+      bindForwordProgress="ForwordProgress"
+      bindPlayNext="handlePlayNext"
+      bindPlayPrev="handlePlayPrev"
+    ></audio-player>
+  </view>
+  <view class="operate-area">
+    <view class="op-group">
+      <view class="o-item">
+        <image src="/static/images/o-shoucang.png" class="o-icon" mode="aspectFix" />
+        <view class="o-text">收藏</view>
+      </view>
+      <view class="o-item">
+        <image src="/static/images/o-dianzan.png" class="o-icon" mode="aspectFix" />
+        <view class="o-text">点赞</view>
+      </view>
+      <view class="o-item">
+        <image src="/static/images/o-ditu.png" class="o-icon" mode="aspectFix" />
+        <view class="o-text">地图</view>
+      </view>
+      <view class="o-item" bindtap="handleClickOpenRate">
+        <image src="/static/images/o-beisu.png" class="o-icon" mode="aspectFix" />
+        <view class="o-text">1.5倍速</view>
+      </view>
+      <view class="o-item">
+        <image src="/static/images/o-mulu.png" class="o-icon" mode="aspectFix" />
+        <view class="o-text">目录</view>
+      </view>
+    </view>
+  </view>
+  <player-comp
+    id="player"
+    bindReadyPlay="handleReadyPlay"
+    bindTimeUpdate="handleTimeUpdate"
+  ></player-comp>
+  <dialog-half
+    showDialog="{{showDialog}}"
+    bindCloseDialog="handleCloseDialog"
+  >
+    <view slot="content">
+      <view class="rate-group">
+        <view class="title">倍速</view>
+        <view class="rate-slider">
+          <slider
+            block-color="#ffffff" 
+            block-size="70"
+            backgroundColor="rgba(44, 47, 59, 0.05)"
+            activeColor="rgba(44, 47, 59, 0.05)"
+            value="{{rateSlider}}" 
+            max="{{rateMax}}"
+            bindchange="handleRateSliderChange"
+          >
+        </slider>
+        </view>
+        <view class="rate-number">
+          <view class="rate-txt">0.5x</view>
+          <view class="rate-txt">1x</view>
+          <view class="rate-txt">1.5x</view>
+          <view class="rate-txt">2.0x</view>
+        </view>
+      </view>
+    </view>
+  </dialog-half>
+</view>
+</page-meta>  

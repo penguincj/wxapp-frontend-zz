@@ -1,0 +1,17 @@
+<view class="dialog-comp" aria-role="dialog" aria-modal="true" aria-hidden="{{!showDialog}}">
+  <view 
+    class="mask {{showDialog ? 'show' : ''}}" 
+    bindtap="handleClose"
+    catchtouchmove="return">
+  </view>
+  <view class="dialog {{showDialog ? 'show' : ''}}"  
+    catchtouchmove="return">
+    <view class="pannel-icon"></view>
+    <image 
+      src="/static/images/shouqi.png" 
+      class="close-icon" 
+      bindtap="handleClose"
+      mode="aspectFix" />
+    <slot name="content"></slot>
+  </view>
+</view>

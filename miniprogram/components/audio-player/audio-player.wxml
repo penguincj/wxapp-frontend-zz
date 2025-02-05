@@ -1,36 +1,51 @@
-<view class="audio_container">
+<view class="audio_player-comp">
 		<view class="slider_container">
 			<slider
-				block-color="#9E2922" 
+				block-color="#CFBD8C" 
 				block-size="24rpx"
-				backgroundColor="{{backgroundColor}}"
-				activeColor="{{activeColor}}"
+				backgroundColor="#f2f2f2"
+				activeColor="#CFBD8C"
 				value="{{sliderIndex}}" 
 				max="{{duration}}"
 				bindchange="handleSliderChange"
 				>
 			</slider>
-			<view class="current_group">
-				<view class="time_current" style="{{'margin-left:'+(Math.round(sliderIndex)/duration)* 100+'%'}}">
+		</view>
+    <view class="time-group">
+				<view class="time-current">
 					{{currentTimeText}}
 				</view>
+        <view class="total-time">
+          {{totalTimeText}}
+        </view>
 			</view>
-		</view>
-		<view class="time_container" style="padding: 0rpx 15rpx 0rpx 15rpx ; display: block; ">
-			<view style="position: absolute;font-size: 20rpx;color:#848484;top: 10rpx;right: 104rpx;">
-				{{totalTimeText}}
-			</view>
-		</view>
-		<view class="flex flex-space-between forward_back_container">
-			<!-- <view class="uni-grid-icon">
-				<image bindtap="handleFastRewind" src="../../static/images/get-back.svg"
-					style="width: 48rpx;height: 48rpx;top:6rpx;">
-				</image>
-			</view>
-			<view class="uni-grid-icon">
-				<image @tap="handleFastForward" src="../../static/images/fast-forward.svg"
-					style="width: 48rpx;height: 48rpx;top:6rpx;">
-				</image>
-			</view> -->
+		<view class="menu-group">
+			<image 
+        src="/static/images/back15.png" 
+        class="back-icon" 
+        bindtap="handleBackProgress"
+        mode="aspectFix" />
+      <view class="play-group">
+        <image 
+          src="/static/images/play-before.png"
+          class="prev-icon"
+          bindtap="handlePlayPrev"
+          mode="aspectFix" />
+        <image 
+          src="/static/images/{{isPlay?'pause1':'play1'}}.png" class="play-icon"
+          bindtap="handlePlayChange"
+          mode="aspectFix" />
+        <image src="/static/images/play-before.png"
+          class="prev-icon reverse" 
+          bindtap="handlePlayNext"
+          mode="aspectFix" />
+
+      </view>
+			<image
+        src="/static/images/for15.png"
+        class="back-icon" 
+        bindtap="handleForwordProgress"
+        mode="aspectFix" />
+
 		</view>
 	</view>
