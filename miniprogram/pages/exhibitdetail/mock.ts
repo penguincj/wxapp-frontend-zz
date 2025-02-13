@@ -15,7 +15,7 @@ const exhibitionList = {
             "addressltop": "",
             "content": "",
             "jycontent": "",
-            "imagepath": "\/storage\/image\/VB29930907857108.jpg",
+            "imagepath": "https://gewugo.com/storage/image/VB29930907857108.jpg",
             "audiourl": "",
             "videocontent": "",
             "is_show": 1,
@@ -89,8 +89,8 @@ const audioList = [
                 "lmid": 18,
                 "tagstr": ",1,",
                 "videocontent": "",
-                "audiourl": "\/storage\/file\/CB26976399343756.mp3",
-                "imagepath": "\/storage\/image\/NC06525637302482.jpg",
+                "audiourl": "https://gewugo.com/storage/file/CB26976399343756.mp3",
+                "imagepath": "https://gewugo.com/storage/image/NC06525637302482.jpg",
                 "title": "单元介绍",
                 "desc": "",
                 "content": "",
@@ -109,8 +109,8 @@ const audioList = [
                 "lmid": 18,
                 "tagstr": ",1,",
                 "videocontent": "",
-                "audiourl": "\/storage\/file\/HB26976402540987.mp3",
-                "imagepath": "\/storage\/image\/NB26974624542052.jpg",
+                "audiourl": "https://gewugo.com/storage/file/HB26976402540987.mp3",
+                "imagepath": "https://gewugo.com/storage/image/NB26974624542052.jpg",
                 "title": "徐熙《雪竹图轴》",
                 "desc": "",
                 "content": "",
@@ -129,8 +129,68 @@ const audioList = [
                 "lmid": 18,
                 "tagstr": ",1,",
                 "videocontent": "",
-                "audiourl": "\/storage\/file\/VB26976401928165.mp3",
-                "imagepath": "\/storage\/image\/KB26974622824076.jpg",
+                "audiourl": "https://gewugo.com/storage/file/VB26976401928165.mp3",
+                "imagepath": "https://gewugo.com/storage/image/KB26974622824076.jpg",
+                "title": "宋人《望贤迎驾图轴》",
+                "desc": "",
+                "content": "",
+                "sort": 102,
+                "is_show": 1,
+                "zannum": 0,
+                "pinglunnum": 0,
+                "lookcount": 999,
+                "shoucangnum": 0,
+                "createtime": "2024-11-26 13:09:40",
+                "duration_format": "01:08"
+            },{
+                "id": 123,
+                "type": 0,
+                "dyid": 14,
+                "lmid": 18,
+                "tagstr": ",1,",
+                "videocontent": "",
+                "audiourl": "https://gewugo.com/storage/file/VB26976401928165.mp3",
+                "imagepath": "https://gewugo.com/storage/image/KB26974622824076.jpg",
+                "title": "宋人《望贤迎驾图轴》",
+                "desc": "",
+                "content": "",
+                "sort": 102,
+                "is_show": 1,
+                "zannum": 0,
+                "pinglunnum": 0,
+                "lookcount": 999,
+                "shoucangnum": 0,
+                "createtime": "2024-11-26 13:09:40",
+                "duration_format": "01:08"
+            },{
+                "id": 1234,
+                "type": 0,
+                "dyid": 14,
+                "lmid": 18,
+                "tagstr": ",1,",
+                "videocontent": "",
+                "audiourl": "https://gewugo.com/storage/file/VB26976401928165.mp3",
+                "imagepath": "https://gewugo.com/storage/image/KB26974622824076.jpg",
+                "title": "宋人《望贤迎驾图轴》",
+                "desc": "",
+                "content": "",
+                "sort": 102,
+                "is_show": 1,
+                "zannum": 0,
+                "pinglunnum": 0,
+                "lookcount": 999,
+                "shoucangnum": 0,
+                "createtime": "2024-11-26 13:09:40",
+                "duration_format": "01:08"
+            },{
+                "id": 12345,
+                "type": 0,
+                "dyid": 14,
+                "lmid": 18,
+                "tagstr": ",1,",
+                "videocontent": "",
+                "audiourl": "https://gewugo.com/storage/file/VB26976401928165.mp3",
+                "imagepath": "https://gewugo.com/storage/image/KB26974622824076.jpg",
                 "title": "宋人《望贤迎驾图轴》",
                 "desc": "",
                 "content": "",
@@ -143,11 +203,11 @@ const audioList = [
                 "createtime": "2024-11-26 13:09:40",
                 "duration_format": "01:08"
             }, {
-                "id": 124, "type": 0, "dyid": 14, "lmid": 18, "tagstr": ",1,", "videocontent": "", "audiourl": "\/storage\/file\/WB26976400314744.mp3", "imagepath": "\/storage\/image\/CB26974625469909.jpg", "title": "赵佶《柳鸦芦雁图卷》", "desc": "", "content": "", "sort": 103, "is_show": 1, "zannum": 0, "pinglunnum": 0, "lookcount": 999, "shoucangnum": 0, "createtime": "2024-11-26 13:10:03", "duration_format": "00:52"
+                "id": 124, "type": 0, "dyid": 14, "lmid": 18, "tagstr": ",1,", "videocontent": "", "audiourl": "https://gewugo.com/storage/file/WB26976400314744.mp3", "imagepath": "https://gewugo.com/storage/image/CB26974625469909.jpg", "title": "赵佶《柳鸦芦雁图卷》", "desc": "", "content": "", "sort": 103, "is_show": 1, "zannum": 0, "pinglunnum": 0, "lookcount": 999, "shoucangnum": 0, "createtime": "2024-11-26 13:10:03", "duration_format": "00:52"
             }, {
-                "id": 125, "type": 0, "dyid": 14, "lmid": 18, "tagstr": ",1,", "videocontent": "", "audiourl": "\/storage\/file\/UB26976402393311.mp3", "imagepath": "\/storage\/image\/QB26974624992640.jpg", "title": "孙位《高逸图卷》", "desc": "", "content": "", "sort": 104, "is_show": 1, "zannum": 0, "pinglunnum": 0, "lookcount": 999, "shoucangnum": 0, "createtime": "2024-11-26 13:10:29", "duration_format": "01:18"
+                "id": 125, "type": 0, "dyid": 14, "lmid": 18, "tagstr": ",1,", "videocontent": "", "audiourl": "https://gewugo.com/storage/file/UB26976402393311.mp3", "imagepath": "https://gewugo.com/storage/image/QB26974624992640.jpg", "title": "孙位《高逸图卷》", "desc": "", "content": "", "sort": 104, "is_show": 1, "zannum": 0, "pinglunnum": 0, "lookcount": 999, "shoucangnum": 0, "createtime": "2024-11-26 13:10:29", "duration_format": "01:18"
             }, {
-                "id": 126, "type": 0, "dyid": 14, "lmid": 18, "tagstr": ",1,", "videocontent": "", "audiourl": "\/storage\/file\/CB26976400966639.mp3", "imagepath": "\/storage\/image\/KB26974626105338.jpg", "title": "董源《夏山图卷》", "desc": "", "content": "", "sort": 105, "is_show": 1, "zannum": 0, "pinglunnum": 0, "lookcount": 999, "shoucangnum": 0, "createtime": "2024-11-26 13:10:52", "duration_format": "00:58"
+                "id": 126, "type": 0, "dyid": 14, "lmid": 18, "tagstr": ",1,", "videocontent": "", "audiourl": "https://gewugo.com/storage/file/CB26976400966639.mp3", "imagepath": "https://gewugo.com/storage/image/KB26974626105338.jpg", "title": "董源《夏山图卷》", "desc": "", "content": "", "sort": 105, "is_show": 1, "zannum": 0, "pinglunnum": 0, "lookcount": 999, "shoucangnum": 0, "createtime": "2024-11-26 13:10:52", "duration_format": "00:58"
             }]
 
 export { exhibitionList, audioList }

@@ -4,6 +4,7 @@
     "swiper-unit": "/components/swiper-unit/swiper-unit",
     "audio-player": "/components/audio-player/audio-player",
     "dialog-half": "/components/dialog-half/dialog-half",
-    "swiper-card5": "/components/swiper-card5/swiper-card5"
+    "swiper-card5": "/components/swiper-card5/swiper-card5",
+    "swiper-card6": "/components/swiper-card6/swiper-card6"
   }
 }

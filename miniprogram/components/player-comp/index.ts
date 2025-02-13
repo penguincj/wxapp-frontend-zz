@@ -123,13 +123,15 @@ Component({
           rate = 2;
         }
         const { currentTime, src } = getApp().globalData.audio.bgAudio;
-        console.log('rate rate rate', currentTime, src);
-        
         getApp().globalData.audio.bgAudio.playbackRate = rate;
-        // getApp().globalData.audio.bgAudio.stop();
-        getApp().globalData.audio.bgAudio.src = src;
-        getApp().globalData.audio.bgAudio.seek(currentTime);
-        // getApp().globalData.audio.bgAudio.play();
+        getApp().globalData.audio.bgAudio.stop();
+       
+        setTimeout(async () => {
+          await this.initPageAudio(app.globalData.audio.curExhibit);
+          console.log('rate rate rate', src, currentTime);
+          getApp().globalData.audio.bgAudio.seek(currentTime);
+        }, 300)
+        
       },
       handlePlayOtherAudio(_audio) {
         getApp().globalData.audio.curExhibit = _audio;
@@ -192,6 +194,7 @@ Component({
         app.globalData.audio.bgAudio.onEnded(() => {
           console.log('end');
           getApp().globalData.audio.isPlay = false;
+          this.triggerEvent('EndAudio')
           // this.setData({
           //   isPlay: false,
           // })

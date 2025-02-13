@@ -7,7 +7,8 @@
   <view class="dialog {{showDialog ? 'show' : ''}}"  
     catchtouchmove="return">
     <view class="pannel-icon"></view>
-    <image 
+    <image
+      wx:if="{{showIcon}}"
       src="/static/images/shouqi.png" 
       class="close-icon" 
       bindtap="handleClose"

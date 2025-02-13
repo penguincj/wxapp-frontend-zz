@@ -3,7 +3,7 @@
 <navigation-bar title="格物观展" loading="{{loading}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
 <view class="exhibit-page">
   <view class="unit-choose-area">
-    <swiper-unit></swiper-unit>
+    <swiper-unit list="{{unitList}}"></swiper-unit>
   </view>
   <view class="unit-card-area">
     <swiper-card4></swiper-card4>
@@ -73,7 +73,7 @@
             <view class="img-wrapper">
               <image class="img" src="/static/images/play-huajuan.png" mode="aspectFix" />
             </view>
-            <view class="img-wrapper">
+            <view class="img-wrapper" bindtap="handleOpenFindDialog">
               <image class="img" src="/static/images/play-dingwei.png" mode="aspectFix" />
             </view>
           </view>
@@ -81,6 +81,22 @@
 
       </view>
     </view>
+  </view>
+  <view class="find-area">
+    <dialog-half
+      showIcon="{{false}}"
+      showDialog="{{showFindDialog}}"
+      bindCloseDialog="handleCloseFindDialog"
+    >
+    <view slot="content">
+      <swiper-card6 
+        showType="guanjianci"
+        showInput="{{showInput}}"
+        list="{{searchList}}"
+        bindClickSearch="handleClickSearch"
+      ></swiper-card6>
+    </view>
+    </dialog-half>
   </view>
 </view>
 </page-meta>  

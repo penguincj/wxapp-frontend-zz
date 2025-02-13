@@ -4,6 +4,28 @@
 import { audioList, exhibitionList } from './mock';
 const base_url = "http://gewugo.com";
 // let bgAudio = wx.getBackgroundAudioManager();
+const defaultUnitList =  [
+  {
+    id: 1,
+    name: '云南龙陵',
+  },
+  {
+    id: 2,
+    name: '玉出昆冈',
+  },
+  {
+    id: 3,
+    name: '云南',
+  },
+  {
+    id: 4,
+    name: '玉出昆',
+  },
+  {
+    id: 5,
+    name: '云南龙陵',
+  },
+];
 
 Component({
   data: {
@@ -21,8 +43,49 @@ Component({
     bgAudio: null as any,
     isAutoPlay: false,
     stored_audio: [] as string[],
+    unitList: defaultUnitList,
+    searchList: [] as any,
+    showFindDialog: false,
+    showInput: true,
   },
   methods: {
+    handleCloseFindDialog() {
+      this.setData({
+        showFindDialog: false,
+      })
+    },
+    handleOpenFindDialog() {
+      this.setData({
+        showFindDialog: true,
+        showInput: true,
+        searchList: [],
+      })
+    },
+    handleClickSearch(event: any) {
+      const { keyword } = event.detail;
+      console.log('keyword', keyword);
+      this.setData({
+        showInput: false,
+      });
+      this.setData({
+        searchList: audioList,
+      })
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     drawCanvas() {
       wx.createSelectorQuery()
         .select('#myCanvas') // 在 WXML 中填入的 id

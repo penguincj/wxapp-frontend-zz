@@ -27,6 +27,19 @@ const audioItem = {
   "duration_format": "00:38"
 }
 
+const listConfig = [
+  {
+    id: 1,
+    name: '播放',
+  },
+  {
+    id: 2,
+    name: '讲词',
+  },
+
+]
+
+
 Component({
   data: {
     exhibitionList: audioList,
@@ -49,9 +62,16 @@ Component({
 
 
     showDialog: false,
+    showMenuDialog: false,
     rateSlider: 2,
     rateMax: 4,
-
+    rateMin: 1,
+    curRate: "1.0",
+    listConfig,
+    topSwiperSelectIdx: 1,
+    audioList: [],
+    isSaved: false,
+    isLiked: false,
   },
   methods: {
     handleReadyPlay(event: any) {
@@ -70,7 +90,36 @@ Component({
         currentTimeText,
       })
     },
+    handleEndAudio() {
+      this.setData({
+        isPlay:false,
 
+      })
+    },
+    handleChangeUnit(e: any) {
+      const { selectId } = e.detail;
+      console.log('selectIdselectIdselectId', selectId)
+      this.setData({
+        topSwiperSelectIdx: Number(selectId),
+      })
+    },
+    handleCloseDialog() {
+      console.log('handleCloseDialog');
+      this.setData({
+        showDialog: false,
+      })
+    },
+    handleCloseMenuDialog() {
+      console.log('handleCloseDialog');
+      this.setData({
+        showMenuDialog: false,
+      })
+    },
+    handleClickMenu() {
+      this.setData({
+        showMenuDialog: true,
+      })
+    },
 
 
 
@@ -126,17 +175,25 @@ Component({
         showDialog: true,
       })
     },
-    handleCloseDialog() {
-      console.log('handleCloseDialog');
-      this.setData({
-        showDialog: false,
-      })
-    },
+    
     handleRateSliderChange(event: any) {
       console.log('handleRateSliderChange', event);
       const value = event.detail.value;
-
+      this.setData({
+        curRate: (value/2).toFixed(1),
+      })
       this.handlePlayRate(value/2)
+    },
+    handleClickSave() {
+
+      this.setData({
+        isSaved: !this.data.isSaved,
+      })
+    },
+    handleClickLike() {
+      this.setData({
+        isLiked: !this.data.isLiked,
+      })
     },
 
 
@@ -338,7 +395,15 @@ Component({
         this.setData({
           loading: false,
         })
-      }, 1000)
+      }, 1000);
+      const audio_list = getApp().globalData.audio.audioList;
+
+      if (audio_list && audio_list.length === 0) {
+        getApp().globalData.audio.audioList = audioList;
+        this.setData({
+          exhibitionList: audioList,
+        })
+      }
     },
   },
 
