@@ -1,0 +1,7 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+<navigation-bar title="格物观展" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view class="save-list-page">
+  <scroll-card list="{{likeList}}"></scroll-card>
+</view>
+</page-meta>  

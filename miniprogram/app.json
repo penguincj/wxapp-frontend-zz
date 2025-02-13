@@ -9,6 +9,9 @@
     "pages/exhibitiondetail/index",
     "pages/exhibitlist/index",
     "pages/exhibitdetail/index",
+    "pages/likelist/index",
+    "pages/savelist/index",
+    "pages/looklist/index",
     "pages/logs/logs"
   ],
   "usingComponents": {

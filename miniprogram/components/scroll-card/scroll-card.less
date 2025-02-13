@@ -1,0 +1,86 @@
+.scroll-card {
+  .scroll-view_H{
+    white-space: nowrap;
+  }
+  .container {
+    padding: 0;
+  }
+
+  .card-group {
+    width: 710rpx;
+    overflow: hidden;
+    height: 240rpx;
+    margin-left: 40rpx;
+    border-radius: 10rpx;
+    background: #FFFFFF;
+    // background: red;
+    padding: 20rpx 0 20rpx 20rpx;
+    box-sizing: border-box;
+    
+    .card-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .group-one {
+      display: flex;
+      align-items: center;
+    }
+    .card-img {
+      width: 240rpx;
+      height: 180rpx;
+      border-radius: 10rpx;
+      box-sizing: border-box;
+    }
+    .card-info {
+      padding-left: 20rpx;
+      width: 470rpx;
+      height: 240rpx;
+      // border-bottom: 1rpx soild rgba(44, 47, 59, 0.1);
+      border-bottom: 1px solid rgba(44, 47, 59, 0.1);
+      .card-title {
+        font-size: 30rpx;
+        color: #2C2F3B;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
+        width: 354rpx;
+        padding-top: 40rpx;
+        display: inline-block;
+      }
+      .card-time {
+        padding-top: 10rpx;
+        font-size: 28rpx;
+
+        color: #9AA7B1;
+      }
+      .card-likenum {
+        padding-top: 38rpx;
+        font-size: 24rpx;
+        color: #CCD3D8;
+      }
+    }
+    .card-operation {
+      width: 250rpx;
+      height: 240rpx;
+      display: flex;
+      font-size: 28rpx;
+      line-height: 240rpx;
+      text-align: center;
+      .item-one {
+        width: 125rpx;
+        height: 240rpx;
+        background: #F7F8F9;
+        color: #2C2F3B;
+      }
+      .item-two {
+        width: 125rpx;
+        height: 240rpx;
+        background: #EF6958;
+        color: #FFFFFF;
+      }
+    }
+    
+  }
+}
