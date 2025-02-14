@@ -1,0 +1,34 @@
+<!--index.wxml-->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <view class="feedback-page">
+    <view class="content-group">
+      <textarea 
+        class="input-content"
+        maxlength="{{100}}"
+        placeholder="在这里输入你想说的话（100字以内）"
+        placeholder-style="font-size: 28rpx; line-height: 34rpx;"
+        value="{{content}}"
+        bindinput="handleContentInputChange"
+      />
+      <view class="count-input">
+        {{content.length}}/100
+      </view>
+    </view>
+    
+    <input 
+      class="phone"
+      type="number"
+      placeholder="请输入电话、邮箱或者QQ（非必填项）"
+      placeholder-style="font-size: 28rpx;"
+      maxlength="{{11}}"
+      value="{{phone}}" 
+      bindinput="handlePhoneInputChange"
+     />
+    <view class="btn-group">
+      <image wx:if="{{content.length === 0}}" class="btn-bg" src="/static/images/btn-long-light.png" mode="aspectFill" />
+      <image wx:else class="btn-bg" src="/static/images/btn-long-dark.png" mode="aspectFill" />
+      <view class="btn-txt">提交</view>
+    </view>
+  </view>
+</page-meta>

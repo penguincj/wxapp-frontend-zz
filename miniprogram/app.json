@@ -12,6 +12,7 @@
     "pages/exhibitiondetail/index",
     "pages/exhibitionlist/index",
     "pages/exhibitionall/index",
+    "pages/feedback/index",
     "pages/logs/logs"
   ],
   "subpackages": [

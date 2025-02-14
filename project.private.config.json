@@ -10,15 +10,15 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/exhibitiondetail/index",
-          "pathName": "pages/exhibitiondetail/index",
+          "name": "pages/feedback/index",
+          "pathName": "pages/feedback/index",
           "query": "",
           "launchMode": "default",
           "scene": null
         },
         {
-          "name": "pages/setting/index",
-          "pathName": "pages/setting/index",
+          "name": "pages/exhibitiondetail/index",
+          "pathName": "pages/exhibitiondetail/index",
           "query": "",
           "launchMode": "default",
           "scene": null
