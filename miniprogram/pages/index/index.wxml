@@ -3,10 +3,12 @@
 <navigation-bar title="格物观展" back="{{false}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view>
   <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
-  <view class="page-section page-section-spacing full-height">
+  <view class="index-page page-section page-section-spacing full-height">
     <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
       <image class="recommend-img" src="{{pageInfo.img}}" />
       <view class="recommend-img-mask"></view>
+      <image class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" />
+
       <view class="recommend-group">
         <view class="recommend-title">
           <image class="title-png" src="/static/images/shouye-jinri.png" mode="aspectFix" />

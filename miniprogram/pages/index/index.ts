@@ -2,7 +2,7 @@
 // 获取应用实例
 // const app = getApp<IAppOption>()
 const pageInfo = {
-  img: 'http://gewugo.com/api/v1/storage/image/shouye-6012491903.jpg',
+  img: 'http://gewugo.com/api/v1/storage/image/shouye-bg-7062504217.jpg',
   cityname: '北京',
   cityid: 1,
   exhibitName: '玉出坤岗',
