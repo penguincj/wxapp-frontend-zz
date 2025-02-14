@@ -17,6 +17,10 @@ Component({
     showInput: {
       type: Boolean,
       value: false,
+    },
+    scrollStyle: {
+      type: String,
+      value: 'height: 1030rpx'
     }
   },
   /**
@@ -47,7 +51,7 @@ Component({
           selectId: id,
           selectName: name,
         });
-        this.triggerEvent('ChangeUnit', {
+        this.triggerEvent('ChangeItem', {
           selectId: id,
           selectName: name,
         })

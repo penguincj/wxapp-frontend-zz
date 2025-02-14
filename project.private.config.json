@@ -10,8 +10,64 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/likelist/index",
-          "pathName": "pages/likelist/index",
+          "name": "pages/exhibitiondetail/index",
+          "pathName": "pages/exhibitiondetail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/setting/index",
+          "pathName": "pages/setting/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/profile/index",
+          "pathName": "pages/profile/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/loginpage/index",
+          "pathName": "pages/loginpage/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/museum/museumlist/index",
+          "pathName": "pages/museum/museumlist/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/museum/museumdetail/index",
+          "pathName": "pages/museum/museumdetail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/museum/exhibitionall/index",
+          "pathName": "pages/museum/exhibitionall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/museum/exhibitiondetail/index",
+          "pathName": "pages/museum/exhibitiondetail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/personal/likelist/index",
+          "pathName": "pages/personal/likelist/index",
           "query": "",
           "launchMode": "default",
           "scene": null
@@ -26,48 +82,6 @@
         {
           "name": "pages/exhibitlist/index",
           "pathName": "pages/exhibitlist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitiondetail/index",
-          "pathName": "pages/exhibitiondetail/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitionall/index",
-          "pathName": "pages/exhibitionall/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitionlist/index",
-          "pathName": "pages/exhibitionlist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/museumdetail/index",
-          "pathName": "pages/museumdetail/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/museumlist/index",
-          "pathName": "pages/museumlist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/logs/logs",
-          "pathName": "pages/logs/logs",
           "query": "",
           "launchMode": "default",
           "scene": null

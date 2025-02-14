@@ -17,21 +17,21 @@
 		<input 
 			wx:if="{{showInput}}"
 			class="weui-input" 
-			auto-focus
 			value="{{keyword}}"
 			bindinput="handInput"
 			bindconfirm="confirmTap"
 			placeholder="可搜索展品名称"/>
-
 	</view>
 	<view class="container">
 		<view class="page-section-spacing">
 			<scroll-view
 				class="scroll-view_H"
-				scroll-y="true"
+				scroll-y="{{true}}"
+				show-scrollbar="{{false}}"
+				enhanced="{{true}}"
 				bindscroll="scroll"
 				bindtap="selectItem"
-				style="height: 1030rpx"
+				style="{{scrollStyle}}"
 			>
 			<block wx:for="{{list}}">
 				<view class="card-group">

@@ -1,0 +1,36 @@
+<!--index.wxml-->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <view class="personal-info-page">
+    <view class="links">
+      <view class="link-group">
+        <view class="left">
+          <text class="text">头像</text>
+        </view>
+        <view class="right">
+          <image class="ava-img" src="/static/images/avatar-default.png" mode="aspectFix" />
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view>
+      <view class="link-group">
+        <view class="left">
+          <text class="text">昵称</text>
+        </view>
+        <view class="right">
+          <input class="input-nickname" value="微信用户" />
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view>
+      <view class="link-group">
+        <view class="left">
+          <text class="text">手机号</text>
+        </view>
+        <view class="right">
+          <view class="phone-num">180****9410</view>
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view>
+      
+    </view>
+  </view>
+</page-meta>

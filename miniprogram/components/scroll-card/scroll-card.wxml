@@ -12,9 +12,10 @@
 				<view class="card-group">
 					<scroll-view
 						scroll-x="true"
-						upper-threshold="30"
-						lower-threshold="30"
+						upper-threshold="10"
+						lower-threshold="10"
 						data-idx="{{index}}"
+						bounces="{{false}}"
 						bindscrolltoupper="handleScrollUpper"
 						bindscrolltolower="handleScrollLower"
 						scroll-into-view="{{toView}}"

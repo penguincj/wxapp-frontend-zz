@@ -3,7 +3,7 @@
 <navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-museum-detail">
   <view class="museum-info">
-    <image src="/static/images/shouye.jpg" class="museum-img" mode="aspectFill" />
+    <image src="http://gewugo.com/api/v1/storage/image/shouye-6012491903.jpg" class="museum-img" mode="aspectFill" />
     <view class="museum-text-group">
       <view class="title">{{museumInfo.name}}</view>
       <view class="desc">{{museumInfo.intro}}</view>

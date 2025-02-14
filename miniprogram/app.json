@@ -2,24 +2,42 @@
   "pages": [
     "pages/index/index",  
     "pages/citylist/index",
-    "pages/museumlist/index",
-    "pages/museumdetail/index",
-    "pages/exhibitionlist/index",
-    "pages/exhibitionall/index",
-    "pages/exhibitiondetail/index",
     "pages/exhibitlist/index",
     "pages/exhibitdetail/index",
-    "pages/likelist/index",
-    "pages/savelist/index",
-    "pages/looklist/index",
+    "pages/login/index",
+    "pages/loginpage/index",
+    "pages/profile/index",
+    "pages/personalinfo/index",
+    "pages/setting/index",
+    "pages/exhibitiondetail/index",
+    "pages/exhibitionlist/index",
+    "pages/exhibitionall/index",
     "pages/logs/logs"
+  ],
+  "subpackages": [
+    {
+      "root": "pages/personal",
+      "pages": [
+        "looklist/index",
+        "savelist/index",
+        "likelist/index"
+      ]
+    },
+    {
+      "root": "pages/museum",
+      "pages": [
+        "museumdetail/index",
+        "museumlist/index"
+      ]
+    }
   ],
   "usingComponents": {
     "player-comp": "components/player-comp"
   },
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "disableScroll": true
   },
   "style": "v2",
   "rendererOptions": {

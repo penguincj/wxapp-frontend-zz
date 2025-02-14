@@ -2,7 +2,7 @@
 // 获取应用实例
 // const app = getApp<IAppOption>()
 const pageInfo = {
-  img: '/static/images/shouye.jpg',
+  img: 'http://gewugo.com/api/v1/storage/image/shouye-6012491903.jpg',
   cityname: '北京',
   cityid: 1,
   exhibitName: '玉出坤岗',
@@ -11,7 +11,7 @@ const pageInfo = {
   museumList: [{
     museumid: 1,
     name: '故宫博物院',
-    img: '/static/images/shou1.jpg',
+    img: 'http://gewugo.com/api/v1/storage/image/shou1-3658272783.jpg',
     address: '北京市东城区景山前街4号',
     tel: '010-64037666',
     openTime: '08:30-17:00',
@@ -19,7 +19,7 @@ const pageInfo = {
   }, {
     museumid: 2,
     name: '奥运博物馆',
-    img: '/static/images/shou2.jpg',
+    img: 'http://gewugo.com/api/v1/storage/image/shou2-0552318603.jpg',
     address: '北京市东城区景山前街4号',
     tel: '010-64037666',
     openTime: '08:30-17:00',

@@ -49,6 +49,10 @@ Component({
     showInput: true,
   },
   methods: {
+    handleClickExhibitItem() {
+      console.log('handleClickExhibitItem');
+      
+    },
     handleCloseFindDialog() {
       this.setData({
         showFindDialog: false,
