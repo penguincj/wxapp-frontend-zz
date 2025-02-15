@@ -1,9 +1,3 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
-
-// 展览状态
-// status 1 未开始 2 进行中 3 已结束
 const exhibitionInfo = {
   img: 'https://gewugo.com/storage/image/JC25139211818586.jpg',
   name: '玉出昆冈',
@@ -105,15 +99,25 @@ const exhibitionInfo = {
     }
   ]
 }
-Component({
+Page({
   data: {
     exhibitionInfo: exhibitionInfo,
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
     statusBarHeight:0,
+    
+    curExhibitionId: -1,
   },
-  methods: {
+  handleClickJiangjie(event: any) {
+    console.log('handleClickJiangjie', event.currentTarget.dataset);
+    
+    const { idx } = event.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/pages/exhibitlist/index?type=${idx}&exhibition_id=${this.data.curExhibitionId}`,
+    })
+  },
+  handleClickPlayIcon() {
 
   },
   pageLifetimes: {
@@ -133,9 +137,9 @@ Component({
         })
       }
 
-      console.log('info',info);
       console.log('windowInfo',windowInfo);
-    }
+    },
+    
   },
   lifetimes: {
     attached() {
@@ -145,6 +149,12 @@ Component({
         })
       }, 1000)
     },
+  },
+  onLoad(options) {
+    console.log('onLoad', options);
+    this.setData({
+      curExhibitionId: Number(options.exhibition_id),
+    })
   },
 
 })

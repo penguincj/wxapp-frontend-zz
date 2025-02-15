@@ -23,13 +23,22 @@
     </view>
   </view>
   <view class="recommend-area">
-    <swiper-card2></swiper-card2>
+    <swiper-card2 
+      list="{{recommendList}}"
+      bindClickItem="handleClickItem"
+    ></swiper-card2>
   </view>
   <view class="normal-area">
-    <card-group1></card-group1>
+    <card-group1
+      list="{{normalList}}"
+      bindClickItem="handleClickItem"
+    ></card-group1>
   </view>
   <view class="expried-area">
-    <swiper-card3></swiper-card3>
+    <swiper-card3
+      list="{{outofdateList}}"
+      bindClickItem="handleClickItem"
+    ></swiper-card3>
   </view>
 </view>
 </page-meta>  

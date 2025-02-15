@@ -64,7 +64,7 @@
     bindReadyPlay="handleReadyPlay"
     bindTimeUpdate="handleTimeUpdate"
     bindEndAudio="handleEndAudio"
-     bindContinuePlay="handleContinuePlay"
+    bindContinuePlay="handleContinuePlay"
   ></player-comp>
   <dialog-half
     showDialog="{{showDialog}}"

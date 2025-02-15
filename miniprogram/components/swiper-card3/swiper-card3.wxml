@@ -13,10 +13,10 @@
 		 duration="{{duration}}"
      next-margin="160rpx"
 		>
-			<block wx:for="{{cardConfig}}" wx:key="{{item.id}}">
+			<block wx:for="{{list}}" wx:key="{{item.id}}">
 				<swiper-item>
-          <view class="item-vertical">
-            <view class="swiper-item">
+          <view class="item-vertical" >
+            <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">
               <image src="{{item.img}}" class="item-img" mode="aspectFill" />
               <view class="item-desc-group">
                 <view class="line-one">

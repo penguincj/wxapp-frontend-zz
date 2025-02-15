@@ -76,6 +76,26 @@ const museumInfo = {
     }
   ]
 }
+const zhanlan1 = [
+  {
+    id: 0,
+    name: '玉出昆冈',
+    img: 'http://gewugo.com/api/v1/storage/image/swiper1-1489240990.jpg',
+    desc: '清代宫廷和田玉文化特展',
+    link: 'pages/index/index',
+    opendate: '2024.01.20-2024.03.31',
+    type: '常设展'
+  },
+  {
+    id: 1,
+    name: '玉出昆冈2',
+    img: 'http://gewugo.com/api/v1/storage/image/swiper2-4593118634.jpg',
+    desc: '清代宫廷和田玉文化特展2',
+    link: 'pages/index/index',
+    opendate: '2024.01.21-2024.03.31',
+    type: '临时展'
+  },
+]
 Component({
   data: {
     museumInfo: museumInfo,
@@ -83,9 +103,17 @@ Component({
     safeHeight: 0,
     windowHeight: 0,
     statusBarHeight:0,
+    recommendList: zhanlan1,
+    normalList: zhanlan1,
+    outofdateList: zhanlan1,
   },
   methods: {
-
+    handleClickItem(event: any) {
+      const { id } = event.detail;
+      wx.navigateTo({
+        url: '/pages/exhibitiondetail/index?exhibition_id=' + id,
+      })
+    },
   },
   pageLifetimes: {
     show() {

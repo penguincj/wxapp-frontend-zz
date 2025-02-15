@@ -9,7 +9,7 @@
         {{exhibitionInfo.name}}
         <view class="zhanlan-type">常设展</view>
       </view>
-      <image src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
+      <image bindtap="handleClickPlayIcon" src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
       <view class="desc">{{exhibitionInfo.intro}}</view>
       <view class="line"></view>
       <view class="group-two">
@@ -68,7 +68,7 @@
           </view>
           <view class="card-content-line-two">
             <view class="type">{{item.type}}</view>
-            <view class="btn-group">
+            <view class="btn-group" data-idx="{{item.type}}" bindtap="handleClickJiangjie">
               <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
               <view class="loc-name white">试听</view>
             </view>

@@ -7,7 +7,7 @@
     <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
       <image class="recommend-img" src="{{pageInfo.img}}" />
       <view class="recommend-img-mask"></view>
-      <image class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" />
+      <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" />
 
       <view class="recommend-group">
         <view class="recommend-title">
@@ -30,7 +30,7 @@
     </view>
     <view class="index-card-group {{isRecoClicked ? 'index-card-group-hide-ani' : ''}}">
       <block wx:for="{{pageInfo.museumList}}">
-        <view class="index-card">
+        <view class="index-card" data-idx="{{item.museumid}}" bindtap="handleClickMuseumItem">
           <image class="index-card-img" src="{{item.img}}" mode="aspectFill" />
           <view class="index-card-img-mask"></view>
           <view class="index-card-museum-title">{{item.name}}</view>

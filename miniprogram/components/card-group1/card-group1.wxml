@@ -6,8 +6,8 @@
 		</view>
 	</view>
 	<view class="card-group">
-			<block wx:for="{{cardConfig}}" wx:key="{{item.id}}">
-          <view class="item-vertical">
+			<block wx:for="{{list}}" wx:key="{{item.id}}">
+          <view class="item-vertical" data-idx="{{item.id}}" bindtap="handleClickItem">
             <view class="card-item">
               <image src="{{item.img}}" class="item-img" mode="aspectFill" />
               <view class="item-desc-group">

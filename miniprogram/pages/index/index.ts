@@ -37,14 +37,17 @@ Component({
     isRecoClicked: false,
   },
   methods: {
-    goToMuseumList() {
+    handleClickMuseumIcon() {
       wx.navigateTo({
-        url: '/pages/museumlist/index',
+        url: '/pages/museum/museumlist/index',
       })
     },
-    goToCityList() {
+    handleClickMuseumItem(event: any) {
+      console.log(event);
+      
+      const { idx } = event.currentTarget.dataset;
       wx.navigateTo({
-        url: '/pages/citylist/index',
+        url: '/pages/museum/museumdetail/index?museum_id=' + idx,
       })
     },
     handleClickRecommend() {
