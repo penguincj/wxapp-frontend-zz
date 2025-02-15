@@ -5,15 +5,17 @@
 		 autoplay="{{autoplay}}"
 		 interval="{{interval}}"
 		 duration="{{duration}}"
-    previous-margin="60rpx"
-    next-margin="44rpx"
+		 current="{{currentIdx}}"
+		previous-margin="60rpx"
+		next-margin="44rpx"
+		bindchange="handleChangeItem"
 		>
-			<block wx:for="{{cardConfig}}" wx:key="{{item.id}}">
+			<block wx:for="{{list}}" wx:key="{{item.id}}">
 				<swiper-item>
 					<view class="swiper-item">
-						<image src="{{item.img}}" class="item-img" mode="aspectFill" />
+						<image src="{{item.imagepath}}" class="item-img" mode="aspectFill" />
 						<view class="item-desc-group">
-							<view class="desc-title">{{item.name}}</view>
+							<view class="desc-title">{{item.title}}</view>
 							<view class="desc-desc">{{item.desc}}</view>
 						</view>
 					</view>

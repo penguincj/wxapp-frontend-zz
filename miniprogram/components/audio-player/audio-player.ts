@@ -17,11 +17,6 @@ Component({
             type: Boolean,
             value: false
         },
-        //音频地址
-        audiourl: {
-            type: String,
-            value: ''
-        },
         // 音频title
         videotitle: {
             type: String,

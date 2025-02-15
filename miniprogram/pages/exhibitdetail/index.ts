@@ -75,11 +75,12 @@ Component({
   },
   methods: {
     handleReadyPlay(event: any) {
-      const { duration, totalTimeText, isPlay } = event.detail;
+      const { duration, totalTimeText, isPlay, playingIndex } = event.detail;
       this.setData({
         isPlay,
         duration,
         totalTimeText,
+        playingIndex,
       })
     },
     handleTimeUpdate(event: any) {
@@ -88,6 +89,15 @@ Component({
         currentTime,
         sliderIndex,
         currentTimeText,
+      })
+    },
+    handleContinuePlay(event: any) {
+      const { isPlay, duration, sliderIndex, totalTimeText } = event.detail;
+      this.setData({
+        isPlay,
+        duration,
+        sliderIndex,
+        totalTimeText,
       })
     },
     handleEndAudio() {
@@ -103,6 +113,21 @@ Component({
         topSwiperSelectIdx: Number(selectId),
       })
     },
+
+
+
+    // swiper-card 4
+    async handleClickExhibitItem(event: any) {
+      this.setData({
+        isPlay: false,
+      });
+      const { selectId } = event.detail;
+      const player = this.selectComponent("#player")
+      await player.handlePlayOtherAudioById(selectId);
+    },
+
+
+
     handleCloseDialog() {
       console.log('handleCloseDialog');
       this.setData({
@@ -370,6 +395,8 @@ Component({
 
       console.log('info', info);
       console.log('windowInfo', windowInfo);
+
+      
       // wx.showModal({
       //   title: '提示',
       //   content: '这是一个模态弹窗',

@@ -2,7 +2,7 @@
 import { audioList } from './mock';
 import { throttle } from '../../utils/util';
 
-const app = getApp();
+const global_audio = getApp().globalData.audio;
 Component({
     properties: {
         isPlay: {
@@ -79,35 +79,35 @@ Component({
     },
     methods: {
       handleAudioPause() {
-        app.globalData.audio.bgAudio.pause();
+        global_audio.bgAudio.pause();
         // this.setData({
         //   playingIndex: -1,
         // })
       },
       handleAudioPlay() {
-        app.globalData.audio.bgAudio.play();
+        global_audio.bgAudio.play();
         // this.setData({
         //   playingIndex: -1,
         // })
       },
       handleSeekPlay(jumptime) {
-        app.globalData.audio.bgAudio.seek(jumptime);
+        global_audio.bgAudio.seek(jumptime);
       },
       playNextAudio() {
-        const {playingIndex, audioList} = app.globalData.audio;
+        const {playingIndex, audioList} = global_audio;
         if (playingIndex + 1 >= audioList) {
           console.log('last one')
         } else {
-          getApp().globalData.audio.playingIndex = playingIndex + 1;
+          global_audio.playingIndex = playingIndex + 1;
           this.handlePlayOtherAudio(audioList[playingIndex + 1])
         }
       },
       playPrevAudio() {
-        const {playingIndex, audioList} = app.globalData.audio;
+        const {playingIndex, audioList} = global_audio;
         if (playingIndex <= 0) {
           console.log('first one')
         } else {
-          getApp().globalData.audio.playingIndex = playingIndex - 1;
+          global_audio.playingIndex = playingIndex - 1;
           this.handlePlayOtherAudio(audioList[playingIndex - 1])
         }
       },
@@ -122,24 +122,33 @@ Component({
         } else if (_rate >= 1.75) {
           rate = 2;
         }
-        const { currentTime, src } = getApp().globalData.audio.bgAudio;
-        getApp().globalData.audio.bgAudio.playbackRate = rate;
-        getApp().globalData.audio.bgAudio.stop();
+        const { currentTime, src } = global_audio.bgAudio;
+        global_audio.bgAudio.playbackRate = rate;
+        global_audio.bgAudio.stop();
        
         setTimeout(async () => {
-          await this.initPageAudio(app.globalData.audio.curExhibit);
+          await this.initPageAudio(global_audio.curExhibit);
           console.log('rate rate rate', src, currentTime);
-          getApp().globalData.audio.bgAudio.seek(currentTime);
+          global_audio.bgAudio.seek(currentTime);
         }, 300)
         
       },
-      handlePlayOtherAudio(_audio) {
-        getApp().globalData.audio.curExhibit = _audio;
-        this.initPageAudio(_audio);
+      async handlePlayOtherAudioById(_id) {
+
+        const audio = global_audio.audioList.find(i=>i.id === _id);
+        await this.handlePlayOtherAudio(audio);
+      },
+      async handlePlayOtherAudioByPlayingIdx(_playingidx) {
+        const audio = global_audio.audioList[_playingidx];
+        await this.handlePlayOtherAudio(audio);
+      },
+      async handlePlayOtherAudio(_audio) {
+        global_audio.curExhibit = _audio;
+        await this.initPageAudio(_audio);
       },
       generateAudioItem(item: any) {
         const { audiourl, imagepath, title, duration_format } = item;
-  console.log('item;;;;;;;', item)
+        console.log('item;;;;;;;', item)
         return {
           src: audiourl,
           startTime: 0,
@@ -150,13 +159,14 @@ Component({
         }
       },
       async findLocalAudio(_url: string) {
-        const stored_audio_arr = app.globalData.audio.stored_audio;
+        return false;
+        const stored_audio_arr = global_audio.stored_audio;
         const file_name = _url.split('/file/')[1].split('.mp3')[0];
   
         if (!stored_audio_arr.length) {
           try {
             const stored_audio = await wx.getStorageSync('audios');
-            getApp().globalData.audio.stored_audio = stored_audio;
+            global_audio.stored_audio = stored_audio;
             // this.setData({
             //   stored_audio,
             // });
@@ -191,25 +201,40 @@ Component({
         }
       },
       onEndAudio() {
-        app.globalData.audio.bgAudio.onEnded(() => {
+        global_audio.bgAudio.onEnded(() => {
           console.log('end');
-          getApp().globalData.audio.isPlay = false;
+          global_audio.isPlay = false;
           this.triggerEvent('EndAudio')
           // this.setData({
           //   isPlay: false,
           // })
         })
       },
+      refreshPageStatusFromCurrentPlayingStatus() {
+        const paused = global_audio.bgAudio.paused;
+        this.triggerEvent('GetCurPlayingStatus', {
+          isPlay: !paused,
+        })
+      },
+      pageTimeUpateContinue() {
+        if(global_audio && global_audio.bgAudio) {
+          console.log('audio continue', global_audio.bgAudio.paused);
+          this.refreshPageStatusFromCurrentPlayingStatus();
+          this.onBgTimeUpdate();
+        } else {
+          console.log('no audio continue');
+        }
+      },
       onBgTimeUpdate() {
         
-        app.globalData.audio.bgAudio.onTimeUpdate(throttle(() => {
+        global_audio.bgAudio.onTimeUpdate(throttle(() => {
           console.log('2')
-          const time = Number(parseFloat(app.globalData.audio.bgAudio.currentTime).toFixed(2));
-          const dur = app.globalData.audio.bgAudio.duration;
+          const time = Number(parseFloat(global_audio.bgAudio.currentTime).toFixed(2));
+          const dur = global_audio.bgAudio.duration;
   
           const timeTxt = this.calTimeTxt(Math.floor(time));
-          getApp().globalData.audio.sliderIndex = time;
-          getApp().globalData.audio.currentTimeText = timeTxt;
+          global_audio.sliderIndex = time;
+          global_audio.currentTimeText = timeTxt;
 
           // this.setData({
           //   sliderIndex: time,
@@ -223,6 +248,7 @@ Component({
         }, 1000))
       },
       async initPageAudio(audio_item: any) {
+        console.log('in initPageAudio')
         const audio_i = this.generateAudioItem(audio_item);
         const { src, startTime, title, epname, singer, coverImgUrl } = audio_i;
   
@@ -235,7 +261,9 @@ Component({
         //   }
         // });
   
-        if (!app.globalData.audio.bgAudio) {
+        if (!global_audio.bgAudio) {
+          console.log('in !global_audio.bgAudio')
+
           const bgAudio = wx.getBackgroundAudioManager();
           // const bgAudio = wx.createInnerAudioContext();
           // bgAudio.src = src;
@@ -244,7 +272,7 @@ Component({
           bgAudio.epname = epname;
           bgAudio.coverImgUrl = coverImgUrl;
           bgAudio.singer = singer;
-          if (local_audio) {
+          if (false && local_audio) {
             bgAudio.src = local_audio;
             console.log('local_audio', local_audio)
   
@@ -255,16 +283,17 @@ Component({
           }
   
           // bgAudio.play();
-          getApp().globalData.audio.bgAudio = bgAudio;
-          getApp().globalData.audio.isPlay = true;
-          getApp().globalData.audio.lastPlayIndex = app.globalData.audio.playingIndex;
+          global_audio.bgAudio = bgAudio;
+          global_audio.isPlay = true;
+          global_audio.lastPlayIndex = global_audio.playingIndex;
           // this.setData({
           //   isPlay: true,
           //   bgAudio,
-          //   lastPlayIndex: app.globalData.audio.playingIndex,
+          //   lastPlayIndex: global_audio.playingIndex,
           // });
         } else {
-          getApp().globalData.audio.bgAudio = null;
+          console.log('in global_audio.bgAudio')
+          global_audio.bgAudio = null;
           const bgAudio = wx.getBackgroundAudioManager();
           // const bgAudio = app.globalData.bgAudio;
           // bgAudio.src = src;
@@ -275,7 +304,7 @@ Component({
           bgAudio.coverImgUrl = coverImgUrl;
           bgAudio.singer = singer;
           // bgAudio.src = "http://tmp/pohVj8ecqWnGc8d75f04958ff2a793a71a9eea580e4b.mp3";
-          if (local_audio) {
+          if (false && local_audio) {
             bgAudio.src = local_audio;
             console.log('local_audio', local_audio)
           } else {
@@ -284,31 +313,33 @@ Component({
           }
   
           // bgAudio.play();
-          getApp().globalData.audio.bgAudio = bgAudio;
-          getApp().globalData.audio.isPlay = true;
-          getApp().globalData.audio.lastPlayIndex = app.globalData.audio.playingIndex;
+          global_audio.bgAudio = bgAudio;
+          global_audio.isPlay = true;
+          global_audio.lastPlayIndex = global_audio.playingIndex;
 
           // this.setData({
           //   isPlay: true,
           //   bgAudio,
-          //   lastPlayIndex: app.globalData.audio.playingIndex,
+          //   lastPlayIndex: global_audio.playingIndex,
           // })
         }
         setTimeout(() => {
-          let duration = app.globalData.audio.bgAudio.duration;
+          let duration = global_audio.bgAudio.duration;
           if (!duration || !isFinite(duration)) {
             const duration_fmt = audio_item.duration_format;
             duration = Number(duration_fmt.split(':')[0]) * 60 + Number(duration_fmt.split(':')[1]);
           }
-          console.log('app.globalData.bgAudio.duration', duration)
-  
+          const playingIdx = global_audio.audioList.findIndex(i => i.id === global_audio.curExhibit.id);
+          global_audio.playingIndex = playingIdx;
+          console.log('app.globalData.bgAudio.playingIdx', playingIdx)
+
           const dur = Math.round(duration);
           const durTxt = this.calTimeTxt(dur);
           console.log('this..bgAudio.durTxt', durTxt)
-          console.log('app.globalData.bgAudio', app.globalData.audio.bgAudio)
+          console.log('app.globalData.bgAudio', global_audio)
   
-          getApp().globalData.audio.duration = dur;
-          getApp().globalData.audio.totalTimeText = durTxt;
+          global_audio.bgAudio.duration = dur;
+          global_audio.totalTimeText = durTxt;
 
           // this.setData({
           //   duration: dur,
@@ -318,8 +349,10 @@ Component({
             isPlay: true,
             duration: dur,
             totalTimeText: durTxt,
+            playingIndex: global_audio.playingIndex,
+            curExhibit: global_audio.curExhibit,
           })
-          console.log(app.globalData.audio.bgAudio);
+          console.log(global_audio);
           this.onEndAudio();
   
         }, 300)
@@ -331,33 +364,40 @@ Component({
 
     lifetimes: {
         async attached() {
-            // console.log("mounted src = ", app.globalData.audio.audiourl)
+           
+            console.log('in attached player comp', (global_audio.bgAudio || {}).currentTime, global_audio.curExhibit);
+            if (global_audio && global_audio.bgAudio) {
+              this.triggerEvent('ContinuePlay', {
+                isPlay: true,
+                duration: global_audio.bgAudio.duration,
+                totalTimeText: global_audio.totalTimeText,
+              });
+              setTimeout(()=> {
+              this.onBgTimeUpdate();
 
-            // const video_src = typeof (app.globalData.audio.audiourl) == 'string' ? app.globalData.audio.audiourl : app.globalData.audio.audiourl[0];
-            // if (!app.globalData.bgAudioManager) {
-            //     this.backgroundAudioInit(video_src);
-            //     setTimeout(() => {
-            //         // this.audioPause();
-            //     }, 300)
-
-            // }
-          
-
-            try {
-              getApp().globalData.audio.audioList = audioList;
-              getApp().globalData.audio.curExhibit = audioList[0];
-
-              const stored_audio = await wx.getStorageSync('audios');
-              getApp().globalData.audio.stored_audio = stored_audio;
-              // this.setData({
-              //   stored_audio,
-              // })
-            } catch (error) {
-              console.log(error)
+              }, 1000)
+              
+            } else {
+              try {
+                global_audio.audioList = audioList;
+                global_audio.curExhibit = audioList[0];
+  
+                const stored_audio = await wx.getStorageSync('audios');
+                global_audio.stored_audio = stored_audio;
+                // this.setData({
+                //   stored_audio,
+                // })
+              } catch (error) {
+                console.error(error)
+              }
+              await this.initPageAudio(audioList[0]);
+              setTimeout(async () => {
+                
+                console.log('in player comp initPageAudio', global_audio)
+  
+              }, 300)
             }
-            setTimeout(() => {
-              this.initPageAudio(app.globalData.audio.curExhibit);
-            }, 300)
+            
         },
     },
 

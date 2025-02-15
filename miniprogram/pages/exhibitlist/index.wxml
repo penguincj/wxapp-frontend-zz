@@ -6,14 +6,20 @@
     <swiper-unit list="{{unitList}}"></swiper-unit>
   </view>
   <view class="unit-card-area">
-    <swiper-card4></swiper-card4>
+    <swiper-card4
+      list="{{exhibitList}}"
+      currentIdx="{{playingIndex}}"
+      bindSwiperItemChange="handleSwiperItemChange"
+    ></swiper-card4>
   </view>
   <view class="list-area">
     <swiper-card6 
         showType="jiangjiedaoyu"
         showInput="{{false}}"
         list="{{exhibitList}}"
+        playingIndex="{{playingIndex}}"
         bindChangeItem="handleClickExhibitItem"
+        bindClickItemImage="handleClickItemImage"
         scrollStyle="height: 510rpx"
       ></swiper-card6>
   </view>
@@ -25,18 +31,19 @@
       </view>
       <view class="info-group">
         <view class="line-one">
-          <view class="title">泥塑佛面相：佛进昌盛见证泥塑佛面相：佛进昌盛见证</view>
+          <view class="title">{{curExhibit.title}}:{{curExhibit.desc}}</view>
           <view class="time">
-            <text>03:34</text>
+            <text>{{currentTimeText}}</text>
             <text class="fenge">/</text>
-            <text>03:34</text>
+            <text>{{totalTimeText}}</text>
           </view>
 
         </view>
         <view class="line-two">
-          <image class="img-icon" src="/static/images/play-before.png" mode="aspectFix" />
-          <image class="img-icon" src="/static/images/play-ing.png" mode="aspectFix" />
-          <image class="img-icon reverse" src="/static/images/play-before.png" mode="aspectFix" />
+          <image bindtap="handlePlayPrev" class="img-icon" src="/static/images/play-before.png" mode="aspectFix" />
+          <image wx:if="{{!isPlay}}" bindtap="handleAudioPlay" class="img-icon" src="/static/images/play1.png" mode="aspectFix" />
+          <image wx:else bindtap="handleAudioPause" class="img-icon" src="/static/images/play-ing.png" mode="aspectFix" />
+          <image bindtap="handlePlayNext" class="img-icon reverse" src="/static/images/play-before.png" mode="aspectFix" />
           <view class="img-dingwei-group">
             <view class="img-wrapper">
               <image class="img" src="/static/images/play-huajuan.png" mode="aspectFix" />
@@ -66,5 +73,14 @@
     </view>
     </dialog-half>
   </view>
+
+  <player-comp
+    id="player"
+    bindReadyPlay="handleReadyPlay"
+    bindTimeUpdate="handleTimeUpdate"
+    bindEndAudio="handleEndAudio"
+    bindGetCurPlayingStatus="handleGetCurPlayingStatus"
+  ></player-comp>
+
 </view>
 </page-meta>  

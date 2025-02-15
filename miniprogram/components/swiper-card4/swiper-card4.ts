@@ -35,7 +35,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    
+    list: {
+      type: Array,
+      value: [],
+    },
+    currentIdx: {
+      type: Number,
+      value: 0,
+    }
   },
   /**
    * 组件的初始数据
@@ -47,7 +54,8 @@ Component({
     vertical: false,
     autoplay: false,
     interval: 2000,
-    duration: 500
+    duration: 500,
+    current: 0,
   },
   lifetimes: {
     attached() {
@@ -58,28 +66,12 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    changeIndicatorDots() {
-      this.setData({
-        indicatorDots: !this.data.indicatorDots
-      })
-    },
-  
-    changeAutoplay() {
-      this.setData({
-        autoplay: !this.data.autoplay
-      })
-    },
-  
-    intervalChange(e: any) {
-      this.setData({
-        interval: e.detail.value
-      })
-    },
-  
-    durationChange(e: any) {
-      this.setData({
-        duration: e.detail.value
-      })
+    handleChangeItem(event: any) {
+      const { current } = event.detail;
+      console.log(current);
+      this.triggerEvent('SwiperItemChange', {
+        current,
+      });
     }
   },
 })

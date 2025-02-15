@@ -21,6 +21,10 @@ Component({
     scrollStyle: {
       type: String,
       value: 'height: 1030rpx'
+    },
+    playingIndex: {
+      type: Number,
+      value: -1,
     }
   },
   /**
@@ -44,18 +48,25 @@ Component({
       console.log(e)
     },
     selectItem(e: any) {
-      console.log('selectItem', e.target.dataset);
-      const {id , name} = e.target.dataset;
-      if(id && name) {
-        this.setData({
-          selectId: id,
-          selectName: name,
-        });
-        this.triggerEvent('ChangeItem', {
-          selectId: id,
-          selectName: name,
-        })
-      }
+      console.log('selectItem', e);
+      const { idx } = e.currentTarget.dataset;
+      this.setData({
+        selectId: idx,
+      });
+      this.triggerEvent('ChangeItem', {
+        selectId: idx,
+      })
+      
+    },
+    clickItemImg(e: any) {
+      console.log('clickItemImg', e);
+      const { idx } = e.currentTarget.dataset;
+      this.setData({
+        selectId: idx,
+      });
+      this.triggerEvent('ClickItemImage', {
+        selectId: idx,
+      })
     },
     confirmTap() {
       console.log('按下完成触发');

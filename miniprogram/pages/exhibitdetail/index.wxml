@@ -19,9 +19,6 @@
   </view>
   <view class="audio-player-area">
     <audio-player
-      audiourl="https://gewugo.com/storage/file/CB26976399343756.mp3"
-      videotitle="videotitle"
-      coverurl="https://gewugo.com/storage/image/NC06525637302482.jpg"
       isPlay="{{isPlay}}"
       duration="{{duration}}"
       sliderIndex="{{sliderIndex}}"
@@ -32,6 +29,7 @@
       bindForwordProgress="ForwordProgress"
       bindPlayNext="handlePlayNext"
       bindPlayPrev="handlePlayPrev"
+     
     ></audio-player>
   </view>
   <view class="operate-area">
@@ -66,6 +64,7 @@
     bindReadyPlay="handleReadyPlay"
     bindTimeUpdate="handleTimeUpdate"
     bindEndAudio="handleEndAudio"
+     bindContinuePlay="handleContinuePlay"
   ></player-comp>
   <dialog-half
     showDialog="{{showDialog}}"
@@ -107,7 +106,12 @@
       bindCloseDialog="handleCloseMenuDialog"
     >
     <view slot="content">
-      <swiper-card6 showType="jiangjiedaoyu" list="{{exhibitionList}}"></swiper-card6>
+      <swiper-card6
+        showType="jiangjiedaoyu" 
+        list="{{exhibitionList}}"
+        playingIndex="{{playingIndex}}"
+        bindChangeItem="handleClickExhibitItem"
+        ></swiper-card6>
     </view>
     </dialog-half>
   </view>

@@ -30,12 +30,7 @@ const defaultUnitList =  [
 Component({
   data: {
     exhibitList: audioList,
-    playingIndex: -1, // 当前播放index
     lastPlayIndex: -1, // 之前播放index
-    sliderIndex: 0, // 当前播放进度
-    duration: 0, // 当前audio时长
-    currentTimeText: '00:00',
-    totalTimeText: '00:00',
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
@@ -47,12 +42,115 @@ Component({
     searchList: [] as any,
     showFindDialog: false,
     showInput: true,
+
+// 一定用到的
+    isPlay: false,
+    duration: 0, // 当前audio时长
+    totalTimeText: '00:00',
+    currentTime: 0,
+    currentTimeText: '00:00',
+    sliderIndex: 0, // 当前播放进度
+    playingIndex: -1, // 当前播放index
+    curExhibit: null, // 当前播放展览
+
   },
   methods: {
-    handleClickExhibitItem() {
-      console.log('handleClickExhibitItem');
+    // player-comp
+    handleReadyPlay(event: any) {
+      const { duration, totalTimeText, isPlay, playingIndex, curExhibit } = event.detail;
+      this.setData({
+        isPlay,
+        duration,
+        totalTimeText,
+        playingIndex,
+        curExhibit,
+      });
+      console.log('curExhibit', curExhibit)
+    },
+    handleTimeUpdate(event: any) {
+      const { sliderIndex, currentTimeText, currentTime } = event.detail;
+      this.setData({
+        currentTime,
+        sliderIndex,
+        currentTimeText,
+      })
+    },
+    handleEndAudio() {
+      this.setData({
+        isPlay:false,
+      })
+    },
+    playSelectedAudio() {
+      console.log('playSelectedAudio');
+     
+    },
+    handleGetCurPlayingStatus(event: any) {
+      const { isPlay } = event.detail;
+      this.setData({
+        isPlay,
+      })
+    },
+
+
+    // swiper-card6 list
+    async handleClickExhibitItem(event: any) {
+      this.setData({
+        isPlay: false,
+      });
+      const { selectId } = event.detail;
+      const player = this.selectComponent("#player")
+      await player.handlePlayOtherAudioById(selectId);
+    },
+    async handleClickItemImage(event: any) {
+      console.log('handleClickItemImage')
+      this.setData({
+        isPlay: false,
+      });
+      const { selectId } = event.detail;
+      const player = this.selectComponent("#player")
+      await player.handlePlayOtherAudioById(selectId);
+      wx.navigateTo({
+        url: '/pages/exhibitdetail/index?exhibit_id='+selectId
+      });
+    },
+
+    handleAudioPlay() {
+      console.log('handleAudioPlay');
+      this.setData({
+        isPlay: true,
+      })
+      const player = this.selectComponent("#player")
+      player.handleAudioPlay();
       
     },
+    handleAudioPause() {
+      console.log('handleAudioPause');
+      this.setData({
+        isPlay: false,
+      })
+      const player = this.selectComponent("#player")
+      player.handleAudioPause();
+    },
+    handlePlayNext() {
+      const player = this.selectComponent("#player");
+      player.playNextAudio();
+    },
+    handlePlayPrev() {
+      const player = this.selectComponent("#player");
+      player.playPrevAudio();
+    },
+
+
+
+    // swiper-card4 
+    handleSwiperItemChange(event: any) {
+      const { current } = event.detail;
+      const player = this.selectComponent("#player")
+      player.handlePlayOtherAudioByPlayingIdx(current);
+    },
+
+
+
     handleCloseFindDialog() {
       this.setData({
         showFindDialog: false,
@@ -141,32 +239,9 @@ Component({
     handleAudioEnd() {
       console.log('handleAudioEnd');
     },
-    handleAudioPlay() {
-      console.log('handleAudioPlay');
-      // const audio = this.selectComponent('#audio')
-      // debugger;
-      // this.setData({
-      //   playingIndex: this.data.currentIndex
-      // })
-      // 	setTimeout(() => {
-      // 		try {
-      // 			const dur = audio.bgAudioManager.duration;
-      //       this.setData({
-      //         duration_fmt: audio.getFormateTime2(dur)
-      //       })
-      // 		} catch (error) {
-      // 			console.log('error', error);
-      // 		}
-      // 	}, 1000)
-    },
+    
     handleAudioChange(e: any) {
       console.log(e.detail.state);
-    },
-    handleAudioPause() {
-      console.log('handleAudioPause');
-      // this.setData({
-      //   playingIndex: -1,
-      // })
     },
     handleAudioError(e: any) {
       console.log(e.detail.data);
@@ -368,6 +443,12 @@ Component({
         })
       }
 
+      const player = this.selectComponent("#player");
+      player.pageTimeUpateContinue();
+      
+
+
+
       console.log('info', info);
       console.log('windowInfo', windowInfo);
 
@@ -385,6 +466,8 @@ Component({
         })
       }, 1000)
     },
+    
   },
+  
 
 })
