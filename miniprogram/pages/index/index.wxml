@@ -51,6 +51,6 @@
   </view>
 </view>
 <view>
-  <bottom-bar></bottom-bar>
+  <bottom-bar currentkey="{{0}}"></bottom-bar>
 </view>
 </page-meta>

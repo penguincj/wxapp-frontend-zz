@@ -26,6 +26,6 @@
       bindClickItem="handleClickItem"
     ></swiper-card3>
   </view>
-  <bottom-bar></bottom-bar>
+  <bottom-bar currentkey="{{1}}"></bottom-bar>
 </view>
 </page-meta>  

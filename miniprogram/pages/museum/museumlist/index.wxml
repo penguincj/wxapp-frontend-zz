@@ -29,9 +29,9 @@
 				</view>
 			</block>
 		</view>
-		<view>
+		<!-- <view>
 			<bottom-bar/>
-		</view>
+		</view> -->
 	</view>
 
 </page-meta>

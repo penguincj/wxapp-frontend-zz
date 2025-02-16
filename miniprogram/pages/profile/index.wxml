@@ -65,7 +65,7 @@
     </view>
 
     <view>
-      <bottom-bar></bottom-bar>
+      <bottom-bar currentkey="{{2}}"></bottom-bar>
     </view>
   </view>
 </page-meta>
