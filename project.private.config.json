@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/museum/exhibitionall/index",
+          "pathName": "pages/exhibitionall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/exhibitionlist/index",
           "pathName": "pages/exhibitionlist/index",
           "query": "",
@@ -47,13 +54,6 @@
         {
           "name": "pages/museum/museumdetail/index",
           "pathName": "pages/museum/museumdetail/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/museum/exhibitionall/index",
-          "pathName": "pages/museum/exhibitionall/index",
           "query": "",
           "launchMode": "default",
           "scene": null

@@ -5,6 +5,7 @@
 	 loading="{{loading}}"
 	 color="black"
 	 background="#FFF"
+	 styleType="dark"
 	 style="text-align: center;"
 	/>
 	<view class="page-exhibition-all">

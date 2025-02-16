@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar back loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-exhibition-detail">
   <view class="museum-info">
     <image src="http://gewugo.com/api/v1/storage/image/shouye-6012491903.jpg" class="museum-img" mode="aspectFill" />

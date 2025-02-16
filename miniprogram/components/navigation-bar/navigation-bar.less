@@ -11,10 +11,12 @@
   overflow: hidden;
   color: var(--weui-FG-0);
   flex: none;
+  height: calc(var(--height) + env(safe-area-inset-top));
+  margin-bottom: 28px;
 }
 
 .weui-navigation-bar__inner {
-  position: relative;
+  position: fixed;
   top: 0;
   left: 0;
   height: calc(var(--height) + env(safe-area-inset-top));
@@ -25,6 +27,9 @@
   padding-top: env(safe-area-inset-top);
   width: 100%;
   box-sizing: border-box;
+  z-index: 99;
+  background: transparent !important;
+  
 }
 
 .weui-navigation-bar__left {
@@ -50,11 +55,18 @@
   font-size: 12px;
   width: 12px;
   height: 24px;
-  -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E") no-repeat 50% 50%;
-  mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E") no-repeat 50% 50%;
+  -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M3.99999,18.00001L6,18L28,18L30,18.00001L30,13.99999L28,14L6,14L3.99999,13.99999L3.99999,18.00001Z'/%3E%3C/svg%3E") no-repeat 50% 50%;
+  mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M3.99999,18.00001L6,18L28,18L30,18.00001L30,13.99999L28,14L6,14L3.99999,13.99999L3.99999,18.00001Z'/%3E%3C/svg%3E") no-repeat 50% 50%;
   -webkit-mask-size: cover;
   mask-size: cover;
-  background-color: var(--weui-FG-0);
+  background-color: white;
+  // background-color: var(--weui-FG-0);
+}
+
+.weui-navigation-bar_back-img {
+  width: 15px;
+  height: 15px;
+  padding-top: 11px;
 }
 
 .weui-navigation-bar__center {
@@ -68,6 +80,20 @@
   font-weight: bold;
   flex: 1;
   height: 100%;
+}
+
+.weui-navigation-bar__title_left {
+  font-size: 18px;
+  text-align: left;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // justify-content: center;
+  font-weight: bold;
+  flex: 1;
+  height: 100%;
+  margin-top: -6px;
 }
 
 .weui-navigation-bar__loading {

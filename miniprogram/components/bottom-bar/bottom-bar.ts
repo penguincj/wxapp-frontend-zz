@@ -1,4 +1,4 @@
-import { getCurrentPageUrl, getCurrentPageParam } from "../../utils/util";
+import { getCurrentPageUrl, getCurrentPageParam, getCurrentPageParamStr } from "../../utils/util";
 const itemConfig = [
   {
     id: 0,
@@ -49,6 +49,7 @@ Component({
     icons: itemConfig,
     selectid: 0,
     urlParams: {},
+    urlParamsStr: '',
   },
   /**
    * 组件的方法列表
@@ -61,11 +62,9 @@ Component({
       // this.setData({
       //   selectid: idx,
       // });
-      console.log('current idx', idx, item);
-
       if (item && item.link) {
         wx.redirectTo({
-          url: item.link,
+          url: item.link + this.data.urlParamsStr,
           fail(error) {
             console.log(error)
           }
@@ -78,12 +77,19 @@ Component({
 
   lifetimes: {
     attached() {
-      setTimeout(() => {
-        const url = getCurrentPageUrl();
-        const param = getCurrentPageParam();
-        console.log('current url', url, param);
-      })
+      
     },
   },
+  pageLifetimes: {
+    show() {
+        const url = getCurrentPageUrl();
+        const param = getCurrentPageParam();
+        const param_str = getCurrentPageParamStr();
+        this.setData({
+          urlParamsStr: param_str,
+        })
+        // console.log('current url', url, param, param_str);
+    }
+  }
   
 })

@@ -19,6 +19,18 @@ App<IAppOption>({
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    wx.getLocation({
+      type: 'wsg84',
+      success(res) {
+        const latitude = res.latitude;
+        const longitude = res.longitude;
+        console.log(latitude, longitude);
+        
+      },
+      fail(res) {
+        console.log('location error', res)
+      }
+    })
 
     // 登录
     wx.login({

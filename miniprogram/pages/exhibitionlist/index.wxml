@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
-<navigation-bar title="格物观展" loading="{{loading}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
+<navigation-bar loading="{{loading}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
 <view class="exhibition-list-page">
   <view>
     <loc-select

@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <page-meta page-style="overflow: hidden;">
-  <navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <navigation-bar back="{{false}}" color="black" background="#FFF"></navigation-bar>
   <view class="profile-page">
     <image class="bg-img" src="http://gewugo.com/api/v1/storage/image/profile-bg-7662115813.jpg" mode="aspectFill" />
     <view class="avatar-group">

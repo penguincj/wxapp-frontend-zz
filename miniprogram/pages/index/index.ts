@@ -1,3 +1,4 @@
+import { getCityList } from "../../api/api";
 // index.ts
 // 获取应用实例
 // const app = getApp<IAppOption>()
@@ -63,8 +64,19 @@ Page({
     })
   },
 
+  // 页面数据
+  async getCityData() {
+    try {
+      const res = await getCityList();
+      console.log(' get city res', res)
+    } catch (error) {
+      
+    }
+  },
+
   onLoad(options) {
     console.log(options);
+    this.getCityData();
   }
 
 })

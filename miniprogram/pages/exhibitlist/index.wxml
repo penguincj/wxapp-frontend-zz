@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
-<navigation-bar title="格物观展" loading="{{loading}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
+<navigation-bar title="展览单元" loading="{{loading}}" back styleType="dark" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
 <view class="exhibit-page">
   <view class="unit-choose-area">
     <swiper-unit list="{{unitList}}"></swiper-unit>

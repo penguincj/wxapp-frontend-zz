@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar loading="{{loading}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-exhibit-detail">
   <view class="top-swiper-area">
     <swiper-unit list="{{listConfig}}" bindChangeUnit="handleChangeUnit"></swiper-unit>
