@@ -27,65 +27,44 @@ const pageInfo = {
   }],
   citypinyin: 'beijing',
 }
-Component({
+Page({
   data: {
     pageInfo: pageInfo,
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
-    statusBarHeight:0,
+    statusBarHeight: 0,
     isRecoClicked: false,
   },
-  methods: {
-    handleClickMuseumIcon() {
-      wx.navigateTo({
-        url: '/pages/museum/museumlist/index',
-      })
-    },
-    handleClickMuseumItem(event: any) {
-      console.log(event);
-      
-      const { idx } = event.currentTarget.dataset;
-      wx.navigateTo({
-        url: '/pages/museum/museumdetail/index?museum_id=' + idx,
-      })
-    },
-    handleClickRecommend() {
-      console.log('handleClickRecommend');
-      this.setData({
-        isRecoClicked: true,
-      })
-    },
-    handleCloseDetail() {
-      console.log('handleCloseDetail');
-      this.setData({
-        isRecoClicked: false,
-      })
-    }
-  },
-  pageLifetimes: {
-    show() {
-      console.log('show');
-      const info = wx.getMenuButtonBoundingClientRect();
-      const windowInfo = wx.getWindowInfo();
-      if (info && info.bottom) {
-        this.setData({
-          topBarHeight: info.bottom,
-          safeHeight: windowInfo.safeArea.height,
-          windowHeight: windowInfo.screenHeight,
-          statusBarHeight: windowInfo.statusBarHeight,
-        })
-      }
 
-      console.log('info',info);
-      console.log('windowInfo',windowInfo);
-    }
+  handleClickMuseumIcon() {
+    wx.navigateTo({
+      url: '/pages/museum/museumlist/index',
+    })
   },
-  lifetimes: {
-    attached() {
+  handleClickMuseumItem(event: any) {
+    console.log(event);
 
-    
-    },
+    const { idx } = event.currentTarget.dataset;
+    wx.navigateTo({
+      url: '/pages/museum/museumdetail/index?museum_id=' + idx,
+    })
   },
+  handleClickRecommend() {
+    console.log('handleClickRecommend');
+    this.setData({
+      isRecoClicked: true,
+    })
+  },
+  handleCloseDetail() {
+    console.log('handleCloseDetail');
+    this.setData({
+      isRecoClicked: false,
+    })
+  },
+
+  onLoad(options) {
+    console.log(options);
+  }
 
 })

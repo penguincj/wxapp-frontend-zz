@@ -21,29 +21,17 @@ const exhibitions = [
     type: '临时展'
   },
 ]
-Component({
+Page({
   data: {
     exhibitions: [] as any,
     loading: false
   },
-  methods: {
-
-  },
-  pageLifetimes: {
-    show() {
-     this.setData({
+  
+  onShow() {
+    this.setData({
       exhibitions: exhibitions,
-     })
-    }
-  },
-  lifetimes: {
-    attached() {
-      setTimeout(() => {
-        this.setData({
-          loading: false,
-        })
-      }, 1000)
-    },
+      loading: false,
+    })
   },
 
 });

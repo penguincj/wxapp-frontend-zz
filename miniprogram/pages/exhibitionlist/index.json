@@ -6,5 +6,6 @@
     "swiper-card2": "/components/swiper-card2/swiper-card2",
     "swiper-card3": "/components/swiper-card3/swiper-card3",
     "bottom-bar": "/components/bottom-bar/bottom-bar"
-  }
+  },
+  "disableScroll": false
 }

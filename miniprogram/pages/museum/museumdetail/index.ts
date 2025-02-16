@@ -96,7 +96,7 @@ const zhanlan1 = [
     type: '临时展'
   },
 ]
-Component({
+Page({
   data: {
     museumInfo: museumInfo,
     topBarHeight: 0,
@@ -106,44 +106,19 @@ Component({
     recommendList: zhanlan1,
     normalList: zhanlan1,
     outofdateList: zhanlan1,
+    curMuseumId: -1,
   },
-  methods: {
-    handleClickItem(event: any) {
-      const { id } = event.detail;
-      wx.navigateTo({
-        url: '/pages/exhibitiondetail/index?exhibition_id=' + id,
-      })
-    },
+  handleClickItem(event: any) {
+    const { id } = event.detail;
+    wx.navigateTo({
+      url: '/pages/exhibitiondetail/index?exhibition_id=' + id,
+    })
   },
-  pageLifetimes: {
-    show() {
-      this.setData({
-        loading: true,
-      })
-      console.log('show');
-      const info = wx.getMenuButtonBoundingClientRect();
-      const windowInfo = wx.getWindowInfo();
-      if (info && info.bottom) {
-        this.setData({
-          topBarHeight: info.bottom,
-          safeHeight: windowInfo.safeArea.height,
-          windowHeight: windowInfo.screenHeight,
-          statusBarHeight: windowInfo.statusBarHeight,
-        })
-      }
-
-      console.log('info',info);
-      console.log('windowInfo',windowInfo);
-    }
-  },
-  lifetimes: {
-    attached() {
-      setTimeout(() => {
-        this.setData({
-          loading: false,
-        })
-      }, 1000)
-    },
+  onLoad(options) {
+    console.log('onLoad', options);
+    this.setData({
+      curMuseumId: Number(options.museum_id),
+    })
   },
 
 })

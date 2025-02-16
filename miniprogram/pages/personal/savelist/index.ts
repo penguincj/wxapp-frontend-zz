@@ -3,29 +3,11 @@
 // const app = getApp<IAppOption>()
 import { audioList } from './mock';
 
-Component({
+Page({
   data: {
-    likeList: [] as any,
+    likeList: audioList,
     loading: false
   },
-  methods: {
-
-  },
-  pageLifetimes: {
-    show() {
-     this.setData({
-      likeList: audioList,
-     })
-    }
-  },
-  lifetimes: {
-    attached() {
-      setTimeout(() => {
-        this.setData({
-          loading: false,
-        })
-      }, 1000)
-    },
-  },
+  
 
 });

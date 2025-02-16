@@ -120,35 +120,23 @@ Page({
   handleClickPlayIcon() {
 
   },
-  pageLifetimes: {
-    show() {
+  onShow() {
+    this.setData({
+      loading: true,
+    })
+    console.log('show');
+    const info = wx.getMenuButtonBoundingClientRect();
+    const windowInfo = wx.getWindowInfo();
+    if (info && info.bottom) {
       this.setData({
-        loading: true,
+        topBarHeight: info.bottom,
+        safeHeight: windowInfo.safeArea.height,
+        windowHeight: windowInfo.screenHeight,
+        statusBarHeight: windowInfo.statusBarHeight,
       })
-      console.log('show');
-      const info = wx.getMenuButtonBoundingClientRect();
-      const windowInfo = wx.getWindowInfo();
-      if (info && info.bottom) {
-        this.setData({
-          topBarHeight: info.bottom,
-          safeHeight: windowInfo.safeArea.height,
-          windowHeight: windowInfo.screenHeight,
-          statusBarHeight: windowInfo.statusBarHeight,
-        })
-      }
+    }
 
-      console.log('windowInfo',windowInfo);
-    },
-    
-  },
-  lifetimes: {
-    attached() {
-      setTimeout(() => {
-        this.setData({
-          loading: false,
-        })
-      }, 1000)
-    },
+    console.log('windowInfo',windowInfo);
   },
   onLoad(options) {
     console.log('onLoad', options);

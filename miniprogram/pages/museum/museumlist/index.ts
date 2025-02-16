@@ -44,40 +44,22 @@ const museumList = [{
   }],
   citypinyin: 'shanghai',
 }]
-Component({
+Page({
   data: { 
     museumList: museumList,
-    topBarHeight: 0,
-    safeHeight: 0,
-    windowHeight: 0,
-    statusBarHeight:0,
+    curCityId: -1,
   },
   methods: {
 
   },
-  pageLifetimes: {
-    show() {
-      console.log('show');
-      const info = wx.getMenuButtonBoundingClientRect();
-      const windowInfo = wx.getWindowInfo();
-      if (info && info.bottom) {
-        this.setData({
-          topBarHeight: info.bottom,
-          safeHeight: windowInfo.safeArea.height,
-          windowHeight: windowInfo.screenHeight,
-          statusBarHeight: windowInfo.statusBarHeight,
-        })
-      }
-
-      console.log('info',info);
-      console.log('windowInfo',windowInfo);
+  onLoad(options) {
+    console.log('onLoad', options);
+    if (options && options.cityid) {
+      this.setData({
+        curCityId: Number(options.city_id),
+      })
     }
-  },
-  lifetimes: {
-    attached() {
-
     
-    },
   },
 
 })

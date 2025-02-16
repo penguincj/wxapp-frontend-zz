@@ -81,6 +81,27 @@ const exhibitionList = {
     }
 }
 
+const cardConfig = [
+    {
+      id: 0,
+      name: '玉出昆冈',
+      img: 'http://gewugo.com/api/v1/storage/image/swiper1-1489240990.jpg',
+      desc: '清代宫廷和田玉文化特展',
+      link: 'pages/index/index',
+      opendate: '2024.01.20-2024.03.31',
+      type: '常设展'
+    },
+    {
+      id: 1,
+      name: '玉出昆冈2',
+      img: 'http://gewugo.com/api/v1/storage/image/swiper2-4593118634.jpg',
+      desc: '清代宫廷和田玉文化特展2',
+      link: 'pages/index/index',
+      opendate: '2024.01.21-2024.03.31',
+      type: '临时展'
+    },
+]
+
 const audioList = [
             {
                 "id": 121,
@@ -150,4 +171,4 @@ const audioList = [
                 "id": 126, "type": 0, "dyid": 14, "lmid": 18, "tagstr": ",1,", "videocontent": "", "audiourl": "\/storage\/file\/CB26976400966639.mp3", "imagepath": "\/storage\/image\/KB26974626105338.jpg", "title": "董源《夏山图卷》", "desc": "", "content": "", "sort": 105, "is_show": 1, "zannum": 0, "pinglunnum": 0, "lookcount": 999, "shoucangnum": 0, "createtime": "2024-11-26 13:10:52", "duration_format": "00:58"
             }]
 
-export { exhibitionList, audioList }
+export { exhibitionList, audioList, cardConfig }

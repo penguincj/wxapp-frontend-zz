@@ -9,13 +9,22 @@
     ></loc-select>
   </view>
   <view class="swiper-card-area">
-    <swiper-card1></swiper-card1>
+    <swiper-card1
+      list="{{recommendList}}"
+      bindClickItem="handleClickItem"
+    ></swiper-card1>
   </view>
   <view>
-    <swiper-card2></swiper-card2>
+    <swiper-card2
+      list="{{normalList}}"
+      bindClickItem="handleClickItem"
+    ></swiper-card2>
   </view>
   <view class="swiper-card3-area">
-    <swiper-card3></swiper-card3>
+    <swiper-card3
+      list="{{outofdateList}}"
+      bindClickItem="handleClickItem"
+    ></swiper-card3>
   </view>
   <bottom-bar></bottom-bar>
 </view>
