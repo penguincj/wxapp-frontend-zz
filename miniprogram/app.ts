@@ -1,4 +1,6 @@
 // app.ts
+import { getCurrentCity } from "./utils/util"
+
 App<IAppOption>({
   globalData: {
     audio: {
@@ -19,18 +21,20 @@ App<IAppOption>({
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    wx.getLocation({
-      type: 'wsg84',
-      success(res) {
-        const latitude = res.latitude;
-        const longitude = res.longitude;
-        console.log(latitude, longitude);
-        
-      },
-      fail(res) {
-        console.log('location error', res)
-      }
-    })
+    // wx.getLocation({
+    //   type: 'wsg84',
+    //   success(res) {
+    //     const latitude = res.latitude;
+    //     const longitude = res.longitude;
+    //     console.log(latitude, longitude);
+    //     wx.setStorageSync('latitude', res.latitude);
+    //     wx.setStorageSync('longitude', res.longitude);
+    //   },
+    //   fail(res) {
+    //     console.log('location error', res)
+    //   }
+    // })
+    getCurrentCity();
 
     // 登录
     wx.login({

@@ -1,4 +1,6 @@
-import { getCityList } from "../../api/api";
+import { getCityList, getMuseumList, getRecoExhibitionList } from "../../api/api";
+import { getCurrentCity } from "../../utils/util";
+
 // index.ts
 // 获取应用实例
 // const app = getApp<IAppOption>()
@@ -36,6 +38,9 @@ Page({
     windowHeight: 0,
     statusBarHeight: 0,
     isRecoClicked: false,
+    museumList: [],
+    recoExhibition: {},
+    loading: false,
   },
 
   handleClickMuseumIcon() {
@@ -65,18 +70,46 @@ Page({
   },
 
   // 页面数据
-  async getCityData() {
+  async getPageData() {
     try {
-      const res = await getCityList();
-      console.log(' get city res', res)
+      const city = await getCurrentCity();
+      const citylist:any = await getCityList();
+      const city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
+      const city_id = city_item.id;
+      console.log('city_id', city_id);
+      if (city_item && city_item.name) {
+        const res: any = await getMuseumList(city_id);
+        const recoExhibition: any = await getRecoExhibitionList(city_id, 1);
+        console.log('museums', res.museums, recoExhibition);
+  
+        if (res && res.museums) {
+          this.setData({
+            museumList: res.museums,
+          })
+        }
+        if (recoExhibition && recoExhibition.exhibitions && recoExhibition.exhibitions[0]) {
+          this.setData({
+            recoExhibition: recoExhibition.exhibitions[0],
+          })
+        }
+      }
+      this.setData({
+        loading: false,
+      })
     } catch (error) {
-      
+      this.setData({
+        loading: false,
+      })
     }
+   
   },
 
   onLoad(options) {
     console.log(options);
-    this.getCityData();
+    this.setData({
+      loading: true,
+    })
+    this.getPageData();
   }
 
 })

@@ -1,0 +1,16 @@
+<view class="loading-comp" aria-role="dialog" aria-modal="true" aria-hidden="{{!showDialog}}">
+  <view 
+    class="mask {{show ? 'show' : ''}}" 
+    bindtap="handleClose"
+    catchtouchmove="return">
+  </view>
+  <view 
+    class="dialog {{show ? 'show' : ''}}"  
+    catchtouchmove="return">
+    <view class="loading-content">
+      <image class="loading-img" src="/static/images/loading.png" mode="aspectFill" />
+      <view class="loading-txt">加载中...</view>
+    </view>
+    
+  </view>
+</view>

@@ -5,7 +5,7 @@
   <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
   <view class="index-page page-section page-section-spacing full-height">
     <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
-      <image class="recommend-img" src="{{pageInfo.img}}" />
+      <image class="recommend-img" src="{{recoExhibition.image_url}}" />
       <view class="recommend-img-mask"></view>
       <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" />
 
@@ -15,27 +15,27 @@
           <span class="title-text">今日推荐</span>
           <image class="title-png title-png-rotate" src="/static/images/shouye-jinri.png" mode="aspectFix" />
         </view>
-        <view class="recommend-name">{{pageInfo.exhibitName}}</view>
+        <view class="recommend-name">{{recoExhibition.name}}</view>
       </view>
       <view class="recommend-detail">
         <view class="recommend-detail-content">
-          <view class="recommend-detail-title">{{pageInfo.exhibitName}}</view>
-          <view class="recommend-detail-desc">{{pageInfo.exhibitDesc}}</view>
+          <view class="recommend-detail-title">{{recoExhibition.name}}</view>
+          <view class="recommend-detail-desc">{{recoExhibition.desc}}</view>
           <view class="recommend-detail-fenge"></view>
-          <view class="recommend-detail-museum-title">{{pageInfo.museumname}}</view>
-          <view class="recommend-detail-desc">中国.{{pageInfo.cityname}}</view>
+          <view class="recommend-detail-museum-title">{{recoExhibition.museum_name}}</view>
+          <view class="recommend-detail-desc">中国.{{recoExhibition.city_name}}</view>
         </view>
         
       </view>
     </view>
     <view class="index-card-group {{isRecoClicked ? 'index-card-group-hide-ani' : ''}}">
-      <block wx:for="{{pageInfo.museumList}}">
-        <view class="index-card" data-idx="{{item.museumid}}" bindtap="handleClickMuseumItem">
-          <image class="index-card-img" src="{{item.img}}" mode="aspectFill" />
+      <block wx:for="{{museumList}}">
+        <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
+          <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />
           <view class="index-card-img-mask"></view>
           <view class="index-card-museum-title">{{item.name}}</view>
           <view class="index-card-museum-num-group">
-            <span class="index-card-museum-num">{{item.exhibitionNum}}</span>
+            <span class="index-card-museum-num">{{item.exhibition_num}}</span>
             <span class="index-card-museum-num-text">个展览</span>
           </view>
           <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />

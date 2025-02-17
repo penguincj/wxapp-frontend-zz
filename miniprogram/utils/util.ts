@@ -70,6 +70,48 @@ export const getCurrentPageParamStr = () => {
   return str;
 }
 
+// 获取当前地理位置信息并写入本地storage
+export const getLocation = async () => {
+  return new Promise((resolve, reject) => {
+    wx.getLocation({
+      type: 'wsg84',
+      success(res) {
+        const latitude = res.latitude;
+        const longitude = res.longitude;
+        wx.setStorageSync('latitude', res.latitude);
+        wx.setStorageSync('longitude', res.longitude);
+        resolve({latitude, longitude});
+      },
+      fail(res) {
+        reject(res);
+        console.log('location error', res)
+      }
+    })
+  })
+}
+
+// 获取当前城市
+export const getCurrentCity = async () => {
+  const local_city = await wx.getStorageSync('city');
+  if (local_city) {
+    return local_city;
+  } else {
+    const defaultCity = '北京市';
+    let lat = await wx.getStorageSync('latitude');
+    let lng = await wx.getStorageSync('longitude');
+    
+    let city = '';
+    if (!lat || !lng) {
+      const {latitude, longitude} = await getLocation();
+      lat = latitude;
+      lng = longitude
+    }
+    // todo 地理位置反解
+    city = defaultCity;
+    wx.setStorageSync('city', city);
+  }
+}
+
 export const request = function (url, options={}) {
   const base_url = 'https://gewugo.com'
 
