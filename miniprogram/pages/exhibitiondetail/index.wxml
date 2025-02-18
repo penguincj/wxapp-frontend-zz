@@ -1,16 +1,16 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar back loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar back loading="{{loading}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-exhibition-detail">
   <view class="museum-info">
-    <image src="http://gewugo.com/api/v1/storage/image/shouye-6012491903.jpg" class="museum-img" mode="aspectFill" />
+    <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
     <view class="museum-text-group">
       <view class="title">
         {{exhibitionInfo.name}}
         <view class="zhanlan-type">常设展</view>
       </view>
       <image bindtap="handleClickPlayIcon" src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
-      <view class="desc">{{exhibitionInfo.intro}}</view>
+      <view class="desc">{{exhibitionInfo.desc}}</view>
       <view class="line"></view>
       <view class="group-two">
         <view class="address text-flex">
@@ -19,7 +19,7 @@
         </view>
         <view class="open-date text-flex">
           <image src="/static/images/date-gray.png" class="museum-icon" mode="aspectFill" />
-          开放时间：{{exhibitionInfo.open_time}}
+          开放时间：{{exhibitionInfo.opendate}}
         </view>
       </view>
     </view>
@@ -40,7 +40,7 @@
         <text class="title">展览票</text>
         <text class="tehui">限时特惠中</text>
       </view>
-      <view class="price">¥120</view>
+      <view class="price">¥{{exhibitionInfo.ticket_price}}</view>
     </view>
   </view>
   <view class="jiangjie-area">
@@ -51,15 +51,15 @@
       </view>
     </view>
     <view class="jiangjie-card">
-      <block wx:for="{{exhibitionInfo.jiangjie_list}}" wx:key="id">
+      <block wx:for="{{narrationList}}" wx:key="id">
         <view class="card-group">
           <image class="card-bg" src="/static/images/btn2.png" mode="aspectFix" />
           <view class="card-content-line-one">
             <view class="first-area">
-              <image class="avatar" src="{{item.avatar}}" mode="aspectFix" />
-              <text class="name">{{item.name}}</text>
-              <text class="fenge">|</text>
-              <text class="title">{{item.title}}</text>
+              <image class="avatar" src="{{item.url}}" mode="aspectFix" />
+              <text class="name">{{item.desc}}</text>
+              <!-- <text class="fenge">|</text>
+              <text class="title">{{item.name}}</text> -->
             </view>
             <view class="sec-area">
               <text class="price"><text class="unit">¥</text>{{item.price}}</text>
@@ -67,8 +67,8 @@
             </view>
           </view>
           <view class="card-content-line-two">
-            <view class="type">{{item.type}}</view>
-            <view class="btn-group" data-idx="{{item.type}}" bindtap="handleClickJiangjie">
+            <view class="type">{{item.name}}</view>
+            <view class="btn-group" data-idx="{{item.id}}" bindtap="handleClickJiangjie">
               <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
               <view class="loc-name white">试听</view>
             </view>

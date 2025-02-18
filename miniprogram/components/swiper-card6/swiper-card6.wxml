@@ -37,17 +37,17 @@
 			<block wx:for="{{list}}">
 				<view class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
 					<view class="group-one">
-					<image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg"  src="{{item.imagepath}}" mode="aspectFix" />
+					<image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg"  src="{{item.image_url}}" mode="aspectFix" />
 						<view class="card-info">
-						<view class="card-title">{{item.title}}</view>
+						<view class="card-title">{{item.name}}</view>
 						<view class="card-desc">
 							<view class="desc-item">
 							<image class="item-icon" src="/static/images/erji.png" mode="aspectFix" />
-							{{item.lookcount}}
+							{{item.audioitem.listen_count}}
 							</view>
 							<view class="desc-item">
 							<image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
-							{{item.zannum}}
+							{{item.audioitem.duration}}
 							</view>
 						</view>
 						</view>

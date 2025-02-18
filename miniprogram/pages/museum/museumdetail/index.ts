@@ -1,9 +1,6 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
+import { getMuseumById, getShortExhibitionList, getLongExhibitionList, getRecoExhibitionList } from "../../../api/api";
+import { generateNewUrlParams } from "../../../utils/util";
 
-// 展览状态
-// status 1 未开始 2 进行中 3 已结束
 const museumInfo = {
   img: 'https://gewugo.com/storage/image/JC25139211818586.jpg',
   name: '故宫博物院',
@@ -107,18 +104,43 @@ Page({
     normalList: zhanlan1,
     outofdateList: zhanlan1,
     curMuseumId: -1,
+    loading: false,
+  },
+  async initPage(_museumid: any) {
+    this.setData({
+      loading: true
+    })
+    try {
+      const museumInfo: any = await getMuseumById(_museumid);
+      const normalList_res: any = await getLongExhibitionList(_museumid);
+      const recommendList_res: any = await getRecoExhibitionList(_museumid);
+      this.setData({
+        museumInfo: museumInfo.museum,
+        normalList: normalList_res.exhibitions,
+        recommendList: recommendList_res.exhibitions,
+        outofdateList: normalList_res.exhibitions,
+        loading: false,
+      })
+
+    } catch (error) {
+      this.setData({
+        loading: false
+      })
+    }
   },
   handleClickItem(event: any) {
     const { id } = event.detail;
+    const url_params = generateNewUrlParams({exhibition_id: id})
     wx.navigateTo({
-      url: '/pages/exhibitiondetail/index?exhibition_id=' + id,
+      url: '/pages/exhibitiondetail/index' + url_params,
     })
   },
   onLoad(options) {
-    console.log('onLoad', options);
+    console.log('museum detail onLoad', options);
     this.setData({
       curMuseumId: Number(options.museum_id),
-    })
+    });
+    this.initPage(options.museum_id);
   },
 
 })

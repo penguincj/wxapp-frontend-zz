@@ -60,14 +60,28 @@ export const getCurrentPageParamStr = () => {
   let pages = getCurrentPages()
   let currentPage = pages[pages.length - 1]
   let options = currentPage.options;
+  const url_str = transferObjToUrlParams(options);
+  return url_str;
+}
+export const transferObjToUrlParams = (_obj) => {
   let str = '?';
-  Object.keys(options).forEach((key) => {
-    str = str + key + '=' + options[key] + '&'
+  Object.keys(_obj).forEach((key) => {
+    str = str + key + '=' + _obj[key] + '&'
   })
   str = (str === '?' ? '' : str);
   str = str.slice(0, str.length - 1);
   console.log('current str', str);
   return str;
+}
+export const generateNewUrlParams = (_obj) => {
+  console.log('generateNewUrlParams', _obj)
+  const options = getCurrentPageParam();
+  const new_obj = {
+    ...options,
+    ..._obj,
+  }
+  const param_str = transferObjToUrlParams(new_obj);
+  return param_str;
 }
 
 // 获取当前地理位置信息并写入本地storage

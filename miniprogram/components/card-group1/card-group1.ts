@@ -9,13 +9,16 @@ Component({
     list: {
       type: Array,
       value: [],
+    },
+    title: {
+      type: String,
+      value: ''
     }
   },
   /**
    * 组件的初始数据
    */
   data: {
-    background: ['demo-text-1', 'demo-text-2', 'demo-text-3'],
     indicatorDots: true,
     vertical: false,
     autoplay: false,

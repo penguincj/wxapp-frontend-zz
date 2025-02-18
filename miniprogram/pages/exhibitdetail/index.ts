@@ -1,6 +1,4 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
+import { getExhibitById, getExhibitList } from '../../api/api';
 import { audioList, exhibitionList } from './mock';
 const base_url = "http://gewugo.com";
 // let bgAudio = wx.getBackgroundAudioManager();
@@ -57,10 +55,10 @@ Page({
     bgAudio: null as any,
     isAutoPlay: false,
     stored_audio: [] as string[],
-    isPlay: false, // 当前是否播放
     currentTime: 0,
 
-
+    exhibitList: [] as any,
+    isPlay: false, // 当前是否播放
     showDialog: false,
     showMenuDialog: false,
     rateSlider: 2,
@@ -72,6 +70,8 @@ Page({
     audioList: [],
     isSaved: false,
     isLiked: false,
+    narrationId: -1,
+    unitId: -1,
   },
 
   handleReadyPlay(event: any) {
@@ -100,21 +100,35 @@ Page({
       totalTimeText,
     })
   },
+  handleUpatePlayingIndex(event: any) {
+    const { playingIndex } = event.detail;
+    this.setData({
+      playingIndex,
+    })
+  },
   handleEndAudio() {
     this.setData({
       isPlay: false,
 
     })
   },
-  handleChangeUnit(e: any) {
-    const { selectId } = e.detail;
-    console.log('selectIdselectIdselectId', selectId)
+  // handleChangeUnit(e: any) {
+  //   const { selectId } = e.detail;
+  //   this.setData({
+  //     topSwiperSelectIdx: Number(selectId),
+  //   })
+  // },
+
+
+
+  // swiper-unit组件
+  handleChangePannelId(event: any) {
+    const { selectId } = event.detail;
+    console.log('handleChangePannelId', selectId);
     this.setData({
-      topSwiperSelectIdx: Number(selectId),
-    })
+      topSwiperSelectIdx: selectId,
+    });
   },
-
-
 
   // swiper-card 4
   async handleClickExhibitItem(event: any) {
@@ -183,12 +197,28 @@ Page({
     // this.data.bgAudio.seek(jumptime);
   },
   handlePlayNext() {
-    var player = this.selectComponent("#player");
-    player.playNextAudio();
+    const curPlayIdx = this.data.playingIndex;
+    console.log('handlePlayNext', curPlayIdx, this.data.exhibitList.length)
+
+    if (curPlayIdx + 1 < this.data.exhibitList.length) {
+      const next_exhibit = this.data.exhibitList[curPlayIdx + 1];
+      this.setData({
+        exhibitInfo: next_exhibit,
+      })
+      const player = this.selectComponent("#player");
+      player.playNextAudio();
+    }
   },
   handlePlayPrev() {
-    var player = this.selectComponent("#player");
-    player.playPrevAudio();
+    const curPlayIdx = this.data.playingIndex;
+    if (curPlayIdx > 0) {
+      const prev_exhibit = this.data.exhibitList[curPlayIdx - 1];
+      this.setData({
+        exhibitInfo: prev_exhibit,
+      })
+      var player = this.selectComponent("#player");
+      player.playPrevAudio();
+    }
   },
   handlePlayRate(rate: number) {
     var player = this.selectComponent("#player");
@@ -220,6 +250,62 @@ Page({
       isLiked: !this.data.isLiked,
     })
   },
+
+  // 业务逻辑
+
+  formatExhibitData(_exhibit: any, _narrationid: any) {
+      const audioitem = _exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
+      console.log('initPage formatExhibitData', audioitem)
+
+      return {
+        ..._exhibit,
+        audioitem,
+      }
+  },
+
+  formatExhibitList(_exhibitlist: any, _narrationid: any) {
+    return _exhibitlist.map((exhibit: any) => {
+      return this.formatExhibitData(exhibit, _narrationid)
+    })
+  },
+
+  async initPage(_exhibitid: any) {
+    this.setData({
+      loading: true,
+    })
+    
+    try {
+      const res: any = await getExhibitById(_exhibitid);
+      const exhibit_info = this.formatExhibitData(res.exhibit, this.data.narrationId);
+      const unit_id = exhibit_info.unit_id;
+      const res_exhibitlist: any = await getExhibitList(unit_id);
+
+      const exhibit_list = this.formatExhibitList(res_exhibitlist.exhibits, this.data.narrationId);
+      console.log('exhibit_list 111', exhibit_list);
+
+      const player = this.selectComponent("#player");
+      player.initAudioList(exhibit_list, exhibit_info);
+      this.setData({
+        exhibitInfo: exhibit_info,
+        exhibitList: exhibit_list,
+        loading: false,
+      })
+    } catch (error) {
+      console.error(error); 
+      this.setData({
+        loading: false,
+      })
+    }
+  },
+  handleGetCurPlayingStatus(event: any) {
+    const { isPlay } = event.detail;
+    console.log('handleGetCurPlayingStatus', isPlay)
+    this.setData({
+      isPlay,
+    })
+  },
+
+
 
 
 
@@ -365,80 +451,26 @@ Page({
 
   },
 
-
-  // pageLifetimes: {
-  //   async show() {
-  //     // this.drawCanvas();
-  //     this.setData({
-  //       loading: true,
-  //     })
-  //     try {
-  //       const stored_audio = await wx.getStorageSync('audios');
-  //       this.setData({
-  //         stored_audio,
-  //       })
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-
-  //     console.log('show');
-  //     const info = wx.getMenuButtonBoundingClientRect();
-  //     const windowInfo = wx.getWindowInfo();
-  //     if (info && info.bottom) {
-  //       this.setData({
-  //         topBarHeight: info.bottom,
-  //         safeHeight: windowInfo.safeArea.height,
-  //         windowHeight: windowInfo.screenHeight,
-  //         statusBarHeight: windowInfo.statusBarHeight,
-  //       })
-  //     }
-
-  //     console.log('info', info);
-  //     console.log('windowInfo', windowInfo);
-
-
-  //     // wx.showModal({
-  //     //   title: '提示',
-  //     //   content: '这是一个模态弹窗',
-  //     //   success (res) {
-  //     //     if (res.confirm) {
-  //     //       console.log('用户点击确定')
-  //     //     } else if (res.cancel) {
-  //     //       console.log('用户点击取消')
-  //     //     }
-  //     //   }
-  //     // })
-
-
-  //     // setTimeout(() => {
-  //     //   this.initPageAudio(this.data.exhibitInfo);
-  //     // }, 300)
-
-  //   },
-  // },
-  // lifetimes: {
-  // attached() {
-  //   setTimeout(() => {
-  //     this.setData({
-  //       loading: false,
-  //     })
-  //   }, 1000);
-  //   const audio_list = getApp().globalData.audio.audioList;
-
-  //   if (audio_list && audio_list.length === 0) {
-  //     getApp().globalData.audio.audioList = audioList;
-  //     this.setData({
-  //       exhibitionList: audioList,
-  //     })
-  //   }
-  // },
-  // },
   onShow() {
     setTimeout(() => {
       this.setData({
         loading: false,
       })
     }, 1000);
+    const player = this.selectComponent("#player");
+    player.pageTimeUpateContinue();
+  },
+  onLoad(options) {
+    if (options) {
+      this.setData({
+        narrationId: Number(options.narration_id),
+        unitId: Number(options.unit_id),
+      }, () => {
+        this.initPage(options.exhibit_id);
+      })
+
+    }
+    
   }
 
 })

@@ -1,3 +1,6 @@
+import { getExhibitionById, getNarrowList } from "../../api/api";
+import { generateNewUrlParams } from "../../utils/util";
+
 const exhibitionInfo = {
   img: 'https://gewugo.com/storage/image/JC25139211818586.jpg',
   name: '玉出昆冈',
@@ -102,23 +105,45 @@ const exhibitionInfo = {
 Page({
   data: {
     exhibitionInfo: exhibitionInfo,
+    narrationList: [],
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
     statusBarHeight:0,
-    
     curExhibitionId: -1,
+    loading: false,
   },
   handleClickJiangjie(event: any) {
     console.log('handleClickJiangjie', event.currentTarget.dataset);
-    
     const { idx } = event.currentTarget.dataset;
+    const url_params = generateNewUrlParams({
+      narration_id: idx,
+      exhibition_id: this.data.curExhibitionId
+    })
     wx.navigateTo({
-      url: `/pages/exhibitlist/index?type=${idx}&exhibition_id=${this.data.curExhibitionId}`,
+      url: '/pages/exhibitlist/index'+ url_params,
     })
   },
   handleClickPlayIcon() {
 
+  },
+  async initPage(_exhibitionid: any){
+    try {
+      const res: any = await getExhibitionById(_exhibitionid);
+      const res_narr: any = await getNarrowList(_exhibitionid);
+      if (res && res.exhibition) {
+        this.setData({
+          exhibitionInfo: res.exhibition,
+          narrationList: res_narr.narrations,
+          loading: false,
+        })
+      }
+      console.log('initPage', res, res_narr)
+    } catch (error) {
+      this.setData({
+        loading: false,
+      })
+    }
   },
   onShow() {
     this.setData({
@@ -143,6 +168,7 @@ Page({
     this.setData({
       curExhibitionId: Number(options.exhibition_id),
     })
+    this.initPage(options.exhibition_id)
   },
 
 })

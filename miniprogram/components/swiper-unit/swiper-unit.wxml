@@ -9,11 +9,11 @@
 			 style="width: 100%;"
 			>
 				<block wx:for="{{list}}">
-					<view class="item-group item-group-{{index}} {{item.id === selectId ? 'select': ''}}">
+					<view class="item-group item-group-{{index}} {{item.id === selectedId ? 'select': ''}}">
 						<view class="item-txt" data-name="{{item.name}}" data-id="{{item.id}}">
 						{{item.name}}
 						</view>
-						<image src="/static/images/unit-group-icon.png" class="chose-item-icon {{item.id === selectId ? 'display': ''}}" mode="widthFix" />
+						<image src="/static/images/unit-group-icon.png" class="chose-item-icon {{item.id === selectedId ? 'display': ''}}" mode="widthFix" />
 					</view>
 				</block>
 

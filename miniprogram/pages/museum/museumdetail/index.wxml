@@ -3,18 +3,18 @@
 <navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-museum-detail">
   <view class="museum-info">
-    <image src="http://gewugo.com/api/v1/storage/image/shouye-6012491903.jpg" class="museum-img" mode="aspectFill" />
+    <image src="{{museumInfo.image_url}}" class="museum-img" mode="aspectFill" />
     <view class="museum-text-group">
       <view class="title">{{museumInfo.name}}</view>
-      <view class="desc">{{museumInfo.intro}}</view>
+      <view class="desc">{{museumInfo.desc}}</view>
       <view class="line"></view>
       <view class="open-date text-flex">
           <image src="/static/images/date.png" class="museum-icon" mode="aspectFill" />
-        {{museumInfo.open_time}}
+        {{museumInfo.opentime}}
       </view>
       <view class="price text-flex">
         <image src="/static/images/piao.png" class="museum-icon" mode="aspectFill" />
-        门票价格：{{museumInfo.price}}/人（普通票）
+        门票价格：{{museumInfo.ticket_price}}/人（普通票）
       </view>
       <view class="address text-flex">
         <image src="/static/images/dingwei.png" class="museum-icon" mode="aspectFill" />
@@ -30,15 +30,17 @@
   </view>
   <view class="normal-area">
     <card-group1
+      title="常设展览"
       list="{{normalList}}"
       bindClickItem="handleClickItem"
     ></card-group1>
   </view>
   <view class="expried-area">
-    <swiper-card3
+    <card-group1
+      title="往期展览"
       list="{{outofdateList}}"
       bindClickItem="handleClickItem"
-    ></swiper-card3>
+    ></card-group1>
   </view>
 </view>
 </page-meta>  

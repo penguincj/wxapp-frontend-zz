@@ -1,4 +1,4 @@
-import { getCityList, getMuseumList, getRecoExhibitionList } from "../../api/api";
+import { getCityList, getMuseumList, getCityRecoExhibitionList } from "../../api/api";
 import { getCurrentCity } from "../../utils/util";
 
 // index.ts
@@ -79,7 +79,7 @@ Page({
       console.log('city_id', city_id);
       if (city_item && city_item.name) {
         const res: any = await getMuseumList(city_id);
-        const recoExhibition: any = await getRecoExhibitionList(city_id, 1);
+        const recoExhibition: any = await getCityRecoExhibitionList(city_id, 1);
         console.log('museums', res.museums, recoExhibition);
   
         if (res && res.museums) {

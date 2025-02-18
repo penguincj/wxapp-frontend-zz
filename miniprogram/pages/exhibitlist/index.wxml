@@ -3,7 +3,7 @@
 <navigation-bar title="展览单元" loading="{{loading}}" back styleType="dark" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
 <view class="exhibit-page">
   <view class="unit-choose-area">
-    <swiper-unit list="{{unitList}}"></swiper-unit>
+    <swiper-unit list="{{unitList}}" selectedId="{{curUnitId}}" bindChangeUnit="handleChangeUnit"></swiper-unit>
   </view>
   <view class="unit-card-area">
     <swiper-card4
@@ -31,7 +31,7 @@
       </view>
       <view class="info-group">
         <view class="line-one">
-          <view class="title">{{curExhibit.title}}:{{curExhibit.desc}}</view>
+          <view class="title">{{curExhibit.name}}:{{curExhibit.desc}}</view>
           <view class="time">
             <text>{{currentTimeText}}</text>
             <text class="fenge">/</text>
@@ -76,6 +76,7 @@
 
   <player-comp
     id="player"
+    narrationId="{{narrationId}}"
     bindReadyPlay="handleReadyPlay"
     bindTimeUpdate="handleTimeUpdate"
     bindEndAudio="handleEndAudio"

@@ -1,26 +1,4 @@
 const order = ['demo1', 'demo2', 'demo3'];
-const unitlist = [
-  {
-    id: 1,
-    name: '云南龙陵',
-  },
-  {
-    id: 2,
-    name: '玉出昆冈',
-  },
-  {
-    id: 3,
-    name: '云南',
-  },
-  {
-    id: 4,
-    name: '玉出昆',
-  },
-  {
-    id: 5,
-    name: '云南龙陵',
-  },
-]
 
 Component({
   options: {
@@ -33,6 +11,10 @@ Component({
     list: {
       type: Array,
       value: [],
+    },
+    selectedId: {
+      type: Number,
+      value: -1,
     }
   },
   /**
@@ -42,45 +24,42 @@ Component({
     scrollTop: 0,
     toView: 'green',
     order,
-    unitlist,
     selectId: 1,
     selectName: '',
   },
   lifetimes: {
     attached() {
-      
+
     },
   },
   /**
    * 组件的方法列表
    */
   methods: {
-    upper(e : any) {
-      console.log(e)
-    },
-  
-    lower(e : any) {
-      console.log(e)
-    },
-  
-    scroll(e : any) {
+    upper(e: any) {
       console.log(e)
     },
 
-  selectItem(e: any) {
+    lower(e: any) {
+      console.log(e)
+    },
+
+    scroll(e: any) {
+      console.log(e)
+    },
+
+    selectItem(e: any) {
       console.log('selectItem', e.target.dataset);
-      const {id , name} = e.target.dataset;
-      if(id && name) {
-        this.setData({
-          selectId: id,
-          selectName: name,
-        });
+      const { id, name } = e.target.dataset;
+        // this.setData({
+        //   selectId: id,
+        //   selectName: name,
+        // });
         this.triggerEvent('ChangeUnit', {
           selectId: id,
-          selectName: name,
+          // selectName: name,
         })
-      }
-    },  
+    },
 
     tap() {
       for (let i = 0; i < order.length; ++i) {
@@ -93,13 +72,13 @@ Component({
         }
       }
     },
-  
+
     tapMove() {
       this.setData({
         scrollTop: this.data.scrollTop + 10
       })
     },
-  
+
     scrollToTop() {
       this.setData({
         scrollTop: 0

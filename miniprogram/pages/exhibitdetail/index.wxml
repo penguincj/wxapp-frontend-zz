@@ -3,17 +3,18 @@
 <navigation-bar loading="{{loading}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-exhibit-detail">
   <view class="top-swiper-area">
-    <swiper-unit list="{{listConfig}}" bindChangeUnit="handleChangeUnit"></swiper-unit>
+    <swiper-unit list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit>
   </view>
   <view wx:if="{{topSwiperSelectIdx === 1}}" class="images-area">
     <swiper-card5 
-      title="金佛壁龛像：工艺顶峰见证"
+      title="{{exhibitInfo.name}}:{{exhibitInfo.desc}}"
+      list="{{exhibitInfo.more_image_urls}}"
     ></swiper-card5>
   </view>
   <view wx:if="{{topSwiperSelectIdx === 2}}" class="geci-area">
       <view class="mask-top"></view>
-      <view class="title">金佛壁龛像：工艺顶峰见证</view>
-      <text decode="{{true}}" space="{{true}}" class="content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;良渚文明是一个在湿地上建立起来的文明，第一展厅‘“水乡泽国”便以编年体的形式，为参观者展示一个湿地王国的崛起和发展的过程，五千年前，良渚地区气候温润、水网密布、资源丰富，为良渚先民的生存和良渚文明的发展壮大提供了适宜的环境。农业是文明产生与发展的重要物质基础，在石犁、炭化稻米农业是文明产生与发展的重要物质基础，在石为良渚先民的生存和良渚文明的发展壮大提供了适宜的环境</text>
+      <view class="title">{{exhibitInfo.name}}</view>
+      <text decode="{{true}}" space="{{true}}" class="content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{exhibitInfo.audioitem.content}}</text>
       <view class="mask-bottom"></view>
 
   </view>
@@ -65,6 +66,8 @@
     bindTimeUpdate="handleTimeUpdate"
     bindEndAudio="handleEndAudio"
     bindContinuePlay="handleContinuePlay"
+    bindUpatePlayingIndex="handleUpatePlayingIndex"
+
   ></player-comp>
   <dialog-half
     showDialog="{{showDialog}}"
@@ -108,8 +111,9 @@
     <view slot="content">
       <swiper-card6
         showType="jiangjiedaoyu" 
-        list="{{exhibitionList}}"
+        list="{{exhibitList}}"
         playingIndex="{{playingIndex}}"
+        bindGetCurPlayingStatus="handleGetCurPlayingStatus"
         bindChangeItem="handleClickExhibitItem"
         ></swiper-card6>
     </view>

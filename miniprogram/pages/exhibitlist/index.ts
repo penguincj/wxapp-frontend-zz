@@ -1,6 +1,6 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
+import { getUnitList, getExhibitList } from '../../api/api';
+import { generateNewUrlParams } from '../../utils/util';
+
 import { audioList, exhibitionList } from './mock';
 const base_url = "http://gewugo.com";
 // let bgAudio = wx.getBackgroundAudioManager();
@@ -52,7 +52,8 @@ Page({
     sliderIndex: 0, // 当前播放进度
     playingIndex: -1, // 当前播放index
     curExhibit: null, // 当前播放展览
-
+    curUnitId: -1, // 当前单元id
+    narrationId: -1, // 页面params语音包id
   },
 
   // player-comp
@@ -109,8 +110,11 @@ Page({
     const { selectId } = event.detail;
     const player = this.selectComponent("#player")
     await player.handlePlayOtherAudioById(selectId);
+    const url_params = generateNewUrlParams({
+      exhibit_id: selectId
+    })
     wx.navigateTo({
-      url: '/pages/exhibitdetail/index?exhibit_id=' + selectId
+      url: '/pages/exhibitdetail/index' + url_params
     });
   },
 
@@ -172,6 +176,85 @@ Page({
     this.setData({
       searchList: audioList,
     })
+  },
+
+  // swiper-unit组件
+  handleChangeUnit(event: any) {
+    const { selectId } = event.detail;
+    console.log('handleChangeUnit', selectId);
+    this.setData({
+      curUnitId: selectId,
+    });
+    this.initExhibitData(selectId)
+  },
+
+  formatExhibitData(_exhibitlist: any, _narrationid: any) {
+    return _exhibitlist.map((exhibit: any) => {
+      const audioitem = exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
+      console.log('initPage formatExhibitData', audioitem)
+
+      return {
+        ...exhibit,
+        audioitem,
+      }
+    })
+  },
+
+  async initExhibitData(_unitid: any) {
+    this.setData({
+      loading: true,
+    })
+    try {
+      const res_exhibitlist: any = await getExhibitList(_unitid);
+      const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
+      console.log('initExhibitData 111', f_exhibitlist)
+
+      this.setData({
+        exhibitList: f_exhibitlist,
+        curExhibit: f_exhibitlist[0],
+      })
+      const player = this.selectComponent("#player");
+      player.initAudioList(f_exhibitlist, f_exhibitlist[0]);
+      this.setData({
+        loading: false,
+      })
+    } catch (error) {
+      this.setData({
+        loading: false,
+      })
+    }
+  },
+
+  // 业务逻辑
+  async initPage(_exhibitionid: any) {
+    try {
+      const res_unit : any = await getUnitList(_exhibitionid);
+      if (res_unit && res_unit.units && res_unit.units.length) {
+        this.setData({
+          curUnitId: res_unit.units[0].id,
+          unitList: res_unit.units,
+        })
+        // const res_exhibitlist: any = await getExhibitList(res_unit.units[0].id);
+        // const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
+        // console.log('initPage 111', f_exhibitlist)
+
+        // this.setData({
+        //   exhibitList: f_exhibitlist,
+        //   curExhibit: f_exhibitlist[0],
+        // })
+        // const player = this.selectComponent("#player");
+        // player.initAudioList(f_exhibitlist, f_exhibitlist[0]);
+
+        this.initExhibitData(res_unit.units[0].id)
+      }
+      this.setData({
+        loading: false,
+      })
+    } catch (error) {
+      this.setData({
+        loading: false,
+      })
+    }
   },
 
 
@@ -418,10 +501,26 @@ Page({
 
   onShow() {
     this.setData({
-      loading: false,
+      loading: true,
     })
     const player = this.selectComponent("#player");
     player.pageTimeUpateContinue();
+  },
+  onLoad(options) {
+    if(options && options.exhibition_id) {
+      this.initPage(options.exhibition_id);
+    }
+    
+    if (options) {
+      this.setData({
+        narrationId: Number(options.narration_id),
+      },() => {
+        console.log('initPageAudio options.narration_id', options.narration_id);
+
+      })
+
+    }
+    
   }
 
 

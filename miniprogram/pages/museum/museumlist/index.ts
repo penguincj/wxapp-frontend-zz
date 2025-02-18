@@ -2,7 +2,8 @@
 // 获取应用实例
 // const app = getApp<IAppOption>()
 import { getCityList, getMuseumList } from "../../../api/api";
-import { getCurrentCity } from "../../../utils/util";
+import { getCurrentCity, getCurrentPageParam, transferObjToUrlParams } from "../../../utils/util";
+
 
 const museumList = [{
   img: 'https://gewugo.com/storage/image/VC25139145565967.jpg',
@@ -54,6 +55,18 @@ Page({
     showLoading: false,
     cityList: [],
     selectCityList: [] as any,
+  },
+  handleClickMuseum(event: any) {
+    const { idx } = event.currentTarget.dataset;
+    let url_obj = getCurrentPageParam();
+    url_obj = {
+      ...url_obj,
+      museum_id: idx,
+    }
+    const url_str = transferObjToUrlParams(url_obj);
+    wx.navigateTo({
+      url: '/pages/museum/museumdetail/index'+ url_str,
+    })
   },
   generateSelectCityList(_cityitem: any, _citylist: any) {
     const citylistCopy = [..._citylist];
