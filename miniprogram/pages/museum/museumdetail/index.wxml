@@ -23,8 +23,10 @@
     </view>
   </view>
   <view class="recommend-area">
-    <swiper-card2 
+    <swiper-card2
+      title="推荐展览"
       list="{{recommendList}}"
+      bindClickMore="handleClickMoreReco"
       bindClickItem="handleClickItem"
     ></swiper-card2>
   </view>
@@ -32,6 +34,7 @@
     <card-group1
       title="常设展览"
       list="{{normalList}}"
+      bindClickMore="handleClickMoreLong"
       bindClickItem="handleClickItem"
     ></card-group1>
   </view>
@@ -39,6 +42,7 @@
     <card-group1
       title="往期展览"
       list="{{outofdateList}}"
+      bindClickMore="handleClickMorePast"
       bindClickItem="handleClickItem"
     ></card-group1>
   </view>

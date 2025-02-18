@@ -95,7 +95,7 @@ const zhanlan1 = [
 ]
 Page({
   data: {
-    museumInfo: museumInfo,
+    museumInfo: [],
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
@@ -127,6 +127,33 @@ Page({
         loading: false
       })
     }
+  },
+
+  handleClickMoreReco() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'recommend',
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
+  },
+  
+  handleClickMorePast() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'past',
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
+  },
+  
+  handleClickMoreLong() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'long',
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
   },
   handleClickItem(event: any) {
     const { id } = event.detail;

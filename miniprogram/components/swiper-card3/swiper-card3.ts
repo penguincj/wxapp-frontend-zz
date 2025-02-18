@@ -36,5 +36,8 @@ Component({
         id: idx,
       })
     },
+    handleClickMore() {
+      this.triggerEvent('ClickMore')
+    },
   },
 })

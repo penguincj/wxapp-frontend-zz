@@ -27,17 +27,40 @@ Page({
     outofdateList: cardConfig,
     loading: true,
     dateObj: {},
+    curCityId: -1,
   },
 
   handleClickItem(event: any) {
     const { id } = event.detail;
     const url_params = generateNewUrlParams({
       exhibition_id: id,
+      city_id: this.data.curCityId,
     })
     wx.navigateTo({
       url: '/pages/exhibitiondetail/index' + url_params,
     })
   },
+
+  handleClickMorePast() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'past',
+      city_id: this.data.curCityId,
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
+  },
+
+  handleClickMoreLong() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'long',
+      city_id: this.data.curCityId,
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
+  },
+
 
   generateDate() {
     const week = new Date().getDay();
@@ -68,6 +91,9 @@ Page({
       const citylist:any = await getCityList();
       const city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
       const city_id = city_item.id;
+      this.setData({
+        curCityId: city_id,
+      })
       console.log('city_id', city_id);
       const res_reco: any = await getCityRecoExhibitionList(city_id, 999);
       const res_long: any = await getCityLongExhibitionList(city_id, 999);

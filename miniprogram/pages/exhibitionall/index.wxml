@@ -10,8 +10,8 @@
 	/>
 	<view class="page-exhibition-all">
 		<block wx:for="{{exhibitions}}" wx:key="{{item.id}}">
-			<view class="exhibition-item">
-				<image src="{{item.img}}" class="item-img" mode="aspectFill" />
+			<view class="exhibition-item" data-idx="{{item.id}}" bindtap="handleClickItem">
+				<image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
 				<view class="item-desc-group">
 					<view class="line-one">
 						<span class="desc-title">{{item.name}}</span>

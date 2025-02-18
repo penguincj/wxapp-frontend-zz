@@ -63,6 +63,9 @@ export const getCityPastExhibitionList = (_cityid: any, _num=1) => {
     return request(`/api/v1/exhibitions?type=past&cityID=${_cityid}&num=${_num}`);
 }
 
+export const getExhibitionListAll = (_querystr: any) => {
+    return request(`/api/v1/exhibitions` + _querystr);
+}
 
 export const getUnitList = (_exhibitionid: any) => {
     return request('/api/v1/units?exhibitionID='+_exhibitionid);

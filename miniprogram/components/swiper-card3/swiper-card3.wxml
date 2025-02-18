@@ -42,6 +42,6 @@
 			</block>
 		</swiper>
 	</view>
-  <view wx:if="{{list.length>10}}" class="find-more">查看更多</view>
+  <view wx:if="{{list.length>10}}" class="find-more" bindtap="handleClickMore">查看更多</view>
 </view>
 

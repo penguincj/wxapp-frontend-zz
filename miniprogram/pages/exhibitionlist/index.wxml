@@ -20,6 +20,7 @@
     <swiper-card2
       title="常设展览"
       list="{{normalList}}"
+      bindClickMore="handleClickMoreLong"
       bindClickItem="handleClickItem"
     ></swiper-card2>
   </view>
@@ -28,6 +29,7 @@
       title="往期展览"
       list="{{outofdateList}}"
       bindClickItem="handleClickItem"
+      bindClickMore="handleClickMorePast"
     ></card-group1>
    
   </view>
