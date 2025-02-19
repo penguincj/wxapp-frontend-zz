@@ -6,7 +6,7 @@
     </view>
   </view>
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="{{false}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" next-margin="160rpx">
+    <swiper indicator-dots="{{false}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" next-margin="180rpx">
       <block wx:for="{{list}}" wx:key="{{item.id}}">
         <swiper-item>
           <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">

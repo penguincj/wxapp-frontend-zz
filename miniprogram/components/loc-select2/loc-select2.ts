@@ -120,18 +120,18 @@ Component({
       if (event && event.target && event.target.dataset) {
         const { citykey, cityname } = event.target.dataset;
         const selectItemInArr = this.data.defaultArr.find((i:any) => i.id === Number(citykey));
-        if (!selectItemInArr) {
-         
+        if (cityname) {
+          this.triggerEvent('ClickCityPanel', {
+            cityid: citykey,
+          });
+          console.log('handleSelectCity', citykey, cityname);
+          this.setData({
+            selectedId: citykey,
+            selectedName: cityname,
+            isPannelOpen: false,
+          })
         }
-        this.triggerEvent('ClickCityPanel', {
-          cityid: citykey,
-        });
-        console.log('handleSelectCity', citykey, cityname);
-        this.setData({
-          selectedId: citykey,
-          selectedName: cityname,
-          isPannelOpen: false,
-        })
+       
       }
 
     }

@@ -4,6 +4,8 @@
 			<scroll-view
 				class="scroll-view_H"
 				scroll-y="true"
+				show-scrollbar="{{false}}"
+				enhanced="{{true}}"
 				bindscroll="scroll"
 				bindtap="selectItem"
 				style="height: 100vh"
@@ -11,7 +13,9 @@
 			<block wx:for="{{list}}">
 				<view class="card-group">
 					<scroll-view
-						scroll-x="true"
+						scroll-x="{{true}}"
+						show-scrollbar="{{false}}"
+						enhanced="{{true}}"
 						upper-threshold="10"
 						lower-threshold="10"
 						data-idx="{{index}}"

@@ -1,4 +1,4 @@
-import { getMuseumById, getShortExhibitionList, getLongExhibitionList, getRecoExhibitionList } from "../../../api/api";
+import { getMuseumById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList } from "../../../api/api";
 import { generateNewUrlParams } from "../../../utils/util";
 
 const museumInfo = {
@@ -112,13 +112,14 @@ Page({
     })
     try {
       const museumInfo: any = await getMuseumById(_museumid);
-      const normalList_res: any = await getLongExhibitionList(_museumid);
-      const recommendList_res: any = await getRecoExhibitionList(_museumid);
+      const normalList_res: any = await getLongExhibitionList(_museumid, 999);
+      const recommendList_res: any = await getShortExhibitionList(_museumid, 999);
+      const pastList_res: any = await getPastExhibitionList(_museumid, 999);
       this.setData({
         museumInfo: museumInfo.museum,
         normalList: normalList_res.exhibitions,
         recommendList: recommendList_res.exhibitions,
-        outofdateList: normalList_res.exhibitions,
+        outofdateList: pastList_res.exhibitions,
         loading: false,
       })
 

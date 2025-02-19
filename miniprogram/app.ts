@@ -13,7 +13,10 @@ App<IAppOption>({
       lastPlayIndex: 0,
       duration: 0,
       totalTimeText: '00:00',
-      
+      userInfo: {
+        nickName: '',
+        avatarUrl: ''
+      }
     }
   },
   onLaunch() {
@@ -36,12 +39,38 @@ App<IAppOption>({
     // })
     getCurrentCity();
 
+    // wx.loadFontFace({
+    //   family: 'MySimSun',
+    //   global: true,
+    //   source: 'url("https://gewugo.com/api/v1/storage/font/SimSun.ttf")',
+    //   success(res) {
+    //     console.log('font', res.status)
+    //   },
+    //   fail: function (res) {
+    //     console.log('font', res.status)
+    //   },
+    //   complete: function (res) {
+    //     console.log('font', res.status)
+    //   }
+    // });
+    
     // 登录
     wx.login({
       success: res => {
-        console.log(res.code)
+        console.log('login status', res)
+       
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       },
+      fail: (error) => {
+        console.log('login status error', error)
+
+      }
     })
+
+    // try {
+    // } catch (error) {
+    //   console.log('font error', error)
+    // }
+    
   },
 })

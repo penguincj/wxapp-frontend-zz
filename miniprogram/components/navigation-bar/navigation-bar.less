@@ -11,8 +11,8 @@
   overflow: hidden;
   color: var(--weui-FG-0);
   flex: none;
-  height: calc(var(--height) + env(safe-area-inset-top));
-  margin-bottom: 28px;
+  margin-bottom: 8px;
+  height: max(calc(var(--height) + env(safe-area-inset-top)), 96px);
 }
 
 .weui-navigation-bar__inner {
@@ -27,9 +27,14 @@
   padding-top: env(safe-area-inset-top);
   width: 100%;
   box-sizing: border-box;
-  z-index: 99;
-  background: transparent !important;
+  z-index: 199;
+ 
   
+}
+.transparent {
+  .weui-navigation-bar__inner {
+    background: transparent !important;
+  }
 }
 
 .weui-navigation-bar__left {
@@ -83,6 +88,7 @@
 }
 
 .weui-navigation-bar__title_left {
+  font-family: SimSun;
   font-size: 18px;
   text-align: left;
   position: relative;
@@ -90,7 +96,7 @@
   flex-direction: row;
   align-items: center;
   // justify-content: center;
-  font-weight: bold;
+  font-weight: 600;
   flex: 1;
   height: 100%;
   margin-top: -6px;

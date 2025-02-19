@@ -1,5 +1,7 @@
 // index.ts
 // 获取应用实例
+import { modifyNameAndAva } from "../../api/api"
+
 const app = getApp<IAppOption>()
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
@@ -21,9 +23,42 @@ Component({
         url: '../logs/logs',
       })
     },
+
     onChooseAvatar(e: any) {
+      console.log('event', e);
       const { avatarUrl } = e.detail
       const { nickName } = this.data.userInfo
+      if (avatarUrl) {
+        wx.uploadFile({
+          url: 'https://gewugo.com/api/v1/images', //仅为示例，非真实的接口地址
+          filePath: avatarUrl,
+          name: 'file',
+          success (res){
+            const data: any = res.data
+            console.log('upload success', data);
+            if (data && data.code === 200) {
+              console.log(data.url);
+              // modifyNameAndAva({
+              //   name: app.globalData.userInfo?.nickName,
+              //   avatarUrl: data.url
+              // }).then((m_res) => {
+              //   if (app.globalData.userInfo) {
+              //     app.globalData.userInfo.avatarUrl = data.url; 
+              //   }
+              // })
+            }
+            
+            //do something
+          },
+          fail (error){
+            console.log('upload fail', error);
+            
+            //do something
+          }
+          
+
+        })
+      }
       this.setData({
         "userInfo.avatarUrl": avatarUrl,
         hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,

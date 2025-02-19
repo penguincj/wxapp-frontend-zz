@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar extClass="transparent" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-museum-detail">
   <view class="museum-info">
     <image src="{{museumInfo.image_url}}" class="museum-img" mode="aspectFill" />

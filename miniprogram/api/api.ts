@@ -83,3 +83,6 @@ export const getNarrowList = (_exhibitionid: any) => {
     return request('/api/v1/narrations?exhibitionID='+_exhibitionid);
 }
 
+export const modifyNameAndAva = (params: any) => {
+    return request('/api/v1/modifynameandava', params)
+}

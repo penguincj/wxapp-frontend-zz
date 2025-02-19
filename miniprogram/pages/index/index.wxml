@@ -1,56 +1,51 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
-<navigation-bar back="{{false}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
-<view>
-  <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
-  <view class="index-page page-section page-section-spacing full-height">
-    <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
-      <image class="recommend-img" src="{{recoExhibition.image_url}}" />
-      <view class="recommend-img-mask"></view>
-      <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" />
-
-      <view class="recommend-group">
-        <view class="recommend-title">
-          <image class="title-png" src="/static/images/shouye-jinri.png" mode="aspectFix" />
-          <span class="title-text">今日推荐</span>
-          <image class="title-png title-png-rotate" src="/static/images/shouye-jinri.png" mode="aspectFix" />
-        </view>
-        <view class="recommend-name">{{recoExhibition.name}}</view>
-      </view>
-      <view class="recommend-detail">
-        <view class="recommend-detail-content">
-          <view class="recommend-detail-title">{{recoExhibition.name}}</view>
-          <view class="recommend-detail-desc">{{recoExhibition.desc}}</view>
-          <view class="recommend-detail-fenge"></view>
-          <view class="recommend-detail-museum-title">{{recoExhibition.museum_name}}</view>
-          <view class="recommend-detail-desc">中国.{{recoExhibition.city_name}}</view>
-        </view>
-        
-      </view>
-    </view>
-    <view class="index-card-group {{isRecoClicked ? 'index-card-group-hide-ani' : ''}}">
-      <block wx:for="{{museumList}}">
-        <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
-          <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />
-          <view class="index-card-img-mask"></view>
-          <view class="index-card-museum-title">{{item.name}}</view>
-          <view class="index-card-museum-num-group">
-            <span class="index-card-museum-num">{{item.exhibition_num}}</span>
-            <span class="index-card-museum-num-text">个展览</span>
+  <navigation-bar back="{{false}}" extClass="transparent" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+  <view>
+    <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
+    <view class="index-page page-section page-section-spacing full-height">
+      <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
+        <image class="recommend-img" src="{{recoExhibition.image_url}}" />
+        <view class="recommend-img-mask"></view>
+        <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" />
+        <view class="recommend-group">
+          <view class="recommend-title">
+            <image class="title-png" src="/static/images/shouye-jinri.png" mode="aspectFix" />
+            <span class="title-text">今日推荐</span>
+            <image class="title-png title-png-rotate" src="/static/images/shouye-jinri.png" mode="aspectFix" />
           </view>
-          <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />
+          <view class="recommend-name">{{recoExhibition.name}}</view>
         </view>
-      </block>
+        <view class="recommend-detail">
+          <view class="recommend-detail-content">
+            <view class="recommend-detail-title">{{recoExhibition.name}}</view>
+            <view class="recommend-detail-desc">{{recoExhibition.desc}}</view>
+            <view class="recommend-detail-fenge"></view>
+            <view class="recommend-detail-museum-title">{{recoExhibition.museum_name}}</view>
+            <view class="recommend-detail-desc">中国.{{recoExhibition.city_name}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="index-card-group {{isRecoClicked ? 'index-card-group-hide-ani' : ''}}">
+        <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: 930rpx;">
+          <block wx:for="{{museumList}}">
+            <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
+              <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />
+              <view class="index-card-img-mask"></view>
+              <view class="index-card-museum-title">{{item.name}}</view>
+              <view class="index-card-museum-num-group">
+                <span class="index-card-museum-num">{{item.exhibition_num}}</span>
+                <span class="index-card-museum-num-text">个展览</span>
+              </view>
+              <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+      <image src="/static/images/close.png" bindtap="handleCloseDetail" class="index-close {{isRecoClicked ? 'index-close-display': ''}}" mode="aspectFix" />
     </view>
-
-    <image 
-      src="/static/images/close.png"
-      bindtap="handleCloseDetail"
-      class="index-close {{isRecoClicked ? 'index-close-display': ''}}" 
-      mode="aspectFix" />
   </view>
-</view>
-<view>
-  <bottom-bar currentkey="{{0}}"></bottom-bar>
-</view>
+  <view>
+    <bottom-bar currentkey="{{0}}"></bottom-bar>
+  </view>
 </page-meta>

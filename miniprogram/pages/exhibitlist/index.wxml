@@ -20,7 +20,7 @@
         playingIndex="{{playingIndex}}"
         bindChangeItem="handleClickExhibitItem"
         bindClickItemImage="handleClickItemImage"
-        scrollStyle="height: 510rpx"
+        scrollStyle="height: 610rpx"
       ></swiper-card6>
   </view>
 

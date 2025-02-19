@@ -25,7 +25,7 @@
 			placeholder="可搜索展品名称"/>
 	</view>
 	<view class="container">
-		<view class="page-section-spacing">
+		<view class="page-section-spacing" style="{{scrollStyle}}">
 			<scroll-view
 				class="scroll-view_H"
 				scroll-y="{{true}}"

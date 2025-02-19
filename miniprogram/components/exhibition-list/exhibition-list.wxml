@@ -1,32 +1,17 @@
 <view>
-<view class="exhibition-list">
-  <scroll-view scroll-y="{{true}}" style="height: 600px">
-    <block wx:for="{{list}}" wx:key="id">
-      <view class="audio-item">
-        <image class="audio-item-img" src="{{base_url + item.imagepath}}" mode="aspectFill" />
-        <view class="audio-item-info">
-          <text class="audio-item-title">{{item.title}}</text>
-          <view class="audio-item-duration">{{item.duration_format}}</view>
+  <view class="exhibition-list">
+    <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: 600px">
+      <block wx:for="{{list}}" wx:key="id">
+        <view class="audio-item">
+          <image class="audio-item-img" src="{{base_url + item.imagepath}}" mode="aspectFill" />
+          <view class="audio-item-info">
+            <text class="audio-item-title">{{item.title}}</text>
+            <view class="audio-item-duration">{{item.duration_format}}</view>
+          </view>
+          <image wx:if="{{playingindex !== index}}" data-item="{{item}}" data-index="{{index}}" bindtap="handleChangeAudioStateToPlay" class="audio-icon" src="/static/images/play.svg" mode="aspectFill" />
+          <image wx:if="{{playingindex === index}}" data-item="{{item}}" data-index="{{index}}" bindtap="handleChangeAudioStateToPause" class="audio-icon" src="/static/images/pause.svg" mode="aspectFill" />
         </view>
-        <image
-          wx:if="{{playingindex !== index}}"
-          data-item="{{item}}"
-          data-index="{{index}}"
-          bindtap="handleChangeAudioStateToPlay"
-          class="audio-icon" 
-          src="/static/images/play.svg" 
-          mode="aspectFill" />
-        <image 
-          wx:if="{{playingindex === index}}"
-          data-item="{{item}}"
-          data-index="{{index}}"
-          bindtap="handleChangeAudioStateToPause"
-          class="audio-icon" 
-          src="/static/images/pause.svg" 
-          mode="aspectFill" />
-      </view>
-    </block>
-  </scroll-view>
-</view>
-
+      </block>
+    </scroll-view>
+  </view>
 </view>

@@ -55,6 +55,18 @@ Component({
     pannelStyle: {
       type: String,
       value: "",
+    },
+    list: {
+      type: Array,
+      value: []
+    },
+    selectedName: {
+      type: String,
+      value: ''
+    },
+    selectedId: {
+      type: Number,
+      value: -1,
     }
   },
   /**
@@ -63,16 +75,16 @@ Component({
   data: {
     cityConfig: cityConfig,
     isPannelOpen: false,
-    selectedId: 999,
-    selectedName: '',
+    // selectedId: 999,
+    // selectedName: '',
   },
   lifetimes: {
     attached() {
       if (cityConfig && cityConfig.length) {
-        this.setData({
-          selectedId: cityConfig[0].id,
-          selectedName: cityConfig[0].name,
-        })
+        // this.setData({
+        //   selectedId: cityConfig[0].id,
+        //   selectedName: cityConfig[0].name,
+        // })
       }
     },
   },
@@ -97,9 +109,11 @@ Component({
         const { citykey, cityname } = event.target.dataset;
         console.log('handleCityChange', citykey, cityname);
         this.setData({
+          isPannelOpen: false,
+        })
+        this.triggerEvent('CityChange', {
           selectedId: citykey,
           selectedName: cityname,
-          isPannelOpen: false,
         })
       }
 

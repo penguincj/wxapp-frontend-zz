@@ -3,7 +3,9 @@
 		<view class="page-section-spacing">
 			<scroll-view
 			 class="scroll-view_H"
-			 scroll-x="true"
+			 scroll-x="{{true}}"
+			 show-scrollbar="{{false}}"
+			 enhanced="{{true}}"
 			 bindscroll="scroll"
        		 bindtap="selectItem"
 			 style="width: 100%;"

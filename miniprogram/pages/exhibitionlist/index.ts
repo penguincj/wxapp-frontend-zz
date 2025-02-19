@@ -28,6 +28,8 @@ Page({
     loading: true,
     dateObj: {},
     curCityId: -1,
+    cityList: [] as any,
+    cityName: '',
   },
 
   handleClickItem(event: any) {
@@ -78,23 +80,11 @@ Page({
     }
   },
 
-  async initPage() {
+  async getPageData(city_id: any) {
     this.setData({
       loading: true
     })
-    const date_obj = this.generateDate();
-    this.setData({
-      dateObj: date_obj,
-    })
     try {
-      const city = await getCurrentCity();
-      const citylist:any = await getCityList();
-      const city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
-      const city_id = city_item.id;
-      this.setData({
-        curCityId: city_id,
-      })
-      console.log('city_id', city_id);
       const res_reco: any = await getCityRecoExhibitionList(city_id, 999);
       const res_long: any = await getCityLongExhibitionList(city_id, 999);
       const res_past: any = await getCityPastExhibitionList(city_id, 999);
@@ -114,6 +104,37 @@ Page({
         })
       }
       this.setData({
+        loading: false
+      })
+    } catch (error) {
+      this.setData({
+        loading: false
+      })
+    }
+  },
+
+  async initPage() {
+    this.setData({
+      loading: true
+    })
+    const date_obj = this.generateDate();
+    this.setData({
+      dateObj: date_obj,
+    })
+    try {
+      const city = await getCurrentCity();
+      const citylist:any = await getCityList();
+      const city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
+      const city_id = city_item.id;
+      const city_name = (citylist.cities.find((i:any) => i.id === city_id) || {}).name
+      this.setData({
+        curCityId: city_id,
+        cityList: citylist.cities,
+        cityName: city_name,
+      })
+      console.log('city_id', city_id);
+      await this.getPageData(city_id);
+      this.setData({
         loading: false,
       })
     } catch (error) {
@@ -122,6 +143,15 @@ Page({
         loading: false,
       })
     }
+  },
+
+  handleCityChange(e: any) {
+    const { selectedId, selectedName } = e.detail;
+    this.setData({
+      curCityId: selectedId,
+      cityName: selectedName
+    });
+    this.getPageData(selectedId)
   },
 
   onShow() {
