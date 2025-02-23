@@ -6,7 +6,7 @@
     <image src="{{museumInfo.image_url}}" class="museum-img" mode="aspectFill" />
     <view class="museum-text-group">
       <view class="title">{{museumInfo.name}}</view>
-      <view class="desc">{{museumInfo.desc}}</view>
+      <view class="desc">{{museumInfo.description}}</view>
       <view class="line"></view>
       <view class="open-date text-flex">
           <image src="/static/images/date.png" class="museum-icon" mode="aspectFill" />

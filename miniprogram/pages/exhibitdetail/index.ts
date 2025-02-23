@@ -1,4 +1,4 @@
-import { getExhibitById, getExhibitList } from '../../api/api';
+import { getExhibitById, getExhibitList, likeExhibit, collectExhibit } from '../../api/api';
 import { audioList, exhibitionList } from './mock';
 const base_url = "http://gewugo.com";
 // let bgAudio = wx.getBackgroundAudioManager();
@@ -68,10 +68,12 @@ Page({
     listConfig,
     topSwiperSelectIdx: 1,
     audioList: [],
-    isSaved: false,
-    isLiked: false,
+    isCollected: 0,
+    isLiked: 0,
     narrationId: -1,
     unitId: -1,
+    userid: -1,
+    exhibitId: -1,
   },
 
   handleReadyPlay(event: any) {
@@ -239,16 +241,35 @@ Page({
     })
     this.handlePlayRate(value / 2)
   },
-  handleClickSave() {
-
-    this.setData({
-      isSaved: !this.data.isSaved,
-    })
+  async handleClickCollect() {
+    const isCollected = + !this.data.isCollected;
+    const {userid, exhibitId } = this.data;
+    let options = { method: 'POST'};
+    if (!isCollected) {
+      options = { method: 'DELETE'};
+    }
+    const res: any = await collectExhibit(userid, exhibitId, options);
+    console.log('res---', res);
+    if (res && res.code === 200) {
+      this.setData({
+        isCollected: + !this.data.isCollected,
+      })
+    }
   },
-  handleClickLike() {
-    this.setData({
-      isLiked: !this.data.isLiked,
-    })
+  async handleClickLike() {
+    const isLiked = + !this.data.isLiked;
+    const {userid, exhibitId } = this.data;
+    let options = { method: 'POST'};
+    if (!isLiked) {
+      options = { method: 'DELETE'};
+    }
+    const res: any = await likeExhibit(userid, exhibitId, options);
+    console.log('res---', res);
+    if (res && res.code === 200) {
+      this.setData({
+        isLiked: + !this.data.isLiked,
+      })
+    }
   },
 
   // 业务逻辑
@@ -281,13 +302,15 @@ Page({
       const res_exhibitlist: any = await getExhibitList(unit_id);
 
       const exhibit_list = this.formatExhibitList(res_exhibitlist.exhibits, this.data.narrationId);
-      console.log('exhibit_list 111', exhibit_list);
+      console.log('exhibit_info 111', res.exhibit);
 
       const player = this.selectComponent("#player");
       player.initAudioList(exhibit_list, exhibit_info);
       this.setData({
         exhibitInfo: exhibit_info,
         exhibitList: exhibit_list,
+        isCollected: exhibit_info.collected,
+        isLiked: exhibit_info.liked,
         loading: false,
       })
     } catch (error) {
@@ -451,20 +474,25 @@ Page({
 
   },
 
-  onShow() {
-    setTimeout(() => {
+  async onShow() {
+    const { userid= 0 } = await wx.getStorageSync('userinfo'); 
+    if (userid) {
       this.setData({
-        loading: false,
+        userid,
       })
-    }, 1000);
+    }
     const player = this.selectComponent("#player");
     player.pageTimeUpateContinue();
+    this.setData({
+      loading: false,
+    })
   },
   onLoad(options) {
     if (options) {
       this.setData({
         narrationId: Number(options.narration_id),
         unitId: Number(options.unit_id),
+        exhibitId: Number(options.exhibit_id),
       }, () => {
         this.initPage(options.exhibit_id);
       })

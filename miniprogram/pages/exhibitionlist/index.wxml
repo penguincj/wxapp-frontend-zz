@@ -37,6 +37,6 @@
     ></card-group1>
    
   </view>
-  <bottom-bar currentkey="{{1}}"></bottom-bar>
+  <bottom-bar currentkey="{{2}}"></bottom-bar>
 </view>
 </page-meta>  

@@ -1,13 +1,13 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar loading="{{loading}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar loading="{{false}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-exhibit-detail">
   <view class="top-swiper-area">
     <swiper-unit list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit>
   </view>
   <view wx:if="{{topSwiperSelectIdx === 1}}" class="images-area">
     <swiper-card5 
-      title="{{exhibitInfo.name}}:{{exhibitInfo.desc}}"
+      title="{{exhibitInfo.name}}:{{exhibitInfo.description}}"
       list="{{exhibitInfo.more_image_urls}}"
     ></swiper-card5>
   </view>
@@ -35,9 +35,9 @@
   </view>
   <view class="operate-area">
     <view class="op-group">
-      <view class="o-item" bindtap="handleClickSave">
-        <image src="/static/images/o-shoucang.png" class="o-icon {{isSaved ? 'not-display': ''}}" mode="aspectFix" />
-        <image src="/static/images/o-shoucang-yi.png" class="o-icon {{isSaved ? '': 'not-display'}}" mode="aspectFix" />
+      <view class="o-item" bindtap="handleClickCollect">
+        <image src="/static/images/o-shoucang.png" class="o-icon {{isCollected ? 'not-display': ''}}" mode="aspectFix" />
+        <image src="/static/images/o-shoucang-yi.png" class="o-icon {{isCollected ? '': 'not-display'}}" mode="aspectFix" />
         <view class="o-text">收藏</view>
       </view>
       <view class="o-item" bindtap="handleClickLike">

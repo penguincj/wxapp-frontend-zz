@@ -67,6 +67,7 @@ export const getExhibitionListAll = (_querystr: any) => {
     return request(`/api/v1/exhibitions` + _querystr);
 }
 
+
 export const getUnitList = (_exhibitionid: any) => {
     return request('/api/v1/units?exhibitionID='+_exhibitionid);
 }
@@ -74,6 +75,11 @@ export const getUnitList = (_exhibitionid: any) => {
 export const getExhibitList = (_unitid: any) => {
     return request('/api/v1/exhibits?unitID='+_unitid);
 }
+export const queryExhibitListAll = (_querystr: any) => {
+    // return request(`/api/v1/queries` + _querystr);
+    return request(`/api/v1/exhibits` + _querystr);
+}
+
 
 export const getExhibitById = (_exhibitid: any) => {
     return request('/api/v1/exhibits/'+_exhibitid);
@@ -83,6 +89,27 @@ export const getNarrowList = (_exhibitionid: any) => {
     return request('/api/v1/narrations?exhibitionID='+_exhibitionid);
 }
 
-export const modifyNameAndAva = (params: any) => {
-    return request('/api/v1/modifynameandava', params)
+export const modifyNameAndAva = (_id: any, options: any) => {
+    return request(`/api/v1/users/${_id}/profile`, options)
 }
+
+export const likeExhibit = (user_id: any, exhibit_id: any, options: any) => {
+    return request(`/api/v1/users/${user_id}/exhibits/${exhibit_id}/like`, options);
+}
+
+export const collectExhibit = (user_id: any, exhibit_id: any, options: any) => {
+    return request(`/api/v1/users/${user_id}/exhibits/${exhibit_id}/collection`, options);
+}
+
+export const viewHistoryList = (user_id: any) => {
+    return request(`/api/v1/users/${user_id}/view/history`);
+}
+
+export const likeList = (user_id: any) => {
+    return request(`/api/v1/users/${user_id}/likes`);
+}
+
+export const collectionList = (user_id: any) => {
+    return request(`/api/v1/users/${user_id}/collections`);
+}
+

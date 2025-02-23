@@ -10,7 +10,7 @@
         <view class="zhanlan-type">常设展</view>
       </view>
       <image bindtap="handleClickPlayIcon" src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
-      <view class="desc">{{exhibitionInfo.desc}}</view>
+      <view class="desc">{{exhibitionInfo.description}}</view>
       <view class="line"></view>
       <view class="group-two">
         <view class="address text-flex">
@@ -57,7 +57,7 @@
           <view class="card-content-line-one">
             <view class="first-area">
               <image class="avatar" src="{{item.url}}" mode="aspectFix" />
-              <text class="name">{{item.desc}}</text>
+              <text class="name">{{item.description}}</text>
               <!-- <text class="fenge">|</text>
               <text class="title">{{item.name}}</text> -->
             </view>

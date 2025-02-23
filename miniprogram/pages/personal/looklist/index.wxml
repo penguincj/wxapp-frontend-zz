@@ -1,7 +1,16 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
-<navigation-bar title="格物观展" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar title="足迹" styleType="dark" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="look-list-page">
-  <scroll-card list="{{likeList}}"></scroll-card>
+  <scroll-card wx:if="{{!error && viewHistoryList.length}}" list="{{viewHistoryList}}"></scroll-card>
+  <view wx:if="{{!error && viewHistoryList.length === 0}}" class="empty-content">
+    <image src="/static/images/kong.png" class="empty-img" mode="aspectFill" />
+    <view class="empty-text">暂无内容</view>
+  </view>
+  <view wx:if="{{error}}" class="empty-content">
+    <image src="/static/images/wangluoshibai.png" class="empty-img" mode="aspectFill" />
+    <view class="empty-text">网络丢失,请检查网络</view>
+    <view class="empty-btn" bindtap="handleClickInit">重试</view>
+  </view>
 </view>
 </page-meta>  

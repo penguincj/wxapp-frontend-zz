@@ -106,6 +106,7 @@ export const getLocation = async () => {
 
 // 获取当前城市
 export const getCurrentCity = async () => {
+  const tx_key = 'KNNBZ-VBT63-BFE3H-OQXQF-TLIK3-MLFOC';
   const local_city = await wx.getStorageSync('city');
   if (local_city) {
     return local_city;
@@ -115,20 +116,65 @@ export const getCurrentCity = async () => {
     let lng = await wx.getStorageSync('longitude');
     
     let city = '';
-    if (!lat || !lng) {
-      const {latitude, longitude} = await getLocation();
-      lat = latitude;
-      lng = longitude
+    try {
+      if (!lat || !lng) {
+        const {latitude, longitude} = await getLocation();
+        lat = latitude;
+        lng = longitude;
+      }
+      const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
+      if (city_res && city_res.result && city_res.result.address_component && city_res.result.address_component.city) {
+        city = city_res.result.address_component.city;
+      } else {
+        city = defaultCity
+      }
+      await wx.setStorageSync('city', city);
+
+    } catch (error) {
+      city = defaultCity
+      await wx.setStorageSync('city', city);
+      console.error(error); 
     }
+    // wx.request({
+    //   url: `https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`,
+    //   header: {
+    //     'content-type': 'application/json',
+    //   },
+    //   success: (res) => {
+    //    if (res && res.data && res.data.status === 0) {
+    //     const loc_info = res.data.result;
+    //     if (loc_info && loc_info.address_component && loc_info.address_component.city) {
+    //       city = loc_info.address_component.city;
+    //       console.log('tengxun map', city);
+    //       wx.setStorageSync('city', city);
+    //     } else {
+    //       city = defaultCity
+    //       wx.setStorageSync('city', city);
+    //     }
+    //    } else {
+    //     city = defaultCity
+    //     wx.setStorageSync('city', city);
+    //    }
+    //   },
+    //   fail: (err) => {
+    //     city = defaultCity;
+    //     wx.setStorageSync('city', city);
+    //     console.error(err);
+    //   }
+    // })
     // todo 地理位置反解
-    city = defaultCity;
-    wx.setStorageSync('city', city);
+    return city;
+    
   }
 }
 
-export const request = function (url, options={}) {
-  const base_url = 'https://gewugo.com'
-
+export const request = async function (url, options={}, base_url='https://gewugo.com') {
+  let token = await wx.getStorageSync('token');
+  if (!token) {
+    const res = await getLoginStatus(); 
+    token = res?.token;
+  }
+  console.log('token---------', token)
   return new Promise((resolve, reject) => {
     wx.request({
       url: base_url + url,
@@ -137,11 +183,19 @@ export const request = function (url, options={}) {
       // header这里根据业务情况自行选择需要还是不需要
       header: {
         'content-type': 'application/json',
-        'Authorization': 'Bearer ' + getApp().globalData.token
+        'Authorization': 'Bearer ' + token
       },
-      success: (res) => {
+      success: async (res) => {
+        
         if (res.statusCode === 200) {
+          console.log('requset----', res.statusCode)
           resolve(res.data)
+        } else if (res.statusCode === 401) {
+          console.log('request 401');
+          
+          await getLoginStatus();
+          // return await request(...arguments);
+          // console.log( arguments)
         } else {
           reject(res.error)
         }
@@ -151,4 +205,104 @@ export const request = function (url, options={}) {
       }
     })
   })
+}
+
+
+export const map_request = function (_url: any, options={} ) {
+
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: _url,
+      method: options.method,
+      // header这里根据业务情况自行选择需要还是不需要
+      header: {
+        'content-type': 'application/json',
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          if (res.result) {
+            resolve(res.result)
+          } else if (res.data) {
+            resolve(res.data)
+
+          }
+        } else {
+          reject(res)
+        }
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}
+
+export const login_request = function () {
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: (res) => {
+        if (res.code) {
+          resolve(res)
+        } else {
+          reject(res)
+        }
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}
+
+export const getLoginStatus = async () => {
+  try {
+    console.log('getLoginStatus login users');
+
+    const local_token = await wx.getStorageSync('token');
+    const local_userinfo = await wx.getStorageSync('userinfo');
+    // const local_token = getApp().globalData.token;
+    // const local_userinfo =  getApp().globalData.userinfo;
+    if (local_token && local_userinfo && local_userinfo.nickname) {
+      return {
+        token: local_token,
+        userinfo: local_userinfo,
+      }
+    }
+    const { code } = await login_request();
+    console.log('code------------', code);
+    
+    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/api/v1/sessions/'+code, {method: 'POST'});
+    console.log('login users', token, nickname, avatar);
+    wx.setStorageSync('token', token);
+    wx.setStorageSync('userinfo', {
+      userid: id,
+      avatar,
+      nickname,
+    })
+    getApp().globalData.token = token;
+    getApp().globalData.userinfo = {
+      userid: id,
+      avatar,
+      nickname,
+    }
+    return {
+      token,
+      userinfo:  {
+        userid: id,
+        avatar,
+        nickname,
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      token: '',
+      userinfo: {
+        nickname: '',
+        avatar: '',
+        userid: -1,
+      }
+    };
+  }
+
 }

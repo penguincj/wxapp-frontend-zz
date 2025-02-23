@@ -1,4 +1,15 @@
 .exhibit-page {
+  @keyframes rotatecirle {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
   .unit-choose-area {
 
   }
@@ -12,7 +23,7 @@
   .audio-player {
     position: fixed;
     width: 100%;
-    height: 218rpx;
+    height: calc(150rpx + env(safe-area-inset-bottom));
     // background-color: red;
     bottom: 0;
     left: 0;
@@ -23,13 +34,41 @@
       display: flex;
       align-items: center;
       .img-group{
-        width: 106prx;
-        height: 106rpx;
+        position: relative;
+        width: 118prx;
+        height: 118rpx;
+        // padding-right: 110rpx;
         margin-left: 40rpx;
+        // .img-bg {
+        //   position: absolute;
+        //   top: 0;
+        //   left: 0;
+        //   width: 11rpx;
+        //   height: 110rpx;
+        //   // background: conic-gradient(#2C2F3B 10%, #ffffff 90%);
+        //   background: conic-gradient(green 0%, green 10%, #f1f1f1 90%, #f1f1f1 100%);
+        //   border-radius: 50%;
+        // }
+        // .img-bg-white {
+        //   position: absolute;
+        //   top: 4rpx;
+        //   left: 4rpx;
+        //   width: 102rpx;
+        //   height: 102rpx;
+        //   background: white;
+        //   border-radius: 50%;
+        // }
         .img-playing {
-          width: 96rpx;
-          height: 96rpx;
+          position: absolute;
+          top: 13rpx;
+          left: 13rpx;
+          width: 94rpx;
+          height: 94rpx;
           border-radius: 50%;
+        }
+        .img-animate {
+          animation: rotatecirle 4s linear 0s infinite;
+
         }
       }
       .info-group {

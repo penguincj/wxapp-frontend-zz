@@ -16,7 +16,7 @@
                 <span class="desc-title">{{item.name}}</span>
                 <span class="exhibition-type">{{item.short ? '临时展' : '常设展'}}</span>
               </view>
-              <view class="desc-desc">{{item.desc}}</view>
+              <view class="desc-desc">{{item.description}}</view>
               <view class="btn-group">
                 <image class="btn-img" src="/static/images/btn1.png" mode="aspectFix" />
                 <view class="btn-text">查看</view>

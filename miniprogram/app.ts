@@ -1,5 +1,6 @@
 // app.ts
-import { getCurrentCity } from "./utils/util"
+import { Image } from "XrFrame/kanata/lib/frontend"
+import { getLoginStatus } from "./utils/util"
 
 App<IAppOption>({
   globalData: {
@@ -13,13 +14,19 @@ App<IAppOption>({
       lastPlayIndex: 0,
       duration: 0,
       totalTimeText: '00:00',
-      userInfo: {
-        nickName: '',
-        avatarUrl: ''
-      }
+      userinfo: {
+        nickname: '',
+        avatar: '',
+        userid: -1,
+      },
+      token: '',
+    },
+    system: {
+      statusBarHeight: 0,
+      bottomSafeHeight: 0, // 底部安全区域高度
     }
   },
-  onLaunch() {
+  async onLaunch() {
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -37,7 +44,7 @@ App<IAppOption>({
     //     console.log('location error', res)
     //   }
     // })
-    getCurrentCity();
+    // getCurrentCity();
 
     // wx.loadFontFace({
     //   family: 'MySimSun',
@@ -53,24 +60,45 @@ App<IAppOption>({
     //     console.log('font', res.status)
     //   }
     // });
-    
+
+    let sysInfo = wx.getWindowInfo();
+let menuInfo = wx.getMenuButtonBoundingClientRect();
+let navigationBarHeight = (menuInfo.top - sysInfo.statusBarHeight) * 2 + menuInfo.height;
+console.log('navigationBarHeight', sysInfo.safeArea.height);
+this.globalData.system.statusBarHeight = sysInfo.statusBarHeight;
     // 登录
-    wx.login({
-      success: res => {
-        console.log('login status', res)
-       
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      },
-      fail: (error) => {
-        console.log('login status error', error)
+    // wx.login({
+    //   success: res => {
+    //     console.log('login status', res)
+    //     wx.request({
+    //       url: 'https://gewugo.com/api/v1/sessions/'+ res.code,
+    //       method: 'POST',
+    //       header: {
+    //         'content-type': 'application/json',
+    //       },
+    //       success: (res: any) => {
+    //         console.log('session login', res);
+    //         if (res && res.statusCode === 200 && res.data && res.data.token ) {
+    //           wx.setStorageSync('token', res.data.token);
+              
 
-      }
-    })
+    //         }
+    //       },
+    //       fail: (err) => {
+    //         console.error(err)
+    //       }
+    //     })
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //   },
+    //   fail: (error) => {
+    //     console.log('login status error', error)
 
-    // try {
-    // } catch (error) {
-    //   console.log('font error', error)
-    // }
-    
+    //   }
+    // })
+
+  getLoginStatus();
+  // const {token, userinfo} = await getLoginStatus();
+  // getApp().globalData.token = token;
+  // getApp().globalData.userinfo = userinfo;
   },
 })

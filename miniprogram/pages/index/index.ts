@@ -43,11 +43,11 @@ Page({
     loading: false,
   },
 
-  handleClickMuseumIcon() {
-    wx.navigateTo({
-      url: '/pages/museum/museumlist/index',
-    })
-  },
+  // handleClickMuseumIcon() {
+  //   wx.navigateTo({
+  //     url: '/pages/museum/museumlist/index',
+  //   })
+  // },
   handleClickMuseumItem(event: any) {
     console.log(event);
 

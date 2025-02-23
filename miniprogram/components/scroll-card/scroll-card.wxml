@@ -27,20 +27,20 @@
 					>
 					<view class="card-wrapper">
 						<view class="group-one" id="image{{index}}">
-							<image class="card-img" src="{{item.imagepath}}" mode="aspectFix" />
+							<image class="card-img" src="{{item.image_url}}" mode="aspectFix" />
 							<view class="card-info">
-								<view class="card-title">{{item.title}}</view>
+								<view class="card-title">{{item.name}}</view>
 								<view class="card-time">
 									{{item.createtime}}
 								</view>
 								<view class="card-likenum">
-									{{item.zannum}}人已点赞
+									{{item.liked}}人已点赞
 								</view>
 							</view>
 						</view>
 						<view class="card-operation" id="operation{{index}}">
 							<view class="item-one">分享</view>
-							<view class="item-two">移除</view>
+							<view class="item-two" data-idx="{{item.id}}" bindtap="handleDeleteItem">移除</view>
 						</view>
 					</view>
 					</scroll-view>

@@ -10,15 +10,36 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/login/index",
-          "pathName": "pages/login/index",
+          "name": "pages/personal/collectionlist/index",
+          "pathName": "pages/personal/collectionlist/index",
           "query": "",
           "launchMode": "default",
           "scene": null
         },
         {
-          "name": "pages/museum/exhibitionall/index",
-          "pathName": "pages/exhibitionall/index",
+          "name": "pages/personal/looklist/index",
+          "pathName": "pages/personal/looklist/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/personal/likelist/index",
+          "pathName": "pages/personal/likelist/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/profile/index",
+          "pathName": "pages/profile/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/login/index",
+          "pathName": "pages/login/index",
           "query": "",
           "launchMode": "default",
           "scene": null
@@ -31,22 +52,8 @@
           "scene": null
         },
         {
-          "name": "pages/feedback/index",
-          "pathName": "pages/feedback/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
           "name": "pages/exhibitiondetail/index",
           "pathName": "pages/exhibitiondetail/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/loginpage/index",
-          "pathName": "pages/loginpage/index",
           "query": "",
           "launchMode": "default",
           "scene": null
@@ -68,13 +75,6 @@
         {
           "name": "pages/museum/exhibitiondetail/index",
           "pathName": "pages/museum/exhibitiondetail/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/personal/likelist/index",
-          "pathName": "pages/personal/likelist/index",
           "query": "",
           "launchMode": "default",
           "scene": null

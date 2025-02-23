@@ -1,27 +1,28 @@
 <!--index.wxml-->
 <page-meta page-style="overflow: hidden;">
-  <navigation-bar back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <navigation-bar extClass="transparent" back="{{false}}" color="black" background="#FFF"></navigation-bar>
   <view class="profile-page">
-    <image class="bg-img" src="http://gewugo.com/api/v1/storage/image/profile-bg-7662115813.jpg" mode="aspectFill" />
+    <!-- <image class="bg-img" src="http://gewugo.com/api/v1/storage/image/profile-bg-7662115813.jpg" mode="aspectFill" /> -->
+    <image class="bg-img" src="/static/images/bg.png" mode="aspectFill" />
     <view class="avatar-group">
       <image class="avatar" src="/static/images/ava1.png" mode="aspectFill"  />
       <image class="ava-bg" src="/static/images/avatar-default.png" mode="aspectFill"  />
     </view>
     <view class="content">
-      <view class="username-group">
-        <text class="name">用户名</text>
+      <view class="username-group" bindtap="handleClickModifyUserInfo">
+        <text class="name">{{userInfo.nickname}}</text>
         <image class="edit-icon" src="/static/images/edit.png" mode="aspectFill"  />
       </view>
       <view class="group-one">
-        <view class="group-item">
+        <view class="group-item" bindtap="handleClickCollect">
           <image class="icon" src="/static/images/shoucang-yinying.png" mode="aspectFill"  />
           <view class="text">收藏</view>
         </view>
-        <view class="group-item">
+        <view class="group-item" bindtap="handleClickLike">
           <image class="icon" src="/static/images/like-yinying.png" mode="aspectFill"  />
           <view class="text">点赞</view>
         </view>
-        <view class="group-item">
+        <view class="group-item" bindtap="handleClickHistory">
           <image class="icon" src="/static/images/zuji-yinying.png" mode="aspectFill"  />
           <view class="text">足迹</view>
         </view>
@@ -65,7 +66,7 @@
     </view>
 
     <view>
-      <bottom-bar currentkey="{{2}}"></bottom-bar>
+      <bottom-bar currentkey="{{3}}"></bottom-bar>
     </view>
   </view>
 </page-meta>

@@ -22,7 +22,7 @@
             <view class="exhibition-type">{{item.short ? '临时展':'常设展'}}</view>
             <view class="item-desc-group">
               <view class="desc-title">{{item.name}}</view>
-              <view class="desc-desc">{{item.desc}}</view>
+              <view class="desc-desc">{{item.description}}</view>
               <view class="desc-opendate">
                 <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
                 {{item.opendate}}

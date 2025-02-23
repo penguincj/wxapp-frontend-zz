@@ -20,18 +20,21 @@
         playingIndex="{{playingIndex}}"
         bindChangeItem="handleClickExhibitItem"
         bindClickItemImage="handleClickItemImage"
-        scrollStyle="height: 610rpx"
+        scrollStyle="height: calc(100vh - 922rpx - {{listAreaHeight}} )"
       ></swiper-card6>
   </view>
 
   <view class="audio-player">
     <view class="audio-wrapper">
       <view class="img-group">
-          <image class="img-playing" src="/static/images/ava1.png" mode="aspectFix" />
+        <!-- <view class="img-bg" style=""></view>
+        <view class="img-bg-white"></view> -->
+        <circle-progress id="progressAni" curId="{{curExhibit.id}}" total="{{duration}}" progress="{{currentTime/duration}}"></circle-progress>
+        <image class="img-playing {{isPlay? 'img-animate': ''}}" src="{{curExhibit.image_url}}" mode="aspectFix" />
       </view>
       <view class="info-group">
         <view class="line-one">
-          <view class="title">{{curExhibit.name}}:{{curExhibit.desc}}</view>
+          <view class="title">{{curExhibit.name}}:{{curExhibit.description}}</view>
           <view class="time">
             <text>{{currentTimeText}}</text>
             <text class="fenge">/</text>
@@ -68,7 +71,10 @@
         showType="guanjianci"
         showInput="{{showInput}}"
         list="{{searchList}}"
+        playingIndex="{{playingIndex}}"
         bindClickSearch="handleClickSearch"
+        bindChangeItem="handleClickSearchExhibitItem"
+
       ></swiper-card6>
     </view>
     </dialog-half>

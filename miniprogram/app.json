@@ -20,7 +20,7 @@
       "root": "pages/personal",
       "pages": [
         "looklist/index",
-        "savelist/index",
+        "collectionlist/index",
         "likelist/index"
       ]
     },

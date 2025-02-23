@@ -1,9 +1,9 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
-<navigation-bar title="点赞" styleType="dark" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
-<view class="like-list-page">
-  <scroll-card wx:if="{{!error && likeList.length}}" list="{{likeList}}" bindDeleteItem="handleDeleteItem"></scroll-card>
-  <view wx:if="{{!error && likeList.length === 0}}" class="empty-content">
+<navigation-bar title="收藏" styleType="dark" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view class="collection-list-page">
+  <scroll-card wx:if="{{!error && collectionList.length}}" list="{{collectionList}}" bindDeleteItem="handleDeleteItem"></scroll-card>
+  <view wx:if="{{!error && collectionList.length === 0}}" class="empty-content">
     <image src="/static/images/kong.png" class="empty-img" mode="aspectFill" />
     <view class="empty-text">暂无内容</view>
   </view>

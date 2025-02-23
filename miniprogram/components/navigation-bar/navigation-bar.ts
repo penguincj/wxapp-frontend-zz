@@ -59,7 +59,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    displayStyle: ''
+    displayStyle: '',
+    statusBarHeight: '0px',
   },
   lifetimes: {
     attached() {
@@ -80,6 +81,16 @@ Component({
         }
       })
     },
+  },
+  pageLifetimes: {
+    show() {
+      const hei = getApp().globalData.system.statusBarHeight;
+      console.log('hei navigationBarHeight', hei);
+      
+      this.setData({
+        statusBarHeight: hei + 'px'
+      })
+    }
   },
   /**
    * 组件的方法列表

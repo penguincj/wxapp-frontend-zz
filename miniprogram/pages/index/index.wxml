@@ -7,7 +7,7 @@
       <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
         <image class="recommend-img" src="{{recoExhibition.image_url}}" />
         <view class="recommend-img-mask"></view>
-        <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" />
+        <!-- <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" /> -->
         <view class="recommend-group">
           <view class="recommend-title">
             <image class="title-png" src="/static/images/shouye-jinri.png" mode="aspectFix" />
@@ -19,7 +19,7 @@
         <view class="recommend-detail">
           <view class="recommend-detail-content">
             <view class="recommend-detail-title">{{recoExhibition.name}}</view>
-            <view class="recommend-detail-desc">{{recoExhibition.desc}}</view>
+            <view class="recommend-detail-desc">{{recoExhibition.description}}</view>
             <view class="recommend-detail-fenge"></view>
             <view class="recommend-detail-museum-title">{{recoExhibition.museum_name}}</view>
             <view class="recommend-detail-desc">中国.{{recoExhibition.city_name}}</view>
@@ -27,7 +27,7 @@
         </view>
       </view>
       <view class="index-card-group {{isRecoClicked ? 'index-card-group-hide-ani' : ''}}">
-        <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: 930rpx;">
+        <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 721rpx)">
           <block wx:for="{{museumList}}">
             <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
               <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />

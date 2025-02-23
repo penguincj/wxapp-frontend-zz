@@ -20,7 +20,7 @@
             <view class="city-item-mask" />
             <text class="city-item-name">{{item.name}}</text>
             <view class="city-museum">
-              <text class="city-museum-text">{{item.desc}}</text>
+              <text class="city-museum-text">{{item.description}}</text>
               <image src="/static/images/arr-r.png" alt="arrow" class="museum-arrow" />
             </view>
             <view class="zhanlan-group">
@@ -36,5 +36,8 @@
       </view>
     </view>
     <loading show="{{showLoading}}"></loading>
+    <view>
+      <bottom-bar currentkey="{{1}}"></bottom-bar>
+    </view>
   </view>
 </page-meta>

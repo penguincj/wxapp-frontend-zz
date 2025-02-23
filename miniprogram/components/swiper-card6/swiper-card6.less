@@ -3,7 +3,7 @@
     white-space: nowrap;
   }
   .container {
-    padding: 40rpx 0 0 0;
+    padding: 30rpx 0 0 0;
   }
 
   .title-line {
@@ -13,11 +13,13 @@
     margin-top: 60rpx;
 
     .title-left {
-  
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
       .title {
         position: relative;
         margin-top: 0;
-        transform: translateY(-2rpx);
+        height: 32rpx;
         .title-name {
           position: absolute;
           top:0;
@@ -40,10 +42,10 @@
        
       }
       .title-num {
-        font-family: D-DIN;
+        font-family: MyDIN;
         font-size: 28rpx;
         color: #9AA7B1;
-        vertical-align: sub;
+        line-height: 40rpx;
       }
     }
     .title-right {
@@ -102,6 +104,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    &:last-child{
+      content: '';
+      padding-bottom: 34rpx;
+    }
     .group-one {
       display: flex;
       align-items: center;

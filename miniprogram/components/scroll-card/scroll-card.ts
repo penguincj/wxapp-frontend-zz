@@ -60,6 +60,13 @@ Component({
         toView: 'image'+idx
       });
     },
+    handleDeleteItem(e: any) {
+      const { idx } = e.currentTarget.dataset;
+
+      this.triggerEvent('DeleteItem', {
+        id: idx
+      })
+    }
 
   },
 })

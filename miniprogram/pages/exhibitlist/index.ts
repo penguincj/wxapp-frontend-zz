@@ -1,5 +1,5 @@
-import { getUnitList, getExhibitList } from '../../api/api';
-import { generateNewUrlParams } from '../../utils/util';
+import { getUnitList, getExhibitList, queryExhibitListAll } from '../../api/api';
+import { generateNewUrlParams, transferObjToUrlParams } from '../../utils/util';
 
 import { audioList, exhibitionList } from './mock';
 const base_url = "http://gewugo.com";
@@ -54,6 +54,9 @@ Page({
     curExhibit: null, // 当前播放展览
     curUnitId: -1, // 当前单元id
     narrationId: -1, // 页面params语音包id
+    exhibitionId: -1,
+    listAreaHeight: '0px', // 播放列表区域高度
+    // playProgress: 0,
   },
 
   // player-comp
@@ -99,7 +102,7 @@ Page({
       isPlay: false,
     });
     const { selectId } = event.detail;
-    const player = this.selectComponent("#player")
+    const player = this.selectComponent("#player");
     await player.handlePlayOtherAudioById(selectId);
   },
   async handleClickItemImage(event: any) {
@@ -167,16 +170,61 @@ Page({
       searchList: [],
     })
   },
-  handleClickSearch(event: any) {
+  async handleClickSearch(event: any) {
     const { keyword } = event.detail;
     console.log('keyword', keyword);
     this.setData({
       showInput: false,
     });
-    this.setData({
-      searchList: audioList,
-    })
+    try {
+      // const url_params = transferObjToUrlParams({
+      //   keyword,
+      //   type: 'exhibit',
+      //   exhibitionID: this.data.exhibitionId,
+      //   exhibitID: 15
+      // })
+      const url_params = transferObjToUrlParams({
+        unitID: 10
+      })
+      const res:any = await queryExhibitListAll(url_params)
+      if( res && res.exhibits) {
+        const f_exhibitlist = this.formatExhibitData(res.exhibits, this.data.narrationId);
+        this.setData({
+          searchList: f_exhibitlist,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+    
   },
+  async handleClickSearchExhibitItem(event: any) {
+    this.setData({
+      isPlay: false,
+    });
+    const { selectId } = event.detail;
+    const player = this.selectComponent("#player")
+
+    const search_item = this.data.searchList.find((i:any) => i.id === selectId);
+    console.log('search item', selectId, search_item);
+    if (search_item.unit_id !== this.data.curUnitId) {
+      await this.playOtherUnit(search_item.unit_id);
+      setTimeout(async () => {
+        await player.handlePlayOtherAudioById(selectId);
+      }, 100)
+    } else {
+      await player.handlePlayOtherAudioById(selectId);
+    }
+    
+  },
+
+  playOtherUnit(_unitid: any) {
+    this.setData({
+      curUnitId: _unitid,
+    });
+    this.initExhibitData(_unitid)
+  },
+
 
   // swiper-unit组件
   handleChangeUnit(event: any) {
@@ -190,6 +238,9 @@ Page({
 
   formatExhibitData(_exhibitlist: any, _narrationid: any) {
     return _exhibitlist.map((exhibit: any) => {
+      // if (!exhibit.audio_infos){
+      //   return null
+      // }
       const audioitem = exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
       console.log('initPage formatExhibitData', audioitem)
 
@@ -500,14 +551,20 @@ Page({
   },
 
   onShow() {
+    const hei = getApp().globalData.system.statusBarHeight;
+
     this.setData({
       loading: true,
+      listAreaHeight: hei + 'px',
     })
     const player = this.selectComponent("#player");
     player.pageTimeUpateContinue();
   },
   onLoad(options) {
     if(options && options.exhibition_id) {
+      this.setData({
+        exhibitionId: Number(options.exhibition_id),
+      })
       this.initPage(options.exhibition_id);
     }
     
