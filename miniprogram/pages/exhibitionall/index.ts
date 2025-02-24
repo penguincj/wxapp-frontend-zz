@@ -1,29 +1,6 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
 import { getExhibitionListAll } from "../../api/api";
-import { transferObjToUrlParams, generateNewUrlParams } from "../../utils/util";
+import { transferObjToUrlParams, generateNewUrlParams, backToTargetPage } from "../../utils/util";
 
-const exhibitions = [
-  {
-    id: 0,
-    name: '玉出昆冈',
-    img: 'http://gewugo.com/api/v1/storage/image/swiper1-1489240990.jpg',
-    desc: '清代宫廷和田玉文化特展',
-    link: 'pages/index/index',
-    opendate: '2024.01.20-2024.03.31',
-    type: '常设展'
-  },
-  {
-    id: 1,
-    name: '玉出昆冈2',
-    img: 'http://gewugo.com/api/v1/storage/image/swiper2-4593118634.jpg',
-    desc: '清代宫廷和田玉文化特展2',
-    link: 'pages/index/index',
-    opendate: '2024.01.21-2024.03.31',
-    type: '临时展'
-  },
-]
 Page({
   data: {
     exhibitions: [] as any,
@@ -62,6 +39,11 @@ Page({
     wx.navigateTo({
       url: '/pages/exhibitiondetail/index' + url_params
     })
+  },
+
+  handleClickPlayerComp() {
+    const targetPage = "pages/exhibitlist/index";
+    backToTargetPage(targetPage);
   },
   
   onShow() {

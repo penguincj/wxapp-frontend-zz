@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <page-meta page-style="overflow: hidden;">
-  <navigation-bar title="设置" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <navigation-bar title="账户设置" styleType="dark" back color="black" background="#FFF"></navigation-bar>
   <view class="setting-page">
     <view class="links">
       <view class="link-group">

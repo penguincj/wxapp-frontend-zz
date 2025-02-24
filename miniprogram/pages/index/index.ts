@@ -1,38 +1,8 @@
 import { getCityList, getMuseumList, getCityRecoExhibitionList } from "../../api/api";
-import { getCurrentCity } from "../../utils/util";
+import { getCurrentCity, backToTargetPage } from "../../utils/util";
 
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
-const pageInfo = {
-  img: 'http://gewugo.com/api/v1/storage/image/shouye-bg-7062504217.jpg',
-  cityname: '北京',
-  cityid: 1,
-  exhibitName: '玉出坤岗',
-  exhibitDesc: '清代宫廷和田玉文化特展',
-  museumname: '故宫博物院',
-  museumList: [{
-    museumid: 1,
-    name: '故宫博物院',
-    img: 'http://gewugo.com/api/v1/storage/image/shou1-3658272783.jpg',
-    address: '北京市东城区景山前街4号',
-    tel: '010-64037666',
-    openTime: '08:30-17:00',
-    exhibitionNum: 20,
-  }, {
-    museumid: 2,
-    name: '奥运博物馆',
-    img: 'http://gewugo.com/api/v1/storage/image/shou2-0552318603.jpg',
-    address: '北京市东城区景山前街4号',
-    tel: '010-64037666',
-    openTime: '08:30-17:00',
-    exhibitionNum: 10,
-  }],
-  citypinyin: 'beijing',
-}
 Page({
   data: {
-    pageInfo: pageInfo,
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
@@ -68,13 +38,22 @@ Page({
       isRecoClicked: false,
     })
   },
+  handleClickPlayerComp() {
+    const targetPage = "pages/exhibitlist/index";
+    backToTargetPage(targetPage);
+  },
 
   // 页面数据
   async getPageData() {
     try {
+      const defalutCityName = '北京市';
       const city = await getCurrentCity();
       const citylist:any = await getCityList();
-      const city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
+      let city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
+      const isCurCityInCityList = citylist.cities.findIndex((i: any) => i.name === city);
+      if (!isCurCityInCityList) {
+        city_item = ((citylist || {}).cities || []).find((i: any) => i.name === defalutCityName);
+      }
       const city_id = city_item.id;
       console.log('city_id', city_id);
       if (city_item && city_item.name) {

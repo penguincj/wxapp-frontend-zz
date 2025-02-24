@@ -8,8 +8,12 @@ Component({
   properties: {
     list: {
       type: Array,
-      value: []
+      value: [] as any,
     },
+    cardStyle: {
+      type: String,
+      value: '',
+    }
   },
   /**
    * 组件的初始数据
@@ -66,7 +70,96 @@ Component({
       this.triggerEvent('DeleteItem', {
         id: idx
       })
+    },
+
+
+
+    /**
+     * 处理touchstart事件
+     */
+  // handleTouchStart(e) {
+  //   this.startX = e.touches[0].pageX
+  // },
+
+
+  /**
+   * 处理touchend事件
+   */
+  // handleTouchEnd(e) {
+  //   if (e.changedTouches[0].pageX < this.startX && e.changedTouches[0].pageX - this.startX <= -30) {
+  //     this.showDeleteButton(e)
+  //   } else if (e.changedTouches[0].pageX > this.startX && e.changedTouches[0].pageX - this.startX < 30) {
+  //     this.showDeleteButton(e)
+  //   } else {
+  //     this.hideDeleteButton(e)
+  //   }
+  // },
+  /**
+     * 显示删除按钮
+     */
+  showDeleteButton: function (e: any) {
+    let index = e.currentTarget.dataset.index;
+    this.setXmove(index, -125);
+  },
+
+
+  /**
+   * 隐藏删除按钮
+   */
+  hideDeleteButton: function (e: any) {
+    let index = e.currentTarget.dataset.index;
+    this.setXmove(index, 0);
+  },
+
+
+  /**
+   * 设置movable-view位移
+   */
+  setXmove: function (index: any, xmove: any) {
+    let { list } = this.data;
+    list[index].xmove = xmove;
+    this.setData({
+      list: list
+    })
+    console.log(this.data.list)
+  },
+
+
+  /**
+   * 处理movable-view移动事件
+   */
+  handleMovableChange: function (e: any) {
+    if (e.detail.source === 'friction') {
+      if (e.detail.x < -30) {
+        this.showDeleteButton(e)
+      } else {
+        this.hideDeleteButton(e)
+      }
+    } else if (e.detail.source === 'out-of-bounds' && e.detail.x === 0) {
+      this.hideDeleteButton(e)
     }
+  },
+
+  handleDelete(e: any) {
+    let { id } = e.currentTarget.dataset;
+    this.itemDel(id)
+  },
+  itemDel(id: any) {
+    // this.data.list.forEach((item, index) => {
+    //   if (item.id == id) {
+    //     this.data.list.splice(index, 1)
+    //   }
+    //   this.setData({
+    //     list: this.data.list
+    //   })
+    //   wx.showToast({
+    //     title: '删除成功',
+    //     icon: 'success'
+    //   })
+    // })
+    console.log('itemDel', id)
+  }
+
 
   },
 })

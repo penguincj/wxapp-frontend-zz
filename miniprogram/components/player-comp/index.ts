@@ -81,6 +81,7 @@ Component({
     // innerAudioContext: uni.createInnerAudioContext(),
     lastAudioUrl: '',
     bgAudioManager: null as any,
+    isShow: false,
   },
   methods: {
     handleAudioPause() {
@@ -221,6 +222,30 @@ Component({
         // })
       })
     },
+    checkIsAudioPlaying() {
+      if (global_audio && global_audio.bgAudio) {
+        if (global_audio.bgAudio.paused) {
+          return {
+            isAudioExist: true,
+            isPlay: false,
+            playingIndex: global_audio.playingIndex,
+            totalTimeText: global_audio.totalTimeText,
+            duration: global_audio.bgAudio.duration,
+          }
+        } else {
+          return {
+            isAudioExist: true,
+            isPlay: true,
+            playingIndex: global_audio.playingIndex,
+            totalTimeText: global_audio.totalTimeText,
+            duration: global_audio.bgAudio.duration,
+          }
+        }
+      }
+      return {
+        isAudioExist: false,
+      }
+    },
     refreshPageStatusFromCurrentPlayingStatus() {
       const paused = global_audio.bgAudio.paused;
       console.log('refreshPageStatusFromCurrentPlayingStatus', global_audio.bgAudio.paused);
@@ -240,7 +265,6 @@ Component({
     onBgTimeUpdate() {
 
       global_audio.bgAudio.onTimeUpdate(throttle(() => {
-        console.log('2')
         const time = Number(parseFloat(global_audio.bgAudio.currentTime).toFixed(2));
         const dur = global_audio.bgAudio.duration;
 
@@ -371,7 +395,9 @@ Component({
 
       }, 300)
       this.onBgTimeUpdate();
-
+      this.setData({
+        isShow: true,
+      })
     },
 
     async initAudioList(_audioList, _curExhibit) {
@@ -390,14 +416,21 @@ Component({
         console.error(error)
       }
       await this.initPageAudio(_curExhibit);
-    }
+    },
+
+    handleClickPlayerComp() {
+      this.triggerEvent('ClickPlayerComp')
+    },
 
   },
 
   lifetimes: {
-    async attached() {
-      console.log('in attached player comp', (global_audio.bgAudio || {}).currentTime, global_audio.curExhibit);
+    async attached() { 
+      console.log('in attached player comp',global_audio.bgAudio);
       if (global_audio && global_audio.bgAudio) {
+        this.setData({
+          isShow: true,
+        })
         this.triggerEvent('ContinuePlay', {
           isPlay: true,
           duration: global_audio.bgAudio.duration,
@@ -420,6 +453,9 @@ Component({
           // this.setData({
           //   stored_audio,
           // })
+          this.setData({
+            isShow: false,
+          })
         } catch (error) {
           console.error(error)
         }
@@ -429,5 +465,15 @@ Component({
 
     },
   },
+  pageLifetimes: {
+    show() {
+      console.log('in attached player comp show');
+      if (global_audio && global_audio.bgAudio) {
+        this.setData({
+          isShow: true,
+        })
+      }
+    }
+  }
 
 })

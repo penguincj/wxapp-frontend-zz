@@ -1,13 +1,9 @@
 import { getCityList, getCityRecoExhibitionList, getCityLongExhibitionList, getCityPastExhibitionList } from '../../api/api';
-import { getCurrentCity, generateNewUrlParams } from "../../utils/util";
-
-import { audioList, cardConfig } from './mock';
-const base_url = "http://gewugo.com";
-// let bgAudio = wx.getBackgroundAudioManager();
+import { getCurrentCity, generateNewUrlParams, backToTargetPage } from "../../utils/util";
 
 Page({
   data: {
-    exhibitionList: audioList,
+    exhibitionList: [],
     playingIndex: -1, // 当前播放index
     lastPlayIndex: -1, // 之前播放index
     sliderIndex: 0, // 当前播放进度
@@ -22,9 +18,9 @@ Page({
     isAutoPlay: false,
     stored_audio: [] as string[],
     curMuseumId: -1,
-    recommendList: cardConfig,
-    normalList: cardConfig,
-    outofdateList: cardConfig,
+    recommendList: [],
+    normalList: [],
+    outofdateList: [],
     loading: true,
     dateObj: {},
     curCityId: -1,
@@ -42,6 +38,12 @@ Page({
       url: '/pages/exhibitiondetail/index' + url_params,
     })
   },
+
+    handleClickPlayerComp() {
+      const targetPage = "pages/exhibitlist/index";
+      backToTargetPage(targetPage);
+    },
+  
 
   handleClickMorePast() {
     const url_params = generateNewUrlParams({

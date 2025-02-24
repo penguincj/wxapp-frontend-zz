@@ -1,6 +1,7 @@
 // app.ts
 import { Image } from "XrFrame/kanata/lib/frontend"
-import { getLoginStatus } from "./utils/util"
+import { getLoginStatus, clearAndFreshLoginStatus } from "./utils/util"
+import { getCityList } from "./api/api"
 
 App<IAppOption>({
   globalData: {
@@ -14,17 +15,18 @@ App<IAppOption>({
       lastPlayIndex: 0,
       duration: 0,
       totalTimeText: '00:00',
-      userinfo: {
-        nickname: '',
-        avatar: '',
-        userid: -1,
-      },
-      token: '',
+      exhibitlistParams: '',
     },
     system: {
       statusBarHeight: 0,
       bottomSafeHeight: 0, // 底部安全区域高度
-    }
+    },
+    userinfo: {
+      nickname: '',
+      avatar: '',
+      userid: -1,
+    },
+    token: '',
   },
   async onLaunch() {
     // 展示本地存储能力
@@ -63,9 +65,10 @@ App<IAppOption>({
 
     let sysInfo = wx.getWindowInfo();
 let menuInfo = wx.getMenuButtonBoundingClientRect();
-let navigationBarHeight = (menuInfo.top - sysInfo.statusBarHeight) * 2 + menuInfo.height;
+// let navigationBarHeight = (menuInfo.top - sysInfo.statusBarHeight) * 2 + menuInfo.height;
 console.log('navigationBarHeight', sysInfo.safeArea.height);
 this.globalData.system.statusBarHeight = sysInfo.statusBarHeight;
+this.globalData.system.bottomSafeHeight = sysInfo.safeArea.height;
     // 登录
     // wx.login({
     //   success: res => {
@@ -95,8 +98,16 @@ this.globalData.system.statusBarHeight = sysInfo.statusBarHeight;
 
     //   }
     // })
-
-  getLoginStatus();
+try {
+  // const res = await getLoginStatus();
+ 
+    clearAndFreshLoginStatus();
+  
+  
+} catch (error) {
+  console.log('login res', error);
+  
+}
   // const {token, userinfo} = await getLoginStatus();
   // getApp().globalData.token = token;
   // getApp().globalData.userinfo = userinfo;

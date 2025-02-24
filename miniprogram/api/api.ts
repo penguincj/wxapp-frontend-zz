@@ -113,3 +113,10 @@ export const collectionList = (user_id: any) => {
     return request(`/api/v1/users/${user_id}/collections`);
 }
 
+export const sendViewExhibitionAction = (_userid: any, _exhibitionid: any, options: any) => {
+    return request(`/api/v1/users/${_userid}/exhibitions/${_exhibitionid}/view`, options)
+}
+
+export const sendFeedback = (_userid: any, options: any) => {
+    return request(`/api/v1/users/${_userid}/complain`, options)
+}

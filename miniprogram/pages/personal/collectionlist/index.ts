@@ -1,10 +1,13 @@
 import { collectionList, collectExhibit } from '../../../api/api';
+import {  backToTargetPage } from "../../../utils/util";
 
 Page({
   data: {
     collectionList: [],
     loading: false,
     error: false,
+    styleHeight: '',
+
   },
   async initPage() {
     const {userid} = await wx.getStorageSync('userinfo');
@@ -12,8 +15,14 @@ Page({
       const res: any = await collectionList(userid)
       console.log(res);
       if (res && res.code === 200) {
+        const list = res.exhibits.map((i: any) => {
+          return {
+            ...i,
+            xmove: 0,
+          }
+        })
         this.setData({
-          collectionList: res.exhibits
+          collectionList: list
         })
       } else {
         this.setData({
@@ -32,6 +41,10 @@ Page({
   handleClickInit() {
     this.initPage();
   },
+    handleClickPlayerComp() {
+      const targetPage = "pages/exhibitlist/index";
+      backToTargetPage(targetPage);
+    },
   async handleDeleteItem(event: any) {
     const { id } = event.detail;
     const {userid} = await wx.getStorageSync('userinfo');
@@ -45,7 +58,12 @@ Page({
     }
   },
   async onShow() {
-    this.initPage()
+    this.initPage();
+    const {statusBarHeight} = getApp().globalData.system;
+    const hei = `height: calc(100vh - ${statusBarHeight}px - 44px)`;
+    this.setData({
+      styleHeight: hei,
+    })
   },
   onLoad(options) {
     

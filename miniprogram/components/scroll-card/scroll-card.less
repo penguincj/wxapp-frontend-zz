@@ -14,7 +14,7 @@
     border-radius: 10rpx;
     background: #FFFFFF;
     // background: red;
-    padding: 20rpx 0 20rpx 20rpx;
+    // padding: 20rpx 0 20rpx 20rpx;
     box-sizing: border-box;
     
     .card-wrapper {
@@ -36,7 +36,10 @@
       padding-left: 20rpx;
       width: 470rpx;
       height: 240rpx;
-      // border-bottom: 1rpx soild rgba(44, 47, 59, 0.1);
+      text-align: left;
+      background-color: #FFFFFF;
+      box-sizing: border-box;
+      display: inline-block;
       border-bottom: 1px solid rgba(44, 47, 59, 0.1);
       .card-title {
         font-size: 30rpx;
@@ -66,21 +69,89 @@
       height: 240rpx;
       display: flex;
       font-size: 28rpx;
-      line-height: 240rpx;
       text-align: center;
-      .item-one {
-        width: 125rpx;
-        height: 240rpx;
-        background: #F7F8F9;
-        color: #2C2F3B;
-      }
-      .item-two {
-        width: 125rpx;
-        height: 240rpx;
-        background: #EF6958;
-        color: #FFFFFF;
-      }
+      
     }
     
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  .container-item {
+    // margin: 20rpx auto;
+    width: 710rpx;
+    height: 240rpx;
+    background: #FFFFFF;
+    // border-radius: 20rpx;
+    // line-height: 20rpx;
+    text-align: center;
+    display: flex;
+    /* 添加此属性 不会划出界面 */
+    overflow: hidden;
+    // box-shadow: 0rpx 5rpx 18rpx 3rpx rgba(176, 176, 176, 0.5);
+  }
+  
+  
+  movable-view {
+    width: 710rpx;
+    height: 240rpx;
+    background: #FFFFFF;
+    border-radius: 20rpx;
+    // line-height: 240rpx;
+    text-align: center;
+    font-size: 26rpx;
+    // color: #999999;
+  
+  
+  }
+  
+  
+  movable-area {
+    height: 240rpx;
+    background: #FFFFFF;
+    // border-radius: 20rpx 0 0 20rpx;
+    // line-height: 200rpx;
+    text-align: center;
+    width: calc(710rpx - 250rpx);
+  
+  
+  }
+  
+  
+  .movable_delete_btn {
+    width: 250rpx;
+    font-size: 24rpx;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: #FFFFFF;
+    border-top-right-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+    .item-one {
+      width: 125rpx;
+      height: 240rpx;
+      background: #F7F8F9;
+      color: #2C2F3B;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 240rpx;
+    }
+    .item-two {
+      width: 125rpx;
+      height: 240rpx;
+      background: #EF6958;
+      color: #FFFFFF;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 240rpx;
+    }
   }
 }

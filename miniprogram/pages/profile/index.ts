@@ -1,4 +1,4 @@
-import { getCurrentPageParamStr } from "../../utils/util"
+import { getCurrentPageParamStr, backToTargetPage } from "../../utils/util"
 const defaultAvatar = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
 Page({
@@ -50,6 +50,28 @@ Page({
       url: '/pages/personal/looklist/index' + params
     })
   },
+  handleClickFeedback() {
+    const params = getCurrentPageParamStr();
+    wx.navigateTo({
+      url: '/pages/feedback/index' + params
+    })
+  },
+  handleClickKefu() {
+    const params = getCurrentPageParamStr();
+    wx.navigateTo({
+      url: '/pages/feedback/index' + params
+    })
+  },
+  handleClickSetting() {
+    const params = getCurrentPageParamStr();
+    wx.navigateTo({
+      url: '/pages/setting/index' + params
+    })
+  },
+  handleClickPlayerComp() {
+    const targetPage = "pages/exhibitlist/index";
+    backToTargetPage(targetPage);
+  },
 
 
 
@@ -76,15 +98,14 @@ Page({
   //   })
   // },
   async getUserProfile() {
-    const userinfo = await wx.getStorageSync('userinfo');
-    console.log('userinfo', userinfo);
+    const userinfo = getApp().globalData.userinfo;
     
     this.setData({
       userInfo: {...userinfo},
     })
   },
   onShow: function() {
-   this.getUserProfile();
+    this.getUserProfile();
   }
 
 })

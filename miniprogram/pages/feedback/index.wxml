@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <page-meta page-style="overflow: hidden;">
-  <navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <navigation-bar styleType="dark" title="投诉与反馈" back color="black" background="#FFF"></navigation-bar>
   <view class="feedback-page">
     <view class="content-group">
       <textarea 
@@ -20,12 +20,11 @@
       class="phone"
       type="number"
       placeholder="请输入电话、邮箱或者QQ（非必填项）"
-      placeholder-style="font-size: 28rpx;"
       maxlength="{{11}}"
       value="{{phone}}" 
       bindinput="handlePhoneInputChange"
      />
-    <view class="btn-group">
+    <view class="btn-group" bindtap="handleClickSubmit">
       <image wx:if="{{content.length === 0}}" class="btn-bg" src="/static/images/btn-long-light.png" mode="aspectFill" />
       <image wx:else class="btn-bg" src="/static/images/btn-long-dark.png" mode="aspectFill" />
       <view class="btn-txt">提交</view>

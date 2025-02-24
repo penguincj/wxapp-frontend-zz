@@ -5,8 +5,9 @@
     <!-- <image class="bg-img" src="http://gewugo.com/api/v1/storage/image/profile-bg-7662115813.jpg" mode="aspectFill" /> -->
     <image class="bg-img" src="/static/images/bg.png" mode="aspectFill" />
     <view class="avatar-group">
-      <image class="avatar" src="/static/images/ava1.png" mode="aspectFill"  />
-      <image class="ava-bg" src="/static/images/avatar-default.png" mode="aspectFill"  />
+      <image class="avatar" src="{{userInfo.avatar}}" mode="aspectFill"  />
+      <image class="ava-bg" src="/static/images/avatar-bg.png" mode="aspectFill"  />
+
     </view>
     <view class="content">
       <view class="username-group" bindtap="handleClickModifyUserInfo">
@@ -41,21 +42,21 @@
           </view>
           <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
         </view>
-        <view class="link-group">
+        <view class="link-group" bindtap="handleClickKefu">
           <view class="left">
             <image class="title-img" src="/static/images/kefu.png" mode="aspectFix" />
             <text class="text">客服反馈</text>
           </view>
           <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
         </view>
-        <view class="link-group">
+        <view class="link-group" bindtap="handleClickFeedback">
           <view class="left">
             <image class="title-img" src="/static/images/tousu.png" mode="aspectFix" />
             <text class="text">投诉反馈</text>
           </view>
           <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
         </view>
-        <view class="link-group">
+        <view class="link-group" bindtap="handleClickSetting">
           <view class="left">
             <image class="title-img" src="/static/images/shezhi.png" mode="aspectFix" />
             <text class="text">账户设置</text>
@@ -69,4 +70,7 @@
       <bottom-bar currentkey="{{3}}"></bottom-bar>
     </view>
   </view>
+    <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
 </page-meta>

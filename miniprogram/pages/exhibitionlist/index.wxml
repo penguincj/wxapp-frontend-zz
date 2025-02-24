@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
-<navigation-bar loading="{{loading}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
+<navigation-bar loading="{{false}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
 <view class="exhibition-list-page">
   <view>
     <loc-select
@@ -39,4 +39,7 @@
   </view>
   <bottom-bar currentkey="{{2}}"></bottom-bar>
 </view>
+  <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
 </page-meta>  

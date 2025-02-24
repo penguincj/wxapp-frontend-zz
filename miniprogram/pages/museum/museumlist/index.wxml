@@ -40,4 +40,7 @@
       <bottom-bar currentkey="{{1}}"></bottom-bar>
     </view>
   </view>
+    <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
 </page-meta>

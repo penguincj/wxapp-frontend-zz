@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar back extClass="transparent" loading="{{loading}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar back extClass="transparent" loading="{{false}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-exhibition-detail">
   <view class="museum-info">
     <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
@@ -79,4 +79,7 @@
   </view>
   
 </view>
+  <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
 </page-meta>  

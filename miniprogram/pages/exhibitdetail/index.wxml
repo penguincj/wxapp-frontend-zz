@@ -67,7 +67,7 @@
     bindEndAudio="handleEndAudio"
     bindContinuePlay="handleContinuePlay"
     bindUpatePlayingIndex="handleUpatePlayingIndex"
-
+    bindClickPlayerComp="handleClickPlayerComp"
   ></player-comp>
   <dialog-half
     showDialog="{{showDialog}}"

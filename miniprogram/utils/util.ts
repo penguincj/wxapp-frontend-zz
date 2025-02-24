@@ -171,10 +171,9 @@ export const getCurrentCity = async () => {
 export const request = async function (url, options={}, base_url='https://gewugo.com') {
   let token = await wx.getStorageSync('token');
   if (!token) {
-    const res = await getLoginStatus(); 
-    token = res?.token;
+    const res: any = await getLoginStatus(); 
+    token = res.token;
   }
-  console.log('token---------', token)
   return new Promise((resolve, reject) => {
     wx.request({
       url: base_url + url,
@@ -186,19 +185,19 @@ export const request = async function (url, options={}, base_url='https://gewugo
         'Authorization': 'Bearer ' + token
       },
       success: async (res) => {
-        
-        if (res.statusCode === 200) {
-          console.log('requset----', res.statusCode)
-          resolve(res.data)
-        } else if (res.statusCode === 401) {
-          console.log('request 401');
+        resolve(res.data)
+        // if (res.statusCode === 200) {
+        //   console.log('requset----', res.statusCode)
+        //   resolve(res.data)
+        // } else if (res.statusCode === 401) {
+        //   console.log('request 401');
           
-          await getLoginStatus();
-          // return await request(...arguments);
-          // console.log( arguments)
-        } else {
-          reject(res.error)
-        }
+        //   resolve(res.data)
+        //   // return await request(...arguments);
+        //   // console.log( arguments)
+        // } else {
+        //   reject(res.error)
+        // }
       },
       fail: (err) => {
         reject(err)
@@ -305,4 +304,71 @@ export const getLoginStatus = async () => {
     };
   }
 
+}
+
+export const clearAndFreshLoginStatus = async () => {
+  try {
+    console.log('clearAndFreshLoginStatus login users');
+    // await checkloginStatus();
+    await wx.setStorageSync('token', '');
+    await wx.setStorageSync('userinfo', '');
+    // const local_token = getApp().globalData.token;
+    // const local_userinfo =  getApp().globalData.userinfo;
+
+    const { code } = await login_request();
+    console.log('code------------', code);
+    
+    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/api/v1/sessions/'+code, {method: 'POST'});
+    console.log('login users', token, nickname, avatar);
+    wx.setStorageSync('token', token);
+    wx.setStorageSync('userinfo', {
+      userid: id,
+      avatar,
+      nickname,
+    })
+    getApp().globalData.token = token;
+    getApp().globalData.userinfo = {
+      userid: id,
+      avatar,
+      nickname,
+    }
+    return {
+      token,
+      userinfo:  {
+        userid: id,
+        avatar,
+        nickname,
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      token: '',
+      userinfo: {
+        nickname: '',
+        avatar: '',
+        userid: -1,
+      }
+    };
+  }
+
+}
+
+export const backToTargetPage = (_pagename: String) => {
+  const pages = getCurrentPages();
+  if (pages.length) {
+    const pageId = pages.findIndex((i: any) => i.route === _pagename);
+    if (pageId !== -1) {
+      const listpageIndex = pages.length - pageId - 1;
+      console.log('pages', pages);
+      wx.navigateBack({
+        delta: listpageIndex
+      })
+    } else {
+      const params = getApp().globalData.audio.exhibitlistParams;
+      wx.navigateTo({
+        url: '/' + _pagename + params,
+      })
+    }
+  } 
 }

@@ -1,4 +1,5 @@
 import { getExhibitById, getExhibitList, likeExhibit, collectExhibit } from '../../api/api';
+import { getCurrentPageParamStr, backToTargetPage } from '../../utils/util';
 import { audioList, exhibitionList } from './mock';
 const base_url = "http://gewugo.com";
 // let bgAudio = wx.getBackgroundAudioManager();
@@ -113,6 +114,10 @@ Page({
       isPlay: false,
 
     })
+  },
+  handleClickPlayerComp() {
+    const targetPage = "pages/exhibitlist/index";
+    backToTargetPage(targetPage);
   },
   // handleChangeUnit(e: any) {
   //   const { selectId } = e.detail;
@@ -475,6 +480,7 @@ Page({
   },
 
   async onShow() {
+
     const { userid= 0 } = await wx.getStorageSync('userinfo'); 
     if (userid) {
       this.setData({
