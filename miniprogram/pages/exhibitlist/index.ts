@@ -27,7 +27,7 @@ Page({
     currentTimeText: '00:00',
     sliderIndex: 0, // 当前播放进度
     playingIndex: -1, // 当前播放index
-    curExhibit: null, // 当前播放展览
+    curExhibit: {}, // 当前播放展览
     curUnitId: -1, // 当前单元id
     narrationId: -1, // 页面params语音包id
     exhibitionId: -1,

@@ -2,6 +2,12 @@
 <page-meta page-style="overflow: hidden;">
   <navigation-bar extClass="transparent" back="{{false}}" color="black" background="#FFF"></navigation-bar>
   <view class="profile-page">
+    <scroll-view
+				scroll-y="true"
+				show-scrollbar="{{false}}"
+				enhanced="{{true}}"
+				style="height: calc(100vh - 164rpx)"
+			>
     <image class="bg-img" src="https://gewugo.com/api/v1/storage/image/bg-6215609170.png" mode="aspectFill" />
     <!-- <image class="bg-img" src="/static/images/bg.png" mode="aspectFill" /> -->
     <view class="avatar-group">
@@ -69,6 +75,7 @@
     <view>
       <bottom-bar currentkey="{{3}}"></bottom-bar>
     </view>
+    </scroll-view>
   </view>
     <player-comp
     bindClickPlayerComp="handleClickPlayerComp"

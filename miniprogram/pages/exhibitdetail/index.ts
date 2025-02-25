@@ -1,30 +1,5 @@
 import { getExhibitById, getExhibitList, likeExhibit, collectExhibit } from '../../api/api';
 import { getCurrentPageParamStr, backToTargetPage } from '../../utils/util';
-import { audioList, exhibitionList } from './mock';
-const base_url = "http://gewugo.com";
-// let bgAudio = wx.getBackgroundAudioManager();
-
-const audioItem = {
-  "id": 121,
-  "type": 0,
-  "dyid": 14,
-  "lmid": 18,
-  "tagstr": ",1,",
-  "videocontent": "",
-  "audiourl": "https://gewugo.com/storage/file/CB26976399343756.mp3",
-  "imagepath": "https://gewugo.com/storage/image/NC06525637302482.jpg",
-  "title": "单元介绍",
-  "desc": "",
-  "content": "",
-  "sort": 100,
-  "is_show": 1,
-  "zannum": 0,
-  "pinglunnum": 0,
-  "lookcount": 999,
-  "shoucangnum": 0,
-  "createtime": "2024-11-26 13:08:40",
-  "duration_format": "00:38"
-}
 
 const listConfig = [
   {
@@ -41,8 +16,7 @@ const listConfig = [
 
 Page({
   data: {
-    exhibitionList: audioList,
-    exhibitInfo: audioItem,
+    exhibitInfo: {} as any,
     playingIndex: -1, // 当前播放index
     lastPlayIndex: -1, // 之前播放index
     sliderIndex: 0, // 当前播放进度
@@ -505,6 +479,31 @@ Page({
 
     }
     
-  }
+  },
+  onShareAppMessage(){
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
+    console.log(this.data.exhibitInfo.image_url);
+    const str = getCurrentPageParamStr();
+    const imageUrl = (this.data.exhibitInfo && this.data.exhibitInfo.image_url) ? this.data.exhibitInfo.image_url : defaultUrl ;
+    const title = (this.data.exhibitInfo.name) ? `格物观展|${this.data.exhibitInfo.name}` : '格物观展|格物观展slogan' ;
+    var shareObj = {
+      title,
+      path: '/pages/museum/museumdetail/index'+str,
+      imageUrl: imageUrl,
+      success: function(res: any){
+        if(res.errMsg == 'shareAppMessage:ok'){
+          console.log('share success')
+        }
+      },
+      fail: function(res: any){
+        if(res.errMsg == 'shareAppMessage:fail cancel'){
+          console.log('share cancel')
+        }else if(res.errMsg == 'shareAppMessage:fail'){
+          console.log('share fail')
+        }
+      },
+    }
+    return shareObj;
+  },
 
 })

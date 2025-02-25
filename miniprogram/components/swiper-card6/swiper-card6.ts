@@ -25,6 +25,10 @@ Component({
     playingIndex: {
       type: Number,
       value: -1,
+    },
+    playingExhibitId: {
+      type: Number,
+      value: -1,
     }
   },
   /**

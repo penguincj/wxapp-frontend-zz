@@ -121,5 +121,28 @@ Page({
     this.initPage();
     
   },
+  onShareAppMessage(){
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
+    const title = '格物观展|格物观展slogan' ;
+    var shareObj = {
+      title,
+      path: '/pages/index/index',
+      imageUrl: defaultUrl,
+      success: function(res: any){
+        if(res.errMsg == 'shareAppMessage:ok'){
+          console.log('share success')
+        }
+      },
+      fail: function(res: any){
+        if(res.errMsg == 'shareAppMessage:fail cancel'){
+          console.log('share cancel')
+        }else if(res.errMsg == 'shareAppMessage:fail'){
+          console.log('share fail')
+        }
+      },
+    }
+    return shareObj;
+  },
+  
 
 })

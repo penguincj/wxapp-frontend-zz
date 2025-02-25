@@ -72,7 +72,7 @@ Page({
     const day_str = '周'+arr[week];
     let date: any = new Date().getDate();
     date = (date < 10) ? ('0'+ date) : date;
-    let month: any = new Date().getMonth();
+    let month: any = new Date().getMonth() + 1;
     month = (month < 10) ? ('0'+ month) : month;
 
     return {
@@ -166,5 +166,29 @@ Page({
       curMuseumId: Number(options.museum_id),
     })
   },
+
+  onShareAppMessage(){
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
+    const title = '格物观展|格物观展slogan' ;
+    var shareObj = {
+      title,
+      path: '/pages/index/index',
+      imageUrl: defaultUrl,
+      success: function(res: any){
+        if(res.errMsg == 'shareAppMessage:ok'){
+          console.log('share success')
+        }
+      },
+      fail: function(res: any){
+        if(res.errMsg == 'shareAppMessage:fail cancel'){
+          console.log('share cancel')
+        }else if(res.errMsg == 'shareAppMessage:fail'){
+          console.log('share fail')
+        }
+      },
+    }
+    return shareObj;
+  },
+  
 
 })

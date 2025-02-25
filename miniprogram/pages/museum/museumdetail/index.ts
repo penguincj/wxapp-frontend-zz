@@ -1,10 +1,10 @@
 import { getMuseumById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList } from "../../../api/api";
-import { generateNewUrlParams, backToTargetPage } from "../../../utils/util";
+import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../../utils/util";
 
 
 Page({
   data: {
-    museumInfo: [],
+    museumInfo: {} as any,
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
@@ -84,6 +84,31 @@ Page({
       curMuseumId: Number(options.museum_id),
     });
     this.initPage(options.museum_id);
+  },
+  onShareAppMessage(){
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
+    console.log(this.data.museumInfo.image_url);
+    const str = getCurrentPageParamStr();
+    const imageUrl = (this.data.museumInfo && this.data.museumInfo.image_url) ? this.data.museumInfo.image_url : defaultUrl ;
+    const title = (this.data.museumInfo.name) ? `格物观展|${this.data.museumInfo.name}` : '格物观展|格物观展slogan' ;
+    var shareObj = {
+      title,
+      path: '/pages/museum/museumdetail/index'+str,
+      imageUrl: imageUrl,
+      success: function(res: any){
+        if(res.errMsg == 'shareAppMessage:ok'){
+          console.log('share success')
+        }
+      },
+      fail: function(res: any){
+        if(res.errMsg == 'shareAppMessage:fail cancel'){
+          console.log('share cancel')
+        }else if(res.errMsg == 'shareAppMessage:fail'){
+          console.log('share fail')
+        }
+      },
+    }
+    return shareObj;
   },
 
 })

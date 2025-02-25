@@ -113,4 +113,5 @@ try {
   // getApp().globalData.token = token;
   // getApp().globalData.userinfo = userinfo;
   },
+  
 })
