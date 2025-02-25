@@ -3,9 +3,9 @@
 
     <!-- 左侧按钮 -->
     <view class='weui-navigation-bar__left' style="{{leftWidth}};">
-      <block wx:if="{{back || homeButton}}">
+      <block wx:if="{{back}}">
         <!-- 返回上一页 -->
-        <block wx:if="{{back}}">
+        <block wx:if="{{!isShowHome}}">
           <view class="weui-navigation-bar__buttons weui-navigation-bar__buttons_goback">
             <view
               bindtap="handleBack"
@@ -22,16 +22,19 @@
           </view>
         </block>
         <!-- 返回首页 -->
-        <block wx:if="{{homeButton}}">
+        <block wx:if="{{back && isShowHome}}">
           <view class="weui-navigation-bar__buttons weui-navigation-bar__buttons_home">
             <view
-              bindtap="home"
+              bindtap="handleClickHome"
               class="weui-navigation-bar__btn_home_wrapper"
               hover-class="weui-active"
               aria-role="button"
               aria-label="首页"
             >
-              <view class="weui-navigation-bar__button weui-navigation-bar__btn_home"></view>
+              <image wx:if="{{styleType==='light'}}" class="weui-navigation-bar_back-img" src="/static/images/home-white.png" mode="aspectFill" />
+              <image wx:else class="weui-navigation-bar_back-img" src="/static/images/home-black.png" mode="aspectFill" />
+              
+              <!-- <view class="weui-navigation-bar__button weui-navigation-bar__btn_home"></view> -->
             </view>
           </view>
         </block>

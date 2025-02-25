@@ -32,8 +32,10 @@
       </view>
     </view>
     <view class="intro-content">
-      <view class="text">本次艺术展汇集全球新锐艺术家作品，通过装置本次艺术展汇集全球新锐艺术家作品，通过装置本次艺术展汇集全球新锐艺术家作品，通过装置</view>
-      <image class="arrow-img" src="/static/images/arrow-bottom.png" mode="aspectFix" />
+      <view class="{{isShowIntro ? 'text-whole': 'text'}}">本次艺术展汇集全球新锐艺术家作品，通过装置本次艺术展汇集全球新锐艺术家作品，通过装置本次艺术展汇集全球新锐艺术家作品，通过装置</view>
+      <view class="img-wrapper">
+        <image class="arrow-img {{isShowIntro ? 'img-rotate': ''}}" src="/static/images/arrow-bottom.png" bindtap="handleClickIntro" mode="aspectFix" />
+      </view>
     </view>
     <view class="ticket-group">
       <view>

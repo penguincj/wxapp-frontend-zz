@@ -48,6 +48,7 @@ Component({
 
             if (data && data.code === 200) {
               this.modifyUserInfoAsync(userid, nickname, data.url);
+              getApp().globalData.userinfo.avatar = data.url;
             }
             
             //do something
@@ -84,6 +85,7 @@ Component({
               nickname
             }
           })
+          getApp().globalData.userinfo.nickname = nickname;
           await wx.setStorageSync('userinfo', {
             ...this.data.userInfo,
             avatar,

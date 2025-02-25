@@ -11,6 +11,7 @@ Page({
     statusBarHeight: 0,
     curExhibitionId: -1,
     loading: false,
+    isShowIntro: false,
   },
   handleClickJiangjie(event: any) {
     console.log('handleClickJiangjie', event.currentTarget.dataset);
@@ -25,6 +26,11 @@ Page({
   },
   handleClickPlayIcon() {
 
+  },
+  handleClickIntro() {
+    this.setData({
+      isShowIntro: !this.data.isShowIntro,
+    })
   },
   handleClickPlayerComp() {
     const targetPage = "pages/exhibitlist/index";

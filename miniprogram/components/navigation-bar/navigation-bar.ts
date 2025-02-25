@@ -61,6 +61,7 @@ Component({
   data: {
     displayStyle: '',
     statusBarHeight: '0px',
+    isShowHome: false,
   },
   lifetimes: {
     attached() {
@@ -85,11 +86,22 @@ Component({
   pageLifetimes: {
     show() {
       const hei = getApp().globalData.system.statusBarHeight;
-      console.log('hei navigationBarHeight', hei);
-      
       this.setData({
         statusBarHeight: hei + 'px'
-      })
+      });
+      const pages = getCurrentPages();
+      console.log('hei navigationBarHeight', this.data.back);
+
+      if (pages.length === 1 && this.data.back ) {
+        this.setData({
+          isShowHome: true,
+        })
+      } else {
+        this.setData({
+          isShowHome: false,
+        })
+      }
+
     }
   },
   /**
@@ -118,6 +130,11 @@ Component({
         })
       }
       this.triggerEvent('back', { delta: data.delta }, {})
+    },
+    handleClickHome() {
+      wx.redirectTo({
+        url: '/pages/index/index'
+      })
     }
   },
 })

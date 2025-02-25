@@ -75,11 +75,10 @@ export const getUnitList = (_exhibitionid: any) => {
 export const getExhibitList = (_unitid: any) => {
     return request('/api/v1/exhibits?unitID='+_unitid);
 }
-export const queryExhibitListAll = (_querystr: any) => {
+export const queryExhibitListAll = (_userid: any, _querystr: any) => {
     // return request(`/api/v1/queries` + _querystr);
-    return request(`/api/v1/exhibits` + _querystr);
+    return request(`/api/v1/users/${_userid}/search` + _querystr);
 }
-
 
 export const getExhibitById = (_exhibitid: any) => {
     return request('/api/v1/exhibits/'+_exhibitid);

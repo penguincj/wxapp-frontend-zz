@@ -279,6 +279,7 @@
       letter-spacing: 2rpx;
       display: flex;
       align-items: center;
+      position: relative;
       .text {
         width: 93%;
         display: inline-block;
@@ -286,13 +287,34 @@
         overflow: hidden;
         
       }
+      .text-whole {
+        width: 93%;
+        display: inline-block;
+      }
       .text-visible {
         height: auto;
         overflow:visible;
       }
+      .img-wrapper {
+        position: absolute;
+        right: 40rpx;
+        top: 30rpx;
+        width: 120rpx;
+        height: 36rpx;
+        // background-color: red;
+        text-align: right;
+        vertical-align: middle;
+        background: linear-gradient(270deg, #FFFFFF 12%, rgba(255, 255, 255, 0) 100%);
+      }
       .arrow-img {
+        margin-top: 4rpx;
         width: 28rpx;
         height: 28rpx;
+        background-color: #FFFFFF;
+        // background: linear-gradient(270deg, #FFFFFF 12%, rgba(255, 255, 255, 0) 100%);
+      }
+      .img-rotate {
+        transform: rotate(180deg);
       }
     }
     .ticket-group {

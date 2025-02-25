@@ -2,8 +2,8 @@
 <page-meta page-style="overflow: hidden;">
   <navigation-bar extClass="transparent" back="{{false}}" color="black" background="#FFF"></navigation-bar>
   <view class="profile-page">
-    <!-- <image class="bg-img" src="http://gewugo.com/api/v1/storage/image/profile-bg-7662115813.jpg" mode="aspectFill" /> -->
-    <image class="bg-img" src="/static/images/bg.png" mode="aspectFill" />
+    <image class="bg-img" src="https://gewugo.com/api/v1/storage/image/bg-6215609170.png" mode="aspectFill" />
+    <!-- <image class="bg-img" src="/static/images/bg.png" mode="aspectFill" /> -->
     <view class="avatar-group">
       <image class="avatar" src="{{userInfo.avatar}}" mode="aspectFill"  />
       <image class="ava-bg" src="/static/images/avatar-bg.png" mode="aspectFill"  />

@@ -150,6 +150,7 @@ Page({
   async handleClickSearch(event: any) {
     const { keyword } = event.detail;
     console.log('keyword', keyword);
+    const { userid } = getApp().globalData.userinfo;
     this.setData({
       showInput: false,
     });
@@ -161,9 +162,10 @@ Page({
       //   exhibitID: 15
       // })
       const url_params = transferObjToUrlParams({
-        unitID: 10
+        keyword: keyword,
+        exhibitionID: this.data.exhibitionId,
       })
-      const res:any = await queryExhibitListAll(url_params)
+      const res:any = await queryExhibitListAll(userid, url_params)
       if( res && res.exhibits) {
         const f_exhibitlist = this.formatExhibitData(res.exhibits, this.data.narrationId);
         this.setData({
@@ -199,6 +201,8 @@ Page({
     this.setData({
       curUnitId: _unitid,
     });
+    getApp().globalData.audio.curUnitId = _unitid;
+    // this.updateUnitId(_unitid);
     this.initExhibitData(_unitid)
   },
 
@@ -210,6 +214,9 @@ Page({
     this.setData({
       curUnitId: selectId,
     });
+    getApp().globalData.audio.curUnitId = selectId;
+
+    // this.updateUnitId(selectId);
     this.initExhibitData(selectId)
   },
 
@@ -277,29 +284,42 @@ Page({
     }
   },
 
+  // updateUnitId(_unitid: any) {
+  //   this.setData({
+  //     curUnitId: _unitid,
+  //   })
+  //   getApp().globalData.audio.curUnitId = _unitid;
+  // },
+
   // 业务逻辑
   async initPage(_exhibitionid: any) {
     try {
       const res_unit : any = await getUnitList(_exhibitionid);
+      const player = this.selectComponent("#player");
+      const isPlayingAudio = player.checkIsAudioPlaying();
       if (res_unit && res_unit.units && res_unit.units.length) {
         this.setData({
-          curUnitId: res_unit.units[0].id,
           unitList: res_unit.units,
         })
-        const player = this.selectComponent("#player");
-        const isPlayingAudio = player.checkIsAudioPlaying();
-        console.log('isPlayingAudio', isPlayingAudio)
         if (!isPlayingAudio.isAudioExist) {
+          this.setData({
+            curUnitId: res_unit.units[0].id,
+          })
+          console.log('isPlayingAudio', isPlayingAudio)
+          
           this.initExhibitData(res_unit.units[0].id);
         } else {
           const { isPlay, playingIndex, totalTimeText, duration } = isPlayingAudio;
+          const unit_id = this.data.curUnitId === -1 ? res_unit.units[0].id : this.data.curUnitId;
           this.setData({
             isPlay,
             playingIndex,
             totalTimeText,
             duration,
+            curUnitId: unit_id,
           })
-          this.getExhibitDataWithNoPlayer(res_unit.units[0].id, playingIndex);
+          console.log('this.data.curUnitId', playingIndex)
+          this.getExhibitDataWithNoPlayer(unit_id, playingIndex);
           player.pageTimeUpateContinue();
         }
       }

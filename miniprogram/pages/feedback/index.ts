@@ -25,7 +25,7 @@ Page({
         method: "POST",
         data: {
           context: this.data.content,
-          contract: this.data.phone,
+          contact: this.data.phone,
         }
       });
       console.log(res);
