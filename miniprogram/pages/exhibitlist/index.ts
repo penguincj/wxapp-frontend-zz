@@ -1,5 +1,5 @@
 import { getUnitList, getExhibitList, queryExhibitListAll } from '../../api/api';
-import { generateNewUrlParams, getCurrentPageParamStr, transferObjToUrlParams } from '../../utils/util';
+import { generateNewUrlParams, getCurrentPageParamStr, transferObjToUrlParams, calTimeTxt } from '../../utils/util';
 
 const base_url = "http://gewugo.com";
 
@@ -66,9 +66,14 @@ Page({
 
   },
   handleGetCurPlayingStatus(event: any) {
-    const { isPlay } = event.detail;
+    const { isPlay, playingIndex, totalTimeText, duration } = event.detail;
+    console.log('handleGetCurPlayingStatus', isPlay);
+    
     this.setData({
       isPlay,
+      playingIndex,
+      totalTimeText,
+      duration
     })
   },
 
@@ -133,7 +138,15 @@ Page({
     player.handlePlayOtherAudioByPlayingIdx(current);
   },
 
-
+  handleSwiperItemClick(event: any) {
+    const { id } = event.detail;
+    const url_params = generateNewUrlParams({
+      exhibit_id: id
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitdetail/index' + url_params
+    });
+  },
 
   handleCloseFindDialog() {
     this.setData({
@@ -226,11 +239,15 @@ Page({
       //   return null
       // }
       const audioitem = exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
-      console.log('initPage formatExhibitData', audioitem)
+      const duration_fmt = calTimeTxt(audioitem.duration);
+      console.log('initPage formatExhibitData', duration_fmt)
 
       return {
         ...exhibit,
-        audioitem,
+        audioitem: {
+          ...audioitem,
+          duration_fmt, 
+        },
       }
     })
   },
@@ -305,12 +322,14 @@ Page({
           this.setData({
             curUnitId: res_unit.units[0].id,
           })
+          getApp().globalData.audio.curUnitId = res_unit.units[0].id;
           console.log('isPlayingAudio', isPlayingAudio)
           
           this.initExhibitData(res_unit.units[0].id);
         } else {
+          const lastUnitId = getApp().globalData.audio.curUnitId;
           const { isPlay, playingIndex, totalTimeText, duration } = isPlayingAudio;
-          const unit_id = this.data.curUnitId === -1 ? res_unit.units[0].id : this.data.curUnitId;
+          const unit_id = lastUnitId === -1 ? res_unit.units[0].id : lastUnitId;
           this.setData({
             isPlay,
             playingIndex,

@@ -1,28 +1,25 @@
 <view wx:if="{{list.length}}" class="card-group-one">
-	<view class="title-line">
-		<view class="title">
-			<view class="title-name">{{title}}</view>
-			<image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
-		</view>
-	</view>
-	<view class="card-group">
-			<block wx:for="{{list}}" wx:key="{{item.id}}">
-          <view class="item-vertical" data-idx="{{item.id}}" bindtap="handleClickItem">
-            <view class="card-item">
-              <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
-              <view class="item-desc-group">
-                <view class="line-one">
-                  <span class="desc-title">{{item.name}}</span>
-                  <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" />
-                </view>
-                <view class="desc-desc">{{item.opendate}}</view>
-              </view>
+  <view class="title-line">
+    <view class="title">
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+      <view class="title-name">{{title}}</view>
+    </view>
+  </view>
+  <view class="card-group">
+    <block wx:for="{{list}}" wx:key="{{item.id}}">
+      <view class="item-vertical" data-idx="{{item.id}}" bindtap="handleClickItem">
+        <view class="card-item">
+          <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
+          <view class="item-desc-group">
+            <view class="line-one">
+              <span class="desc-title">{{item.name}}</span>
+              <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" />
             </view>
-            
+            <view class="desc-desc">{{item.opendate}}</view>
           </view>
-					
-			</block>
-	</view>
+        </view>
+      </view>
+    </block>
+  </view>
   <view wx:if="{{list.length>4}}" class="find-more" bindtap="handleClickMore">查看更多</view>
 </view>
-

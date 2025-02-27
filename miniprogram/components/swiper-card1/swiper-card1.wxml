@@ -14,11 +14,12 @@
     </view>
   </view>
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <swiper indicator-dots="{{false}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperChange" current="{{swiperCurrent}}">
       <block wx:for="{{list}}" wx:key="{{item.id}}">
         <swiper-item>
           <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem" >
             <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
+            <view class="mask"></view>
             <view class="exhibition-type">{{item.short ? '临时展':'常设展'}}</view>
             <view class="item-desc-group">
               <view class="desc-title">{{item.name}}</view>
@@ -32,5 +33,10 @@
         </swiper-item>
       </block>
     </swiper>
+  </view>
+  <view class="dots-group">
+    <block wx:for="{{list}}" wx:key="{{item.id}}">
+      <image src="/static/images/dot1{{index === swiperCurrent ? '-active': ''}}.png" class="dot-img" mode="aspectFill" />
+    </block>
   </view>
 </view>

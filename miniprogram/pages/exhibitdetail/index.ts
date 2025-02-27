@@ -481,11 +481,11 @@ Page({
     
   },
   onShareAppMessage(){
-    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
+    const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';
     console.log(this.data.exhibitInfo.image_url);
     const str = getCurrentPageParamStr();
     const imageUrl = (this.data.exhibitInfo && this.data.exhibitInfo.image_url) ? this.data.exhibitInfo.image_url : defaultUrl ;
-    const title = (this.data.exhibitInfo.name) ? `格物观展|${this.data.exhibitInfo.name}` : '格物观展|格物观展slogan' ;
+    const title = (this.data.exhibitInfo.name) ? `格物观展|${this.data.exhibitInfo.name}` : '【格物观展：让您的博物馆之旅不虚此行】' ;
     var shareObj = {
       title,
       path: '/pages/museum/museumdetail/index'+str,

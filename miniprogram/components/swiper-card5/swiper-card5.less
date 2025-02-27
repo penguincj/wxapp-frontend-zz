@@ -33,12 +33,13 @@
     align-items: center;
     text-align: center;
 
-    margin-top: 40rpx;
+    margin-top: 28rpx;
     height: 656rpx;
-    
+    max-height: calc(100vh - 44px - 850rpx - env(safe-area-inset-top));
     swiper {
       width: 750rpx;
       height: 656rpx;
+      max-height: calc(100vh - 44px - 850rpx - env(safe-area-inset-top));
     }
 
     
@@ -50,6 +51,20 @@
       .item-img {
         width: 540rpx;
         height: 656rpx;
+        max-height: calc(100vh - 44px - 850rpx - env(safe-area-inset-top));
+      }
+      .share-btn {
+        position: absolute;
+        width: 36rpx;
+        height: 70rpx;
+        top: 20rpx;
+        right: 130rpx;
+        background: transparent;
+      }
+      .share-img {
+        // position: absolute;
+        width: 36rpx;
+        height: 36rpx;
       }
 
       .item-desc-group {

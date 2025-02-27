@@ -4,8 +4,8 @@
 <view class="exhibition-list-page">
   <view>
     <loc-select
-      locStyle="margin-top: -74rpx"
-      pannelStyle="margin-top: -74rpx"
+      locStyle="margin-top: -96rpx"
+      pannelStyle="margin-top: -96rpx"
       list="{{cityList}}"
       selectedName="{{cityName}}"
       selectedId="{{curCityId}}"

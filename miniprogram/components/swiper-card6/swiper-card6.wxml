@@ -1,66 +1,52 @@
 <view class="swiper-card-six">
-	<view class="title-line" wx:if="{{showType === 'jiangjiedaoyu'}}">
-		<view class="title-left">
-			<view class="title">
-				<view class="title-name">讲解导语</view>
-				<image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
-			</view>
-			<image class="title-icon small-icon" src="/static/images/dianshi.png" mode="aspectFix" />
-			<text class="title-num">{{list.length}}</text>
-
-		</view>
-		<view class="title-right">
-			<image class="title-icon" src="/static/images/xunhuan1.png" mode="aspectFix" />
-			<image class="title-icon" src="/static/images/xiazai.png" mode="aspectFix" />
-		</view>
-	</view>
-	<view class="title-line-simple" wx:if="{{showType === 'guanjianci'}}">
-		<view class="only-title">关键词</view>
-		<input 
-			wx:if="{{showInput}}"
-			class="weui-input" 
-			value="{{keyword}}"
-			bindinput="handInput"
-			bindconfirm="confirmTap"
-			placeholder="可搜索展品名称"/>
-	</view>
-	<view class="container">
-		<view class="page-section-spacing" style="{{scrollStyle}}">
-			<scroll-view
-				class="scroll-view_H"
-				scroll-y="{{true}}"
-				show-scrollbar="{{false}}"
-				enhanced="{{true}}"
-				bindscroll="scroll"
-				style="{{scrollStyle}}"
-			>
-			<block wx:for="{{list}}">
-				<view class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
-					<view class="group-one">
-					<image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg"  src="{{item.image_url}}" mode="aspectFix" />
-						<view class="card-info">
-						<view class="card-title">{{item.name}}</view>
-						<view class="card-desc">
-							<view class="desc-item">
-							<image class="item-icon" src="/static/images/erji.png" mode="aspectFix" />
-							{{item.audioitem.listen_count}}
-							</view>
-							<view class="desc-item">
-							<image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
-							{{item.audioitem.duration}}
-							</view>
-						</view>
-						</view>
-					</view>
-					<view class="card-icon">
-						<image wx:if="{{(playingIndex === index) && (playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
-						<image wx:elif="{{item.audioitem.locked === 0}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
-						<image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
-					</view>
-				</view>
-			</block>
-			</scroll-view>
-		</view>
-	</view>
-	
+  <view class="title-line" wx:if="{{showType === 'jiangjiedaoyu'}}">
+    <view class="title-left">
+      <view class="title">
+        <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+        <view class="title-name">讲解导语</view>
+      </view>
+      <image class="title-icon small-icon" src="/static/images/dianshi.png" mode="aspectFix" />
+      <text class="title-num">{{list.length}}</text>
+    </view>
+    <view class="title-right">
+      <image class="title-icon" src="/static/images/xunhuan1.png" mode="aspectFix" />
+      <image class="title-icon" src="/static/images/xiazai.png" mode="aspectFix" />
+    </view>
+  </view>
+  <view class="title-line-simple" wx:if="{{showType === 'guanjianci'}}">
+    <view class="only-title">关键词</view>
+    <input wx:if="{{showInput}}" class="weui-input" value="{{keyword}}" bindinput="handInput" bindconfirm="confirmTap" placeholder="可搜索展品名称" />
+  </view>
+  <view class="container">
+    <view class="page-section-spacing" style="{{scrollStyle}}">
+      <scroll-view wx:if="{{list && list.length}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll" style="{{scrollStyle}}">
+        <block wx:for="{{list}}">
+          <view class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
+            <view class="group-one">
+              <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFix" />
+              <view class="card-info">
+                <view class="card-title">{{item.name}}</view>
+                <view class="card-desc">
+                  <view class="desc-item">
+                    <image class="item-icon" src="/static/images/erji.png" mode="aspectFix" />
+                    {{item.audioitem.listen_count}}
+                  </view>
+                  <view class="desc-item">
+                    <image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
+                    {{item.audioitem.duration_fmt}}
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="card-icon">
+              <image wx:if="{{(playingIndex === index) && (playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
+              <image wx:elif="{{item.audioitem.locked === 0}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
+              <image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+      <view class="empty-list" wx:else>未查询到结果</view>
+    </view>
+  </view>
 </view>

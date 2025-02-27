@@ -32,7 +32,7 @@
           bindtap="handlePlayPrev"
           mode="aspectFix" />
         <image 
-          src="/static/images/{{isPlay?'pause1':'play1'}}.png" class="play-icon"
+          src="/static/images/{{isPlay?'pause2':'play2'}}.png" class="play-icon"
           bindtap="handlePlayChange"
           mode="aspectFix" />
         <image src="/static/images/play-before.png"

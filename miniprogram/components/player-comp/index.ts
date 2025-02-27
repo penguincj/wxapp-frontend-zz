@@ -1,7 +1,7 @@
 // @ts-nocheck
 // import { audioList } from './mock';
 import { throttle } from '../../utils/util';
-import { getExhibitList } from '../../api/api';
+import { getExhibitList, sendListenAudioAction } from '../../api/api';
 
 const global_audio = getApp().globalData.audio;
 Component({
@@ -84,14 +84,27 @@ Component({
     isShow: false,
   },
   methods: {
+    sendListenAction(_audioid: any) {
+      try {
+        sendListenAudioAction(_audioid, {method: 'POST'})
+      } catch (error) {
+        console.log(error);
+      }
+    },
     handleAudioPause() {
       global_audio.bgAudio.pause();
+      this.setData({
+        isPlaying: false
+      })
       // this.setData({
       //   playingIndex: -1,
       // })
     },
     handleAudioPlay() {
       global_audio.bgAudio.play();
+      this.setData({
+        isPlaying: true,
+      })
       // this.setData({
       //   playingIndex: -1,
       // })
@@ -159,7 +172,7 @@ Component({
       // const audioitem = _item.audio_infos.find(i => i.narration_id == this.data.narrationId);
       // console.log('initPageAudio item;;;;;;;', audioitem, this.data.narrationId)
       
-      const { audio_url, duration } = _item.audioitem || {};
+      const { audio_url, duration, audio_id } = _item.audioitem || {};
       const { name, image_url} = _item;
       return {
         src: audio_url,
@@ -168,6 +181,7 @@ Component({
         epname: name,
         singer: 'gewugo',
         coverImgUrl: image_url,
+        audio_id,
       }
     },
     async findLocalAudio(_url: string) {
@@ -217,9 +231,9 @@ Component({
         console.log('end');
         global_audio.isPlay = false;
         this.triggerEvent('EndAudio')
-        // this.setData({
-        //   isPlay: false,
-        // })
+        this.setData({
+          isPlaying: false,
+        })
       })
     },
     checkIsAudioPlaying() {
@@ -248,10 +262,16 @@ Component({
     },
     refreshPageStatusFromCurrentPlayingStatus() {
       const paused = global_audio.bgAudio.paused;
-      console.log('refreshPageStatusFromCurrentPlayingStatus', global_audio.bgAudio.paused);
+      console.log('refreshPageStatusFromCurrentPlayingStatus', global_audio.playingIndex);
 
       this.triggerEvent('GetCurPlayingStatus', {
         isPlay: !paused,
+        playingIndex: global_audio.playingIndex,
+        totalTimeText: global_audio.totalTimeText,
+        duration: global_audio.bgAudio.duration,
+      })
+      this.setData({
+        isPlaying: !paused
       })
     },
     pageTimeUpateContinue() {
@@ -284,9 +304,8 @@ Component({
       }, 1000))
     },
     async initPageAudio(audio_item: any) {
-      console.log('in initPageAudio', audio_item)
       const audio_i = this.generateAudioItem(audio_item);
-      const { src, startTime, title, epname, singer, coverImgUrl } = audio_i;
+      const { src, startTime, title, epname, singer, coverImgUrl, audio_id } = audio_i;      
 
       let local_audio = await this.findLocalAudio(src);
       // wx.getStorage({
@@ -314,6 +333,7 @@ Component({
 
         } else {
           bgAudio.src = src;
+
           console.log('not local_audio', src)
 
         }
@@ -390,6 +410,9 @@ Component({
           playingIndex: global_audio.playingIndex,
           curExhibit: global_audio.curExhibit,
         })
+        this.setData({
+          isPlaying: true,
+        })
         console.log(global_audio);
         this.onEndAudio();
 
@@ -398,6 +421,11 @@ Component({
       this.setData({
         isShow: true,
       })
+      try {
+        sendListenAudioAction(audio_id, {method: 'POST'})
+      } catch (error) {
+        console.error(error)
+      }
     },
 
     async initAudioList(_audioList, _curExhibit) {
@@ -430,6 +458,7 @@ Component({
       if (global_audio && global_audio.bgAudio) {
         this.setData({
           isShow: true,
+          isPlaying: true,
         })
         this.triggerEvent('ContinuePlay', {
           isPlay: true,

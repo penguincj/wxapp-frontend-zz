@@ -5,8 +5,9 @@
     <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
     <view class="index-page page-section page-section-spacing full-height">
       <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
-        <image class="recommend-img" src="{{recoExhibition.image_url}}" />
-        <view class="recommend-img-mask"></view>
+        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" bindtap="handleClickRecoImg" />
+        <view class="recommend-img-mask" data-idx="{{recoExhibition.id}}" bindtap="handleClickRecoImg"></view>
+        
         <!-- <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" /> -->
         <view class="recommend-group">
           <view class="recommend-title">
@@ -22,7 +23,10 @@
             <view class="recommend-detail-desc">{{recoExhibition.description}}</view>
             <view class="recommend-detail-fenge"></view>
             <view class="recommend-detail-museum-title">{{recoExhibition.museum_name}}</view>
-            <view class="recommend-detail-desc">中国.{{recoExhibition.city_name}}</view>
+            <view class="recommend-line">
+              <view class="recommend-detail-desc">中国.{{recoExhibition.city_name}}</view>
+              <image src="/static/images/right-dark.png" class="right-img" mode="aspectFill" />
+            </view>
           </view>
         </view>
       </view>

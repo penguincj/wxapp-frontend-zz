@@ -21,7 +21,7 @@
       }
       .title-img {
         position: absolute;
-        top:20rpx;
+        top:18rpx;
         left: 0;
         width: 152rpx;
         height: 16rpx;
@@ -52,8 +52,8 @@
       .item-img {
         width: 490rpx;
         height: 276rpx;
-        border-top-left-radius: 24rpx;
-        border-top-right-radius: 24rpx;
+        border-top-left-radius: 30rpx;
+        border-top-right-radius: 30rpx;
         // border: 12rpx solid #FFFFFF;
         // border: 12rpx solid red;
       }
@@ -67,14 +67,15 @@
         background-color: #F7F8F9;
         // background: red;
         margin-top: -4rpx;
-        border-bottom-left-radius: 24rpx;
-        border-bottom-right-radius: 24rpx;
+        border-bottom-left-radius: 30rpx;
+        border-bottom-right-radius: 30rpx;
         padding: 16rpx 20rpx;
         box-sizing: border-box;
 
         // display: inline-block;
         .line-one {
-
+          display: flex;
+          align-items: center;
           .exhibition-type {
             width: 80rpx;
             height: 34rpx;
@@ -83,7 +84,6 @@
             font-size: 20rpx;
             line-height: 34rpx;
             margin-left: 10rpx;
-            margin-top: -10rpx;
             display: inline-block;
             text-align: center;
             vertical-align: middle;
@@ -104,13 +104,16 @@
         }
         
         .desc-desc {
+          width: 330rpx;
           font-size: 26rpx;
           line-height: 26rpx;
           letter-spacing: 0;
           color: #9AA7B1;
-          // box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.3);
-          padding-top: 14rpx;
+          padding-top: 20rpx;
           padding-bottom: 20rpx;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
         }
         .btn-group {
           position: absolute;
@@ -131,6 +134,8 @@
             font-size: 30rpx;
             text-align: center;
             line-height: 60rpx;
+            font-family: MysimSun;
+
           }
         }
 
@@ -152,5 +157,6 @@
     // margin-bottom: 100rpx;
     text-align: center;
     line-height: 72rpx;
+    font-family: MysimSun;
   }
 }

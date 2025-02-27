@@ -41,6 +41,12 @@ Component({
       this.triggerEvent('SwiperItemChange', {
         current,
       });
+    },
+    handleClickImg(event: any) {
+      const { idx } = event.currentTarget.dataset;
+      this.triggerEvent('SwiperItemClick', {
+        id: idx,
+      });
     }
   },
 })

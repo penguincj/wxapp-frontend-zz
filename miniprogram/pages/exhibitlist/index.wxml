@@ -9,6 +9,7 @@
     <swiper-card4
       list="{{exhibitList}}"
       currentIdx="{{playingIndex}}"
+      bindSwiperItemClick="handleSwiperItemClick"
       bindSwiperItemChange="handleSwiperItemChange"
     ></swiper-card4>
   </view>
@@ -75,7 +76,6 @@
         playingIndex="{{playingIndex}}"
         bindClickSearch="handleClickSearch"
         bindChangeItem="handleClickSearchExhibitItem"
-
       ></swiper-card6>
     </view>
     </dialog-half>

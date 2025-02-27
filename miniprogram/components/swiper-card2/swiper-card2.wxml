@@ -1,8 +1,8 @@
 <view wx:if="{{list.length}}" class="swiper-card-two">
   <view class="title-line">
     <view class="title">
-      <view class="title-name">{{title}}</view>
       <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+      <view class="title-name">{{title}}</view>
     </view>
   </view>
   <view class="page-section page-section-spacing swiper">
@@ -27,5 +27,5 @@
       </block>
     </swiper>
   </view>
-  <view wx:if="{{list.length > 1}}" class="find-more"  bindtap="handleClickMore">查看更多</view>
+  <view wx:if="{{list.length > 1}}" class="find-more" bindtap="handleClickMore">查看更多</view>
 </view>

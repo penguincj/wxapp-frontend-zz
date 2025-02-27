@@ -126,13 +126,23 @@ Page({
     try {
       const city = await getCurrentCity();
       const citylist:any = await getCityList();
-      const city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
-      const city_id = city_item.id;
-      const city_name = (citylist.cities.find((i:any) => i.id === city_id) || {}).name
+      let city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
+      this.setData({
+        cityList: citylist.cities 
+      })
+      let city_id = -1;
+      
+      if(city_item && city_item.name) {
+        city_id = city_item.id;
+      } else {
+        city_item = ((citylist || {}).cities || []).find((i: any) => i.name === '北京市');
+        city_id = city_item.id;
+      }
+      // const city_name = (citylist.cities.find((i:any) => i.id === city_id) || {}).name
       this.setData({
         curCityId: city_id,
         cityList: citylist.cities,
-        cityName: city_name,
+        cityName: city_item.name,
       })
       console.log('city_id', city_id);
       await this.getPageData(city_id);
@@ -168,8 +178,8 @@ Page({
   },
 
   onShareAppMessage(){
-    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
-    const title = '格物观展|格物观展slogan' ;
+    const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';
+    const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
     var shareObj = {
       title,
       path: '/pages/index/index',

@@ -372,3 +372,24 @@ export const backToTargetPage = (_pagename: String) => {
     }
   } 
 }
+
+export const calTimeTxt = (_time: number) => {
+  if (_time < 3600) {
+    const min = Math.floor(_time / 60);
+    const min_str = (min < 10) ? ('0' + min) : min;
+    const sec = (_time % 60);
+    const sec_str = (sec < 10) ? ('0' + sec) : sec;
+    return min_str + ':' + sec_str
+  } else {
+    const hour = Math.floor(_time / 3600);
+    const hour_str = (hour < 10) ? ('0' + hour) : hour;
+
+    const minute = Math.floor((_time % 3600) / 60);
+    const minute_str = (minute < 10) ? ('0' + minute) : minute;
+
+    const second = ((_time % 3600) % 60);
+    const second_str = (second < 10) ? ('0' + second) : second;
+
+    return hour_str + ':' + minute_str + ':' + second_str;
+  }
+}

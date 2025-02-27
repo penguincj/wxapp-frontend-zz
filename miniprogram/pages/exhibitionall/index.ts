@@ -79,8 +79,8 @@ Page({
     this.initPage(query_obj);
   },
   onShareAppMessage(){
-    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
-    const title = '格物观展|格物观展slogan' ;
+    const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';
+    const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
     var shareObj = {
       title,
       path: '/pages/index/index',

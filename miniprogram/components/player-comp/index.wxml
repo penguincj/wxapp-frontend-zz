@@ -1,3 +1,4 @@
 <view class="player-comp" wx:if="{{isShow}}" bindtap="handleClickPlayerComp">
-		11
+	<image wx:if="{{isPlaying}}" src="/static/images/fuchuang-playing.png" class="img" mode="aspectFill" />
+	<image wx:else src="/static/images/fuchuang-pause.png" class="img" mode="aspectFill" />
 </view>

@@ -6,6 +6,11 @@
         <swiper-item>
           <view class="swiper-item">
             <image src="{{item}}" class="item-img" mode="aspectFill" />
+            <button open-type="share" class="share-btn">
+              <image src="/static/images/share.png" class="share-img" mode="aspectFill" />
+            </button>
+            
+            
           </view>
         </swiper-item>
       </block>

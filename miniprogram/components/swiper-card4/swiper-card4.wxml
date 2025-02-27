@@ -4,10 +4,10 @@
       <block wx:for="{{list}}" wx:key="{{item.id}}">
         <swiper-item>
           <view class="swiper-item">
-            <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
+            <image src="{{item.image_url}}" data-idx="{{item.id}}" bindtap="handleClickImg" class="item-img" mode="aspectFill" />
             <view class="item-desc-group">
               <view class="desc-title">{{item.name}}</view>
-              <view class="desc-desc">{{item.description}}</view>
+              <!-- <view class="desc-desc">{{item.description}}</view> -->
             </view>
           </view>
         </swiper-item>

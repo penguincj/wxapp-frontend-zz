@@ -36,6 +36,9 @@ Page({
           duration: 2000
         })
       }
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 2000)
     } catch (error) {
       console.log(error);
       

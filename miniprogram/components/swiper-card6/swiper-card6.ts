@@ -49,7 +49,7 @@ Component({
    */
   methods: {
     scroll(e : any) {
-      console.log(e)
+      // console.log(e)
     },
     selectItem(e: any) {
       console.log('selectItem', e);

@@ -28,7 +28,8 @@ Component({
     vertical: false,
     autoplay: false,
     interval: 2000,
-    duration: 500
+    duration: 500,
+    swiperCurrent: 0,
   },
   lifetimes: {
     attached() {
@@ -39,6 +40,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    swiperChange: function(e: any){    
+      this.setData({
+        swiperCurrent: e.detail.current
+      })
+    },
     handleClickItem(e: any) {      
       const { idx } = e.currentTarget.dataset;
       this.triggerEvent('ClickItem', {

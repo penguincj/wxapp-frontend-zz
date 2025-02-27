@@ -4,7 +4,7 @@ import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "
 Page({
   data: {
     exhibitionInfo: {} as any,
-    narrationList: [],
+    narrationList: [] as any,
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
@@ -25,7 +25,17 @@ Page({
     })
   },
   handleClickPlayIcon() {
-
+    if (this.data.narrationList && this.data.narrationList.length) {
+      const nid = this.data.narrationList[0].id;
+      const url_params = generateNewUrlParams({
+        narration_id: nid,
+        exhibition_id: this.data.curExhibitionId
+      })
+      wx.navigateTo({
+        url: '/pages/exhibitlist/index' + url_params,
+      })
+    }
+   
   },
   handleClickIntro() {
     this.setData({
@@ -90,11 +100,11 @@ Page({
 
   },
   onShareAppMessage() {
-    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/e4-4031525947.jpg';
+    const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';
     console.log(this.data.exhibitionInfo.image_url);
     const str = getCurrentPageParamStr();
     const imageUrl = (this.data.exhibitionInfo && this.data.exhibitionInfo.image_url) ? this.data.exhibitionInfo.image_url : defaultUrl;
-    const title = (this.data.exhibitionInfo.name) ? `格物观展|${this.data.exhibitionInfo.name}` : '格物观展|格物观展slogan';
+    const title = (this.data.exhibitionInfo.name) ? `格物观展|${this.data.exhibitionInfo.name}` : '【格物观展：让您的博物馆之旅不虚此行】';
     var shareObj = {
       title,
       path: '/pages/museum/museumdetail/index' + str,

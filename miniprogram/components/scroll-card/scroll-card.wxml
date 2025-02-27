@@ -1,78 +1,40 @@
 <view class="scroll-card">
-	<view class="container">
-		<view class="page-section-spacing" style="{{cardStyle}}">
-			<scroll-view
-				class="scroll-view_H"
-				scroll-y="true"
-				show-scrollbar="{{false}}"
-				enhanced="{{true}}"
-				bindscroll="scroll"
-				bindtap="selectItem"
-				style="{{cardStyle}}"
-			>
-			<block wx:for="{{list}}">
-				<view class="card-group">
-					<scroll-view
-						scroll-x="{{true}}"
-						show-scrollbar="{{false}}"
-						enhanced="{{true}}"
-						upper-threshold="10"
-						lower-threshold="10"
-						data-idx="{{index}}"
-						bounces="{{false}}"
-						bindscrolltoupper="handleScrollUpper"
-						bindscrolltolower="handleScrollLower"
-						scroll-into-view="{{toView}}"
-						style="width: 710rpx"
-					>
-					<view class="card-wrapper">
-						<!-- <view class="group-one" id="image{{index}}">
-							<image class="card-img" src="{{item.image_url}}" mode="aspectFix" />
-							<view class="card-info">
-								<view class="card-title">{{item.name}}</view>
-								<view class="card-time">
-									{{item.createtime}}
-								</view>
-								<view class="card-likenum">
-									{{item.liked}}人已点赞
-								</view>
-							</view>
-						</view>
-						<view class="card-operation" id="operation{{index}}">
-							<view class="item-one">分享</view>
-							<view class="item-two" data-idx="{{item.id}}" bindtap="handleDeleteItem">移除</view>
-						</view> -->
-						<view class="container-item">
-              <movable-area>
-                <movable-view out-of-bounds="true" direction="horizontal" x="{{item.xmove}}" inertia="true" data-index="{{index}}" bindtouchstart="handleTouchStart" bindtouchend="handleTouchEnd" bindchange="handleMovableChange">
-                  <view class="group-one" id="image{{index}}">
-							<image class="card-img" src="{{item.image_url}}" mode="aspectFix" />
-							<view class="card-info">
-								<view class="card-title">{{item.name}}</view>
-								<view class="card-time">
-									{{item.createtime}}
-								</view>
-								<view class="card-likenum">
-									{{item.liked}}人已点赞
-								</view>
-							</view>
-						</view>
-
-                </movable-view>
-              </movable-area>
-              <view class="movable_delete_btn" id="operation{{index}}">
-                <view class="item-one">分享</view>
-                <view class="item-two" data-id="{{item.id}}" bindtap="handleDeleteItem">移除</view>
+  <view class="container">
+    <view class="page-section-spacing" style="{{cardStyle}}">
+      <scroll-view class="scroll-view_H" scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll" bindtap="selectItem" style="{{cardStyle}}">
+        <block wx:for="{{list}}">
+          <view class="card-group">
+            <scroll-view scroll-x="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" upper-threshold="10" lower-threshold="10" data-idx="{{index}}" bounces="{{false}}" bindscrolltoupper="handleScrollUpper" bindscrolltolower="handleScrollLower" scroll-into-view="{{toView}}" style="width: 710rpx">
+              <view class="card-wrapper">
+                <view class="container-item">
+                  <movable-area>
+                    <movable-view out-of-bounds="true" direction="horizontal" x="{{item.xmove}}" inertia="true" data-index="{{index}}" bindtouchstart="handleTouchStart" bindtouchend="handleTouchEnd" bindchange="handleMovableChange">
+                      <view class="group-one" id="image{{index}}">
+                        <image class="card-img" src="{{item.image_url}}" mode="aspectFix" />
+                        <view class="card-info">
+                          <view class="card-title">{{item.name}}</view>
+                          <view class="card-time">{{item.createtime}}</view>
+                          <view class="card-likenum">
+                            {{item.liked ? item.liked+ '人已点赞': item.description}}
+                          </view>
+                        </view>
+                      </view>
+                    </movable-view>
+                  </movable-area>
+                  <view class="movable_delete_btn" id="operation{{index}}">
+                    <view class="item-one" open-type="share">分享
+                      </view>
+                    <view class="item-two" data-id="{{item.id}}" bindtap="handleDeleteItem">
+                      移除
+                    </view>
+                  </view>
+                  <!-- <view class="movable_delete_btn" data-id="{{item.id}}" catchtap="handleDelete">删除</view> -->
+                </view>
               </view>
-              <!-- <view class="movable_delete_btn" data-id="{{item.id}}" catchtap="handleDelete">删除</view> -->
-            </view>
-					</view>
-					</scroll-view>
-					
-				</view>
-			</block>
-			</scroll-view>
-		</view>
-	</view>
-	
+            </scroll-view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
 </view>

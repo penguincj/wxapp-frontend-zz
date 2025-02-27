@@ -131,7 +131,7 @@
   
   .recommend-detail {
     position: absolute;
-    bottom: 264rpx;
+    bottom: 224rpx;
     width: 100%;
     color: #FFFFFF;
     left: 0;
@@ -140,6 +140,15 @@
     opacity: 0;
     transform: translateZ(0);
     transition: all 0.5s ease-in-out;
+  }
+  .recommend-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .right-img {
+      width: 30rpx;
+      height: 30rpx;
+    }
   }
   .recommend-detail-content {
     margin-right: 80rpx;
@@ -150,6 +159,7 @@
     line-height: 44rpx;
     color: #2C2F3B;
     margin-bottom: 30rpx;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
   }
   .recommend-detail-desc {
     font-family: PingFang SC;
@@ -189,12 +199,12 @@
   
   .recommend-img-mask {
     position: absolute;
-    top: 40vh;
+    top: 50vh;
     left: 0;
     width: 100%;
-    height: 60vh;
     // background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 0) 100%);
     background: linear-gradient(to top, #ffffff 0%, rgba(0, 0, 0, 0) 100%);
+    height: calc(50vh - 164rpx);
   }
   
   .bg-group {
@@ -235,6 +245,7 @@
     font-size: 60rpx;
     line-height: 60rpx;
     margin-top: 30rpx;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
     // font-weight: 600;
   }
   
@@ -250,6 +261,8 @@
     font-weight: normal;
     line-height: 24rpx;
     padding: 0 10rpx;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3)
   }
   
   .title-png-rotate {
@@ -311,6 +324,7 @@
     line-height: 44rpx;
     color: #FFFFFF;
     font-family:"MySimSun";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   }
   .index-card-museum-num-group {
     position: absolute;
@@ -321,7 +335,6 @@
   .index-card-museum-num {
     font-family: MyDIN;
     font-size: 40rpx;
-    font-weight: normal;
     line-height: 40rpx;
     letter-spacing: 0;
     font-weight: bold;
