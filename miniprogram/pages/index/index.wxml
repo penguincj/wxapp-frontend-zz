@@ -5,9 +5,9 @@
     <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
     <view class="index-page page-section page-section-spacing full-height">
       <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
-        <!-- <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" bindtap="handleClickRecoImg" /> -->
-        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="https://gewugo.com/api/v1/storage/image/gugong-6746305410.jpg" bindtap="handleClickRecoImg" mode="aspectFill" />
-        <view class="recommend-img-mask" data-idx="{{recoExhibition.id}}" bindtap="handleClickRecoImg"></view>
+        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" bindtap="handleClickRecoImg" mode="aspectFill" />
+        <view wx:if="{{isRecoClicked}}" class="recommend-img-mask" data-idx="{{recoExhibition.id}}" bindtap="handleClickRecoImg"></view>
+        <view class="recommend-img-mask-two {{isRecoClicked ? 'ani-hide': 'ani-show'}}" data-idx="{{recoExhibition.id}}" bindtap="handleClickRecoImg"></view>
         
         <!-- <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" /> -->
         <view class="recommend-group">

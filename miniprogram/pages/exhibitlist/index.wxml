@@ -36,7 +36,7 @@
       </view>
       <view class="info-group">
         <view class="line-one">
-          <view class="title">{{curExhibit.name}}:{{curExhibit.description}}</view>
+          <view class="title">{{curExhibit.name}}</view>
           <view class="time">
             <text>{{currentTimeText}}</text>
             <text class="fenge">/</text>
@@ -46,8 +46,8 @@
         </view>
         <view class="line-two">
           <image bindtap="handlePlayPrev" class="img-icon" src="/static/images/play-before.png" mode="aspectFix" />
-          <image wx:if="{{!isPlay}}" bindtap="handleAudioPlay" class="img-icon" src="/static/images/play2.png" mode="aspectFix" />
-          <image wx:else bindtap="handleAudioPause" class="img-icon" src="/static/images/pause2.png" mode="aspectFix" />
+          <image wx:if="{{!isPlay}}" bindtap="handleAudioPlay" class="img-icon play-icon" src="/static/images/play3.png" mode="aspectFix" />
+          <image wx:else bindtap="handleAudioPause" class="img-icon pause-icon" src="/static/images/pause1.png" mode="aspectFill" />
           <image bindtap="handlePlayNext" class="img-icon reverse" src="/static/images/play-before.png" mode="aspectFix" />
           <view class="img-dingwei-group">
             <view class="img-wrapper">

@@ -110,12 +110,11 @@ Page({
   
   onShareAppMessage(){
     const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';
-    const imageUrl = (this.data.recoExhibition.image_url) ? this.data.recoExhibition.image_url : defaultUrl ;
-    const title = (this.data.recoExhibition.name) ? `格物观展|${this.data.recoExhibition.name}` : '【格物观展：让您的博物馆之旅不虚此行】' ;
+    const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
     var shareObj = {
       title,
       path: '/pages/index/index',
-      imageUrl: imageUrl,
+      imageUrl: defaultUrl,
       success: function(res: any){
         if(res.errMsg == 'shareAppMessage:ok'){
           console.log('share success')
