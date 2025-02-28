@@ -1,5 +1,5 @@
 import { getUnitList, getExhibitList, queryExhibitListAll } from '../../api/api';
-import { generateNewUrlParams, getCurrentPageParamStr, transferObjToUrlParams, calTimeTxt } from '../../utils/util';
+import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt } from '../../utils/util';
 
 const base_url = "http://gewugo.com";
 
@@ -32,6 +32,7 @@ Page({
     narrationId: -1, // 页面params语音包id
     exhibitionId: -1,
     listAreaHeight: '0px', // 播放列表区域高度
+    lastExhibitionId: -1,
     // playProgress: 0,
   },
 
@@ -314,11 +315,16 @@ Page({
       const res_unit : any = await getUnitList(_exhibitionid);
       const player = this.selectComponent("#player");
       const isPlayingAudio = player.checkIsAudioPlaying();
+      const lastExhibitionId = this.data.lastExhibitionId;
+
       if (res_unit && res_unit.units && res_unit.units.length) {
         this.setData({
           unitList: res_unit.units,
         })
-        if (!isPlayingAudio.isAudioExist) {
+        console.log('isPlayingAudio.isAudioExist', isPlayingAudio.isAudioExist)
+        console.log('isPlayingAudio.isAudioExist lastExhibitionId', lastExhibitionId)
+        console.log('isPlayingAudio.isAudioExist _exhibitionid', _exhibitionid)
+        if (!isPlayingAudio.isAudioExist || lastExhibitionId !== _exhibitionid) {
           this.setData({
             curUnitId: res_unit.units[0].id,
           })
@@ -423,27 +429,34 @@ Page({
   // },
 
   onShow() {
-    console.log('onShow onShow')
+    console.log('onShow onShow', getApp().globalData.audio.curExhibition)
 
     const hei = getApp().globalData.system.statusBarHeight;
 
     this.setData({
       loading: true,
       listAreaHeight: hei + 'px',
+      lastExhibitionId: getApp().globalData.audio.curExhibition,
     })
     const player = this.selectComponent("#player");
     player.pageTimeUpateContinue();
     // if (this.data.exhibitionId !== -1) {
     //   this.initPage(this.data.exhibitionId);
     // }
-    const params = getCurrentPageParamStr();
-    getApp().globalData.audio.exhibitlistParams = params;
+    setTimeout(() => {
+      const params = getCurrentPageParamStr();
+      const { exhibition_id } = getCurrentPageParam();
+      getApp().globalData.audio.exhibitlistParams = params;
+      getApp().globalData.audio.curExhibition = exhibition_id;
+    }, 1000)
+   
 
   },
   onLoad(options) {
     console.log('onShow onLoad')
 
     if(options && options.exhibition_id) {
+
       this.setData({
         exhibitionId: Number(options.exhibition_id),
       })

@@ -7,7 +7,7 @@
   </view>
   <view wx:if="{{topSwiperSelectIdx === 1}}" class="images-area">
     <swiper-card5 
-      title="{{exhibitInfo.name}}:{{exhibitInfo.description}}"
+      title="{{exhibitInfo.name}}"
       list="{{exhibitInfo.more_image_urls}}"
     ></swiper-card5>
   </view>

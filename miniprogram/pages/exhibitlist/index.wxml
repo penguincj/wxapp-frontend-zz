@@ -46,8 +46,8 @@
         </view>
         <view class="line-two">
           <image bindtap="handlePlayPrev" class="img-icon" src="/static/images/play-before.png" mode="aspectFix" />
-          <image wx:if="{{!isPlay}}" bindtap="handleAudioPlay" class="img-icon" src="/static/images/play1.png" mode="aspectFix" />
-          <image wx:else bindtap="handleAudioPause" class="img-icon" src="/static/images/play-ing.png" mode="aspectFix" />
+          <image wx:if="{{!isPlay}}" bindtap="handleAudioPlay" class="img-icon" src="/static/images/play2.png" mode="aspectFix" />
+          <image wx:else bindtap="handleAudioPause" class="img-icon" src="/static/images/pause2.png" mode="aspectFix" />
           <image bindtap="handlePlayNext" class="img-icon reverse" src="/static/images/play-before.png" mode="aspectFix" />
           <view class="img-dingwei-group">
             <view class="img-wrapper">

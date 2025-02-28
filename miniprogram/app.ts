@@ -17,6 +17,7 @@ App<IAppOption>({
       totalTimeText: '00:00',
       exhibitlistParams: '',
       curUnitId: 0,
+      curExhibition: -1,
     },
     system: {
       statusBarHeight: 0,

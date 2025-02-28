@@ -5,7 +5,8 @@
     <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
     <view class="index-page page-section page-section-spacing full-height">
       <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
-        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" bindtap="handleClickRecoImg" />
+        <!-- <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" bindtap="handleClickRecoImg" /> -->
+        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="https://gewugo.com/api/v1/storage/image/gugong-6746305410.jpg" bindtap="handleClickRecoImg" mode="aspectFill" />
         <view class="recommend-img-mask" data-idx="{{recoExhibition.id}}" bindtap="handleClickRecoImg"></view>
         
         <!-- <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" /> -->
@@ -31,7 +32,7 @@
         </view>
       </view>
       <view class="index-card-group {{isRecoClicked ? 'index-card-group-hide-ani' : ''}}">
-        <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 721rpx)">
+        <scroll-view wx:if="{{museumList && museumList.length > 2}}" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 721rpx)">
           <block wx:for="{{museumList}}">
             <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
               <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />
@@ -45,6 +46,21 @@
             </view>
           </block>
         </scroll-view>
+        <view wx:else class="few-museum">
+          <block wx:for="{{museumList}}">
+            <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
+              <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />
+              <view class="index-card-img-mask"></view>
+              <view class="index-card-museum-title">{{item.name}}</view>
+              <view class="index-card-museum-num-group">
+                <span class="index-card-museum-num">{{item.exhibition_num}}</span>
+                <span class="index-card-museum-num-text">个展览</span>
+              </view>
+              <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />
+            </view>
+            
+          </block>
+        </view>
       </view>
       <image src="/static/images/close.png" bindtap="handleCloseDetail" class="index-close {{isRecoClicked ? 'index-close-display': ''}}" mode="aspectFix" />
     </view>

@@ -12,7 +12,7 @@
           <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
           <view class="item-desc-group">
             <view class="line-one">
-              <span class="desc-title">{{item.name}}</span>
+              <text class="desc-title">{{item.name}}</text>
               <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" />
             </view>
             <view class="desc-desc">{{item.opendate}}</view>

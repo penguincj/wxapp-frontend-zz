@@ -55,6 +55,17 @@
         font-size: 44rpx;
         margin-left: 30rpx;
         font-family: MySimSun;
+        display: flex;
+        align-items: flex-end;
+        
+        .title-name {
+          max-width: 60%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          word-break: break-all;
+          white-space: nowrap;
+          display: inline-block;
+        }
 
         .zhanlan-type {
           width: 80rpx;
@@ -191,8 +202,9 @@
         .sec-area {
           display: flex;
           align-items: flex-end;
+          flex: 0 0 auto;
           .price {
-            font-family: MyDIN;
+            // font-family: MyDIN;
             font-size: 40rpx;
             line-height: 40rpx;
             // letter-spacing: -1rpx;
@@ -344,8 +356,7 @@
         padding-left: 10rpx;
       }
       .price {
-        font-family: MyDIN;
-        line-height: 32px;
+        font-family: MyDIN DIN;
         color: #2C2F3B;
       }
     }

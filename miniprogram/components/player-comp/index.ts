@@ -454,11 +454,11 @@ Component({
 
   lifetimes: {
     async attached() { 
-      console.log('in attached player comp',global_audio.bgAudio);
       if (global_audio && global_audio.bgAudio) {
+      console.log('in attached player comp',global_audio.bgAudio.paused);
+
         this.setData({
           isShow: true,
-          isPlaying: true,
         })
         this.triggerEvent('ContinuePlay', {
           isPlay: true,
@@ -500,6 +500,7 @@ Component({
       if (global_audio && global_audio.bgAudio) {
         this.setData({
           isShow: true,
+          isPlaying: !global_audio.bgAudio.paused,
         })
       }
     }

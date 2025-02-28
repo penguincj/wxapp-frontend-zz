@@ -12,7 +12,7 @@
       <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
       <view class="museum-text-group">
         <view class="title">
-          <span>{{exhibitionInfo.name}}</span>
+          <span class="title-name">{{exhibitionInfo.name}}</span>
           <view class="zhanlan-type">{{exhibitionInfo.short === 1 ? '临时展': '常设展'}}</view>
         </view>
         <image bindtap="handleClickPlayIcon" src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
@@ -48,9 +48,10 @@
       <view class="ticket-group">
         <view>
           <text class="title">展览票</text>
-          <text class="tehui">限时特惠中</text>
+          <text class="tehui">{{exhibitionInfo.ticket_price === 0? '免费' : ''}}</text>
         </view>
         <view class="price">¥{{exhibitionInfo.ticket_price}}</view>
+        <!-- <view class="price11">{{exhibitionInfo.ticket_price}}</view> -->
       </view>
     </view>
     <view class="jiangjie-area">
