@@ -1,6 +1,4 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
+import { getCurrentPageParamStr } from "../../utils/util"
 Page({
   data: {
     isAutoPlay: false,
@@ -36,6 +34,12 @@ Page({
       countdown: 5,
     });
     this.countDownFunc();
+  },
+  handleClickPerosnInfo() {
+    const params = getCurrentPageParamStr();
+    wx.navigateTo({
+      url: '/pages/login/index' + params
+    })
   },
   countDownFunc() {
     const intervalId = setInterval(() => {

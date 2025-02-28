@@ -35,20 +35,20 @@
           <view class="title-name">其他功能</view>
         </view>
         <view class="links">
-          <view class="link-group">
+          <!-- <view class="link-group">
             <view class="left">
               <image class="title-img" src="/static/images/dingdan.png" mode="aspectFix" />
               <text class="text">我的订单</text>
             </view>
             <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
-          </view>
-          <view class="link-group" bindtap="handleClickKefu">
+          </view> -->
+          <!-- <view class="link-group" bindtap="handleClickKefu">
             <view class="left">
               <image class="title-img" src="/static/images/kefu.png" mode="aspectFix" />
               <text class="text">客服反馈</text>
             </view>
             <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
-          </view>
+          </view> -->
           <view class="link-group" bindtap="handleClickFeedback">
             <view class="left">
               <image class="title-img" src="/static/images/tousu.png" mode="aspectFix" />
