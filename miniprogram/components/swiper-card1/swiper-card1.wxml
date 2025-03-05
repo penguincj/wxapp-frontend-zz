@@ -14,7 +14,16 @@
     </view>
   </view>
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="{{false}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperChange" current="{{swiperCurrent}}">
+    <swiper
+      indicator-dots="{{false}}"
+      autoplay="{{autoplay}}" 
+      interval="{{interval}}" 
+      duration="{{duration}}" 
+      bindchange="swiperChange" 
+      current="{{swiperCurrent}}"
+      previous-margin="200rpx"
+      next-margin="200rpx"
+      >
       <block wx:for="{{list}}" wx:key="{{item.id}}">
         <swiper-item>
           <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem" >

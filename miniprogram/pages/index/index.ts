@@ -11,6 +11,8 @@ Page({
     museumList: [],
     recoExhibition: {} as any,
     loading: false,
+    touchStartY: 0,
+  
   },
 
   // handleClickMuseumIcon() {
@@ -27,6 +29,8 @@ Page({
     })
   },
   handleClickRecoImg(event: any) {
+    console.log('handleClickRecoImg');
+    
     if (this.data.isRecoClicked) {
       const { idx } = event.currentTarget.dataset;
       const paramStr = generateNewUrlParams({
@@ -36,14 +40,29 @@ Page({
         url: '/pages/exhibitiondetail/index' + paramStr
       })
     }
-    
   },
-  handleClickRecommend() {
-    console.log('handleClickRecommend');
-    this.setData({
-      isRecoClicked: true,
-    })
+  handleTouchStart(event: any) {
+    this.data.touchStartY = event.touches[0].clientY;
   },
+  handleTouchMove(event: any) {
+    const DY = 15;
+    const CY = event.touches[0].clientY;
+    if (this.data.touchStartY - CY > DY) {
+      this.setData({
+        isRecoClicked: true,
+      })
+    } else if (CY - this.data.touchStartY > DY) {
+      this.setData({
+        isRecoClicked: false,
+      })
+    }
+  },
+  // handleClickRecommend() {
+  //   console.log('handleClickRecommend');
+  //   // this.setData({
+  //   //   isRecoClicked: true,
+  //   // })
+  // },
   handleCloseDetail() {
     console.log('handleCloseDetail');
     this.setData({

@@ -1,0 +1,45 @@
+<view class="info-card">
+  <!-- <view class="pagination-prompt">
+    {{ currentGuestIndex + 1 }} / {{ totalGuests }}
+  </view> -->
+  <view wx:if="{{title}}" class="title-line">
+    <view class="title">
+      <view class="title-name">{{title}}</view>
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+    </view>
+    <view class="date-group">
+      <view class="date">
+        <span class="date-month">{{dateData.month}}</span>
+        <span class="date-fenge">/</span>
+        <span class="date-day">{{dateData.date}}</span>
+      </view>
+      <span class="date-week">{{dateData.day_str}}</span>
+    </view>
+  </view>
+  <view class="tower-swiper" catchtouchstart="towerStart" catchtouchend="towerEnd">
+    <view class="tower-item" 
+      wx:for="{{swiperList}}" 
+      wx:key="id" 
+      style="--index:{{item.zIndex}};--rotate:{{item.rotate}};--opacity:{{item.opacity}}"
+      >
+      <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem" >
+        <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
+        <view class="mask"></view>
+        <view class="exhibition-type">{{item.short ? '临时展':'常设展'}}</view>
+        <view class="item-desc-group">
+          <view class="desc-title">{{item.name}}</view>
+          <view class="desc-desc">{{item.description}}</view>
+          <view class="desc-opendate">
+            <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
+            {{item.opendate}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="dots-group">
+    <block wx:for="{{swiperList}}" wx:key="{{item.id}}">
+      <image src="/static/images/dot1{{index === currentGuestIndex ? '-active': ''}}.png" class="dot-img" mode="aspectFill" />
+    </block>
+  </view>
+</view>

@@ -1,45 +1,35 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
-<navigation-bar loading="{{false}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
-<view class="exhibition-list-page">
-  <view>
-    <loc-select
-      locStyle="margin-top: -96rpx"
-      pannelStyle="margin-top: -96rpx"
-      list="{{cityList}}"
-      selectedName="{{cityName}}"
-      selectedId="{{curCityId}}"
-      bindCityChange="handleCityChange"
-    ></loc-select>
-  </view>
-  <view class="swiper-card-area">
-    <swiper-card1
+  <navigation-bar loading="{{false}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;">
+    <view slot="left">
+      <view class="loc-ara-chosen">
+        <loc-select 
+          locStyle="" 
+          pannelStyle="" 
+          list="{{cityList}}" 
+          selectedName="{{cityName}}" 
+          selectedId="{{curCityId}}" 
+          bindCityChange="handleCityChange"></loc-select>
+      </view>
+    </view>
+  </navigation-bar>
+  <view class="exhibition-list-page">
+    <view class="swiper-card-area" wx:if="{{recommendList && recommendList.length}}">
+      <!-- <swiper-card1
       title="首推展览"
       dateData="{{dateObj}}"
       list="{{recommendList}}"
       bindClickItem="handleClickItem"
-    ></swiper-card1>
+    ></swiper-card1> -->
+      <swiper-card7 title="首推展览" dateData="{{dateObj}}" dataList="{{recommendList}}" bindClickItem="handleClickItem"></swiper-card7>
+    </view>
+    <view>
+      <swiper-card2 title="常设展览" list="{{normalList}}" bindClickMore="handleClickMoreLong" bindClickItem="handleClickItem"></swiper-card2>
+    </view>
+    <view class="swiper-card3-area">
+      <card-group1 title="往期展览" list="{{outofdateList}}" bindClickItem="handleClickItem" bindClickMore="handleClickMorePast"></card-group1>
+    </view>
+    <bottom-bar currentkey="{{2}}"></bottom-bar>
   </view>
-  <view>
-    <swiper-card2
-      title="常设展览"
-      list="{{normalList}}"
-      bindClickMore="handleClickMoreLong"
-      bindClickItem="handleClickItem"
-    ></swiper-card2>
-  </view>
-  <view class="swiper-card3-area">
-    <card-group1
-      title="往期展览"
-      list="{{outofdateList}}"
-      bindClickItem="handleClickItem"
-      bindClickMore="handleClickMorePast"
-    ></card-group1>
-   
-  </view>
-  <bottom-bar currentkey="{{2}}"></bottom-bar>
-</view>
-  <player-comp
-    bindClickPlayerComp="handleClickPlayerComp"
-  ></player-comp>
-</page-meta>  
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+</page-meta>

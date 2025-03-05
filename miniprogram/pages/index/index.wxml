@@ -4,12 +4,10 @@
   <view>
     <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
     <view class="index-page page-section page-section-spacing full-height">
-      <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}" bindtap="handleClickRecommend">
-        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" bindtap="handleClickRecoImg" mode="aspectFill" />
-        <view wx:if="{{isRecoClicked}}" class="recommend-img-mask" data-idx="{{recoExhibition.id}}" bindtap="handleClickRecoImg"></view>
-        <view class="recommend-img-mask-two {{isRecoClicked ? 'ani-hide': 'ani-show'}}" data-idx="{{recoExhibition.id}}" bindtap="handleClickRecoImg"></view>
-        
-        <!-- <image catchtap="handleClickMuseumIcon" class="museum-icon {{isRecoClicked ? 'no-display':''}}" src="/static/images/bwg-icon.png" mode="aspectFix" /> -->
+      <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}">
+        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" mode="aspectFill" catchtouchstart="handleTouchStart" catchtouchmove="handleTouchMove" />
+        <view wx:if="{{isRecoClicked}}" class="recommend-img-mask"></view>
+        <view class="recommend-img-mask-two {{isRecoClicked ? 'ani-hide': 'ani-show'}}"></view>
         <view class="recommend-group">
           <view class="recommend-title">
             <image class="title-png" src="/static/images/shouye-jinri.png" mode="aspectFix" />
@@ -18,7 +16,7 @@
           </view>
           <view class="recommend-name">{{recoExhibition.name}}</view>
         </view>
-        <view class="recommend-detail">
+        <view class="recommend-detail" data-idx="{{recoExhibition.id}}" catchtap="handleClickRecoImg">
           <view class="recommend-detail-content">
             <view class="recommend-detail-title">{{recoExhibition.name}}</view>
             <view class="recommend-detail-desc">{{recoExhibition.description}}</view>
@@ -39,8 +37,8 @@
               <view class="index-card-img-mask"></view>
               <view class="index-card-museum-title">{{item.name}}</view>
               <view class="index-card-museum-num-group">
-                <span class="index-card-museum-num">{{item.exhibition_num}}</span>
-                <span class="index-card-museum-num-text">个展览</span>
+                <text class="index-card-museum-num">{{item.exhibition_num}}</text>
+                <text class="index-card-museum-num-text">个展览</text>
               </view>
               <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />
             </view>
@@ -58,7 +56,6 @@
               </view>
               <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />
             </view>
-            
           </block>
         </view>
       </view>
@@ -68,7 +65,5 @@
   <view>
     <bottom-bar currentkey="{{0}}"></bottom-bar>
   </view>
-  <player-comp
-    bindClickPlayerComp="handleClickPlayerComp"
-  ></player-comp>
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
 </page-meta>
