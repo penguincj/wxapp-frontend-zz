@@ -1,5 +1,5 @@
 import { getCityList, getMuseumList, getCityRecoExhibitionList } from "../../api/api";
-import { getCurrentCity, backToTargetPage, getCurrentPageParam, generateNewUrlParams } from "../../utils/util";
+import { getCurrentCity, backToTargetPage, throttle, generateNewUrlParams } from "../../utils/util";
 
 Page({
   data: {
@@ -12,14 +12,36 @@ Page({
     recoExhibition: {} as any,
     loading: false,
     touchStartY: 0,
-  
+    x:5,
+    y:5,
   },
 
-  // handleClickMuseumIcon() {
-  //   wx.navigateTo({
-  //     url: '/pages/museum/museumlist/index',
-  //   })
-  // },
+  listenGyro() {
+    // 设备方向
+    wx.startDeviceMotionListening({
+      interval: 'normal',
+    });
+    wx.onDeviceMotionChange(throttle((res: any) => {
+        // console.log('设备方向：',res);//alpha,beta,gamma
+        const result = res[0];
+        var xVal = -(result.gamma).toFixed(2)/5;
+        var yVal = -(result.beta - 30).toFixed(2)/5;
+        this.setData({
+          x: xVal > 10 ? 10 : (xVal < -10 ? -10 : xVal),
+          y: yVal > 10 ? 10 : (yVal < -10 ? -10 : yVal),
+        })
+    }, 200))
+  },
+  stopListenGyro() {
+    wx.stopDeviceMotionListening({
+      success: (res) => {
+        console.log('stopDeviceMotionListening sucess ', res);
+      },
+      fail: (err) => {
+        console.log('stopDeviceMotionListening fail ', err);
+      }
+    });
+  },
   handleClickMuseumItem(event: any) {
     console.log(event);
 
@@ -126,6 +148,21 @@ Page({
     })
     this.getPageData();
   },
+
+  onShow() {
+    this.listenGyro();
+
+  },
+
+  onUnload() {
+    this.stopListenGyro();
+  },
+
+  onHide() {
+    this.stopListenGyro();
+
+  },
+
   
   onShareAppMessage(){
     const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';

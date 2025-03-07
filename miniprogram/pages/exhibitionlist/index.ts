@@ -30,6 +30,8 @@ Page({
 
   handleClickItem(event: any) {
     const { id } = event.detail;
+    console.log('handleClickItem');
+    
     const url_params = generateNewUrlParams({
       exhibition_id: id,
       city_id: this.data.curCityId,

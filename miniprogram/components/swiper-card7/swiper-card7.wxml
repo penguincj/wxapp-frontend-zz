@@ -1,7 +1,4 @@
 <view class="info-card">
-  <!-- <view class="pagination-prompt">
-    {{ currentGuestIndex + 1 }} / {{ totalGuests }}
-  </view> -->
   <view wx:if="{{title}}" class="title-line">
     <view class="title">
       <view class="title-name">{{title}}</view>
@@ -16,11 +13,11 @@
       <span class="date-week">{{dateData.day_str}}</span>
     </view>
   </view>
-  <view class="tower-swiper" catchtouchstart="towerStart" catchtouchend="towerEnd">
+  <view class="tower-swiper" catchtouchstart="{{enabled ? 'towerStart': ''}}" catchtouchend="{{enabled ? 'towerEnd' : ''}}">
     <view class="tower-item" 
       wx:for="{{swiperList}}" 
       wx:key="id" 
-      style="--index:{{item.zIndex}};--rotate:{{item.rotate}};--opacity:{{item.opacity}}"
+      style="--index:{{item.zIndex}};--rotate:{{item.rotate}};--opacity:{{item.opacity}};"
       >
       <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem" >
         <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
@@ -33,7 +30,11 @@
             <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
             {{item.opendate}}
           </view>
+          <image src="/static/images/right-arrow.png" class="desc-arrow" mode="aspectFi" />
+
         </view>
+        <view class="mask-two" style="--blur:{{item.blur}};"></view>
+
       </view>
     </view>
   </view>

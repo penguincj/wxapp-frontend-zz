@@ -221,15 +221,16 @@
 
   .recommend-img-mask-two {
     position: absolute;
-    top: 68vh;
+    top: 70vh;
     left: 0;
     width: 100%;
-    // background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 0) 100%);
+    height: calc(30vh - 164rpx);
     background: linear-gradient(to top, #ffffff 0%, rgba(0, 0, 0, 0) 100%);
-    height: 4vh;
+
+    backdrop-filter: blur(10px);
   }
   .ani-show {
-    animation: show-ani 0.5s;
+    animation: show-ani 0.1s;
 
   }
   .ani-hide {
@@ -410,6 +411,51 @@
     opacity: 1;
     transform: translateZ(0);
     transition: all 0.5s ease-in-out 0.5s;
+  }
+
+
+
+  .demo{
+    width: 500rpx;
+    height: 500rpx;
+    box-shadow: 0rpx 0rpx 10rpx rgba(0,0,0);
+    position: relative;
+  }
+  .img{
+    height: 880rpx;
+    width: 500rpx;
+    position: relative;
+    box-shadow: 0rpx 0rpx 20rpx #000000;
+  }
+  @keyframes hd{
+    form{
+      transform: none;
+    }
+    35% {
+      transform: translate3d(0%, 0, 0) rotate3d(1, 0, 0, 4deg);
+    }
+    65% {
+      transform: translate3d(0%, 0, 0) rotate3d(1, 0, 0, -4deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes lf{
+    form{
+      transform: none;
+    }
+    to {
+      transform: translate3d(5%, 0, 0) rotate3d(0, 1, 0, 4deg);
+    }
+  }
+  @keyframes rf{
+    form{
+      transform: none;
+    }
+    to {
+      transform: translate3d(-5%, 0, 0) rotate3d(0, 1, 0, -4deg);
+    }
   }
   
   

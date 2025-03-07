@@ -117,8 +117,13 @@ Page({
       isPlay: false,
     });
     const { selectId } = event.detail;
+    const exhibit_info = this.data.exhibitList.find((i: any)=> i.id === selectId)
     const player = this.selectComponent("#player")
     await player.handlePlayOtherAudioById(selectId);
+    this.setData({
+      exhibitId: selectId,
+      exhibitInfo: exhibit_info
+    })
   },
 
 
@@ -185,6 +190,7 @@ Page({
       const next_exhibit = this.data.exhibitList[curPlayIdx + 1];
       this.setData({
         exhibitInfo: next_exhibit,
+        exhibitId: next_exhibit.id,
       })
       const player = this.selectComponent("#player");
       player.playNextAudio();
@@ -196,6 +202,7 @@ Page({
       const prev_exhibit = this.data.exhibitList[curPlayIdx - 1];
       this.setData({
         exhibitInfo: prev_exhibit,
+        exhibitId: prev_exhibit.id,
       })
       var player = this.selectComponent("#player");
       player.playPrevAudio();
@@ -213,7 +220,6 @@ Page({
   },
 
   handleRateSliderChange(event: any) {
-    console.log('handleRateSliderChange', event);
     const value = event.detail.value;
     this.setData({
       curRate: (value / 2).toFixed(1),

@@ -5,7 +5,14 @@
     <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
     <view class="index-page page-section page-section-spacing full-height">
       <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}">
-        <image class="recommend-img" data-idx="{{recoExhibition.id}}" src="{{recoExhibition.home_image_url}}" mode="aspectFill" catchtouchstart="handleTouchStart" catchtouchmove="handleTouchMove" />
+        <image 
+          class="recommend-img" 
+          style="transform: scale(1.1) translateX({{x}}px) translateY({{y}}px)"
+          data-idx="{{recoExhibition.id}}" 
+          src="{{recoExhibition.home_image_url}}" 
+          mode="aspectFill" 
+          catchtouchstart="handleTouchStart" 
+          catchtouchmove="handleTouchMove" />
         <view wx:if="{{isRecoClicked}}" class="recommend-img-mask"></view>
         <view class="recommend-img-mask-two {{isRecoClicked ? 'ani-hide': 'ani-show'}}"></view>
         <view class="recommend-group">

@@ -4,7 +4,7 @@ Component({
   properties: {
     dataList: {
       type: Object,
-      value: []
+      value: [] as any
     },
     title: {
       type: String,
@@ -23,6 +23,7 @@ Component({
     clientWidth: 0,
     towerStart: 0,
     swiperCurrent: 0,
+    enabled: true,
   },
 
   lifetimes: {
@@ -36,8 +37,9 @@ Component({
   },
 
   methods: {
-    handleClickItem(e: any) {      
-      const { idx } = e.currentTarget.dataset;
+    handleClickItem() {  
+      const idx = this.data.swiperList[this.data.currentGuestIndex].id;
+      console.log(idx);
       this.triggerEvent('ClickItem', {
         id: idx,
       })
@@ -51,6 +53,8 @@ Component({
             rotate: '0deg',
             showData: true,
             opacity: 1,
+            blur: '0px',
+
             ..._list[0],
           }
         } else if (index === 1) {
@@ -59,6 +63,7 @@ Component({
             rotate: '-7deg',
             showData: true,
             opacity: 1,
+            blur: '3px',
             ..._list[1],
           }
         } else if (index === 2) {
@@ -67,6 +72,7 @@ Component({
             rotate: '-14deg',
             showData: true,
             opacity: 1,
+            blur: '3px',
             ..._list[2],
           }
         } else {
@@ -75,6 +81,7 @@ Component({
             rotate: '-14deg',
             showData: true,
             opacity: 0,
+            blur: '3px',
             ..._list[index],
           }
         }
@@ -92,9 +99,13 @@ Component({
     },
     // towerSwiper计算滚动
     towerEnd(e: any) {
-      console.log(e.changedTouches[0].pageX - this.data.towerStart);
+      console.log(e);
       const valueTouch = Math.abs(e.changedTouches[0].pageX - this.data.towerStart) > 50 ? true : false
-      if(!valueTouch) return false
+      if(!valueTouch) {
+        console.log('! valuetouch');
+        this.handleClickItem();
+        return
+      }
       const direction = e.changedTouches[0].pageX - this.data.towerStart > 0 ? 'right' : 'left'
       const list : any = this.data.swiperList
       const clientWidth = this.data.clientWidth
@@ -111,6 +122,7 @@ Component({
                 ...item,
                 zIndex : len,
                 rotate : '0deg',
+                blur: '0px',
                 opacity: 1,
               }
             } else if (index === preDataIndex + 1) {
@@ -119,6 +131,7 @@ Component({
 
                 zIndex : zIdx - 1,
                 rotate : '-7deg',
+                blur: '3px',
                 opacity: 1,
 
               }
@@ -128,6 +141,7 @@ Component({
 
                 zIndex : zIdx - 1,
                 rotate : '-14deg',
+                blur: '3px',
                 opacity: 1,
 
               }
@@ -137,13 +151,13 @@ Component({
 
                 zIndex : (zIdx - 1) % len,
                 rotate : '-14deg',
+                blur: '3px',
                 opacity: 0,
 
               }
             }
            
           })
-          console.log('newlist 1', newList);
           this.setData({
             swiperList: newList,
             currentGuestIndex: preDataIndex
@@ -160,6 +174,7 @@ Component({
                 ...item,
                 zIndex : zIdx + 1,
                 rotate : '0deg',
+                blur: '0px',
                 opacity: 1,
               }
             } else if (index === nextDataIndex + 1) {
@@ -168,6 +183,7 @@ Component({
 
                 zIndex : zIdx + 1,
                 rotate : '-7deg',
+                blur: '3px',
                 opacity: 1,
               }
             } else if (index === nextDataIndex + 2) {
@@ -175,6 +191,7 @@ Component({
                 ...item,
                 zIndex : zIdx + 1,
                 rotate : '-14deg',
+                blur: '3px',
                 opacity: 1,
               }
             } else {
@@ -182,6 +199,7 @@ Component({
                 ...item,
                 zIndex : (zIdx + 1) % len,
                 rotate : '-14deg',
+                blur: '3px',
                 opacity: 0,
               }
             }
@@ -194,14 +212,27 @@ Component({
           })
         }
 
-      }
-    }
+      } 
+
+    },
+    towerStartFather(e:any) {
+      console.log('towerStartFather')
+    },
+    towerEndFather(e:any) {
+      console.log('towerEndFather')
+
+    },
   },
   observers: {
     'dataList': function(dataList) {
-      console.log('dataList changed', dataList);
+      console.log('dataList changed', this.data.dataList, dataList);
+      if (this.data.currentGuestIndex) {
+        return
+      }
       this.towerSwiper(dataList)
-
+      this.setData({
+        currentGuestIndex: 0,
+      })
     }
   }
 })

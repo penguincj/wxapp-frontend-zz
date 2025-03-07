@@ -23,7 +23,7 @@ Component({
     vertical: false,
     autoplay: false,
     interval: 2000,
-    duration: 500,
+    duration: 1000,
     current: 0,
   },
   lifetimes: {
@@ -47,6 +47,9 @@ Component({
       this.triggerEvent('SwiperItemClick', {
         id: idx,
       });
+    },
+    handleTransition(event: any) {
+      console.log('event', event)
     }
   },
 })
