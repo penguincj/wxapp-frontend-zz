@@ -38,7 +38,6 @@
                 </view>
               </view>
             </view>
-            {{playingExhibitId}} {{item.id}}
             <view class="card-icon">
               <image wx:if="{{(playingIndex === index) && (playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
               <image wx:elif="{{item.audioitem.locked === 0}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
