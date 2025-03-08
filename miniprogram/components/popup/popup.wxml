@@ -1,0 +1,14 @@
+<view class="popup-comp" aria-role="dialog" aria-modal="true" aria-hidden="{{!showDialog}}">
+  <view 
+    class="mask {{showPupup ? 'show' : ''}}" 
+    bindtap="handleClose"
+    catchtouchmove="return">
+  </view>
+  <view 
+    class="dialog {{showPupup ? 'show' : ''}}"  
+    style="{{popupStyle}}"
+    catchtouchmove="return">
+    
+    <slot name="content"></slot>
+  </view>
+</view>

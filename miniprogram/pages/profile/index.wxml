@@ -1,0 +1,74 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar extClass="transparent" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <view class="profile-page">
+    <scroll-view scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 164rpx)">
+      <image class="bg-img" src="https://gewugo.com/api/v1/storage/image/bg-6215609170.png" mode="aspectFill" />
+      <!-- <image class="bg-img" src="/static/images/bg.png" mode="aspectFill" /> -->
+      <view class="avatar-group">
+        <image class="avatar" src="{{userInfo.avatar}}" mode="aspectFill" />
+        <image class="ava-bg" src="/static/images/avatar-bg.png" mode="aspectFill" />
+      </view>
+      <view class="content">
+        <view class="username-group" bindtap="handleClickModifyUserInfo">
+          <text class="name">{{userInfo.nickname}}</text>
+          <image class="edit-icon" src="/static/images/edit.png" mode="aspectFill" />
+        </view>
+        <view class="group-one">
+          <view class="group-item" bindtap="handleClickCollect">
+            <image class="icon" src="/static/images/shoucang-yinying.png" mode="aspectFill" />
+            <view class="text">收藏</view>
+          </view>
+          <view class="group-item" bindtap="handleClickLike">
+            <image class="icon" src="/static/images/like-yinying.png" mode="aspectFill" />
+            <view class="text">点赞</view>
+          </view>
+          <view class="group-item" bindtap="handleClickHistory">
+            <image class="icon" src="/static/images/zuji-yinying.png" mode="aspectFill" />
+            <view class="text">足迹</view>
+          </view>
+        </view>
+      </view>
+      <view class="link-list">
+        <view class="title">
+          <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+          <view class="title-name">其他功能</view>
+        </view>
+        <view class="links">
+          <!-- <view class="link-group">
+            <view class="left">
+              <image class="title-img" src="/static/images/dingdan.png" mode="aspectFix" />
+              <text class="text">我的订单</text>
+            </view>
+            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+          </view> -->
+          <!-- <view class="link-group" bindtap="handleClickKefu">
+            <view class="left">
+              <image class="title-img" src="/static/images/kefu.png" mode="aspectFix" />
+              <text class="text">客服反馈</text>
+            </view>
+            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+          </view> -->
+          <view class="link-group" bindtap="handleClickFeedback">
+            <view class="left">
+              <image class="title-img" src="/static/images/tousu.png" mode="aspectFix" />
+              <text class="text">投诉反馈</text>
+            </view>
+            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+          </view>
+          <view class="link-group" bindtap="handleClickSetting">
+            <view class="left">
+              <image class="title-img" src="/static/images/shezhi.png" mode="aspectFix" />
+              <text class="text">账户设置</text>
+            </view>
+            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+          </view>
+        </view>
+      </view>
+      <view>
+        <bottom-bar currentkey="{{3}}"></bottom-bar>
+      </view>
+    </scroll-view>
+  </view>
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+</page-meta>

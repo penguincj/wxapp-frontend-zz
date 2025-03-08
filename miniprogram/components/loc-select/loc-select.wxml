@@ -10,8 +10,8 @@
       <image src="/static/images/arrow-bottom.png" class="loc-arrow-reverse" mode="aspectFix" bindtap="handleClosePannel" />
     </view>
     <view class="more-cities-pannel" bindtap="handleCityChange">
-      <block wx:for="{{cityConfig}}" key="{{item.id}}">
-        <view class="loc-city-item" data-citykey="{{item.id}}" data-cityname="{{item.name}}">
+      <block wx:for="{{list}}" key="{{item.id}}">
+        <view class="loc-city-item {{selectedId === item.id ? 'white-bg':'gray-bg'}}" data-citykey="{{item.id}}" data-cityname="{{item.name}}">
           {{item.name}}
         </view>
       </block>

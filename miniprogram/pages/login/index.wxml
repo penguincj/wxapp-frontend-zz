@@ -1,28 +1,32 @@
-<!--index.wxml-->
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
+<!-- index.wxml -->
+<navigation-bar title="个人资料" back styleType="dark" color="black" background="#FFF"></navigation-bar>
+
+<view class="userinfo-page">
+    <view class="links">
+      <view class="link">
+        <view class="link-group">
+          <view class="left">
+            <text class="text">头像</text>
+          </view>
+          <view class="right">
+            <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+              <image class="avatar" src="{{userInfo.avatar}}"></image>
+            </button>
+
+            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+          </view>
         </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
-    </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
+      </view>
+      <view class="link">
+        <view class="link-group" bindtap="handleClearStorage">
+          <view class="left">
+            <text class="text">昵称</text>
+          </view>
+          <view class="right">
+            <input type="nickname" class="nickname-input" placeholder="请输入昵称" value="{{userInfo.nickname}}" bind:change="onInputChange" />
+            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+          </view>
+        </view>
+      </view>
     </view>
   </view>
-</scroll-view>

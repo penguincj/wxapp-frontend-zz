@@ -10,6 +10,10 @@ Component({
     showDialog: {
       type: Boolean,
       value: false,
+    },
+    showIcon: {
+      type: Boolean,
+      value: true,
     }
   },
   /**

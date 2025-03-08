@@ -1,38 +1,31 @@
-<view class="swiper-card-two">
-	<view class="title-line">
-		<view class="title">
-			<view class="title-name">常设展览</view>
-			<image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
-		</view>
-	</view>
-	<view class="page-section page-section-spacing swiper">
-		<swiper
-		 indicator-dots="{{false}}"
-		 autoplay="{{autoplay}}"
-		 interval="{{interval}}"
-		 duration="{{duration}}"
-     next-margin="160rpx"
-		>
-			<block wx:for="{{cardConfig}}" wx:key="{{item.id}}">
-				<swiper-item>
-					<view class="swiper-item">
-						<image src="{{item.img}}" class="item-img" mode="aspectFill" />
-						<view class="item-desc-group">
-							<view class="line-one">
-								<span class="desc-title">{{item.name}}</span>
-                <span class="exhibition-type">{{item.type}}</span>
-							</view>
-							<view class="desc-desc">{{item.desc}}</view>
+<view wx:if="{{list.length}}" class="swiper-card-two">
+  <view class="title-line">
+    <view class="title">
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+      <view class="title-name">{{title}}</view>
+    </view>
+  </view>
+  <view class="page-section page-section-spacing swiper">
+    <swiper indicator-dots="{{false}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" next-margin="180rpx">
+      <block wx:for="{{list}}" wx:key="{{item.id}}">
+        <swiper-item>
+          <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">
+            <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
+            <view class="item-desc-group">
+              <view class="line-one">
+                <span class="desc-title">{{item.name}}</span>
+                <span class="exhibition-type">{{item.short ? '临时展' : '常设展'}}</span>
+              </view>
+              <view class="desc-desc">{{item.description}}</view>
               <view class="btn-group">
                 <image class="btn-img" src="/static/images/btn1.png" mode="aspectFix" />
                 <view class="btn-text">查看</view>
               </view>
-						</view>
-					</view>
-				</swiper-item>
-			</block>
-		</swiper>
-	</view>
-  <view class="find-more">查看更多</view>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view wx:if="{{list.length > 1}}" class="find-more" bindtap="handleClickMore">查看更多</view>
 </view>
-

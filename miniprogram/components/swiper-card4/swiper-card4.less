@@ -1,49 +1,57 @@
 .swiper-card-four {
-  padding-top: 40rpx;
+  position: relative;
+  // padding-top: 40rpx;
+  height: 390rpx;
   padding-right: 30rpx;
 
   .page-section {
     position: absolute;
     left: 0;
-    top: 250rpx;
+    top: 0rpx;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 
-    margin-top: 80rpx;
+    // margin-top: 80rpx;
     swiper {
       width: 750rpx;
-      height: 430rpx;
+      height: 390rpx;
     }
 
     .swiper-item {
       position: relative;
       width: 610rpx;
+      margin-top: 40rpx;
         // height: 344rpx;
       box-shadow: 0px 10px 35px -30px rgba(0, 0, 0, 0.2);
       .item-img {
         width: 610rpx;
         height: 344rpx;
         border-radius: 24rpx;
-        border: 12rpx solid #FFFFFF;
+        border: 1rpx solid #FFFFFF;
         border-radius: 40rpx;
-      
         // border: 12rpx solid red;
       }
+      
 
       .item-desc-group {
         position: absolute;
-        bottom: 50rpx;
+        bottom:48rpx;
         text-align: left;
-        width: 100%;
+        width: 543rpx;
         color: #FFFFFF;
-        padding-left: 36rpx;
+        margin-left: 45rpx;
+        text-align: center;
         // display: inline-block;
         .desc-title {
-          font-size: 48rpx;
-          line-height: 48rpx;
+          font-size: 28rpx;
+          line-height: 36rpx;
           color: #FFFFFF;
+          font-family: MySimSun;
+          letter-spacing: 2rpx;
+          text-shadow: 1rpx 1rpx 1rpx rgba(0, 0, 0, 0.7);
+
           // box-shadow: 1rpx 1rpx 1rpx 0px rgba(0, 0, 0, 0.3);
         }
         .desc-desc {
@@ -56,6 +64,19 @@
         }
 
       }
+    }
+    .active {
+      transform: none;
+      transition: all 0.1s ease-in 0s;
+    } 
+    
+    .before-act {
+      transform:rotate(-2deg) translateY(10rpx) scale(.95) translateZ(0);
+      transition: all 0.1s ease-in 0s;
+    }
+    .after-act {
+      transform:rotate(2deg) translateY(10rpx) scale(.95) translateZ(0);
+      transition: all 0.1s ease-in 0s;
     }
     // .swiper-item-wrapper:nth-child(2) {
     //   transform: rotate(10deg);

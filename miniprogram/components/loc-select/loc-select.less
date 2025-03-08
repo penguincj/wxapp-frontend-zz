@@ -1,78 +1,103 @@
 .location-select-comp {
   position: relative;
-}
-.loc-chosen {
-  position: absolute;
-  top:0;
-  left: 0;
-  display: inline-flex;
-  height: 64rpx;
-  border-radius: 10rpx;
-  background: #F7F8F9;
-  // background: red;
-  padding: 0 14rpx;
-  align-items: center;
-  justify-content: center;
-}
-.loc-icon {
-  width: 30rpx;
-  height: 30rpx;
-}
-.loc-arrow {
-  width: 30rpx;
-  height: 30rpx;
-}
-.loc-name {
-  padding: 0 10rpx;
-  font-size: 30rpx;
-  font-weight: 600;
-  line-height: 30rpx;
-  color: #2C2F3B;
-}
-.more-cities-pannel {
-  display: flex;
-  flex-wrap: wrap;
-}
-.loc-city-item {
-  height: 64rpx;
-  background-color: #F7F8F9;
-  border-radius: 8rpx;
-  padding: 0 46rpx;
-  line-height: 64rpx;
-  margin: 16rpx 10rpx;
-  font-size: 30rpx;
-  color: #6B798E;
-}
-.loc-arrow-reverse {
-  width: 30rpx;
-  height: 30rpx;
-  transform: rotate(180deg);
-}
-.pannel-text-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2rpx 8rpx 22rpx 8rpx;
-}
-.more-cities-zhankai {
-  position: absolute;
-  left: 0px;
-  top: 64rpx;
-  width: 100%;
-  background: #FFFFFF;
-  // background: red;
-  border-bottom-left-radius: 30rpx;
-  border-bottom-right-radius: 30rpx;
-  padding: 28rpx 30rpx;
-  box-sizing: border-box;
-  display: none;
-  z-index: 99;
-}
-.pannel-display {
-  display: block;
-}
-.pannel-text-title {
-  font-size: 30rpx;
-  line-height: 30rpx;
-  color: #2C2F3B;
+  
+
+  .loc-chosen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    height: 64rpx;
+    border-radius: 10rpx;
+    background: #F7F8F9;
+    // background: red;
+    padding: 0 14rpx;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+  }
+
+  .loc-icon {
+    width: 30rpx;
+    height: 30rpx;
+  }
+
+  .loc-arrow {
+    width: 30rpx;
+    height: 30rpx;
+  }
+
+  .loc-name {
+    padding: 0 10rpx;
+    font-size: 30rpx;
+    font-weight: 600;
+    line-height: 30rpx;
+    color: #2C2F3B;
+  }
+
+  .more-cities-pannel {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .loc-city-item {
+    height: 64rpx;
+    background-color: #F7F8F9;
+    border-radius: 8rpx;
+    padding: 0 46rpx;
+    line-height: 64rpx;
+    margin: 16rpx 10rpx;
+    font-size: 30rpx;
+    color: #6B798E;
+  }
+
+  .loc-arrow-reverse {
+    width: 30rpx;
+    height: 30rpx;
+    transform: rotate(180deg);
+  }
+
+  .pannel-text-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rpx 8rpx 22rpx 8rpx;
+  }
+
+  .more-cities-zhankai {
+    position: absolute;
+    left: 0px;
+    top: 64rpx;
+    width: 100%;
+    background: #FFFFFF;
+    // background: red;
+    border-bottom-left-radius: 30rpx;
+    border-bottom-right-radius: 30rpx;
+    padding: 28rpx 0rpx;
+    box-sizing: border-box;
+    display: none;
+    z-index: 99;
+
+    .white-bg {
+      color: #FFFFFF;
+      background-image: url('http://gewugo.com/api/v1/storage/image/btn-selected-9618951020.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .gray-bg {
+      color: #6B798E;
+      border-radius: 8px;
+    }
+  }
+
+  .pannel-display {
+    display: block;
+  }
+
+  .pannel-text-title {
+    font-size: 30rpx;
+    line-height: 30rpx;
+    color: #2C2F3B;
+  }
 }

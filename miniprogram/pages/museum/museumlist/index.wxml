@@ -1,0 +1,46 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar homeButton="{{true}}" title="博物馆列表" color="black" background="#FFF" styleType="dark" style="text-align: center;" />
+  <view class="page-museum-list">
+    <view class="loc-area">
+      <loc-select2 locStyle="padding: 0 40rpx" selectCityId="{{curCityId}}" citylist="{{cityList}}" selectCityList="{{selectCityList}}" bindClickCityPanel="handleClickCityPanel" pannelStyle="" />
+    </view>
+    <view class="content-area">
+      <scroll-view
+        wx:if="{{museumList.length}}"
+				scroll-y="{{true}}"
+				show-scrollbar="{{false}}"
+				enhanced="{{true}}"
+				bindscroll="scroll"
+				style="height: calc(100vh - 186px)"
+			>
+        <block wx:for="{{museumList}}" wx:key="cityid">
+          <view class="city-item" bindtap="handleClickMuseum" data-idx="{{item.id}}" style="background: url({{item.image_url}}) no-repeat center center / cover">
+            <!-- <image class="city-item-img" src="{{item.img}}" mode="aspectFill" /> -->
+            <view class="city-item-mask" />
+            <text class="city-item-name">{{item.name}}</text>
+            <view class="city-museum">
+              <text class="city-museum-text">{{item.description}}</text>
+              <image src="/static/images/arr-r.png" alt="arrow" class="museum-arrow" />
+            </view>
+            <view class="zhanlan-group">
+              <image src="/static/images/zhanlan_icon.png" alt="museum" class="city-museum-arrow" />
+              <view class="zhanlan-txt">{{item.exhibition_num}}个展览</view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+      <view wx:if="{{museumList.length === 0}}" class="empty-content">
+        <image src="/static/images/kong.png" class="empty-img" mode="aspectFill" />
+        <view class="empty-text">暂无内容</view>
+      </view>
+    </view>
+    <loading show="{{showLoading}}"></loading>
+    <view>
+      <bottom-bar currentkey="{{1}}"></bottom-bar>
+    </view>
+  </view>
+    <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
+</page-meta>

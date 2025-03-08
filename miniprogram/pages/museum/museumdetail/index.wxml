@@ -1,0 +1,53 @@
+<!-- index.wxml -->
+<page-meta page-style="">
+<navigation-bar extClass="transparent" loading="{{false}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view class="page-museum-detail">
+  <view class="museum-info">
+    <image src="{{museumInfo.image_url}}" class="museum-img" mode="aspectFill" />
+    <view class="museum-text-group">
+      <view class="title">{{museumInfo.name}}</view>
+      <view class="desc">{{museumInfo.description}}</view>
+      <view class="line"></view>
+      <view class="open-date text-flex">
+          <image src="/static/images/date.png" class="museum-icon" mode="aspectFill" />
+        {{museumInfo.opentime}}
+      </view>
+      <view class="price text-flex">
+        <image src="/static/images/piao.png" class="museum-icon" mode="aspectFill" />
+        门票价格：{{museumInfo.ticket_price}}/人（普通票）
+      </view>
+      <view class="address text-flex">
+        <image src="/static/images/dingwei.png" class="museum-icon" mode="aspectFill" />
+      {{museumInfo.address}}
+      </view>
+    </view>
+  </view>
+  <view class="recommend-area">
+    <swiper-card2
+      title="推荐展览"
+      list="{{recommendList}}"
+      bindClickMore="handleClickMoreReco"
+      bindClickItem="handleClickItem"
+    ></swiper-card2>
+  </view>
+  <view class="normal-area">
+    <card-group1
+      title="常设展览"
+      list="{{normalList}}"
+      bindClickMore="handleClickMoreLong"
+      bindClickItem="handleClickItem"
+    ></card-group1>
+  </view>
+  <view class="expried-area">
+    <card-group1
+      title="往期展览"
+      list="{{outofdateList}}"
+      bindClickMore="handleClickMorePast"
+      bindClickItem="handleClickItem"
+    ></card-group1>
+  </view>
+</view>
+  <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
+</page-meta>  

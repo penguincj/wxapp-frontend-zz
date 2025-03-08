@@ -3,8 +3,10 @@
     "navigation-bar": "/components/navigation-bar/navigation-bar",
     "loc-select": "/components/loc-select/loc-select",
     "swiper-card1": "/components/swiper-card1/swiper-card1",
+    "swiper-card7": "/components/swiper-card7/swiper-card7",
     "swiper-card2": "/components/swiper-card2/swiper-card2",
-    "swiper-card3": "/components/swiper-card3/swiper-card3",
+    "card-group1": "/components/card-group1/card-group1",
     "bottom-bar": "/components/bottom-bar/bottom-bar"
-  }
+  },
+  "disableScroll": false
 }

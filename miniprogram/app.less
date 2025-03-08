@@ -11,14 +11,31 @@
 
 .page-exhibit-detail {
   wx-slider .wx-slider-handle-wrapper {
-    height: 10rpx !important;
-    border-radius: 10px;
+    height: 8rpx !important;
+    border-radius: 8rpx;
   }
   .rate-slider {
     wx-slider .wx-slider-handle-wrapper {
-      height: 70rpx !important;
-      border-radius: 100rpx;
+      height: 36rpx !important;
+      border-radius: 20px !important;
+    }
+    wx-slider .wx-slider-track{
+      border-radius: 20px !important;
+    }
+    wx-slider .wx-slider-block{
+      width: 70px !important;
+      height: 70px !important;
+      background-color: red !important;
     }
   }
 }
 
+@font-face {
+  font-family: "MySimSun";
+  src: url("https://gewugo.com/api/v1/storage/font/SimSun.ttf");  //此处需替换为真实字体地址
+}
+
+@font-face {
+  font-family: "MyDIN";
+  src: url("https://gewugo.com/api/v1/storage/font/din-bold-2.ttf");  //此处需替换为真实字体地址
+}

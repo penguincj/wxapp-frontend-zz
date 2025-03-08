@@ -1,20 +1,25 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar loading="{{false}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="page-exhibit-detail">
   <view class="top-swiper-area">
-    <swiper-unit></swiper-unit>
+    <swiper-unit list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit>
   </view>
-  <view class="images-area">
+  <view wx:if="{{topSwiperSelectIdx === 1}}" class="images-area">
     <swiper-card5 
-      title="金佛壁龛像：工艺顶峰见证"
+      title="{{exhibitInfo.name}}"
+      list="{{exhibitInfo.more_image_urls}}"
     ></swiper-card5>
+  </view>
+  <view wx:if="{{topSwiperSelectIdx === 2}}" class="geci-area">
+      <view class="mask-top"></view>
+      <view class="title">{{exhibitInfo.name}}</view>
+      <text decode="{{true}}" space="{{true}}" class="content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{exhibitInfo.audioitem.content}}</text>
+      <view class="mask-bottom"></view>
+
   </view>
   <view class="audio-player-area">
     <audio-player
-      audiourl="https://gewugo.com/storage/file/CB26976399343756.mp3"
-      videotitle="videotitle"
-      coverurl="https://gewugo.com/storage/image/NC06525637302482.jpg"
       isPlay="{{isPlay}}"
       duration="{{duration}}"
       sliderIndex="{{sliderIndex}}"
@@ -25,16 +30,19 @@
       bindForwordProgress="ForwordProgress"
       bindPlayNext="handlePlayNext"
       bindPlayPrev="handlePlayPrev"
+     
     ></audio-player>
   </view>
   <view class="operate-area">
     <view class="op-group">
-      <view class="o-item">
-        <image src="/static/images/o-shoucang.png" class="o-icon" mode="aspectFix" />
+      <view class="o-item" bindtap="handleClickCollect">
+        <image src="/static/images/o-shoucang.png" class="o-icon {{isCollected ? 'not-display': ''}}" mode="aspectFix" />
+        <image src="/static/images/o-shoucang-yi.png" class="o-icon {{isCollected ? '': 'not-display'}}" mode="aspectFix" />
         <view class="o-text">收藏</view>
       </view>
-      <view class="o-item">
-        <image src="/static/images/o-dianzan.png" class="o-icon" mode="aspectFix" />
+      <view class="o-item" bindtap="handleClickLike">
+        <image src="/static/images/o-dianzan.png" class="o-icon {{isLiked ? 'not-display': ''}}" mode="aspectFix" />
+        <image src="/static/images/o-dianzan-yi.png" class="o-icon {{isLiked ? '': 'not-display'}}" mode="aspectFix" />
         <view class="o-text">点赞</view>
       </view>
       <view class="o-item">
@@ -43,9 +51,10 @@
       </view>
       <view class="o-item" bindtap="handleClickOpenRate">
         <image src="/static/images/o-beisu.png" class="o-icon" mode="aspectFix" />
-        <view class="o-text">1.5倍速</view>
+        <view class="o-beisu-txt">{{curRate}}</view>
+        <view class="o-text">{{curRate}}倍速</view>
       </view>
-      <view class="o-item">
+      <view class="o-item" bindtap="handleClickMenu">
         <image src="/static/images/o-mulu.png" class="o-icon" mode="aspectFix" />
         <view class="o-text">目录</view>
       </view>
@@ -55,6 +64,10 @@
     id="player"
     bindReadyPlay="handleReadyPlay"
     bindTimeUpdate="handleTimeUpdate"
+    bindEndAudio="handleEndAudio"
+    bindContinuePlay="handleContinuePlay"
+    bindUpatePlayingIndex="handleUpatePlayingIndex"
+    bindClickPlayerComp="handleClickPlayerComp"
   ></player-comp>
   <dialog-half
     showDialog="{{showDialog}}"
@@ -62,18 +75,31 @@
   >
     <view slot="content">
       <view class="rate-group">
-        <view class="title">倍速</view>
+        <view class="title">倍速{{curRate}}x</view>
+        
         <view class="rate-slider">
+          <view class="fake-slider">
+            <view class="dark-bg" style="width:{{400*(curRate-0.5) + 70}}rpx"></view>
+            <view class="rate-txt-group">
+              <view class="rate-speed">慢</view>
+              <view class="rate-speed">快</view>
+            </view>
+            <view class="circle" style="transform: translateX({{400*(curRate-0.5)}}rpx)"><text class="rate-txt">{{curRate}}x</text></view>
+         </view>
+         <view class="real-slider">
           <slider
             block-color="#ffffff" 
-            block-size="70"
+            block-size="18"
             backgroundColor="rgba(44, 47, 59, 0.05)"
             activeColor="rgba(44, 47, 59, 0.05)"
-            value="{{rateSlider}}" 
+            value="{{rateSlider}}"
+            min="{{rateMin}}"
             max="{{rateMax}}"
             bindchange="handleRateSliderChange"
           >
-        </slider>
+          </slider>
+        </view>
+        
         </view>
         <view class="rate-number">
           <view class="rate-txt">0.5x</view>
@@ -84,5 +110,24 @@
       </view>
     </view>
   </dialog-half>
+  <view class="menu-area">
+    <dialog-half
+      showIcon="{{false}}"
+      showDialog="{{showMenuDialog}}"
+      bindCloseDialog="handleCloseMenuDialog"
+    >
+    <view slot="content">
+      <swiper-card6
+        showType="jiangjiedaoyu" 
+        list="{{exhibitList}}"
+        playingExhibitId="{{exhibitId}}"
+        playingIndex="{{playingIndex}}"
+        bindGetCurPlayingStatus="handleGetCurPlayingStatus"
+        bindChangeItem="handleClickExhibitItem"
+        ></swiper-card6>
+    </view>
+    </dialog-half>
+  </view>
+  
 </view>
 </page-meta>  

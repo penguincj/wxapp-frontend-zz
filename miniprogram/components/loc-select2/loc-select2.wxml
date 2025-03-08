@@ -1,10 +1,10 @@
 <view class="location-select-two">
 	<view class="defalut-group {{isPannelOpen ? 'hide': ''}}">
 		<view class="loc-default" bindtap="handleSelectCity" style="{{locStyle}}">
-			<block wx:for="{{defaultArr}}" key="{{item.id}}">
+			<block wx:for="{{selectCityList}}" key="{{item.id}}">
 				<view class="btn-group">
-					<image src="/static/images/btn-selected.png" class="loc-btn {{selectedId === item.id ? 'display':''}}" mode="aspectFix" />
-					<view class="loc-name {{selectedId === item.id ? 'white':'gray'}}" data-citykey="{{item.id}}" data-cityname="{{item.name}}">{{item.name}}</view>
+					<!-- <image src="/static/images/btn-selected.png" class="loc-btn {{selectCityId === item.id ? 'display':''}}" mode="aspectFix" /> -->
+					<view class="loc-name {{selectCityId === item.id ? 'white':'gray'}}" data-citykey="{{item.id}}" data-cityname="{{item.name}}">{{item.name}}</view>
 				</view>
 			</block>
 			<view class="icon-arrow" catchtap="handleOpenPannel">
@@ -15,21 +15,23 @@
 	</view>
 
 	<view class="more-cities-zhankai {{isPannelOpen ? 'pannel-display': ''}}" style="{{pannelStyle}}">
-		<view class="pannel-text-group">
-			<view class="pannel-text-title">更多城市</view>
-			<image
-			 src="/static/images/arrow-bottom.png"
-			 class="loc-arrow-reverse"
-			 mode="aspectFix"
-			 bindtap="handleClosePannel"
-			/>
-		</view>
-		<view class="more-cities-pannel" bindtap="handleSelectCity">
-			<block wx:for="{{cityConfig}}" key="{{item.id}}">
-				<view class="loc-city-item" data-citykey="{{item.id}}" data-cityname="{{item.name}}">
-					{{item.name}}
-				</view>
-			</block>
+		<view class="cities-group">
+			<view class="pannel-text-group">
+				<view class="pannel-text-title">更多城市</view>
+				<image
+				src="/static/images/arrow-bottom.png"
+				class="loc-arrow-reverse"
+				mode="aspectFix"
+				bindtap="handleClosePannel"
+				/>
+			</view>
+			<view class="more-cities-pannel" bindtap="handleSelectCity">
+				<block wx:for="{{citylist}}" key="{{item.id}}">
+					<view class="loc-city-item {{selectCityId === item.id ? 'white-bg':'gray-bg'}}" data-citykey="{{item.id}}" data-cityname="{{item.name}}">
+						{{item.name}}
+					</view>
+				</block>
+			</view>
 		</view>
 	</view>
 </view>

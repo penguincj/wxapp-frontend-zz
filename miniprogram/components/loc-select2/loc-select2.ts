@@ -55,6 +55,18 @@ Component({
     pannelStyle: {
       type: String,
       value: "",
+    },
+    citylist: {
+      type: Array,
+      value: [],
+    },
+    selectCityList: {
+      type: Array,
+      value: [],
+    },
+    selectCityId: {
+      type: Number,
+      value: -1,
     }
   },
   /**
@@ -99,7 +111,7 @@ Component({
       console.log('handleOpenPannel', this.data.isPannelOpen)
 
       this.setData({
-        isPannelOpen: !this.data.isPannelOpen,
+        isPannelOpen:true,
       })
     },
     handleSelectCity(event: any) {
@@ -108,27 +120,18 @@ Component({
       if (event && event.target && event.target.dataset) {
         const { citykey, cityname } = event.target.dataset;
         const selectItemInArr = this.data.defaultArr.find((i:any) => i.id === Number(citykey));
-        if (!selectItemInArr) {
-          const defaultArr = [];
-          const data_arr = this.data.defaultArr;
-          defaultArr.push({
-            id: Number(citykey),
-            name: cityname,
+        if (cityname) {
+          this.triggerEvent('ClickCityPanel', {
+            cityid: citykey,
           });
-          console.log('defaultArrdefaultArr', defaultArr)
-          for (let i = 0; i<data_arr.length -1 ;i++) {
-            defaultArr.push(data_arr[i]);
-          } 
+          console.log('handleSelectCity', citykey, cityname);
           this.setData({
-            defaultArr,
+            selectedId: citykey,
+            selectedName: cityname,
+            isPannelOpen: false,
           })
         }
-        console.log('handleSelectCity', citykey, cityname);
-        this.setData({
-          selectedId: citykey,
-          selectedName: cityname,
-          isPannelOpen: false,
-        })
+       
       }
 
     }

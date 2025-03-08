@@ -1,12 +1,73 @@
 .page-exhibit-detail {
   .top-swiper-area {
-
+    .page-section-spacing {
+      border-bottom: 0;
+    }
+    .item-group {
+      width: 150rpx;
+      margin: 0;
+    }
+    .item-group-0 {
+      // margin-left: 225rpx;
+    }
+    .item-group-1 {
+    }
   }
   .images-area {
-    
+    width: 100%;
+    // height: 824rpx;
+  }
+  .geci-area {
+    position: relative;
+    width: 100%;
+    // height: 824rpx;
+    padding: 40rpx 40rpx 50rpx 40rpx;
+    box-sizing: border-box;
+    // background-color: antiquewhite;
+    .title {
+      font-size: 32rpx;
+      font-weight: 600;
+      color: #2C2F3B;
+      text-align: center;
+      // transform: translateX(-20rpx);
+    }
+    .content {
+      font-size: 32rpx;
+      line-height: 70rpx;
+      letter-spacing: 2rpx;
+      color: #45465E;
+      margin-top: 40rpx;
+      width: 100%;
+      height: 700rpx;
+      max-height: calc(100vh - 44px - 760rpx - env(safe-area-inset-top));
+      overflow: auto;
+      display: block;
+      padding: 30rpx 0;
+    }
+    .mask-top {
+      position: absolute;
+      left: 0px;
+      top: 122rpx;
+      width: 750rpx;
+      height: 115rpx;
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 19%, rgba(255,255,255, 1) 100%);
+    }
+    .mask-bottom {
+      position: absolute;
+      left: 0px;
+      bottom: 0rpx;
+      width: 750rpx;
+      height: 176rpx;
+      background: linear-gradient(0deg, #FFFFFF 19%, rgba(255, 255, 255, 0) 100%);
+    }
   }
   .audio-player-area {
     // background-color: aqua;
+    // margin-top: 60rpx;
+    position: absolute;
+    bottom: 234rpx;
+    left: 0;
+    width: 100%;
   }
   .operate-area {
     position: absolute;
@@ -20,6 +81,7 @@
       align-items: center;
       justify-content: space-between;
       .o-item {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -27,34 +89,114 @@
           width: 52rpx;
           height: 52rpx;
         }
+        .not-display {
+          display: none;
+        }
+        .display {
+          display: block;
+        }
         .o-text {
           font-size: 26rpx;
           color: #9AA7B1;
           padding-top: 14rpx;
+        }
+        .o-beisu-txt {
+          position: absolute;
+          top: 18rpx;
+          left: 25rpx;
+          width: 12rpx;
+          height: 12rpx;
+          font-size: 20rpx;
+          color: #9AA7B1;
+          font-weight: 800;
         }
       }
     }
   }
   .rate-group {
     margin: 54rpx 0rpx 0 0rpx;
+    position: relative;
     .title {
       font-size: 38rpx;
       color: #2C2F3B;
       text-align: center;
+      font-family: PingFang SC;
+      font-weight: 600;
     }
     .rate-slider {
-      // position: relative;
+      position: relative;
       // top: 0rpx;
       // left: 0;
       width: 670rpx;
       height: 100rpx;
-      z-index: 100;
+      margin-top: 70rpx;
+      z-index: 10;
+      // transform: scaleY(2);
+      .fake-slider {
+        position: absolute;
+        width: 670rpx;
+        height: 70rpx;
+        background: rgba(44, 47, 59, 0.05);
+        border-radius: 70rpx;
+        .circle {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 70rpx;
+          height: 70rpx;
+          border-radius: 50%;
+          background-color: #FFFFFF;
+          // background-color: green;
+          transition: all 0.5s;
+          text-align: center;
+          
+          .rate-txt {
+            color: #2C2F3B;
+            font-size: 28rpx;
+            line-height: 70rpx;
+            display: inline-block;
+            vertical-align: middle;
+            font-family: DIN;
+            font-weight: 600;
+          }
+        }
+        .dark-bg {
+          background-color: rgba(44, 47, 59, 0.05);
+          height: 70rpx;
+          width: 200rpx;
+          border-radius: 70rpx;
+          transition: all 0.5s;
+        }
+      }
+      .real-slider {
+        position: absolute;
+        width: 670rpx;
+        height: 100rpx;
+        z-index: 11;
+        opacity: 0;
+      }
+    }
+    .rate-txt-group {
+      position: absolute;
+      top:12rpx;
+      left: 0;
+      width: 670rpx;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+      padding: 0 30rpx;
+      .rate-speed {
+        color: #2C2F3B;
+        font-size: 30rpx;
+      }
     }
     .rate-number {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10rpx 40rpx;
+      padding: 10rpx 20rpx;
       .rate-txt {
         font-family: DIN;
         font-size: 28rpx;
@@ -62,5 +204,14 @@
       }
     }
   }
+
+  .menu-area {
+    .dialog-comp .dialog {
+      height: 1250rpx;
+      background-color: #FFFFFF;
+    }
+  }
+  
+  
 }
 

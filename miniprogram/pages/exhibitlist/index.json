@@ -2,6 +2,9 @@
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
     "swiper-unit": "/components/swiper-unit/swiper-unit",
-    "swiper-card4": "/components/swiper-card4/swiper-card4"
+    "dialog-half": "/components/dialog-half/dialog-half",
+    "swiper-card4": "/components/swiper-card4/swiper-card4",
+    "circle-progress": "/components/circle-progress/circle-progress",
+    "swiper-card6": "/components/swiper-card6/swiper-card6"
   }
 }

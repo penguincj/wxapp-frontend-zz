@@ -50,29 +50,59 @@ Component({
       type: Number,
       value: 1
     },
+    styleType: {
+      type: String,
+      value: 'light',
+    }
   },
   /**
    * 组件的初始数据
    */
   data: {
-    displayStyle: ''
+    displayStyle: '',
+    statusBarHeight: '0px',
+    isShowHome: false,
   },
   lifetimes: {
     attached() {
       const rect = wx.getMenuButtonBoundingClientRect()
       wx.getSystemInfo({
         success: (res) => {
+          // console.log('getMenuButtonBoundingClientRect', res, rect)
           const isAndroid = res.platform === 'android'
           const isDevtools = res.platform === 'devtools'
           this.setData({
             ios: !isAndroid,
-            innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
-            leftWidth: `width: ${res.windowWidth - rect.left }px`,
+            // innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
+            innerPaddingRight: `padding-right: 10px`,
+            // leftWidth: `width: ${res.windowWidth - rect.left }px`,
+            leftWidth: `width: 40px`,
             safeAreaTop: isDevtools || isAndroid ? `;height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``
           })
         }
       })
     },
+  },
+  pageLifetimes: {
+    show() {
+      const hei = getApp().globalData.system.statusBarHeight;
+      this.setData({
+        statusBarHeight: hei + 'px'
+      });
+      const pages = getCurrentPages();
+      console.log('hei navigationBarHeight', this.data.back);
+
+      if (pages.length === 1 && this.data.back ) {
+        this.setData({
+          isShowHome: true,
+        })
+      } else {
+        this.setData({
+          isShowHome: false,
+        })
+      }
+
+    }
   },
   /**
    * 组件的方法列表
@@ -100,6 +130,11 @@ Component({
         })
       }
       this.triggerEvent('back', { delta: data.delta }, {})
+    },
+    handleClickHome() {
+      wx.redirectTo({
+        url: '/pages/index/index'
+      })
     }
   },
 })

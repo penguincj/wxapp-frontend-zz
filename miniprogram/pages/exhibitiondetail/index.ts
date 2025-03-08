@@ -1,150 +1,129 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
+import { getExhibitionById, getNarrowList, sendViewExhibitionAction } from "../../api/api";
+import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../utils/util";
 
-// 展览状态
-// status 1 未开始 2 进行中 3 已结束
-const exhibitionInfo = {
-  img: 'https://gewugo.com/storage/image/JC25139211818586.jpg',
-  name: '玉出昆冈',
-  address: '北京市东城区景山前街4号',
-  phone: '010-65253885',
-  open_time: '09:00-17:00',
-  price: '16元',
-  intro: '故宫博物院是中国最大的古代文化艺术博物馆，收藏了大量的珍贵文物，包括书画、陶瓷、玉器、铜器、金银器、漆器、珐琅器、钟表、家具、织绣、珠宝等。故宫博物院以其丰富的文物收藏、独特的建筑风格和深厚的历史文化底蕴，成为了中国文化遗产的重要代表。',
-  jiangjie_list: [
-    {
-      id: 1,
-      name: '张讲解员',
-      avatar: '/static/images/ava1.png',
-      title: '国家一级讲解员',
-      price: 60,
-      dur: 100,
-      type: '儿童导览',
-    },
-    {
-      id: 2,
-      name: '张讲解员',
-      avatar: '/static/images/ava1.png',
-      title: '国家一级讲解员',
-      price: 60,
-      dur: 100,
-      type: '儿童导览',
-    },
-    {
-      id: 3,
-      name: '张讲解员',
-      avatar: '/static/images/ava1.png',
-      title: '国家一级讲解员',
-      price: 60,
-      dur: 100,
-      type: '儿童导览',
-    },
-  ],
-  zhanlan_list: [
-    {
-      id: 1,
-      title: '儒家文化展',
-      img: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png',
-      status: 2,
-      start_time: '2024-01-01',
-      end_time: '2024-01-01',
-      open_time: '09:00-17:00',
-      ticket_price: '100元',
-      ticket_url: 'https://www.baidu.com',
-      price_desc: '成人票：100元/人，儿童票：50元/人',
-      jiangjie_price: '20',
-      jiangjie_discount: 0.8,
-      final_price: '16',
-      intro: '儒家文化展是中国最大的古代文化艺术博物馆，收藏了大量的珍贵文物，包括书画、陶瓷、玉器、铜器、金银器、漆器、珐琅器、钟表、家具、织绣、珠宝等。故宫博物院以其丰富的文物收藏、独特的建筑风格和深厚的历史文化底蕴，成为了中国文化遗产的重要代表。',
-    },  {
-      id: 2,
-      title: '儒家文化展2',
-      img: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png',
-      status: 2,
-      start_time: '2024-01-01',
-      end_time: '2024-01-01',
-      open_time: '09:00-17:00',
-      ticket_price: '100元',
-      ticket_url: 'https://www.baidu.com',
-      price_desc: '成人票：100元/人，儿童票：50元/人',
-      jiangjie_price: '20',
-      jiangjie_discount: 0.8,
-      final_price: '16',
-      intro: '儒家文化展是中国最大的古代文化艺术博物馆，收藏了大量的珍贵文物，包括书画、陶瓷、玉器、铜器、金银器、漆器、珐琅器、钟表、家具、织绣、珠宝等。故宫博物院以其丰富的文物收藏、独特的建筑风格和深厚的历史文化底蕴，成为了中国文化遗产的重要代表。',
-    },{
-      id: 3,
-      title: '儒家文化展3',
-      img: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png',
-      status: 3,
-      start_time: '2024-01-01',
-      end_time: '2024-01-01',
-      open_time: '09:00-17:00',
-      ticket_price: '100元',
-      ticket_url: 'https://www.baidu.com',
-      price_desc: '成人票：100元/人，儿童票：50元/人',
-      jiangjie_price: '20',
-      jiangjie_discount: 0.8,
-      final_price: '16',
-      intro: '儒家文化展是中国最大的古代文化艺术博物馆，收藏了大量的珍贵文物，包括书画、陶瓷、玉器、铜器、金银器、漆器、珐琅器、钟表、家具、织绣、珠宝等。故宫博物院以其丰富的文物收藏、独特的建筑风格和深厚的历史文化底蕴，成为了中国文化遗产的重要代表。',
-    },{
-      id: 4,
-      title: '儒家文化展4',
-      img: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png',
-      status: 3,
-      start_time: '2024-01-01',
-      end_time: '2024-01-01',
-      open_time: '09:00-17:00',
-      ticket_price: '100元',
-      ticket_url: 'https://www.baidu.com',
-      price_desc: '成人票：100元/人，儿童票：50元/人',
-      jiangjie_price: '20',
-      jiangjie_discount: 0.8,
-      final_price: '16',
-      intro: '儒家文化展是中国最大的古代文化艺术博物馆，收藏了大量的珍贵文物，包括书画、陶瓷、玉器、铜器、金银器、漆器、珐琅器、钟表、家具、织绣、珠宝等。故宫博物院以其丰富的文物收藏、独特的建筑风格和深厚的历史文化底蕴，成为了中国文化遗产的重要代表。',
-    }
-  ]
-}
-Component({
+Page({
   data: {
-    exhibitionInfo: exhibitionInfo,
+    exhibitionInfo: {} as any,
+    narrationList: [] as any,
     topBarHeight: 0,
     safeHeight: 0,
     windowHeight: 0,
-    statusBarHeight:0,
+    statusBarHeight: 0,
+    curExhibitionId: -1,
+    loading: false,
+    isShowIntro: true,
   },
-  methods: {
-
+  handleClickJiangjie(event: any) {
+    console.log('handleClickJiangjie', event.currentTarget.dataset);
+    const { idx } = event.currentTarget.dataset;
+    const url_params = generateNewUrlParams({
+      narration_id: idx,
+      exhibition_id: this.data.curExhibitionId
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitlist/index' + url_params,
+    })
   },
-  pageLifetimes: {
-    show() {
-      this.setData({
-        loading: true,
+  handleClickPlayIcon() {
+    if (this.data.narrationList && this.data.narrationList.length) {
+      const nid = this.data.narrationList[0].id;
+      const url_params = generateNewUrlParams({
+        narration_id: nid,
+        exhibition_id: this.data.curExhibitionId
       })
-      console.log('show');
-      const info = wx.getMenuButtonBoundingClientRect();
-      const windowInfo = wx.getWindowInfo();
-      if (info && info.bottom) {
-        this.setData({
-          topBarHeight: info.bottom,
-          safeHeight: windowInfo.safeArea.height,
-          windowHeight: windowInfo.screenHeight,
-          statusBarHeight: windowInfo.statusBarHeight,
-        })
-      }
-
-      console.log('info',info);
-      console.log('windowInfo',windowInfo);
+      wx.navigateTo({
+        url: '/pages/exhibitlist/index' + url_params,
+      })
     }
+   
   },
-  lifetimes: {
-    attached() {
-      setTimeout(() => {
+  handleClickIntro() {
+    this.setData({
+      isShowIntro: !this.data.isShowIntro,
+    })
+  },
+  handleClickPlayerComp() {
+    const targetPage = "pages/exhibitlist/index";
+    backToTargetPage(targetPage);
+  },
+
+  async initPage(_exhibitionid: any) {
+    try {
+      const res: any = await getExhibitionById(_exhibitionid);
+      const res_narr: any = await getNarrowList(_exhibitionid);
+      if (res && res.exhibition) {
         this.setData({
+          exhibitionInfo: res.exhibition,
+          narrationList: res_narr.narrations,
           loading: false,
         })
-      }, 1000)
-    },
+      }
+      console.log('initPage', res, res_narr)
+    } catch (error) {
+      this.setData({
+        loading: false,
+      })
+    }
   },
+  async onShow() {
+    this.setData({
+      loading: true,
+    })
+    const { userid } = await wx.getStorageSync('userinfo');
+    console.log('show');
+    const info = wx.getMenuButtonBoundingClientRect();
+    const windowInfo = wx.getWindowInfo();
+    if (info && info.bottom) {
+      this.setData({
+        topBarHeight: info.bottom,
+        safeHeight: windowInfo.safeArea.height,
+        windowHeight: windowInfo.screenHeight,
+        statusBarHeight: windowInfo.statusBarHeight,
+      })
+    }
+    try {
+      setTimeout(() => {
+        sendViewExhibitionAction(userid, this.data.curExhibitionId, { method: 'POST' });
+      }, 300)
+    } catch (error) {
+
+    }
+
+    console.log('windowInfo', windowInfo);
+  },
+  onLoad(options) {
+    console.log('onLoad', options);
+    this.setData({
+      curExhibitionId: Number(options.exhibition_id),
+    })
+    this.initPage(options.exhibition_id);
+
+  },
+  onShareAppMessage() {
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
+    console.log(this.data.exhibitionInfo.image_url);
+    const str = getCurrentPageParamStr();
+    const imageUrl = (this.data.exhibitionInfo && this.data.exhibitionInfo.image_url) ? this.data.exhibitionInfo.image_url : defaultUrl;
+    const title = (this.data.exhibitionInfo.name) ? `格物观展|${this.data.exhibitionInfo.name}` : '【格物观展：让您的博物馆之旅不虚此行】';
+    var shareObj = {
+      title,
+      path: '/pages/museum/museumdetail/index' + str,
+      imageUrl: imageUrl,
+      success: function (res: any) {
+        if (res.errMsg == 'shareAppMessage:ok') {
+          console.log('share success')
+        }
+      },
+      fail: function (res: any) {
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          console.log('share cancel')
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          console.log('share fail')
+        }
+      },
+    }
+    return shareObj;
+  },
+
 
 })

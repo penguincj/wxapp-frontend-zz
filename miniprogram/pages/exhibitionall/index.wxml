@@ -2,15 +2,16 @@
 <page-meta page-style="">
 	<navigation-bar
 	 title="格物观展"
-	 loading="{{loading}}"
+	 loading="{{false}}"
 	 color="black"
 	 background="#FFF"
+	 styleType="dark"
 	 style="text-align: center;"
 	/>
 	<view class="page-exhibition-all">
 		<block wx:for="{{exhibitions}}" wx:key="{{item.id}}">
-			<view class="exhibition-item">
-				<image src="{{item.img}}" class="item-img" mode="aspectFill" />
+			<view class="exhibition-item" data-idx="{{item.id}}" bindtap="handleClickItem">
+				<image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
 				<view class="item-desc-group">
 					<view class="line-one">
 						<span class="desc-title">{{item.name}}</span>
@@ -20,5 +21,8 @@
 			</view>
 		</block>
 	</view>
+	<player-comp
+    	bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
 </page-meta>
 

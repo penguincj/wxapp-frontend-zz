@@ -7,30 +7,24 @@
     
     .loc-default {
       position: absolute;
-      width: 100%;
+      width: 710rpx;
+      overflow: hidden;
       top:0;
       left: 0;
-      display: inline-flex;
+      // display: flex;
       height: 64rpx;
       border-radius: 10rpx;
-      // background: #F7F8F9;
-      // background: red;
-      // padding: 0 14rpx;
       align-items: center;
       justify-content: space-between;
-      box-sizing: border-box;
 
       .btn-group {
         position: relative;
-        width: 150rpx;
         height: 64rpx;
         background: #F7F8F9;
         border-radius: 8rpx;
+        margin-right: 20rpx;
+        display: inline-block;
         .loc-btn {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 150rpx;
           height: 64rpx;
           display: none;
         }
@@ -38,39 +32,41 @@
           display: block;
         }
         .loc-name {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 150rpx;
+          // padding: 0 20rpx;
+          font-family: SimSun;
+
           height: 64rpx;
-          font-size: 30rpx;
+          font-size: 28rpx;
           font-weight: 600;
           line-height: 64rpx;
           text-align: center;
+          padding: 0 45rpx;
+          display: inline-block;
+          // box-sizing: border-box;
+
         }
         .white {
           color: #FFFFFF;
-          background-color: transparent;
+          background-image: url('http://gewugo.com/api/v1/storage/image/btn-selected-9618951020.png');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
         .gray {
           color: #6B798E;
           border-radius: 8px;
-          background-color: #F7F8F9;
-          // background-color: red;
-
         }
       }
       .icon-arrow {
-        position: relative;
         width: 90rpx;
         height: 64rpx;
-        // background-color: aqua;
-        margin-left: -100rpx;
         background: linear-gradient(270deg, #FFFFFF 65%, rgba(255, 255, 255, 0) 100%);
-
+        position: absolute;
+        right: 40rpx;
+        top: 0;
+        z-index: 100;
         .loc-arrow {
           position: absolute;
-          right: 0rpx;
+          right: 40rpx;
           top: 17rpx;
           width: 30rpx;
           height: 30rpx;
@@ -86,15 +82,27 @@
   .more-cities-pannel {
     display: flex;
     flex-wrap: wrap;
+    .white-bg {
+      color: #FFFFFF;
+      background-image: url('http://gewugo.com/api/v1/storage/image/btn-selected-9618951020.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    .gray-bg {
+      color: #6B798E;
+      border-radius: 8px;
+    }
   }
   .loc-city-item {
+    font-family: SimSun;
+
     height: 64rpx;
     background-color: #F7F8F9;
     border-radius: 8rpx;
     padding: 0 46rpx;
     line-height: 64rpx;
     margin: 16rpx 10rpx;
-    font-size: 30rpx;
+    font-size: 28rpx;
     color: #6B798E;
   }
   .loc-arrow-reverse {
@@ -121,12 +129,23 @@
     box-sizing: border-box;
     display: none;
     z-index: 99;
+    .cities-group {
+      transform: translateY(-200rpx);
+      transition: transform 1s ease-in;
+    }
   }
+
   .pannel-display {
     display: block;
+    
+
+  }
+  .pannel-display .cities-group {
+    transform: translateY(0);
+    transition: transform 1s ease-in;
   }
   .pannel-text-title {
-    font-size: 30rpx;
+    font-size: 28rpx;
     line-height: 30rpx;
     color: #2C2F3B;
   }

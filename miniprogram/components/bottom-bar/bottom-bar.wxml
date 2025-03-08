@@ -1,6 +1,6 @@
 <view class="bottom-bar">
-  <block wx:for="{{icons}}">
-    <view class="bottom-bar-group" key="{{item.id}}">
+  <block wx:for="{{icons}}" wx:key="index">
+    <view class="bottom-bar-group" data-idx="{{item.id}}" bindtap="handleClickBottomBar">
       <image class="bottom-bar-img" src="{{currentkey === item.id ? item.iconClicked : item.icon}}" mode="aspectFix" />
       <view class="bottom-bar-text {{currentkey === item.id ? 'bottom-bar-text-blod' : ''}}">{{item.name}}</view>
     </view>

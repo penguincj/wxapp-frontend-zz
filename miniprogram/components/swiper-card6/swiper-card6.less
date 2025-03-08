@@ -1,0 +1,165 @@
+.swiper-card-six {
+  .scroll-view_H{
+    white-space: nowrap;
+  }
+  .container {
+    padding: 30rpx 0 0 0;
+  }
+
+  .title-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 60rpx;
+
+    .title-left {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      .title {
+        position: relative;
+        margin-top: 0;
+        height: 32rpx;
+        .title-name {
+          position: absolute;
+          top:0;
+          left: 0;
+          font-size: 38rpx;
+          line-height: 38rpx;
+          color: #2C2F3B;
+          display: inline-block;
+          width: 200rpx;
+          font-family: MySimSun;
+
+        }
+        .title-img {
+          position: absolute;
+          top:18rpx;
+          left: 0;
+          width: 152rpx;
+          height: 16rpx;
+        }
+       
+      }
+      .title-num {
+        font-family: MyDIN;
+        font-size: 28rpx;
+        color: #9AA7B1;
+        line-height: 40rpx;
+      }
+    }
+    .title-right {
+      display: flex;
+      width: 128rpx;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .title-icon {
+      width: 34rpx;
+      height: 34rpx;
+    }
+    
+    .small-icon {
+      width: 32rpx;
+      height: 32rpx;
+      margin-left: 162rpx;
+      transform: translateY(6rpx);
+      vertical-align: middle;
+    }
+  }
+
+  .title-line-simple {
+    margin-top: 48rpx;
+    text-align: center;
+    .only-title {
+      font-size: 38rpx;
+      font-weight: 600;
+      color: #2C2F3B;
+    }
+    .weui-input {
+      width: 670rpx;
+      height: 100rpx;
+      border-radius: 10px;
+      background: #F7F8F9;
+      margin-top: 90rpx;
+      padding: 0 30rpx;
+      box-sizing: border-box;
+      text-align: left;
+      font-size: 32rpx;
+      line-height: 100rpx;
+      color: #2C2F3B;
+    }
+  }
+  
+
+  .card-group {
+    width: 670rpx;
+    height: 150rpx;
+    margin-bottom: 30rpx;
+    border-radius: 10rpx;
+    background: #F7F8F9;
+    // background: red;
+    padding: 20rpx;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:last-child{
+      content: '';
+      padding-bottom: 34rpx;
+    }
+    .group-one {
+      display: flex;
+      align-items: center;
+    }
+    .card-img {
+      width: 147rpx;
+      height: 110rpx;
+      border-radius: 10rpx;
+    }
+    .card-info {
+      padding-left: 20rpx;
+
+      .card-title {
+        font-size: 30rpx;
+        color: #2C2F3B;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
+        width: 354rpx;
+        display: inline-block;
+      }
+      .card-desc {
+        display: flex;
+        flex-direction: row;
+        padding-top: 10rpx;
+        .desc-item {
+          font-size: 24rpx;
+          color: #9AA7B1;
+          padding-right: 40rpx;
+          .item-icon {
+            width: 20rpx;
+            height: 20rpx;
+            padding-right: 4rpx;
+          }
+        }
+      }
+    }
+    .card-icon {
+      width: 50rpx;
+      height: 50rpx;
+      .play-icon {
+        width: 50rpx;
+        height: 50rpx;
+        // display: none;
+      }
+    }
+    
+  }
+  .empty-list {
+    font-size: 28rpx;
+    color: #2C2F3B;
+    padding-top: 20rpx;
+  }
+}

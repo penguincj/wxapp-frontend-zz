@@ -1,31 +1,32 @@
+import { getCurrentPageUrl, getCurrentPageParam, getCurrentPageParamStr } from "../../utils/util";
 const itemConfig = [
   {
     id: 0,
     name: '首页',
     icon: '/static/images/ishouye.png',
     iconClicked: '/static/images/ishouye-c.png',
-    link: 'pages/index/index',
+    link: '/pages/index/index',
   },
   {
     id: 1,
     name: '场馆',
     icon: '/static/images/ichangguan.png',
     iconClicked: '/static/images/ichangguan-c.png',
-    link: 'pages/index/index',
+    link: '/pages/museum/museumlist/index',
   },
   {
     id: 2,
     name: '展览',
     icon: '/static/images/izhanlan.png',
     iconClicked: '/static/images/izhanlan-c.png',
-    link: 'pages/index/index',
+    link: '/pages/exhibitionlist/index',
   },
   {
     id: 3,
     name: '我的',
     icon: '/static/images/iwode.png',
     iconClicked: '/static/images/iwode-c.png',
-    link: 'pages/index/index',
+    link: '/pages/profile/index',
   },
 ]
 Component({
@@ -46,16 +47,49 @@ Component({
    */
   data: {
     icons: itemConfig,
-  },
-  lifetimes: {
-    attached() {
-      
-    },
+    selectid: 0,
+    urlParams: {},
+    urlParamsStr: '',
   },
   /**
    * 组件的方法列表
    */
   methods: {
-  
+    handleClickBottomBar(e: any) {
+      const {idx} =e.currentTarget.dataset;
+      
+      const item = itemConfig.find(i => i.id === idx);
+      // this.setData({
+      //   selectid: idx,
+      // });
+      if (item && item.link) {
+        wx.redirectTo({
+          url: item.link + this.data.urlParamsStr,
+          fail(error) {
+            console.log(error)
+          }
+        })
+      }
+    },
+
   },
+ 
+
+  lifetimes: {
+    attached() {
+      
+    },
+  },
+  pageLifetimes: {
+    show() {
+        const url = getCurrentPageUrl();
+        const param = getCurrentPageParam();
+        const param_str = getCurrentPageParamStr();
+        this.setData({
+          urlParamsStr: param_str,
+        })
+        // console.log('current url', url, param, param_str);
+    }
+  }
+  
 })

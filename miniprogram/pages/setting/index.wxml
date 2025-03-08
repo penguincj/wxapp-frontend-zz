@@ -1,0 +1,92 @@
+<!--index.wxml-->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar title="账户设置" styleType="dark" back color="black" background="#FFF"></navigation-bar>
+  <view class="setting-page">
+    <view class="links">
+      <view class="link-group" bindtap="handleClickPerosnInfo">
+        <view class="left">
+          <text class="text">个人资料</text>
+        </view>
+        <view class="right">
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view>
+      <!-- <view class="link-group">
+        <view class="left">
+          <text class="text">自动播放语音</text>
+        </view>
+        <view class="right" bindtap="handleClickAutoPlay">
+          <view class="jiaonang {{isAutoPlay ? '': 'off'}}">
+            <view class="inner-circle"></view>
+          </view>
+        </view>
+      </view>
+      <view class="link-group" bindtap="handleClearStorage">
+        <view class="left">
+          <text class="text">缓存</text>
+        </view>
+        <view class="right">
+          <view class="phone-num">68MB</view>
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view> -->
+      <view class="link-group">
+        <view class="left">
+          <text class="text">隐私政策</text>
+        </view>
+        <view class="right">
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view>
+      <view class="link-group">
+        <view class="left">
+          <text class="text">用户协议</text>
+        </view>
+        <view class="right">
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view>
+      <!-- <view class="link-group" bindtap="handleZXClick">
+        <view class="left">
+          <text class="text">注销账号</text>
+        </view>
+        <view class="right">
+          <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+        </view>
+      </view> -->
+    </view>
+    <!-- <view class="logout-btn">退出登录</view> -->
+    <view class="popup-area">
+      <popup showPupup="{{showClearStoragePopup}}" bindClosePopup="handleClosePopup">
+        <view slot="content">
+          <view class="content">
+            <view class="title">清空缓存与下载</view>
+            <view class="desc">确认后将清空所有缓存数据，以及您已下载的导览包，确认是否执行此操作？</view>
+            <view class="btn-group">
+              <view class="btn" bindtap="handleClosePopup">取消</view>
+              <view class="btn confirm">查看</view>
+            </view>
+          </view>
+        </view>
+      </popup>
+
+       <popup 
+        showPupup="{{showZXPopup}}" 
+        popupStyle="height: 454rpx;"
+        bindClosePopup="handleCloseZXPopup">
+        <view slot="content">
+          <view class="content">
+            <view class="title">注销账号</view>
+            <view class="desc">注销账号后将移除您所有个人信息，包括已购买的数据资产，请谨慎选择，是否确认执行注销操作？</view>
+            <view class="btn-group">
+              <view class="btn" bindtap="handleCloseZXPopup">取消</view>
+              <view class="btn {{countdown ? 'unconfirm': 'confirm'}}">确定{{countdown?('（'+countdown+'）'):""}}</view>
+            </view>
+          </view>
+        </view>
+      </popup>
+
+    </view>
+  </view>
+
+</page-meta>

@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "bottom-bar": "/components/bottom-bar/bottom-bar",
-    "loc-select2": "/components/loc-select2/loc-select2"
-  }
-}

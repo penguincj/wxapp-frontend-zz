@@ -1,12 +1,19 @@
 .swiper-card-five {
   padding-top: 40rpx;
-  padding-right: 30rpx;
-
+  // padding-right: 30rpx;
+  text-align: center;
+  
   .title {
     font-size: 32rpx;
     font-weight: 600;
     color: #2C2F3B;
     text-align: center;
+    display: inline-block;
+    max-width: 540rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: nowrap;
   }
   .dots-group {
     margin-top: 20rpx;
@@ -26,12 +33,13 @@
     align-items: center;
     text-align: center;
 
-    margin-top: 40rpx;
-    height: 656rpx;
-    
+    margin-top: 28rpx;
+    height:720rpx;
+    max-height: calc(100vh - 44px - 800rpx - env(safe-area-inset-top));
     swiper {
       width: 750rpx;
-      height: 656rpx;
+      height:720rpx;
+      max-height: calc(100vh - 44px - 800rpx - env(safe-area-inset-top));
     }
 
     
@@ -42,7 +50,21 @@
       box-shadow: 0px 10px 35px -30px rgba(0, 0, 0, 0.2);
       .item-img {
         width: 540rpx;
-        height: 656rpx;
+        height:720rpx;
+        max-height: calc(100vh - 44px - 800rpx - env(safe-area-inset-top));
+      }
+      .share-btn {
+        position: absolute;
+        width: 36rpx;
+        height: 70rpx;
+        top: 20rpx;
+        right: 130rpx;
+        background: transparent;
+      }
+      .share-img {
+        // position: absolute;
+        width: 36rpx;
+        height: 36rpx;
       }
 
       .item-desc-group {

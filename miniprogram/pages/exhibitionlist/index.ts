@@ -1,13 +1,9 @@
-// index.ts
-// 获取应用实例
-// const app = getApp<IAppOption>()
-import { audioList, exhibitionList } from './mock';
-const base_url = "http://gewugo.com";
-// let bgAudio = wx.getBackgroundAudioManager();
+import { getCityList, getCityRecoExhibitionList, getCityLongExhibitionList, getCityPastExhibitionList } from '../../api/api';
+import { getCurrentCity, generateNewUrlParams, backToTargetPage } from "../../utils/util";
 
-Component({
+Page({
   data: {
-    exhibitionList: audioList,
+    exhibitionList: [],
     playingIndex: -1, // 当前播放index
     lastPlayIndex: -1, // 之前播放index
     sliderIndex: 0, // 当前播放进度
@@ -21,303 +17,190 @@ Component({
     bgAudio: null as any,
     isAutoPlay: false,
     stored_audio: [] as string[],
+    curMuseumId: -1,
+    recommendList: [],
+    normalList: [],
+    outofdateList: [],
+    loading: true,
+    dateObj: {},
+    curCityId: -1,
+    cityList: [] as any,
+    cityName: '',
   },
-  methods: {
-    drawCanvas() {
-      wx.createSelectorQuery()
-        .select('#myCanvas') // 在 WXML 中填入的 id
-        .fields({ node: true, size: true })
-        .exec((res) => {
-          // Canvas 对象
-          const canvas = res[0].node
-          // 渲染上下文
-          const ctx = canvas.getContext('2d')
 
-          // Canvas 画布的实际绘制宽高
-          const width = res[0].width
-          const height = res[0].height
+  handleClickItem(event: any) {
+    const { id } = event.detail;
+    console.log('handleClickItem');
+    
+    const url_params = generateNewUrlParams({
+      exhibition_id: id,
+      city_id: this.data.curCityId,
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitiondetail/index' + url_params,
+    })
+  },
 
-          // 初始化画布大小
-          const dpr = wx.getWindowInfo().pixelRatio
-          canvas.width = width * dpr
-          canvas.height = height * dpr
-          ctx.scale(dpr, dpr)
-          // 省略上面初始化步骤，已经获取到 canvas 对象和 ctx 渲染上下文
-
-          // 清空画布
-          ctx.clearRect(0, 0, width, height)
-
-          // // 绘制红色正方形
-          // ctx.fillStyle = 'rgb(200, 0, 0)';
-          // ctx.fillRect(10, 10, 50, 50);
-
-          // // 绘制蓝色半透明正方形
-          // ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-          // ctx.fillRect(30, 30, 50, 50);
-
-          // 虚线
-          ctx.setLineDash([5, 15]);
-          ctx.moveTo(50, 50);
-          ctx.lineTo(60, 50);
-          ctx.lineTo(70, 50);
-          ctx.lineTo(80, 50);
-          ctx.lineTo(250, 50);
-          ctx.lineTo(250, 60);
-          ctx.lineTo(250, 70);
-          ctx.lineTo(250, 100);
-          ctx.lineTo(240, 100);
-          ctx.lineTo(50, 100);
-          ctx.stroke();
-
-        })
+    handleClickPlayerComp() {
+      const targetPage = "pages/exhibitlist/index";
+      backToTargetPage(targetPage);
     },
-    handleAudioEnd() {
-      console.log('handleAudioEnd');
-    },
-    handleAudioPlay() {
-      console.log('handleAudioPlay');
-      // const audio = this.selectComponent('#audio')
-      // debugger;
-      // this.setData({
-      //   playingIndex: this.data.currentIndex
-      // })
-      // 	setTimeout(() => {
-      // 		try {
-      // 			const dur = audio.bgAudioManager.duration;
-      //       this.setData({
-      //         duration_fmt: audio.getFormateTime2(dur)
-      //       })
-      // 		} catch (error) {
-      // 			console.log('error', error);
-      // 		}
-      // 	}, 1000)
-    },
-    handleAudioChange(e: any) {
-      console.log(e.detail.state);
-    },
-    handleAudioPause() {
-      console.log('handleAudioPause');
-      // this.setData({
-      //   playingIndex: -1,
-      // })
-    },
-    handleAudioError(e: any) {
-      console.log(e.detail.data);
-    },
-    handleAudioNext() {
-      console.log('handleAudioNext');
+  
 
-      // const next_index = this.data.currentIndex + 1 > this.data.detail.list.length - 1 ? this.data.currentIndex : this.data.currentIndex + 1;
-      // const next_item = this.data.detail.list[next_index];
-      // console.log('handleAudioNext', this.data.currentIndex, next_index);
+  handleClickMorePast() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'past',
+      city_id: this.data.curCityId,
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
+  },
 
-      // this.handleChangeAudioState(next_item, next_index);
-    },
-    handleAudioPre() {
-      console.log('handleAudioPre');
-      // const pre_index = this.data.currentIndex - 1 < 0 ? this.data.currentIndex : this.data.currentIndex - 1;
-      // 	const pre_item = this.data.detail.list[pre_index];
-      // 	this.handleChangeAudioState(pre_item, pre_index);
-    },
-    handleAudioCollec() {
-      console.log('handleAudioCollec')
-    },
-    handleAudioShare() {
-      console.log('handleAudioShare')
-    },
-    generateAudioItem(item: any) {
-      const { audiourl, imagepath, title, duration_format } = item;
-
-      return {
-        src: base_url + audiourl,
-        startTime: 0,
-        title,
-        epname: title,
-        singer: 'gewugo',
-        coverImgUrl: base_url + imagepath,
-      }
-    },
-    async findLocalAudio(_url: string) {
-      const stored_audio_arr = this.data.stored_audio;
-      const file_name = _url.split('/file/')[1].split('.mp3')[0];
-
-      if (!stored_audio_arr.length) {
-        try {
-          const stored_audio = await wx.getStorageSync('audios');
-          this.setData({
-            stored_audio,
-          });
-          if (!stored_audio) {
-            return "";
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      return stored_audio_arr.find((item) => item.includes(file_name))
-
-    },
-    async initPageAudio(audio_item: any) {
-      const audio_i = this.generateAudioItem(audio_item);
-      const { src, startTime, title, epname, singer, coverImgUrl } = audio_i;
-
-      let local_audio = await this.findLocalAudio(src);
-      // wx.getStorage({
-      //   key: 'audios',
-      //   success(res){
-      //     console.log('storage', res)
-      //     tmp_src = res.data;
-      //   }
-      // });
-
-      if (!this.data.bgAudio) {
-        const bgAudio = wx.getBackgroundAudioManager();
-        // const bgAudio = wx.createInnerAudioContext();
-        // bgAudio.src = src;
-        bgAudio.title = title;
-        bgAudio.startTime = startTime;
-        bgAudio.epname = epname;
-        bgAudio.coverImgUrl = coverImgUrl;
-        bgAudio.singer = singer;
-        if (local_audio) {
-          bgAudio.src = local_audio;
-          console.log('local_audio', local_audio)
-
-        } else {
-          bgAudio.src = src;
-          console.log('not local_audio', src)
-
-        }
-
-        // bgAudio.play();
-        this.setData({
-          bgAudio,
-          lastPlayIndex: this.data.playingIndex,
-        })
-      } else {
-        const bgAudio = this.data.bgAudio;
-        // bgAudio.src = src;
-
-        bgAudio.title = title;
-        bgAudio.startTime = startTime;
-        bgAudio.epname = epname;
-        bgAudio.coverImgUrl = coverImgUrl;
-        bgAudio.singer = singer;
-        // bgAudio.src = "http://tmp/pohVj8ecqWnGc8d75f04958ff2a793a71a9eea580e4b.mp3";
-        if (local_audio) {
-          bgAudio.src = local_audio;
-          console.log('local_audio', local_audio)
-        } else {
-          bgAudio.src = src;
-          console.log('not local_audio', src)
-
-        }
+  handleClickMoreLong() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'long',
+      city_id: this.data.curCityId,
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
+  },
 
 
-        // bgAudio.play();
-        this.setData({
-          bgAudio,
-          lastPlayIndex: this.data.playingIndex,
-        })
-      }
-      setTimeout(() => {
-        let duration = this.data.bgAudio.duration;
-        if (!duration || !isFinite(duration)) {
-          const duration_fmt = audio_item.duration_format;
-          duration = Number(duration_fmt.split(':')[0]) * 60 + Number(duration_fmt.split(':')[1]);
-        }
-        console.log('this.data.bgAudio.duration', duration)
+  generateDate() {
+    const week = new Date().getDay();
+    const arr = ['日', '一', '二', '三', '四', '五', '六'];
+    const day_str = '周'+arr[week];
+    let date: any = new Date().getDate();
+    date = (date < 10) ? ('0'+ date) : date;
+    let month: any = new Date().getMonth() + 1;
+    month = (month < 10) ? ('0'+ month) : month;
 
-        const dur = Math.round(duration);
-        const durTxt = this.calTimeTxt(dur);
-        console.log('this..bgAudio.durTxt', durTxt)
-        console.log('this.data.bgAudio', this.data.bgAudio)
-
-        this.setData({
-          duration: dur,
-          totalTimeText: durTxt,
-        })
-      }, 300)
-      this.onBgTimeUpdate();
-
-    },
-    calTimeTxt(_time: number) {
-      if (_time < 3600) {
-        return Math.floor(_time / 60) + ':' + (_time % 60)
-      } else {
-        return Math.floor(_time / 3600) + ':' + Math.floor((_time % 3600) / 60) + ':' + ((_time % 3600) % 60)
-      }
-    },
-    onBgTimeUpdate() {
-      this.data.bgAudio.onTimeUpdate(() => {
-        const time = Number(parseFloat(this.data.bgAudio.currentTime).toFixed(2));
-        const dur = this.data.bgAudio.duration;
-
-        const timeTxt = this.calTimeTxt(Math.floor(time));
-        this.setData({
-          sliderIndex: time,
-          currentTimeText: timeTxt,
-        })
-      })
-    },
-    handleChangeAudioState(e: any) {
-      const pIdx = e.detail.playingIdx;
-      const item = e.detail.item;
-      this.setData({
-        playingIndex: pIdx,
-      })
-      if ((pIdx !== -1) && item) {
-        this.initPageAudio(item)
-      } else {
-        this.data.bgAudio.pause();
-      }
-      console.log('pIndex', pIdx)
+    return {
+      day_str,
+      date,
+      month,
     }
   },
-  pageLifetimes: {
-    async show() {
-      this.drawCanvas();
+
+  async getPageData(city_id: any) {
+    this.setData({
+      loading: true
+    })
+    try {
+      const res_reco: any = await getCityRecoExhibitionList(city_id, 999);
+      const res_long: any = await getCityLongExhibitionList(city_id, 999);
+      const res_past: any = await getCityPastExhibitionList(city_id, 999);
+      if (res_reco && res_reco.exhibitions) {
+        this.setData({
+          recommendList: res_reco.exhibitions,
+        })
+      }
+      if (res_long && res_long.exhibitions) {
+        this.setData({
+          normalList: res_long.exhibitions,
+        })
+      }
+      if (res_past && res_past.exhibitions) {
+        this.setData({
+          outofdateList: res_past.exhibitions,
+        })
+      }
       this.setData({
-        loading: true,
+        loading: false
       })
-      try {
-        const stored_audio = await wx.getStorageSync('audios');
-        this.setData({
-          stored_audio,
-        })
-      } catch (error) {
-        console.log(error)
-      }
-
-      console.log('show');
-      const info = wx.getMenuButtonBoundingClientRect();
-      const windowInfo = wx.getWindowInfo();
-      if (info && info.bottom) {
-        this.setData({
-          topBarHeight: info.bottom,
-          safeHeight: windowInfo.safeArea.height,
-          windowHeight: windowInfo.screenHeight,
-          statusBarHeight: windowInfo.statusBarHeight,
-        })
-      }
-
-      console.log('info', info);
-      console.log('windowInfo', windowInfo);
-
-      // setTimeout(() => {
-      //   this.initPageAudio(exhibitionList[0]);
-      // }, 3000)
-
-    },
+    } catch (error) {
+      this.setData({
+        loading: false
+      })
+    }
   },
-  lifetimes: {
-    attached() {
-      setTimeout(() => {
-        this.setData({
-          loading: false,
-        })
-      }, 1000)
-    },
+
+  async initPage() {
+    this.setData({
+      loading: true
+    })
+    const date_obj = this.generateDate();
+    this.setData({
+      dateObj: date_obj,
+    })
+    try {
+      const city = await getCurrentCity();
+      const citylist:any = await getCityList();
+      let city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
+      this.setData({
+        cityList: citylist.cities 
+      })
+      let city_id = -1;
+      
+      if(city_item && city_item.name) {
+        city_id = city_item.id;
+      } else {
+        city_item = ((citylist || {}).cities || []).find((i: any) => i.name === '北京市');
+        city_id = city_item.id;
+      }
+      // const city_name = (citylist.cities.find((i:any) => i.id === city_id) || {}).name
+      this.setData({
+        curCityId: city_id,
+        cityList: citylist.cities,
+        cityName: city_item.name,
+      })
+      console.log('city_id', city_id);
+      await this.getPageData(city_id);
+      this.setData({
+        loading: false,
+      })
+    } catch (error) {
+      console.error(error);
+      this.setData({
+        loading: false,
+      })
+    }
   },
+
+  handleCityChange(e: any) {
+    const { selectedId, selectedName } = e.detail;
+    this.setData({
+      curCityId: selectedId,
+      cityName: selectedName
+    });
+    this.getPageData(selectedId)
+  },
+
+  onShow() {
+    this.initPage();
+  },
+ 
+  onLoad(options) {
+    console.log('onLoad', options);
+    this.setData({
+      curMuseumId: Number(options.museum_id),
+    })
+  },
+
+  onShareAppMessage(){
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
+    const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
+    var shareObj = {
+      title,
+      path: '/pages/index/index',
+      imageUrl: defaultUrl,
+      success: function(res: any){
+        if(res.errMsg == 'shareAppMessage:ok'){
+          console.log('share success')
+        }
+      },
+      fail: function(res: any){
+        if(res.errMsg == 'shareAppMessage:fail cancel'){
+          console.log('share cancel')
+        }else if(res.errMsg == 'shareAppMessage:fail'){
+          console.log('share fail')
+        }
+      },
+    }
+    return shareObj;
+  },
+  
 
 })

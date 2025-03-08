@@ -1,0 +1,139 @@
+.profile-page {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: calc(100vh - 164rpx);
+  overflow: hidden;
+  .bg-img {
+    // position: absolute;
+    // top:0;
+    // left: 0;
+    width: 750rpx;
+    height: 472rpx;
+  }
+  .avatar-group {
+    position: absolute;
+    top: 244rpx;
+    left: 264rpx;
+    width: 222rpx;
+    height: 222rpx;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    .ava-bg {
+      position: absolute;
+      top:6rpx;
+      left: 6rpx;
+      width: 210rpx;
+      height: 210rpx;
+    }
+    .avatar {
+      position: absolute;
+      top:16rpx;
+      left: 16rpx;
+     
+      width: 192rpx;
+      height: 192rpx;
+      border-radius: 50%;
+    }
+  }
+  .content {
+    // margin-top: 472rpx;
+    padding: 0 40rpx;
+    text-align: center;
+    .username-group {
+      // margin-top: 30rpx;
+      .name {
+        font-size: 40rpx;
+        color: #2C2F3B;
+        font-family: MySimSun;
+        vertical-align: middle;
+      }
+      .edit-icon {
+        width: 32rpx;
+        height: 32rpx;
+        vertical-align: middle;
+        padding-left: 6rpx;
+      }
+    }
+    .group-one {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 60rpx;
+      .group-item {
+        width: 202rpx;
+        height: 146rpx;
+        border-radius: 10rpx;
+        background: #F7F8F9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .icon {
+          width: 54rpx;
+          height: 54rpx;
+        }
+        .text {
+          font-size: 30rpx;
+          color: #2C2F3B;
+          padding-top: 3rpx;
+        }
+      }
+    }
+  }
+  .link-list {
+    margin-top: 20rpx;
+    padding: 0 40rpx;
+    .title {
+      position: relative;
+      margin-top: 80rpx;
+      padding-bottom: 86rpx;
+      .title-name {
+        position: absolute;
+        top:0;
+        left: 0;
+        font-size: 38rpx;
+        line-height: 38rpx;
+        color: #2C2F3B;
+        display: inline-block;
+        width: 200rpx;
+        font-family: MySimSun;
+
+      }
+      .title-img {
+        position: absolute;
+        top:18rpx;
+        left: 0;
+        width: 152rpx;
+        height: 16rpx;
+        transform: translateY(1rpx);
+      }
+    }
+    .links {
+      .link-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 90rpx;
+        .left {
+          display: flex;
+          align-items: center;
+          .title-img {
+            width: 30rpx;
+            height: 30rpx;
+          }
+          .text {
+            font-size: 30rpx;
+            color: #2C2F3B;
+            line-height: 30rpx;
+            padding-left: 10rpx;
+          }
+        }
+        .title-img {
+          width: 26rpx;
+          height: 26rpx;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <view class="login-luodi-page">
+    <image class="bg-img" src="http://gewugo.com/api/v1/storage/image/loginimage-7801902807.jpg" mode="aspectFill"  />
+    <view class="content">
+      <view class="title">格物观展</view>
+      <view class="info">探索文化异常之美</view>
+      <view class="btn-group">
+        <image class="wx-icon" src="/static/images/weixin.png" mode="aspectFill" />
+        <text class="wx-txt">微信登录</text>
+      </view>
+    </view>
+    <view class="tiaokuan-group">
+      <radio value="r1" checked="{{radioSelected}}" bindtap="handleRadioChange" color="" style="transform: scale(0.6);"/>
+      <text class="tiaokuan">使用本产品代表阅读并同意《用户协议》、《隐私政策》</text>
+    </view>
+  </view>
+</page-meta>

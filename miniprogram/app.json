@@ -2,21 +2,43 @@
   "pages": [
     "pages/index/index",  
     "pages/citylist/index",
-    "pages/museumlist/index",
-    "pages/museumdetail/index",
-    "pages/exhibitionlist/index",
-    "pages/exhibitionall/index",
-    "pages/exhibitiondetail/index",
     "pages/exhibitlist/index",
     "pages/exhibitdetail/index",
+    "pages/login/index",
+    "pages/loginpage/index",
+    "pages/profile/index",
+    "pages/personalinfo/index",
+    "pages/setting/index",
+    "pages/exhibitiondetail/index",
+    "pages/exhibitionlist/index",
+    "pages/exhibitionall/index",
+    "pages/feedback/index",
     "pages/logs/logs"
+  ],
+  "subpackages": [
+    {
+      "root": "pages/personal",
+      "pages": [
+        "looklist/index",
+        "collectionlist/index",
+        "likelist/index"
+      ]
+    },
+    {
+      "root": "pages/museum",
+      "pages": [
+        "museumdetail/index",
+        "museumlist/index"
+      ]
+    }
   ],
   "usingComponents": {
     "player-comp": "components/player-comp"
   },
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "disableScroll": true
   },
   "style": "v2",
   "rendererOptions": {
@@ -25,6 +47,14 @@
       "disableABTest": true,
       "sdkVersionBegin": "3.0.0",
       "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
   "componentFramework": "glass-easel",
