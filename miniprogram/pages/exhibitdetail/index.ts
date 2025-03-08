@@ -487,7 +487,7 @@ Page({
     
   },
   onShareAppMessage(){
-    const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
     console.log(this.data.exhibitInfo.image_url);
     const str = getCurrentPageParamStr();
     const imageUrl = (this.data.exhibitInfo && this.data.exhibitInfo.image_url) ? this.data.exhibitInfo.image_url : defaultUrl ;

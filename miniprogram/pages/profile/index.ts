@@ -108,7 +108,7 @@ Page({
     this.getUserProfile();
   },
   onShareAppMessage(){
-    const defaultUrl = 'https://gewugo.com/storage/image/GC07356611338310.jpg';
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
     const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
     var shareObj = {
       title,
