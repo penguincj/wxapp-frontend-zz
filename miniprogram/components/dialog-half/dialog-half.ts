@@ -14,6 +14,10 @@ Component({
     showIcon: {
       type: Boolean,
       value: true,
+    },
+    fullHeight: {
+      type: Boolean,
+      value: false,
     }
   },
   /**

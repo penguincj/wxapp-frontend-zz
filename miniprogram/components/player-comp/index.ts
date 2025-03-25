@@ -187,23 +187,15 @@ Component({
     async findLocalAudio(_url: string) {
       return false;
       const stored_audio_arr = global_audio.stored_audio;
-      const file_name = _url.split('/file/')[1].split('.mp3')[0];
+      const file_name = _url.split('/audio/')[1].split('.mp3')[0];
+      const stored_audio = await wx.getStorageSync('audios');
+      global_audio.stored_audio = stored_audio;
 
-      if (!stored_audio_arr.length) {
-        try {
-          const stored_audio = await wx.getStorageSync('audios');
-          global_audio.stored_audio = stored_audio;
-          // this.setData({
-          //   stored_audio,
-          // });
-          if (!stored_audio) {
-            return "";
-          }
-        } catch (error) {
-          console.log(error)
-        }
+      if (!stored_audio) {
+        return "";
       }
-      return stored_audio_arr.find((item) => item.includes(file_name))
+      console.log('global_audio.stored_audio',global_audio.stored_audio)
+      return global_audio.stored_audio.find((item) => item.includes(file_name))
 
     },
     calTimeTxt(_time: number) {
@@ -308,6 +300,7 @@ Component({
       const { src, startTime, title, epname, singer, coverImgUrl, audio_id } = audio_i;      
 
       let local_audio = await this.findLocalAudio(src);
+      console.log('local', local_audio)
       // wx.getStorage({
       //   key: 'audios',
       //   success(res){

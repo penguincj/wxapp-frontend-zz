@@ -1,4 +1,4 @@
-import { getCurrentPageUrl, getCurrentPageParam, getCurrentPageParamStr } from "../../utils/util";
+import { getCurrentPageUrl, getCurrentPageParam, getCurrentPageParamStr } from "../utils/util";
 const itemConfig = [
   {
     id: 0,
@@ -12,7 +12,7 @@ const itemConfig = [
     name: '场馆',
     icon: '/static/images/ichangguan.png',
     iconClicked: '/static/images/ichangguan-c.png',
-    link: '/pages/museum/museumlist/index',
+    link: '/pages/museumlist/index',
   },
   {
     id: 2,
@@ -37,17 +37,17 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    currentkey: {
-      type: Number,
-      value: 0,
-    },
+    // currentkey: {
+    //   type: Number,
+    //   value: 0,
+    // },
   },
   /**
    * 组件的初始数据
    */
   data: {
     icons: itemConfig,
-    selectid: 0,
+    selected: 0,
     urlParams: {},
     urlParamsStr: '',
   },
@@ -55,7 +55,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    handleClickBottomBar(e: any) {
+    switchTab(e: any) {
       const {idx} =e.currentTarget.dataset;
       
       const item = itemConfig.find(i => i.id === idx);
@@ -63,7 +63,7 @@ Component({
       //   selectid: idx,
       // });
       if (item && item.link) {
-        wx.redirectTo({
+        wx.switchTab({
           url: item.link + this.data.urlParamsStr,
           fail(error) {
             console.log(error)

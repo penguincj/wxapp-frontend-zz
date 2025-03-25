@@ -10,14 +10,14 @@
     bottom: 0;
     width: 100%;
     min-height: 255px;
-    max-height: 75%;
+    max-height: 100%;
     z-index: 5000;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     overflow: hidden;
-    padding: 0 24px;
-    padding: 0 24px constant(safe-area-inset-bottom) 24px;
-    padding: 0 24px env(safe-area-inset-bottom) 24px;
+    padding: 0 40rpx;
+    padding: 0 40rpx constant(safe-area-inset-bottom) 40rpx;
+    padding: 0 40rpx env(safe-area-inset-bottom) 40rpx;
     transform: translateY(100%);
     transition: transform .3s;
     background-color: #FFFFFF;
@@ -48,6 +48,13 @@
     position: absolute;
     top: 40rpx;
     right: 30rpx;
+  }
+  .full-height-close-icon {
+    width: 44rpx;
+    height: 44rpx;
+    position: absolute;
+    top: 140rpx;
+    left: 30rpx;
   }
   .pannel-icon {
     position: absolute;

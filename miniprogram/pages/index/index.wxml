@@ -11,6 +11,7 @@
           data-idx="{{recoExhibition.id}}" 
           src="{{recoExhibition.home_image_url}}" 
           mode="aspectFill" 
+          catchtouchend="handleClick"
           catchtouchstart="handleTouchStart" 
           catchtouchmove="handleTouchMove" />
         <view wx:if="{{isRecoClicked}}" class="recommend-img-mask"></view>
@@ -70,7 +71,7 @@
     </view>
   </view>
   <view>
-    <bottom-bar currentkey="{{0}}"></bottom-bar>
+    <custom-tab-bar></custom-tab-bar>
   </view>
   <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
 </page-meta>

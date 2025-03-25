@@ -10,6 +10,10 @@ Component({
       type: Array,
       value: []
     },
+    audiolist: {
+      type: Array,
+      value: [],
+    },
     showType: {
       type: String,
       value: "",

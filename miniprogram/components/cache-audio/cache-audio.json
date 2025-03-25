@@ -1,5 +1,7 @@
 {
     "component": true,
     "styleIsolation": "apply-shared",
-    "usingComponents": {}
+    "usingComponents": {
+    "circle-progress": "/components/circle-progress/circle-progress"
+    }
   }

@@ -1,5 +1,7 @@
 import { getExhibitById, getExhibitList, likeExhibit, collectExhibit } from '../../api/api';
 import { getCurrentPageParamStr, backToTargetPage } from '../../utils/util';
+import { Exhpoints } from './points';
+
 
 const listConfig = [
   {
@@ -37,8 +39,8 @@ Page({
     showDialog: false,
     showMenuDialog: false,
     rateSlider: 2,
-    rateMax: 4,
-    rateMin: 1,
+    rateMax: 6,
+    rateMin: 3,
     curRate: "1.0",
     listConfig,
     topSwiperSelectIdx: 1,
@@ -49,6 +51,7 @@ Page({
     unitId: -1,
     userid: -1,
     exhibitId: -1,
+    mapPoints: Exhpoints, // 地图点
   },
 
   handleReadyPlay(event: any) {
@@ -221,10 +224,16 @@ Page({
 
   handleRateSliderChange(event: any) {
     const value = event.detail.value;
+    let curRate = (value / 4).toFixed(2);
+    if (curRate === "1.00") {
+      curRate = "1";
+    } else if (curRate === "1.50") {
+      curRate = "1.5"; 
+    }
     this.setData({
-      curRate: (value / 2).toFixed(1),
+      curRate,
     })
-    this.handlePlayRate(value / 2)
+    this.handlePlayRate(value / 4)
   },
   async handleClickCollect() {
     const isCollected = + !this.data.isCollected;
@@ -312,72 +321,43 @@ Page({
       isPlay,
     })
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  drawCanvas() {
-    wx.createSelectorQuery()
-      .select('#myCanvas') // 在 WXML 中填入的 id
-      .fields({ node: true, size: true })
-      .exec((res) => {
-        // Canvas 对象
-        const canvas = res[0].node
-        // 渲染上下文
-        const ctx = canvas.getContext('2d')
-
-        // Canvas 画布的实际绘制宽高
-        const width = res[0].width
-        const height = res[0].height
-
-        // 初始化画布大小
-        const dpr = wx.getWindowInfo().pixelRatio
-        canvas.width = width * dpr
-        canvas.height = height * dpr
-        ctx.scale(dpr, dpr)
-        // 省略上面初始化步骤，已经获取到 canvas 对象和 ctx 渲染上下文
-
-        // 清空画布
-        ctx.clearRect(0, 0, width, height)
-
-        // // 绘制红色正方形
-        // ctx.fillStyle = 'rgb(200, 0, 0)';
-        // ctx.fillRect(10, 10, 50, 50);
-
-        // // 绘制蓝色半透明正方形
-        // ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-        // ctx.fillRect(30, 30, 50, 50);
-
-        // 虚线
-        ctx.setLineDash([5, 15]);
-        ctx.moveTo(50, 50);
-        ctx.lineTo(60, 50);
-        ctx.lineTo(70, 50);
-        ctx.lineTo(80, 50);
-        ctx.lineTo(250, 50);
-        ctx.lineTo(250, 60);
-        ctx.lineTo(250, 70);
-        ctx.lineTo(250, 100);
-        ctx.lineTo(240, 100);
-        ctx.lineTo(50, 100);
-        ctx.stroke();
-
-      })
+  
+  handleOpenMapDialog() {
+    console.log('exhibitionID', getApp().globalData.audio.curExhibition);
+    if(Number(getApp().globalData.audio.curExhibition) !== 26) {
+      return
+    }
+    this.getCurrentPointIdx(this.data.mapPoints);
+    this.setData({
+      showMapDialog: true,
+    })
+    const map = this.selectComponent("#map")
+    map.drawCanvas();
+    // this.drawCanvas();
   },
+  handleCloseMapDialog() {
+    const map = this.selectComponent("#map")
+    map.clearCanvas();
+    this.setData({
+      showMapDialog: false,
+    })
+    
+  },
+  getCurrentPointIdx(_point: any) {
+    // let currentPoint = [0, 0];
+    const id = getApp().globalData.audio.curExhibit.id;
+    const keys = Object.keys(_point);
+    const idx = keys.findIndex((i: any) => Number(i) === Number(id));
+
+    this.setData({
+      currentPointIdx: idx,
+    })
+    console.log('id-----', keys)
+  },
+
+
+
+
   handleAudioEnd() {
     console.log('handleAudioEnd');
   },
@@ -437,27 +417,6 @@ Page({
     console.log('handleAudioShare')
   },
 
-
-  async findLocalAudio(_url: string) {
-    const stored_audio_arr = this.data.stored_audio;
-    const file_name = _url.split('/file/')[1].split('.mp3')[0];
-
-    if (!stored_audio_arr.length) {
-      try {
-        const stored_audio = await wx.getStorageSync('audios');
-        this.setData({
-          stored_audio,
-        });
-        if (!stored_audio) {
-          return "";
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    return stored_audio_arr.find((item) => item.includes(file_name))
-
-  },
 
   async onShow() {
 

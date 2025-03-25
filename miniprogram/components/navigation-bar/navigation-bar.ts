@@ -132,8 +132,15 @@ Component({
       this.triggerEvent('back', { delta: data.delta }, {})
     },
     handleClickHome() {
-      wx.redirectTo({
-        url: '/pages/index/index'
+      console.log('handleClickHome')
+      wx.switchTab({
+        url: '/pages/index/index',
+        success(res) {
+          console.log('res', res)
+        },
+        fail(res) {
+          console.log('res', res)
+        },
       })
     }
   },
