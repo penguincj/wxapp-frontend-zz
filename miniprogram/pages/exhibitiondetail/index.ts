@@ -107,7 +107,7 @@ Page({
     const title = (this.data.exhibitionInfo.name) ? `格物观展|${this.data.exhibitionInfo.name}` : '【格物观展：让您的博物馆之旅不虚此行】';
     var shareObj = {
       title,
-      path: '/pages/museum/museumdetail/index' + str,
+      path: '/pages/exhibitiondetail/index' + str,
       imageUrl: imageUrl,
       success: function (res: any) {
         if (res.errMsg == 'shareAppMessage:ok') {

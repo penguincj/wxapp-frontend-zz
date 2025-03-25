@@ -10,7 +10,7 @@
     <image
       wx:if="{{showIcon}}"
       src="/static/images/shouqi.png" 
-      class="close-icon" 
+      class="{{fullHeight? 'full-height-close-icon': 'close-icon'}}" 
       bindtap="handleClose"
       mode="aspectFix" />
     <slot name="content"></slot>

@@ -13,7 +13,8 @@
     "pages/exhibitionlist/index",
     "pages/exhibitionall/index",
     "pages/feedback/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/museumlist/index"
   ],
   "subpackages": [
     {
@@ -27,8 +28,8 @@
     {
       "root": "pages/museum",
       "pages": [
-        "museumdetail/index",
-        "museumlist/index"
+        "museumdetail/index"
+       
       ]
     }
   ],
@@ -60,5 +61,38 @@
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
-  "requiredBackgroundModes": ["audio", "backgroundAudioManager", "location"]
+  "requiredBackgroundModes": ["audio", "backgroundAudioManager", "location"],
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "current": 0,
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/static/images/ishouye.png",
+        "selectedIconPath": "/static/images/ishouye-c.png"
+      },
+      {
+        "current": 1,
+        "pagePath": "pages/museumlist/index",
+        "text": "场馆",
+        "iconPath": "/static/images/ichangguan.png",
+        "selectedIconPath": "/static/images/ichangguan-c.png"
+      },
+      {
+        "current": 2,
+        "pagePath": "pages/exhibitionlist/index",
+        "text": "展览",
+        "iconPath": "/static/images/izhanlan.png",
+        "selectedIconPath": "/static/images/izhanlan-c.png"
+      },
+      {
+        "current": 3,
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "/static/images/iwode.png",
+        "selectedIconPath": "/static/images/iwode-c.png"
+      }
+    ]
+  }
 }

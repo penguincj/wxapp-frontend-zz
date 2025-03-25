@@ -1,4 +1,6 @@
 // @ts-nocheck
+var log = require('../utils/log')
+
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -94,6 +96,7 @@ export const getLocation = async () => {
         const longitude = res.longitude;
         wx.setStorageSync('latitude', res.latitude);
         wx.setStorageSync('longitude', res.longitude);
+        log.info('lat, lng', res.latitude, res.longitude)
         resolve({latitude, longitude});
       },
       fail(res) {
@@ -123,6 +126,7 @@ export const getCurrentCity = async () => {
         lng = longitude;
       }
       const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
+      // const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=30.290937,120.213803`);
       if (city_res && city_res.result && city_res.result.address_component && city_res.result.address_component.city) {
         city = city_res.result.address_component.city;
       } else {
@@ -201,6 +205,7 @@ export const request = async function (url, options={}, base_url='https://gewugo
       },
       fail: (err) => {
         reject(err)
+        
       }
     })
   })
@@ -231,6 +236,7 @@ export const map_request = function (_url: any, options={} ) {
       },
       fail: (err) => {
         reject(err)
+        log.error(err)
       }
     })
   })
@@ -248,6 +254,7 @@ export const login_request = function () {
       },
       fail: (err) => {
         reject(err)
+        log.error(err)
       }
     })
   })
@@ -308,7 +315,6 @@ export const getLoginStatus = async () => {
 
 export const clearAndFreshLoginStatus = async () => {
   try {
-    console.log('clearAndFreshLoginStatus login users');
     // await checkloginStatus();
     await wx.setStorageSync('token', '');
     await wx.setStorageSync('userinfo', '');

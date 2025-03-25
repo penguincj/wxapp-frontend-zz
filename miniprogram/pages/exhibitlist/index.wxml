@@ -18,6 +18,7 @@
         showType="jiangjiedaoyu"
         showInput="{{false}}"
         list="{{exhibitList}}"
+        audiolist="{{audiolist}}"
         playingExhibitId="{{curExhibit.id}}"
         playingIndex="{{playingIndex}}"
         bindChangeItem="handleClickExhibitItem"
@@ -50,7 +51,7 @@
           <image wx:else bindtap="handleAudioPause" class="img-icon pause-icon" src="/static/images/pause1.png" mode="aspectFill" />
           <image bindtap="handlePlayNext" class="img-icon reverse" src="/static/images/play-before.png" mode="aspectFix" />
           <view class="img-dingwei-group">
-            <view class="img-wrapper">
+            <view class="img-wrapper" bindtap="handleOpenMapDialog">
               <image class="img" src="/static/images/play-huajuan.png" mode="aspectFix" />
             </view>
             <view class="img-wrapper" bindtap="handleOpenFindDialog">
@@ -63,7 +64,7 @@
   </view>
   <view class="find-area">
     <dialog-half
-      showIcon="{{false}}"
+      showIcon="{{true}}"
       showDialog="{{showFindDialog}}"
       bindCloseDialog="handleCloseFindDialog"
     >
@@ -77,6 +78,21 @@
         bindClickSearch="handleClickSearch"
         bindChangeItem="handleClickSearchExhibitItem"
       ></swiper-card6>
+    </view>
+    </dialog-half>
+  </view>
+
+   <view class="map-area">
+    <dialog-half
+      fullHeight="{{false}}"
+      showIcon="{{true}}"
+      showDialog="{{showMapDialog}}"
+      bindCloseDialog="handleCloseMapDialog"
+    >
+    <view slot="content">
+      <view class="canvas-wrapper">
+        <local-map id="map" Exhpoints="{{mapPoints}}" currentPointIdx="{{currentPointIdx}}"></local-map>
+      </view>
     </view>
     </dialog-half>
   </view>

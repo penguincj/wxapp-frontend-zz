@@ -29,7 +29,7 @@
     <view class="swiper-card3-area">
       <card-group1 title="往期展览" list="{{outofdateList}}" bindClickItem="handleClickItem" bindClickMore="handleClickMorePast"></card-group1>
     </view>
-    <bottom-bar currentkey="{{2}}"></bottom-bar>
+    <custom-tab-bar></custom-tab-bar>
   </view>
   <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
 </page-meta>

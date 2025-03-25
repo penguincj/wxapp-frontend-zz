@@ -45,7 +45,7 @@
         <image src="/static/images/o-dianzan-yi.png" class="o-icon {{isLiked ? '': 'not-display'}}" mode="aspectFix" />
         <view class="o-text">点赞</view>
       </view>
-      <view class="o-item">
+      <view class="o-item" bindtap="handleOpenMapDialog">
         <image src="/static/images/o-ditu.png" class="o-icon" mode="aspectFix" />
         <view class="o-text">地图</view>
       </view>
@@ -79,12 +79,12 @@
         
         <view class="rate-slider">
           <view class="fake-slider">
-            <view class="dark-bg" style="width:{{400*(curRate-0.5) + 70}}rpx"></view>
+            <view class="dark-bg" style="width:{{800*(curRate-0.75) + 70}}rpx"></view>
             <view class="rate-txt-group">
               <view class="rate-speed">慢</view>
               <view class="rate-speed">快</view>
             </view>
-            <view class="circle" style="transform: translateX({{400*(curRate-0.5)}}rpx)"><text class="rate-txt">{{curRate}}x</text></view>
+            <view class="circle" style="transform: translateX({{800*(curRate-0.75)}}rpx)"><text class="rate-txt">{{curRate}}x</text></view>
          </view>
          <view class="real-slider">
           <slider
@@ -102,10 +102,10 @@
         
         </view>
         <view class="rate-number">
-          <view class="rate-txt">0.5x</view>
+          <view class="rate-txt">0.75x</view>
           <view class="rate-txt">1x</view>
+          <view class="rate-txt">1.25x</view>
           <view class="rate-txt">1.5x</view>
-          <view class="rate-txt">2.0x</view>
         </view>
       </view>
     </view>
@@ -125,6 +125,21 @@
         bindGetCurPlayingStatus="handleGetCurPlayingStatus"
         bindChangeItem="handleClickExhibitItem"
         ></swiper-card6>
+    </view>
+    </dialog-half>
+  </view>
+
+  <view class="map-area">
+    <dialog-half
+      fullHeight="{{false}}"
+      showIcon="{{true}}"
+      showDialog="{{showMapDialog}}"
+      bindCloseDialog="handleCloseMapDialog"
+    >
+    <view slot="content">
+      <view class="canvas-wrapper">
+        <local-map id="map" Exhpoints="{{mapPoints}}" currentPointIdx="{{currentPointIdx}}"></local-map>
+      </view>
     </view>
     </dialog-half>
   </view>

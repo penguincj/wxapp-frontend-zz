@@ -14,6 +14,8 @@ Page({
     touchStartY: 0,
     x:5,
     y:5,
+    exhibitionId: -1,
+    isRecoTouched: false,
   },
 
   listenGyro() {
@@ -50,13 +52,13 @@ Page({
       url: '/pages/museum/museumdetail/index?museum_id=' + idx,
     })
   },
-  handleClickRecoImg(event: any) {
+  handleClickRecoImg() {
     console.log('handleClickRecoImg');
     
     if (this.data.isRecoClicked) {
-      const { idx } = event.currentTarget.dataset;
+      // const { idx } = event.currentTarget.dataset;
       const paramStr = generateNewUrlParams({
-        exhibition_id : idx,
+        exhibition_id : this.data.exhibitionId,
       })
       wx.navigateTo({
         url: '/pages/exhibitiondetail/index' + paramStr
@@ -70,14 +72,28 @@ Page({
     const DY = 15;
     const CY = event.touches[0].clientY;
     if (this.data.touchStartY - CY > DY) {
-      this.setData({
-        isRecoClicked: true,
-      })
+      // this.setData({
+      //   isRecoClicked: false,
+      // })
     } else if (CY - this.data.touchStartY > DY) {
       this.setData({
-        isRecoClicked: false,
+        isRecoClicked: true,
+        isRecoTouched: true,
       })
+    } else {
+      // throttle(()=> {
+      //   console.log('click 11')
+      // }, 30)
     }
+  },
+  handleClick(e: any) {
+    if (this.data.isRecoClicked && !this.data.isRecoTouched) {
+      console.log('click 11')
+      this.handleClickRecoImg();
+    }
+    this.setData({
+      isRecoTouched: false,
+    })      
   },
   // handleClickRecommend() {
   //   console.log('handleClickRecommend');
@@ -124,8 +140,10 @@ Page({
           })
         }
         if (recoExhibition && recoExhibition.exhibitions && recoExhibition.exhibitions[0]) {
+          const exhibitionId = recoExhibition.exhibitions[0].id;
           this.setData({
             recoExhibition: recoExhibition.exhibitions[0],
+            exhibitionId,
           })
         }
       }
@@ -151,7 +169,12 @@ Page({
 
   onShow() {
     this.listenGyro();
-
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 0    // 根据tab的索引值设置
+      }) 
+    }
   },
 
   onUnload() {

@@ -2,6 +2,7 @@
 <page-meta page-style="overflow: hidden;">
   <navigation-bar styleType="dark" title="投诉与反馈" back color="black" background="#FFF"></navigation-bar>
   <view class="feedback-page">
+    <view class="wx-info">此投诉为本小程序自有投诉渠道，非微信官方投诉渠道</view>
     <view class="content-group">
       <textarea 
         class="input-content"

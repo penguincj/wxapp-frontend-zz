@@ -87,7 +87,7 @@
               <view class="type">{{item.name}}</view>
               <view class="btn-group" data-idx="{{item.id}}" bindtap="handleClickJiangjie">
                 <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
-                <view class="loc-name white">试听</view>
+                <view class="loc-name white">播放</view>
               </view>
             </view>
           </view>

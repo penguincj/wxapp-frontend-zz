@@ -1,8 +1,8 @@
 // index.ts
 // 获取应用实例
 // const app = getApp<IAppOption>()
-import { getCityList, getMuseumList } from "../../../api/api";
-import { getCurrentCity, getCurrentPageParam, transferObjToUrlParams, backToTargetPage } from "../../../utils/util";
+import { getCityList, getMuseumList } from "../../api/api";
+import { getCurrentCity, getCurrentPageParam,getCurrentPageParamStr, transferObjToUrlParams, backToTargetPage } from "../../utils/util";
 
 Page({
   data: { 
@@ -132,12 +132,20 @@ Page({
     this.initPage();
     
   },
+  onShow() {    
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {    
+      this.getTabBar().setData({
+          selected: 1
+        })
+    }
+  },
   onShareAppMessage(){
     const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
     const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
+    const str = getCurrentPageParamStr();
     var shareObj = {
       title,
-      path: '/pages/index/index',
+      path: '/pages/museumlist/index' + str,
       imageUrl: defaultUrl,
       success: function(res: any){
         if(res.errMsg == 'shareAppMessage:ok'){

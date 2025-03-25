@@ -9,8 +9,9 @@
       <text class="title-num">{{list.length}}</text>
     </view>
     <view class="title-right">
-      <image class="title-icon" src="/static/images/xunhuan1.png" mode="aspectFix" />
-      <image class="title-icon" src="/static/images/xiazai.png" mode="aspectFix" />
+      <!-- <image class="title-icon" src="/static/images/xunhuan1.png" mode="aspectFix" /> -->
+      
+      <cache-audio playingIndex="{{playingIndex}}" audiolist="{{audiolist}}"></cache-audio>
     </view>
   </view>
   <view class="title-line-simple" wx:if="{{showType === 'guanjianci'}}">

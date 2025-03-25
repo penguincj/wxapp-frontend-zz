@@ -106,6 +106,11 @@ Page({
   },
   onShow: function() {
     this.getUserProfile();
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {    
+      this.getTabBar().setData({
+          selected: 3
+        })
+    }
   },
   onShareAppMessage(){
     const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
