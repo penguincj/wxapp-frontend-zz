@@ -45,10 +45,46 @@ App<IAppOption>({
 
       const city = await getCurrentCity();
       log.info('cityname', city);
+      if (!wx.cloud) {
+        console.error('请使用 2.2.3 或以上的基础库以使用云能力 cloud')
+      } else {
+        wx.cloud.init({
+          // env 参数说明：
+          //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资 源 
+          env: 'cloud1-7grz6n8i7da33fb5',
+          traceUser: true,
+        })
+        console.log('cloud init');
+
+              
+      // // 用户的输入，这里我们以某个报错信息为例
+      // const userInput =
+      // "我的小程序这个报错是什么意思：FunctionName parameter could not be found";
+
+      // const res = await wx.cloud.extend.AI.bot.sendMessage({
+      //   data: {
+      //     botId: "bot-7acc137c", // 第2步中获取的Agent唯一标识
+      //     msg: userInput, // 用户的输入
+      //     history: [], // 历史对话的内容，这里我们是第一轮对话，所以可以不传入
+      //   },
+      //   });
+      //   console.log('cloud res：');
+
+      //   for await (let x of res.textStream) {
+      //     console.log(x);
+      //   }
+      }
     } catch (error) {
       console.log(error)
       log.error(error) 
     }
+
+    const getAICha = async () => {
+     
+      // 创建模型
+      
+    };
+
     const onErrorCallback = function(msg: any) {
       console.error('wx:onError:', msg)
       try {

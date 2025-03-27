@@ -64,6 +64,7 @@
             <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
           </view>
         </view>
+        <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix"  bindtap="handleClickAiRobot" />
       </view>
       <view>
         <custom-tab-bar currentkey="{{3}}"></custom-tab-bar>

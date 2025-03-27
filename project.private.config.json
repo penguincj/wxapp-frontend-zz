@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/agent/index",
+          "pathName": "pages/agent/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/exhibitiondetail/index",
           "pathName": "pages/exhibitiondetail/index",
           "query": "museum_id=8&exhibition_id=15",
