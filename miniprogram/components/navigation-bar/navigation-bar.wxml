@@ -66,4 +66,5 @@
       <slot name="right"></slot>
     </view>
   </view>
+
 </view>

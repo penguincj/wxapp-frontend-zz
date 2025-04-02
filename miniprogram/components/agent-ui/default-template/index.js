@@ -10,14 +10,17 @@ Component({
    * 组件的属性列表
    */
   properties: {
-   
+   questions: {
+    type: Array,
+    value: [],
+   }
   },
 
   /**
    * 组件的初始数据
    */
   data: {
-    questions: questions,
+    question: questions,
   },
   lifetimes: {
     attached() {

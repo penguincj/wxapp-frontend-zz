@@ -16,7 +16,6 @@
       <view style="line-height: 47px; font-size: 20px; font-weight: 500;">{{chatMode==='bot'?bot.name:modelConfig.modelProvider}}</view>
       <view style="line-height: 26px;padding: 0px 16px; font-size: 32rpx;">{{chatMode==='bot'?"":modelConfig.welcomeMsg}}</view>
     </view>
-    <default-template bindClickQuestion="handleClickQuestion"></default-template>
     <block wx:for="{{chatRecords}}" wx:key="record_id">
       <!-- 系统聊天 -->
       <view class="system" style="padding-left: {{showBotAvatar?80:0}}rpx;" wx:if="{{item.role==='assistant'}}">
@@ -96,22 +95,33 @@
         </view>
       </view>
     </block>
-    <!-- 推荐问题 -->
+    <default-template wx:if="{{questions && questions.length}}" bindClickQuestion="handleClickQuestion">
+      <view slot="questions-slot">
+<!-- 推荐问题 -->
     <block wx:for="{{questions}}" wx:key="item">
-      <view class="questions" style="padding-left: {{showBotAvatar?80:0}}rpx;">
+      <!-- <view class="questions" style="padding-left: {{showBotAvatar?80:0}}rpx;"> -->
+       <view class="question-item" bind:tap="handleSendMessage" data-message="{{item}}">
+          <view class="question-item-title">{{item}}</view>
+          <image class="question-item-arrow" src="/static/images/arr-r.png" mode="aspectFit" />
+        </view>
+      <!-- <view class="questions">
         <view class="question_content" bind:tap="handleSendMessage" data-message="{{item}}">{{item}}</view>
-      </view>
+      </view> -->
     </block>
+      </view>
+    </default-template>
+
+    
     <view id="scroll-bottom" style="width: 100%;height: 20px;"></view>
   </scroll-view>
   <!-- 底部输入区 -->
   <view class="footer">
-    <view class="feature_list" wx:if="{{showFeatureList}}">
+    <!-- <view class="feature_list" wx:if="{{showFeatureList}}">
       <view bind:tap="handleClickWebSearch" class="{{'webSearchSwitch ' + (useWebSearch ? 'feature_enable' : '')}}">
         <image src="{{ useWebSearch ? './imgs/internetUse.svg' : './imgs/internet.svg'}}" mode="" style="width: 40rpx;height:30px;margin-right: 10rpx" />
         <text>联网搜索</text>
       </view>
-    </view>
+    </view> -->
     <view class="file_list" wx:if="{{showFileList}}">
       <chatFile enableDel="{{true}}" wx:for="{{sendFileList}}" wx:key="tempId" fileData="{{item}}" bind:removeChild="handleRemoveChild" bind:changeChild="handleChangeChild"></chatFile>
     </view>
@@ -119,15 +129,17 @@
       <view class="input_box">
         <view class="input_inner_box">
           <textarea class="input" value="{{inputValue}}" maxlength="1024" bindfocus="bindInputFocus" bindinput="bindKeyInput" placeholder="说点什么吧" bindconfirm="handleSendMessage" confirm-type="send" adjust-position cursor-spacing="40" auto-height="{{true}}" show-confirm-bar="{{false}}" bindlinechange="handleLineChange" />
+          <view class="right_btns">
+            <!-- 加号 -->
+            <image src="./imgs/set.svg" class="set" mode="widthFix" bind:tap="handleClickTools" />
+            <!-- 发送按钮 -->
+            <!-- <image src="./imgs/send.png" class="set" mode="widthFix" wx:if="{{!!inputValue&&chatStatus===0}}" bind:tap="handleSendMessage" style="transform: rotate(-40deg);transform-origin: 8px 8px" /> -->
+            <image src="./imgs/send.png" class="set" mode="widthFix" wx:if="{{!!inputValue&&chatStatus===0}}" bind:tap="handleSendMessage" />
+            <!-- 暂停按钮 -->
+            <image src="./imgs/stop.svg" class="set" mode="widthFix" wx:if="{{!(chatStatus===0)}}" bind:tap="stop" />
+          </view>
         </view>
-        <view class="right_btns">
-          <!-- 加号 -->
-          <image src="./imgs/set.svg" class="set" mode="widthFix" bind:tap="handleClickTools" />
-          <!-- 发送按钮 -->
-          <image src="./imgs/send.svg" class="set" mode="widthFix" wx:if="{{!!inputValue&&chatStatus===0}}" bind:tap="handleSendMessage" style="transform: rotate(-40deg);transform-origin: 8px 8px" />
-          <!-- 暂停按钮 -->
-          <image src="./imgs/stop.svg" class="set" mode="widthFix" wx:if="{{!(chatStatus===0)}}" bind:tap="stop" />
-        </view>
+        
       </view>
     </view>
     <!-- 底部工具栏 -->
@@ -136,7 +148,7 @@
         <image src="./imgs/clear.svg" alt="widthFix" class="icon" />
         <text class="text_desc">清除</text>
       </view>
-      <view wx:if="{{showUploadFile && chatMode === 'bot'}}" class="function" bind:tap="handleUploadMessageFile">
+      <!-- <view wx:if="{{showUploadFile && chatMode === 'bot'}}" class="function" bind:tap="handleUploadMessageFile">
         <image src="./imgs/wechat.svg" alt="widthFix" class="icon" />
         <text class="text_desc">微信文件</text>
       </view>
@@ -147,7 +159,7 @@
       <view wx:if="{{showUploadImg && chatMode === 'bot'}}" class="function" bind:tap="handleCamera">
         <image src="./imgs/camera.svg" alt="widthFix" class="icon" />
         <text class="text_desc">相机</text>
-      </view>
+      </view> -->
     </view>
   </view>
   <image bind:tap="autoToBottom" wx:if="{{manualScroll}}" style="width:35px;height:35px;border-radius: 50px;position: absolute;bottom:150px;right: 20px;padding: 5px;background-color: white;" src="./imgs/toBottom.svg" mode="aspectFit" binderror="" bindload="" />
