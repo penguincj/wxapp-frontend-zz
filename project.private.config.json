@@ -92,13 +92,6 @@
           "query": "",
           "launchMode": "default",
           "scene": null
-        },
-        {
-          "name": "pages/exhibitdetail/index",
-          "pathName": "pages/exhibitdetail/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
         }
       ]
     }

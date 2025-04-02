@@ -16,7 +16,7 @@
           catchtouchmove="handleTouchMove" />
         <view wx:if="{{isRecoClicked}}" class="recommend-img-mask"></view>
         <view class="recommend-img-mask-two {{isRecoClicked ? 'ani-hide': 'ani-show'}}"></view>
-        <view class="recommend-group">
+        <view class="recommend-group" bindtap="handleClickRecoImg">
           <view class="recommend-title">
             <image class="title-png" src="/static/images/shouye-jinri.png" mode="aspectFix" />
             <span class="title-text">今日推荐</span>

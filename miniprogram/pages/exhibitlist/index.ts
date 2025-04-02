@@ -103,7 +103,8 @@ Page({
     const player = this.selectComponent("#player")
     await player.handlePlayOtherAudioById(selectId);
     const url_params = generateNewUrlParams({
-      exhibit_id: selectId
+      exhibit_id: selectId,
+      unit_id: this.data.curUnitId,
     })
     wx.navigateTo({
       url: '/pages/exhibitdetail/index' + url_params
@@ -148,7 +149,8 @@ Page({
   handleSwiperItemClick(event: any) {
     const { id } = event.detail;
     const url_params = generateNewUrlParams({
-      exhibit_id: id
+      exhibit_id: id,
+      unit_id: this.data.curUnitId,
     })
     wx.navigateTo({
       url: '/pages/exhibitdetail/index' + url_params
@@ -415,9 +417,11 @@ Page({
     // if (this.data.exhibitionId !== -1) {
     //   this.initPage(this.data.exhibitionId);
     // }
+    // this.initPage(getApp().globalData.audio.curExhibition);
     setTimeout(() => {
       const params = getCurrentPageParamStr();
       const { exhibition_id } = getCurrentPageParam();
+     console.log('params ', params)
       getApp().globalData.audio.exhibitlistParams = params;
       getApp().globalData.audio.curExhibition = exhibition_id;
     }, 1000)

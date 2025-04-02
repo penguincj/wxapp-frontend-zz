@@ -1,5 +1,5 @@
 import { getExhibitById, getExhibitList, likeExhibit, collectExhibit } from '../../api/api';
-import { getCurrentPageParamStr, backToTargetPage } from '../../utils/util';
+import { getCurrentPageParamStr, backToTargetPage, getCurrentPageParam, transferObjToUrlParams } from '../../utils/util';
 import { Exhpoints } from './points';
 
 
@@ -431,6 +431,20 @@ Page({
     this.setData({
       loading: false,
     })
+    setTimeout(() => {      
+      const { exhibition_id, museum_id, narration_id } = getCurrentPageParam();
+      const paramstr = transferObjToUrlParams({
+        museum_id,
+        exhibition_id,
+        narration_id
+      })
+      console.log('params str', paramstr)
+      getApp().globalData.audio.exhibitlistParams = paramstr;
+      getApp().globalData.audio.curExhibition = exhibition_id;
+    }, 1000)
+       
+    console.log('curUnitId', getApp().globalData.audio.curUnitId)
+    console.log('curUnitId curExhibition', getApp().globalData.audio.curExhibition)
   },
   onLoad(options) {
     if (options) {
@@ -441,7 +455,8 @@ Page({
       }, () => {
         this.initPage(options.exhibit_id);
       })
-
+      getApp().globalData.audio.curUnitId = options.unit_id;
+      getApp().globalData.audio.curExhibition = options.exhibition_id;
     }
     
   },
@@ -453,7 +468,7 @@ Page({
     const title = (this.data.exhibitInfo.name) ? `格物观展|${this.data.exhibitInfo.name}` : '【格物观展：让您的博物馆之旅不虚此行】' ;
     var shareObj = {
       title,
-      path: '/pages/museum/museumdetail/index'+str,
+      path: '/pages/exhibitdetail/index'+str,
       imageUrl: imageUrl,
       success: function(res: any){
         if(res.errMsg == 'shareAppMessage:ok'){

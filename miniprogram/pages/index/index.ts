@@ -52,18 +52,14 @@ Page({
       url: '/pages/museum/museumdetail/index?museum_id=' + idx,
     })
   },
-  handleClickRecoImg() {
-    console.log('handleClickRecoImg');
-    
-    if (this.data.isRecoClicked) {
-      // const { idx } = event.currentTarget.dataset;
-      const paramStr = generateNewUrlParams({
-        exhibition_id : this.data.exhibitionId,
-      })
-      wx.navigateTo({
-        url: '/pages/exhibitiondetail/index' + paramStr
-      })
-    }
+  handleClickRecoImg() {    
+    // const { idx } = event.currentTarget.dataset;
+    const paramStr = generateNewUrlParams({
+      exhibition_id : this.data.exhibitionId,
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitiondetail/index' + paramStr
+    })
   },
   handleTouchStart(event: any) {
     this.data.touchStartY = event.touches[0].clientY;
@@ -78,7 +74,6 @@ Page({
     } else if (CY - this.data.touchStartY > DY) {
       this.setData({
         isRecoClicked: true,
-        isRecoTouched: true,
       })
     } else {
       // throttle(()=> {
@@ -87,13 +82,10 @@ Page({
     }
   },
   handleClick(e: any) {
-    if (this.data.isRecoClicked && !this.data.isRecoTouched) {
-      console.log('click 11')
+    // console.log('click changedTouches', this.data.touchStartY, e.changedTouches[0].clientY)
+    if (e.changedTouches[0].clientY - this.data.touchStartY < 15) {
       this.handleClickRecoImg();
     }
-    this.setData({
-      isRecoTouched: false,
-    })      
   },
   // handleClickRecommend() {
   //   console.log('handleClickRecommend');
