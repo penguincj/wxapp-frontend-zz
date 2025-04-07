@@ -1,0 +1,40 @@
+<!--components/agent-ui/collapsibleCard/index.wxml-->
+<view class="default-template" style="{{collapsedStatus&&showBgColor?'background-color: #f5f5f5;':''}}">
+  <view class="content">
+    <view class="title">您好! 我是助手BOBO</view>
+    <view class="description">您的专属博物馆展览搭子，很高兴为您服务～</view>
+    <view class="question">
+      <view class="tips">
+        <view class="title">猜你想问</view>
+        <!-- <view class="change-area">
+          <image class="change-btn" src="/static/images/refresh.png" mode="aspectFit"  />
+          <text class="change-btn-text">换一批</text>
+        </view> -->
+      </view>
+      <view class="question-area">
+        <slot name="questions-slot"></slot>
+        <!-- <block wx:for="{{questions}}">
+          <view class="question-item" data-que="{{item}}" bindtap="handleClickQuestion">
+            <view class="question-item-title">{{item}}</view>
+            <image class="question-item-arrow" src="/static/images/arr-r.png" mode="aspectFit" />
+          </view>
+        </block> -->
+      </view>
+      </view>
+  </view>
+  <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix" />
+  <!-- <view class="func-list">
+    <view class="func-item">
+      <image src="/static/images/jiangjie.png" class="func-item-img" mode="aspectFit" />
+      <text class="func-item-text">文物讲解</text>
+    </view>
+    <view class="func-item">
+      <image src="/static/images/shibie.png" class="func-item-img" mode="aspectFit" />
+      <text class="func-item-text">文物识别</text>
+    </view>
+    <view class="func-item">
+      <image src="/static/images/lishi.png" class="func-item-img" mode="aspectFit" />
+      <text class="func-item-text">历史故事</text>
+    </view>
+  </view> -->
+</view>

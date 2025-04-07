@@ -1,0 +1,13 @@
+<!--index.wxml-->
+  <navigation-bar back="{{true}}" extClass="transparent" styleType="dark" color="black" background="#FFF" style="text-align: center; position:absolute"></navigation-bar>
+
+  <view class="agent-page">
+    <view>
+      <agent-ui 
+        agentConfig="{{agentConfig}}" 
+        showBotAvatar="{{showBotAvatar}}" 
+        chatMode="{{chatMode}}" 
+        modelConfig="{{modelConfig}}">
+      </agent-ui>
+    </view>
+  </view>

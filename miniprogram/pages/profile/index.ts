@@ -73,6 +73,15 @@ Page({
     backToTargetPage(targetPage);
   },
 
+  handleClickAiRobot() {
+    console.log('handleClickAiRobot')
+    const params = getCurrentPageParamStr();
+    const targetPage = "/pages/agent/index";
+    wx.navigateTo({
+      url: targetPage
+    })
+  },
+
 
 
 

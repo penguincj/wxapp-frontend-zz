@@ -10,9 +10,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/exhibitdetail/index",
-          "pathName": "pages/exhibitdetail/index",
-          "query": "exhibition_id=26&city_id=15&narration_id=30&exhibit_id=124&unit_id=30",
+          "name": "pages/agent/index",
+          "pathName": "pages/agent/index",
+          "query": "",
           "launchMode": "default",
           "scene": null
         },

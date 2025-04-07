@@ -14,7 +14,8 @@
     "pages/exhibitionall/index",
     "pages/feedback/index",
     "pages/logs/logs",
-    "pages/museumlist/index"
+    "pages/museumlist/index",
+    "pages/agent/index"
   ],
   "subpackages": [
     {
@@ -34,7 +35,8 @@
     }
   ],
   "usingComponents": {
-    "player-comp": "components/player-comp"
+    "player-comp": "components/player-comp",
+    "agent-ui":"/components/agent-ui"
   },
   "window": {
     "navigationBarTextStyle": "black",

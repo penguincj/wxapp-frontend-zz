@@ -1,6 +1,6 @@
 // @ts-nocheck
 // import { audioList } from './mock';
-import { throttle } from '../../utils/util';
+import { throttle, getCurrentPageParamStr } from '../../utils/util';
 import { getExhibitList, sendListenAudioAction } from '../../api/api';
 
 const global_audio = getApp().globalData.audio;
@@ -442,8 +442,21 @@ Component({
     handleClickPlayerComp() {
       this.triggerEvent('ClickPlayerComp')
     },
+    
+  handleClickAiRobot() {
+    console.log('handleClickAiRobot')
+    const params = getCurrentPageParamStr();
+    const targetPage = "/pages/agent/index";
+    wx.navigateTo({
+      url: targetPage + params
+    })
+  },
 
   },
+
+  
+
+
 
   lifetimes: {
     async attached() { 

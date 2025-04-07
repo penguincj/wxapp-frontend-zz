@@ -1,4 +1,8 @@
 <view class="player-comp" wx:if="{{isShow}}" bindtap="handleClickPlayerComp">
 	<image wx:if="{{isPlaying}}" src="/static/images/fuchuang-playing.png" class="img" mode="aspectFill" />
 	<image wx:else src="/static/images/fuchuang-pause.png" class="img" mode="aspectFill" />
+
+
 </view>
+
+	<image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix"  bindtap="handleClickAiRobot" />
