@@ -17,7 +17,7 @@ Component({
   methods: {
     handleDownloadFile() {
       console.log('handleDownloadFile');
-      // const audiolist = ['https://gewugo.com/storage/file/CB26976399343756.mp3', 'https://gewugo.com/storage/file/HB26976402540987.mp3'];
+      // const audiolist = ['https://wx.ajioang.cn/storage/file/CB26976399343756.mp3', 'https://wx.ajioang.cn/storage/file/HB26976402540987.mp3'];
       const file_arr = [];
       console.log('audiolist',this.data.audiolist)
       for (let i = 0; i < this.data.audiolist.length; i++) {

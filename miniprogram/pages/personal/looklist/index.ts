@@ -1,5 +1,5 @@
 import { viewHistoryList } from '../../../api/api';
-import { backToTargetPage } from '../../../utils/util';
+import { backToTargetPage, generateNewUrlParams } from '../../../utils/util';
 
 Page({
   data: {
@@ -13,7 +13,7 @@ Page({
     try {
       const res: any = await viewHistoryList(userid)
       console.log(res);
-      if (res && res.code === 200) {
+      if (res && res.code === 0) {
         const list = res.exhibitions.map((i: any) => {
           return {
             ...i,
@@ -44,6 +44,20 @@ Page({
   handleClickPlayerComp() {
     const targetPage = "pages/exhibitlist/index";
     backToTargetPage(targetPage);
+  },
+
+  handleClickItem(e: any) {
+    console.log('e----', e)
+    const { selectId, museumid, cityid } = e.detail;
+    const targetUrl = '/pages/exhibitiondetail/index';
+    const params = generateNewUrlParams({
+      museum_id: museumid,
+      exhibition_id: selectId
+    })
+    wx.navigateTo({
+      url: targetUrl + params
+    })
+
   },
 
 

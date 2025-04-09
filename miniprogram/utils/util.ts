@@ -21,7 +21,7 @@ const formatNumber = (n: number) => {
   return s[1] ? s : '0' + s
 }
 
-export const base_url = 'https://gewugo.com'
+export const base_url = 'https://wx.ajioang.cn'
 
 /**
  * 函数截流 一
@@ -172,7 +172,7 @@ export const getCurrentCity = async () => {
   }
 }
 
-export const request = async function (url, options={}, base_url='https://gewugo.com') {
+export const request = async function (url, options={}, base_url='https://wx.ajioang.cn') {
   let token = await wx.getStorageSync('token');
   if (!token) {
     const res: any = await getLoginStatus(); 
@@ -277,7 +277,7 @@ export const getLoginStatus = async () => {
     const { code } = await login_request();
     console.log('code------------', code);
     
-    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/api/v1/sessions/'+code, {method: 'POST'});
+    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://wx.ajioang.cn/api/v1/sessions/'+code, {method: 'POST'});
     console.log('login users', token, nickname, avatar);
     wx.setStorageSync('token', token);
     wx.setStorageSync('userinfo', {
@@ -324,7 +324,7 @@ export const clearAndFreshLoginStatus = async () => {
     const { code } = await login_request();
     console.log('code------------', code);
     
-    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/api/v1/sessions/'+code, {method: 'POST'});
+    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://wx.ajioang.cn/api/v1/sessions/'+code, {method: 'POST'});
     console.log('login users', token, nickname, avatar);
     wx.setStorageSync('token', token);
     wx.setStorageSync('userinfo', {
