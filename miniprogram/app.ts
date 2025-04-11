@@ -55,7 +55,8 @@ App<IAppOption>({
           traceUser: true,
         })
         console.log('cloud init');
-
+        // const client = init(wx.cloud)
+        // const models = client.models
               
       // // 用户的输入，这里我们以某个报错信息为例
       // const userInput =
