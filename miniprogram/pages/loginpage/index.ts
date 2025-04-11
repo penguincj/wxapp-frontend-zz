@@ -5,7 +5,7 @@ const defaultAvatarUrl11111 = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242
 
 Page({
   data: {
-    motto: '格物观展',
+    motto: '博物岛屿',
     userInfo: {
       avatarUrl: defaultAvatarUrl11111,
       nickName: '',

@@ -90,7 +90,7 @@ Page({
     console.log(this.data.museumInfo.image_url);
     const str = getCurrentPageParamStr();
     const imageUrl = (this.data.museumInfo && this.data.museumInfo.image_url) ? this.data.museumInfo.image_url : defaultUrl ;
-    const title = (this.data.museumInfo.name) ? `格物观展|${this.data.museumInfo.name}` : '【格物观展：让您的博物馆之旅不虚此行】' ;
+    const title = (this.data.museumInfo.name) ? `博物岛屿|${this.data.museumInfo.name}` : '让您的博物馆之旅不虚此行' ;
     var shareObj = {
       title,
       path: '/pages/museum/museumdetail/index'+str,

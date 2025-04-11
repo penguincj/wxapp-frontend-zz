@@ -470,13 +470,14 @@
 }
 .question-item:last-child {
   content: "";
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
 
 }
 .question-item-title {
   color: #2C2F3B;
   font-size: 30rpx;
   padding: 24rpx;
+  text-align: left;
 }
 .question-item-arrow {
   width: 30rpx;

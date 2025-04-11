@@ -3,7 +3,7 @@ const defaultAvatar = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQ
 
 Page({
   data: {
-    motto: '格物观展',
+    motto: '博物岛屿',
     userInfo: {
       avatar: defaultAvatar,
       nickname: '',
@@ -123,7 +123,7 @@ Page({
   },
   onShareAppMessage(){
     const defaultUrl = 'https://wx.ajioang.cn/api/v1/storage/image/share-3639793484.jpg';
-    const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
+    const title = '让您的博物馆之旅不虚此行' ;
     var shareObj = {
       title,
       path: '/pages/index/index',

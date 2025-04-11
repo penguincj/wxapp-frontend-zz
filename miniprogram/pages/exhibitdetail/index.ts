@@ -465,7 +465,7 @@ Page({
     console.log(this.data.exhibitInfo.image_url);
     const str = getCurrentPageParamStr();
     const imageUrl = (this.data.exhibitInfo && this.data.exhibitInfo.image_url) ? this.data.exhibitInfo.image_url : defaultUrl ;
-    const title = (this.data.exhibitInfo.name) ? `格物观展|${this.data.exhibitInfo.name}` : '【格物观展：让您的博物馆之旅不虚此行】' ;
+    const title = (this.data.exhibitInfo.name) ? `博物岛屿|${this.data.exhibitInfo.name}` : '让您的博物馆之旅不虚此行' ;
     var shareObj = {
       title,
       path: '/pages/exhibitdetail/index'+str,

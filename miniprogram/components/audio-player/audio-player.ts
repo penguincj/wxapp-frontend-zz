@@ -273,7 +273,7 @@ Component({
         // //     const bgAudioManager = {
         // //         ...this.data.bgAudioManager,
         // //         title: videotitle,
-        // //         singer: '格物观展独家解说',
+        // //         singer: '博物岛屿独家解说',
         // //         coverImgUrl: coverurl,
         // //         epname: videotitle,
         // //         src: video_src,
@@ -311,7 +311,7 @@ Component({
         //     const bgAudioManager = {
         //         ...this.data.bgAudioManager,
         //         title: videotitle,
-        //         singer: '格物观展独家解说',
+        //         singer: '博物岛屿独家解说',
         //         coverImgUrl: coverurl,
         //         epname: videotitle,
         //         src: video_src,

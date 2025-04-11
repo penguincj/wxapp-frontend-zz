@@ -48,7 +48,7 @@ Page({
   },
 
   handleClickItem(e: any) {
-console.log('e----', e)
+    console.log('e----', e)
     const { selectId, museumid, cityid, infos } = e.detail;
     const targetUrl = '/pages/exhibitdetail/index';
     if(infos && infos.narration_id && infos.unit_id) {

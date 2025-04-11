@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <page-meta page-style="">
 	<navigation-bar
-	 title="格物观展"
+	 title="博物岛屿"
 	 loading="{{false}}"
 	 color="black"
 	 background="#FFF"
