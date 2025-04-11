@@ -18,10 +18,11 @@
     </view>
     <block wx:for="{{chatRecords}}" wx:key="record_id">
       <!-- 系统聊天 -->
-      <view class="system" style="padding-left: {{showBotAvatar?80:0}}rpx;" wx:if="{{item.role==='assistant'}}">
-        <view class="avatar-left" wx:if="{{showBotAvatar}}">
+      <view class="system" wx:if="{{item.role==='assistant'}}">
+      <!-- <view class="system" style="padding-left: {{showBotAvatar?80:0}}rpx;" wx:if="{{item.role==='assistant'}}"> -->
+        <!-- <view class="avatar-left" wx:if="{{showBotAvatar}}">
           <image src="{{chatMode==='bot'?bot.avatar:modelConfig.logo}}" mode="aspectFill" style="width: 56rpx;height: 56rpx; border-radius: 28rpx;" />
-        </view>
+        </view> -->
         <view>
           <!-- 最后一条消息，并且是发送状态显示发送中 -->
           <block wx:if="{{(chatRecords.length-1)===index&&chatStatus===1}}">
@@ -67,7 +68,7 @@
             </FoldedCard>
             <markdownPreview markdown="{{item.content||''}}"></markdownPreview>
             <!-- 下面的按钮 -->
-            <view style="display: flex; gap: 10px;justify-content: flex;" wx:if="{{!item.hiddenBtnGround}}">
+            <!-- <view style="display: flex; gap: 10px;justify-content: flex;" wx:if="{{!item.hiddenBtnGround}}">
               <image wx:if="{{item.error}}" mode="widthFix" bind:tap="showErrorMsg" src='./imgs/error-circle.svg' style="width: 36rpx; height: 36rpx;" data-content="{{item.error}}" />
               <image mode="widthFix" bind:tap="copyChatRecord" src='./imgs/copy.svg' style="width: 36rpx; height: 36rpx;" data-content="{{item.content}}" />
               <block wx:if="{{!item.error}}">                
@@ -79,7 +80,7 @@
                   <image mode="widthFix" bind:tap="openFeedback" data-feedbackType="downvote" data-feedbackRecordId="{{item.record_id}}" src='./imgs/thumb-down.svg' style="width: 36rpx; height: 36rpx;" />
                 </block>
               </block>
-            </view>
+            </view> -->
           </block>
         </view>
       </view>

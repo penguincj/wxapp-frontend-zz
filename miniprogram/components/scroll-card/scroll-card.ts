@@ -37,16 +37,19 @@ Component({
       // console.log(e)
     },
     selectItem(e: any) {
-      console.log('selectItem', e.target.dataset);
-      const {id , name} = e.target.dataset;
-      if(id && name) {
+      console.log('selectItem', e);
+      const {idx, museumid, cityid, infos} = e.currentTarget.dataset;
+      if(idx) {
         this.setData({
-          selectId: id,
-          selectName: name,
+          selectId: idx,
+          // selectName: name,
         });
-        this.triggerEvent('ChangeUnit', {
-          selectId: id,
-          selectName: name,
+        this.triggerEvent('ClickItem', {
+          selectId: idx,
+          museumid,
+          cityid,
+          infos,
+          // selectName: name,
         })
       }
     },
@@ -65,10 +68,10 @@ Component({
       });
     },
     handleDeleteItem(e: any) {
-      const { idx } = e.currentTarget.dataset;
+      const { id } = e.currentTarget.dataset;
 
       this.triggerEvent('DeleteItem', {
-        id: idx
+        id: id
       })
     },
 

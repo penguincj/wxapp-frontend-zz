@@ -16,6 +16,7 @@ Page({
     y:5,
     exhibitionId: -1,
     isRecoTouched: false,
+
   },
 
   listenGyro() {
@@ -180,10 +181,10 @@ Page({
 
   },
 
-  
+
   onShareAppMessage(){
-    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
-    const title = '【格物观展：让您的博物馆之旅不虚此行】' ;
+    const defaultUrl = 'https://wx.ajioang.cn/api/v1/storage/image/share-3639793484.jpg';
+    const title = '让您的博物馆之旅不虚此行' ;
     var shareObj = {
       title,
       path: '/pages/index/index',

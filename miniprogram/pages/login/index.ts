@@ -7,7 +7,7 @@ const defaultAvatar = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQ
 
 Component({
   data: {
-    motto: '格物观展',
+    motto: '博物岛屿',
     userInfo: {
       avatar: defaultAvatar,
       nickname: '',
@@ -32,7 +32,7 @@ Component({
       const token = await wx.getStorageSync('token');
       if (avatarUrl) {
         wx.uploadFile({
-          url: `https://gewugo.com/api/v1/users/${userid}/avatar`, //仅为示例，非真实的接口地址
+          url: `https://wx.ajioang.cn/api/v1/users/${userid}/avatar`, //仅为示例，非真实的接口地址
           header: {
             "Content-Type": "multipart/form-data",
             'Authorization': 'Bearer ' + token
@@ -46,7 +46,7 @@ Component({
             }
             console.log('upload success 222', data.code);
 
-            if (data && data.code === 200) {
+            if (data && data.code === 0) {
               this.modifyUserInfoAsync(userid, nickname, data.url);
               getApp().globalData.userinfo.avatar = data.url;
             }

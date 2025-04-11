@@ -5,7 +5,7 @@
     <view class="description">您的专属博物馆展览搭子，很高兴为您服务～</view>
     <view class="question">
       <view class="tips">
-        <view class="title">猜你想问</view>
+        <view class="tips-title">猜你想问</view>
         <!-- <view class="change-area">
           <image class="change-btn" src="/static/images/refresh.png" mode="aspectFit"  />
           <text class="change-btn-text">换一批</text>

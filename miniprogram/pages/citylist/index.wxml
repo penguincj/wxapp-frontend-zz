@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
-<navigation-bar title="格物观展" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar title="博物岛屿" loading="{{loading}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
 <view>
   <block wx:for="{{citylists}}" wx:key="cityid">
     <view class="city-item" style="background: url({{item.img}}) no-repeat center center / cover">

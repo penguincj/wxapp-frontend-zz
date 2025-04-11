@@ -2,9 +2,9 @@
 <page-meta page-style="overflow: hidden;">
   <navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
   <view class="login-luodi-page">
-    <image class="bg-img" src="http://gewugo.com/api/v1/storage/image/loginimage-7801902807.jpg" mode="aspectFill"  />
+    <image class="bg-img" src="https://wx.ajioang.cn/api/v1/storage/image/loginimage-7801902807.jpg" mode="aspectFill"  />
     <view class="content">
-      <view class="title">格物观展</view>
+      <view class="title">博物岛屿</view>
       <view class="info">探索文化异常之美</view>
       <view class="btn-group">
         <image class="wx-icon" src="/static/images/weixin.png" mode="aspectFill" />
