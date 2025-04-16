@@ -1,6 +1,7 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
   <navigation-bar extClass="transparent" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
   <view class="profile-page">
     <scroll-view scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 164rpx)">
       <image class="bg-img" src="https://wx.ajioang.cn/api/v1/storage/image/bg-6215609170.png" mode="aspectFill" />
@@ -71,5 +72,5 @@
       </view>
     </scroll-view>
   </view>
-  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+  
 </page-meta>

@@ -1,6 +1,9 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
   <navigation-bar homeButton="{{true}}" title="博物馆列表" color="black" background="#FFF" styleType="dark" style="text-align: center;" />
+  <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
   <view class="page-museum-list">
     <view class="loc-area">
       <loc-select2 locStyle="padding: 0 40rpx" selectCityId="{{curCityId}}" citylist="{{cityList}}" selectCityList="{{selectCityList}}" bindClickCityPanel="handleClickCityPanel" pannelStyle="" />
@@ -40,7 +43,5 @@
       <custom-tab-bar></custom-tab-bar>
     </view>
   </view>
-    <player-comp
-    bindClickPlayerComp="handleClickPlayerComp"
-  ></player-comp>
+    
 </page-meta>

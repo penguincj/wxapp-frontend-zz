@@ -1,6 +1,9 @@
 <!-- index.wxml -->
 <page-meta page-style="">
 <navigation-bar extClass="transparent" loading="{{false}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<player-comp
+  bindClickPlayerComp="handleClickPlayerComp"
+></player-comp>
 <view class="page-museum-detail">
   <view class="museum-info">
     <image src="{{museumInfo.image_url}}" class="museum-img" mode="aspectFill" />
@@ -47,7 +50,5 @@
     ></card-group1>
   </view>
 </view>
-  <player-comp
-    bindClickPlayerComp="handleClickPlayerComp"
-  ></player-comp>
+
 </page-meta>  

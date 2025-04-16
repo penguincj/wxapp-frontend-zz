@@ -1,6 +1,7 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
   <navigation-bar back="{{false}}" extClass="transparent" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
   <view>
     <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
     <view class="index-page page-section page-section-spacing full-height">
@@ -73,6 +74,6 @@
   <view>
     <custom-tab-bar></custom-tab-bar>
   </view>
-  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+ 
 
 </page-meta>

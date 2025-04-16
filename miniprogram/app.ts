@@ -18,6 +18,14 @@ App<IAppOption>({
       curUnitId: 0,
       curExhibition: -1,
     },
+    ai: {
+      x: 300,
+      y: 400,
+    },
+    play: {
+      x: 320,
+      y: 500,
+    },
     system: {
       statusBarHeight: 0,
       bottomSafeHeight: 0, // 底部安全区域高度
