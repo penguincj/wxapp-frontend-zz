@@ -467,7 +467,6 @@ Component({
       // })
     getApp().globalData.ai.x = x;
     getApp().globalData.ai.y = y;
-    console.log('change', getApp().globalData.ai.x)
     // setTimeout(() => {
     //   const { x, y} = e.detail;
     //   // this.setData({
@@ -485,9 +484,7 @@ Component({
       const { x, y} = e.detail;
 
       getApp().globalData.play.x = x;
-      getApp().globalData.play.y = y;
-      console.log('change', getApp().globalData.play.x)
-  
+      getApp().globalData.play.y = y;  
     
   },
 

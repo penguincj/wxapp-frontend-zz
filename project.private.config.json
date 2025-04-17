@@ -11,6 +11,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/exhibitionall/index",
+          "pathName": "pages/exhibitionall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/agent/index",
           "pathName": "pages/agent/index",
           "query": "",

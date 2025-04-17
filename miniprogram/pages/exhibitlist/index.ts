@@ -223,7 +223,7 @@ Page({
       const res:any = await queryExhibitListAll(userid, url_params)
       if( res && res.exhibits) {
         const f_exhibitlist = this.formatExhibitData(res.exhibits, this.data.narrationId);
-        const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
+        const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
         this.setData({
           audiolist,
         })
@@ -325,7 +325,7 @@ Page({
       const res_exhibitlist: any = await getExhibitList(_unitid);
       const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
       console.log('initExhibitData 111', f_exhibitlist)
-      const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
+      // const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
 
       this.setData({
         exhibitList: f_exhibitlist,

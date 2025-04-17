@@ -1,5 +1,8 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
+  <view class="player-area">
+    <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+  </view>
   <navigation-bar loading="{{false}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;">
     <view slot="left">
       <view class="loc-ara-chosen">
@@ -31,5 +34,5 @@
     </view>
     <custom-tab-bar></custom-tab-bar>
   </view>
-  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+  
 </page-meta>
