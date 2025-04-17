@@ -7,6 +7,14 @@ Page({
     countdown: 5,
   },
 
+  handleOpenPrivacy() {
+    wx.openPrivacyContract({
+      success: () => {}, // 打开成功
+      fail: () => {}, // 打开失败
+      complete: () => {}
+    })
+  },
+
   // 事件处理函数
   handleClickAutoPlay() {
     this.setData({

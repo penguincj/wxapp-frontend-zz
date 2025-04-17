@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "popup": "/components/popup/popup"
+    "popup": "/components/popup/popup",
+    "privacyPopup": "/components/privacyPopup/privacyPopup"
 
   }
 }

@@ -30,7 +30,7 @@
           <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
         </view>
       </view> -->
-      <view class="link-group">
+      <view class="link-group" bindtap="handleOpenPrivacy">
         <view class="left">
           <text class="text">隐私政策</text>
         </view>
@@ -38,14 +38,14 @@
           <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
         </view>
       </view>
-      <view class="link-group">
+      <!-- <view class="link-group">
         <view class="left">
           <text class="text">用户协议</text>
         </view>
         <view class="right">
           <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
         </view>
-      </view>
+      </view> -->
       <!-- <view class="link-group" bindtap="handleZXClick">
         <view class="left">
           <text class="text">注销账号</text>
