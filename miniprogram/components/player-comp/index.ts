@@ -550,7 +550,7 @@ Component({
   },
   pageLifetimes: {
     show() {
-      console.log('in attached player comp show', getApp().globalData.ai.x);
+      console.log('in attached player comp show', global_audio.bgAudio);
       if (global_audio && global_audio.bgAudio) {
         this.setData({
           isShow: true,

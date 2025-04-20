@@ -282,7 +282,6 @@ Page({
       // }
       const audioitem = exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
       const duration_fmt = calTimeTxt(audioitem.duration);
-      console.log('initPage formatExhibitData', duration_fmt)
 
       return {
         ...exhibit,

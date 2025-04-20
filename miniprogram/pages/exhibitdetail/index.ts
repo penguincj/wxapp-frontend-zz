@@ -270,8 +270,6 @@ Page({
 
   formatExhibitData(_exhibit: any, _narrationid: any) {
       const audioitem = _exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
-      console.log('initPage formatExhibitData', audioitem)
-
       return {
         ..._exhibit,
         audioitem,

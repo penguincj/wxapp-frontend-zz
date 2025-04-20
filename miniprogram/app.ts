@@ -19,7 +19,7 @@ App<IAppOption>({
       curExhibition: -1,
     },
     ai: {
-      x: 300,
+      x: 280,
       y: 400,
     },
     play: {
