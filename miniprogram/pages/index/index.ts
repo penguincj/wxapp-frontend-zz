@@ -16,7 +16,7 @@ Page({
     y:5,
     exhibitionId: -1,
     isRecoTouched: false,
-
+    showPrivacy: false,
   },
 
   listenGyro() {
@@ -156,6 +156,8 @@ Page({
 
   onLoad(options) {
     console.log(options);
+   
+
     this.setData({
       loading: true,
     })

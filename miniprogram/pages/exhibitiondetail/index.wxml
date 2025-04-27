@@ -7,7 +7,10 @@
 </wxs>
 <page-meta page-style="">
   <navigation-bar back extClass="transparent" loading="{{false}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar>
-  <view class="page-exhibition-detail">
+  <view class="player-area">
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+  </view>
+ <view class="page-exhibition-detail">
     <view class="museum-info">
       <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
       <view class="museum-text-group">
@@ -95,5 +98,5 @@
       </view>
     </view>
   </view>
-  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+ 
 </page-meta>

@@ -1,6 +1,11 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
 <navigation-bar title="点赞" styleType="dark" loading="{{false}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view class="player-area">
+<player-comp
+  bindClickPlayerComp="handleClickPlayerComp"
+></player-comp>
+</view>
 <view class="like-list-page">
   <scroll-card wx:if="{{!error && likeList.length}}" cardStyle="{{styleHeight}}" list="{{likeList}}" bindDeleteItem="handleDeleteItem" bindClickItem="handleClickItem"></scroll-card>
   <view wx:if="{{!error && likeList.length === 0}}" class="empty-content">
@@ -13,7 +18,5 @@
     <view class="empty-btn" bindtap="handleClickInit">重试</view>
   </view>
 </view>
-  <player-comp
-    bindClickPlayerComp="handleClickPlayerComp"
-  ></player-comp>
+  
 </page-meta>  

@@ -1,6 +1,17 @@
 <!-- index.wxml -->
 <page-meta page-style="">
 <navigation-bar loading="{{false}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<view class="player-area">
+<player-comp
+  id="player"
+  bindReadyPlay="handleReadyPlay"
+  bindTimeUpdate="handleTimeUpdate"
+  bindEndAudio="handleEndAudio"
+  bindContinuePlay="handleContinuePlay"
+  bindUpatePlayingIndex="handleUpatePlayingIndex"
+  bindClickPlayerComp="handleClickPlayerComp"
+></player-comp>
+</view>
 <view class="page-exhibit-detail">
   <view class="top-swiper-area">
     <swiper-unit list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit>
@@ -60,15 +71,7 @@
       </view>
     </view>
   </view>
-  <player-comp
-    id="player"
-    bindReadyPlay="handleReadyPlay"
-    bindTimeUpdate="handleTimeUpdate"
-    bindEndAudio="handleEndAudio"
-    bindContinuePlay="handleContinuePlay"
-    bindUpatePlayingIndex="handleUpatePlayingIndex"
-    bindClickPlayerComp="handleClickPlayerComp"
-  ></player-comp>
+
   <dialog-half
     showDialog="{{showDialog}}"
     bindCloseDialog="handleCloseDialog"

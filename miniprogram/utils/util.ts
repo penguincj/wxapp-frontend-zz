@@ -371,7 +371,9 @@ export const backToTargetPage = (_pagename: String) => {
         delta: listpageIndex
       })
     } else {
+      
       const params = getApp().globalData.audio.exhibitlistParams;
+      console.log('params', params)
       wx.navigateTo({
         url: '/' + _pagename + params,
       })

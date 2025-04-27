@@ -1,6 +1,7 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
   <navigation-bar back="{{false}}" extClass="transparent" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
   <view>
     <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
     <view class="index-page page-section page-section-spacing full-height">
@@ -73,6 +74,10 @@
   <view>
     <custom-tab-bar></custom-tab-bar>
   </view>
-  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
-
+  <!-- <view wx:if="{{showPrivacy}}" class="">
+    <view>隐私弹窗内容....</view>
+    <button bindtap="handleClickPlayerComp">查看隐私协议</button>
+    <button id="agree-btn" open-type="agreePrivacyAuthorization" bindagreeprivacyauthorization="handleAgreePrivacyAuthorization">同意</button>
+  </view> -->
+  <!-- <privacyPopup></privacyPopup> -->
 </page-meta>

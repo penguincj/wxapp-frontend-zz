@@ -6,6 +6,16 @@ interface IAppOption {
     audio: any,
     system: any,
     token: any,
-  }
+    ai: {
+      x: number,
+      y: number,
+    },
+    play: {
+      x: number,
+      y: number,
+    }
+  },
+ 
+
   userInfoReadyCallback?: WechatMiniprogram.GetUserInfoSuccessCallback,
 }

@@ -8,6 +8,11 @@
 	 styleType="dark"
 	 style="text-align: center;"
 	/>
+	<view class="player-area">
+	<player-comp
+		bindClickPlayerComp="handleClickPlayerComp"
+	></player-comp>
+	</view>
 	<view class="page-exhibition-all">
 		<block wx:for="{{exhibitions}}" wx:key="{{item.id}}">
 			<view class="exhibition-item" data-idx="{{item.id}}" bindtap="handleClickItem">
@@ -21,8 +26,6 @@
 			</view>
 		</block>
 	</view>
-	<player-comp
-    	bindClickPlayerComp="handleClickPlayerComp"
-  ></player-comp>
+
 </page-meta>
 

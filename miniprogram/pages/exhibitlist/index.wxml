@@ -1,6 +1,18 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
 <navigation-bar title="展览单元" loading="{{false}}" back styleType="dark" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
+<view class="player-area">
+  <player-comp
+      id="player"
+      narrationId="{{narrationId}}"
+      bindReadyPlay="handleReadyPlay"
+      bindTimeUpdate="handleTimeUpdate"
+      bindEndAudio="handleEndAudio"
+      bindGetCurPlayingStatus="handleGetCurPlayingStatus"
+    ></player-comp>
+</view>
+
+
 <view class="exhibit-page">
   <view class="unit-choose-area">
     <swiper-unit list="{{unitList}}" selectedId="{{curUnitId}}" bindChangeUnit="handleChangeUnit"></swiper-unit>
@@ -97,14 +109,6 @@
     </dialog-half>
   </view>
 
-  <player-comp
-    id="player"
-    narrationId="{{narrationId}}"
-    bindReadyPlay="handleReadyPlay"
-    bindTimeUpdate="handleTimeUpdate"
-    bindEndAudio="handleEndAudio"
-    bindGetCurPlayingStatus="handleGetCurPlayingStatus"
-  ></player-comp>
-
+  
 </view>
 </page-meta>  

@@ -82,6 +82,12 @@ Component({
     lastAudioUrl: '',
     bgAudioManager: null as any,
     isShow: false,
+    movex: getApp().globalData.ai.x,
+    movey: getApp().globalData.ai.y,
+    moveplayx: getApp().globalData.play.x,
+    moveplayy: getApp().globalData.play.y,
+    screenWidth:0,
+    screenHeight:0, //手机屏幕高度
   },
   methods: {
     sendListenAction(_audioid: any) {
@@ -452,6 +458,36 @@ Component({
     })
   },
 
+  handleChange(e: any) {
+    // console.log(e);
+    const { x, y} = e.detail;
+      // this.setData({
+      //   x,
+      //   y,
+      // })
+    getApp().globalData.ai.x = x;
+    getApp().globalData.ai.y = y;
+    // setTimeout(() => {
+    //   const { x, y} = e.detail;
+    //   // this.setData({
+    //   //   x,
+    //   //   y,
+    //     // })
+    //   getApp().globalData.ai.x = x;
+    //   getApp().globalData.ai.y = y;
+    //   console.log('change', getApp().globalData.ai.x)
+    // }, 100)
+    
+  },
+  handlePlayIconChange(e: any) {
+    // console.log(e);
+      const { x, y} = e.detail;
+
+      getApp().globalData.play.x = x;
+      getApp().globalData.play.y = y;  
+    
+  },
+
   },
 
   
@@ -460,11 +496,23 @@ Component({
 
   lifetimes: {
     async attached() { 
+      const systemInfo = wx.getSystemInfoSync();
+      console.log('attached: ', getApp().globalData.ai.x, getApp().globalData.ai.y)
+      this.setData({
+        screenWidth: systemInfo.screenWidth,
+        screenHeight: systemInfo.screenHeight,
+        movex: getApp().globalData.ai.x,
+        movey: getApp().globalData.ai.y
+        // y: systemInfo.screenHeight - 200
+      });
+
       if (global_audio && global_audio.bgAudio) {
       console.log('in attached player comp',global_audio.bgAudio.paused);
 
         this.setData({
           isShow: true,
+          moveplayx: getApp().globalData.play.x,
+          moveplayy: getApp().globalData.play.y
         })
         this.triggerEvent('ContinuePlay', {
           isPlay: true,
@@ -502,13 +550,20 @@ Component({
   },
   pageLifetimes: {
     show() {
-      console.log('in attached player comp show');
+      console.log('in attached player comp show', global_audio.bgAudio);
       if (global_audio && global_audio.bgAudio) {
         this.setData({
           isShow: true,
           isPlaying: !global_audio.bgAudio.paused,
+          moveplayx: getApp().globalData.play.x,
+          moveplayy: getApp().globalData.play.y
         })
       }
+
+      this.setData({
+        movex: getApp().globalData.ai.x,
+        movey: getApp().globalData.ai.y
+      })
     }
   }
 
