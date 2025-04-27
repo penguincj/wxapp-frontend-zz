@@ -136,10 +136,10 @@ Component({
       // top = dirFuc(top);
       // bottom = dirFuc(bottom);
 
-      this.drawImages(_canvas, _ctx, left, 'https://wx.ajioang.cn/api/v1/storage/image/left-2382242687.png', _scale)
-      this.drawImages(_canvas, _ctx, right, 'https://wx.ajioang.cn/api/v1/storage/image/right-9119674618.png', _scale)
-      this.drawImages(_canvas, _ctx, top, 'https://wx.ajioang.cn/api/v1/storage/image/top-5035156405.png', _scale)
-      this.drawImages(_canvas, _ctx, bottom, 'https://wx.ajioang.cn/api/v1/storage/image/bottom-9350203903.png', _scale)
+      this.drawImages(_canvas, _ctx, left, 'https://gewugo.com/api/v1/storage/image/left-2382242687.png', _scale)
+      this.drawImages(_canvas, _ctx, right, 'https://gewugo.com/api/v1/storage/image/right-9119674618.png', _scale)
+      this.drawImages(_canvas, _ctx, top, 'https://gewugo.com/api/v1/storage/image/top-5035156405.png', _scale)
+      this.drawImages(_canvas, _ctx, bottom, 'https://gewugo.com/api/v1/storage/image/bottom-9350203903.png', _scale)
 
       console.log('left:', left)
       console.log('right:', right)
@@ -170,8 +170,8 @@ Component({
 
     drawLoc(_canvas: any, _ctx: any, _point: any, _scale: number = 1) {
       const imgLoc = _canvas.createImage()
-      // imgLoc.src = 'https\://wx.ajioang.cn/api/v1/storage/image/location-4930810257.webp';
-      imgLoc.src = 'https://wx.ajioang.cn/api/v1/storage/image/location1-8053762002.png';
+      // imgLoc.src = 'https\://gewugo.com/api/v1/storage/image/location-4930810257.webp';
+      imgLoc.src = 'https://gewugo.com/api/v1/storage/image/location1-8053762002.png';
       imgLoc.onload = () => {
         _ctx.drawImage(imgLoc, (_point[0] - 15) * _scale, (_point[1] - 30) * _scale, 30 * _scale, 30 * _scale);
       }
