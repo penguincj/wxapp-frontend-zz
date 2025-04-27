@@ -11,7 +11,10 @@ Page({
     statusBarHeight: 0,
     curExhibitionId: -1,
     loading: false,
-    isShowIntro: true,
+    isShowIntro: false,
+  },
+  scroll(e: any) {
+    // console.log(e)
   },
   handleClickJiangjie(event: any) {
     console.log('handleClickJiangjie', event.currentTarget.dataset);

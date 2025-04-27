@@ -1,0 +1,21 @@
+<view class="comment-list">
+  <view class="title-line">
+    <view class="title">
+      <view class="title-name">观众评价</view>
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+    </view>
+  </view>
+  <view class="tag-group">
+    <view class="tag-item">全部</view>
+    <block wx:for="{{tagArr}}">
+      <view class="tag-item">{{item.name}}（{{item.num}}）</view>
+    </block>
+  </view>
+  <view class="comment-group">
+    <block wx:for="{{[1,1,1,1]}}">
+     <comment-item></comment-item>
+    </block>
+  </view>
+  
+  <image src="/static/images/comment.png" mode="aspectFill" class="cmt-icon" />
+</view>

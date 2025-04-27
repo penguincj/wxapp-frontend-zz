@@ -1,0 +1,61 @@
+<view class="comment-reply">
+  <view class="orderby-line">
+    <text class="title">按热度</text>
+    <image src="/static/images/icon_arrow_down.png" class="icon-down" mode="aspectFill" />
+  </view>
+  <view class="comment-list">
+    <view class="com-whole">
+      <view class="com-item">
+        <view class="content-group">
+          <image src="/static/images/ava1.png" class="com-ava" mode="aspectFill" />
+          <view class="com-content">
+            <view class="username-group">
+              <view class="user-name">格格</view>
+            </view>
+            <view class="com-detail">
+              <text class="content">我感觉这个展览对一些清宫对玉料选择和工艺制作确实有讲究。</text>
+              <text class="time">昨天13:16</text>
+              <text class="reply">回复</text>
+            </view>
+          </view>
+        </view>
+        <view class="zan-group">
+          <image wx:if="{{false}}" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" />
+          <image wx:else class="info-notlike" src="/static/images/heart.png" mode="aspectFit" />
+          <view class="heart-num">199</view>
+        </view>
+        
+      </view>
+      <view class="sub-item">
+        <view class="content-group">
+          <image src="/static/images/ava1.png" class="com-ava" mode="aspectFill" />
+          <view class="com-content">
+            <view class="username-group">
+              <view class="user-name">格格</view>
+              <view class="author" wx:if="{{false}}">作者</view>
+              <view class="reply" wx:else>
+                回复：AA
+              </view>
+            </view>
+            
+            <view class="com-detail">
+              <text class="content">我感觉这个展览对一些清。</text>
+              <text class="time">昨天13:16</text>
+              <text class="reply">回复</text>
+            </view>
+          </view>
+        </view>
+        <view class="zan-group">
+          <image wx:if="{{false}}" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" />
+          <image wx:else class="info-notlike" src="/static/images/heart.png" mode="aspectFit" />
+          <view class="heart-num">199</view>
+        </view>
+        
+      </view>
+    </view>
+    <view class="more-comment">
+      <view class="hr-line"></view>
+      <view class="text">展开10条回复</view>
+    </view>
+  </view>
+</view>

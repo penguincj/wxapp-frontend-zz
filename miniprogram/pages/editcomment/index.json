@@ -1,8 +1,7 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "score-card": "/components/score-card/score-card",
-    "comment-list": "/components/comment-list/comment-list"
+    "popup": "/components/popup/popup"
   },
   "disableScroll": false
 }

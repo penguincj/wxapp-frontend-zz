@@ -1,0 +1,20 @@
+<!-- index.wxml -->
+<navigation-bar back="{{true}}" title="评论详情" extClass="transparent" styleType="dark" color="black" background="#FFF"></navigation-bar>
+<view class="comment-detail-page">
+  <comment-item></comment-item>
+  <view class="reply-area">
+    <comment-reply></comment-reply>
+  </view>
+  <view class="bottom-reply">
+    <input class="input-reply" placeholder="说点什么..." value="{{message}}" />
+    <view class="zan-g">
+      <image wx:if="{{true}}" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" />
+      <image wx:else class="info-notlike" src="/static/images/heart.png" mode="aspectFit" />
+      <view class="heart-num">199</view>    
+    </view>
+    <view class="com-g">
+      <image class="info-comment" src="/static/images/icon_chat.png" mode="aspectFit" />
+      <view class="reply-num">199</view>    
+    </view>
+  </view>
+</view>

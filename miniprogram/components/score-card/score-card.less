@@ -1,0 +1,130 @@
+.scord-card {
+  // padding-top: 40rpx;
+  padding-bottom: 80rpx;
+  .title-line {
+    display: flex;
+    justify-content: space-between;
+    height: 40rpx;
+    margin-bottom: 40rpx;
+    // align-items: center;
+    .title {
+      position: relative;
+      margin-top: 10rpx;
+      .title-name {
+        position: absolute;
+        top:0;
+        left: 0;
+        font-size: 38rpx;
+        line-height: 38rpx;
+        color: #2C2F3B;
+        display: inline-block;
+        width: 200rpx;
+        font-family: MySimSun;
+
+      }
+      .title-img {
+        position: absolute;
+        top:18rpx;
+        left: 0;
+        width: 152rpx;
+        height: 16rpx;
+      }
+    }
+  }
+  .card-group {
+    position: relative;
+    height: 200rpx;
+    margin-bottom: 30rpx;
+    .card-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 670rpx;
+      height: 280rpx;
+    }
+    .content-group{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 670rpx;
+      height: 280rpx;
+      padding: 32rpx 20rpx;
+      box-sizing: border-box;
+      .top-area {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .left-group {
+          text-align: center;
+          .content-score {
+            font-size: 48rpx;
+            color: #101011;
+          }
+          .content-name {
+            font-size: 24rpx;
+            color: #101011;
+            line-height: 36rpx;
+          }
+          .content-star-group {
+            display: flex;
+            align-items: center;
+            width: 212rpx;
+            height: 36rpx;
+            margin-top: 10rpx;
+            justify-content: space-between;
+            .content-star {
+              width: 32rpx;
+              height: 32rpx;
+
+            }
+          }
+        }
+        .right-group {
+          width: 384rpx;
+          height: 120rpx;
+          .star-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .star-group {
+              width: 128rpx;
+              height: 24rpx;
+              transform: translateY(-50%);
+              
+              .gray-star-group {
+                width: 22rpx;
+                height: 22rpx;
+                margin: 0;
+                padding: 0;
+              }
+            }
+            .percent-line {
+              width: 220rpx;
+              height: 8rpx;
+              background: red;
+              border-radius: 6rpx;
+            }
+          }
+        }
+      }
+      .bottom-area {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 28rpx;
+        color: #64676C;
+        border-top: 1rpx solid#E4E6EC;
+        margin: 20rpx 0;
+        padding-top: 20rpx;
+        .bottom-left {
+          display: flex;
+          align-items: center;
+        }
+        .bottom-right {
+
+        }
+      }
+    }
+    
+  }
+}

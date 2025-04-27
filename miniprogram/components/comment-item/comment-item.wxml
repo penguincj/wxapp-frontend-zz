@@ -1,0 +1,27 @@
+<view class="comment-item">
+  <view class="title-line">
+    <image src="/static/images/ava1.png" class="c-ava" mode="aspectFit" />
+    <view class="c-name">爱看展的F</view>
+    <view class="content-star-group">
+      <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
+      <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
+      <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
+      <image src="/static/images/star_both.png" mode="aspectFit" class="content-star" />
+      <image src="/static/images/star_gray.png" mode="aspectFit" class="content-star" />
+    </view>
+  </view>
+  <view class="comment-desc">观展有感：清宫对玉料选择和工艺制作确实讲究。抬头看斋宫的藻井，美极了！</view>
+  <view class="impression">印象：观展很沉浸·不用排队·环境好·展品优质</view>
+  <view class="{{true? 'muti-images': 'image-group'}}">
+    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
+    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
+    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
+    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
+  </view>
+  <view class="info-line">
+    <view class="time">5小时前 ·20回复</view>
+    <image wx:if="{{false}}" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" />
+    <image wx:else class="info-notlike" src="/static/images/heart.png" mode="aspectFit" />
+    <view class="num">199</view>
+  </view>
+</view>

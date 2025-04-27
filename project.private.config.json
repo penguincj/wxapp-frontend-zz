@@ -11,6 +11,27 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/commentdetail/index",
+          "pathName": "pages/commentdetail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/editcomment/index",
+          "pathName": "pages/editcomment/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/exhibitiondetail/index",
+          "pathName": "pages/exhibitiondetail/index",
+          "query": "exhibition_id=33&city_id=15",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/exhibitionall/index",
           "pathName": "pages/exhibitionall/index",
           "query": "",
@@ -21,13 +42,6 @@
           "name": "pages/agent/index",
           "pathName": "pages/agent/index",
           "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitiondetail/index",
-          "pathName": "pages/exhibitiondetail/index",
-          "query": "museum_id=8&exhibition_id=15",
           "launchMode": "default",
           "scene": null
         },

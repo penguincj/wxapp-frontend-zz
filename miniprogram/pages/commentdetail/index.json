@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "comment-item": "/components/comment-item/comment-item",
+    "comment-reply": "/components/comment-reply/comment-reply"
+  }
+}
