@@ -32,7 +32,7 @@ Component({
       const token = await wx.getStorageSync('token');
       if (avatarUrl) {
         wx.uploadFile({
-          url: `https://wx.ajioang.cn/api/v1/users/${userid}/avatar`, //仅为示例，非真实的接口地址
+          url: `https://gewugo.com/api/v1/users/${userid}/avatar`, //仅为示例，非真实的接口地址
           header: {
             "Content-Type": "multipart/form-data",
             'Authorization': 'Bearer ' + token

@@ -86,7 +86,7 @@ Page({
     this.initPage(options.museum_id);
   },
   onShareAppMessage(){
-    const defaultUrl = 'https://wx.ajioang.cn/api/v1/storage/image/share-3639793484.jpg';
+    const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
     console.log(this.data.museumInfo.image_url);
     const str = getCurrentPageParamStr();
     const imageUrl = (this.data.museumInfo && this.data.museumInfo.image_url) ? this.data.museumInfo.image_url : defaultUrl ;

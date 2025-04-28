@@ -19,7 +19,7 @@ Component({
     }
   },
   data: {
-    base_url: 'https://wx.ajioang.cn',
+    base_url: 'https://gewugo.com',
   },
   methods: {
     handleChangeAudioStateToPlay(e: any) {
