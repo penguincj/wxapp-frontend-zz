@@ -2,7 +2,7 @@ import { getUnitList, getExhibitList, queryExhibitListAll } from '../../api/api'
 import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt } from '../../utils/util';
 import { Exhpoints } from './points';
 
-const base_url = "http://wx.ajioang.cn";
+const base_url = "http://gewugo.com";
 
 Page({
   data: {
