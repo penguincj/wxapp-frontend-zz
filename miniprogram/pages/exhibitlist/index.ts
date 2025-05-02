@@ -310,6 +310,7 @@ Page({
         loading: false,
       })
     } catch (error) {
+      console.log(error)
       this.setData({
         loading: false,
       })

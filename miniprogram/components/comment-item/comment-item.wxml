@@ -1,27 +1,33 @@
-<view class="comment-item">
+<view class="comment-item" data-idx="{{comment.comment_id}}" bindtap="handleClickComment">
+  <view class="hr-line"></view>
   <view class="title-line">
-    <image src="/static/images/ava1.png" class="c-ava" mode="aspectFit" />
-    <view class="c-name">爱看展的F</view>
+    <image src="{{comment.user_avatar}}" class="c-ava" mode="aspectFit" />
+    <view class="c-name">{{comment.user_name}}</view>
     <view class="content-star-group">
-      <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
-      <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
-      <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
-      <image src="/static/images/star_both.png" mode="aspectFit" class="content-star" />
-      <image src="/static/images/star_gray.png" mode="aspectFit" class="content-star" />
+      <block wx:for="{{[1,2,3,4,5]}}">
+        <image wx:if="{{comment.stars >= item}}" src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
+        <image wx:else src="/static/images/star_gray.png" mode="aspectFit" class="content-star" />
+      </block>
     </view>
   </view>
-  <view class="comment-desc">观展有感：清宫对玉料选择和工艺制作确实讲究。抬头看斋宫的藻井，美极了！</view>
-  <view class="impression">印象：观展很沉浸·不用排队·环境好·展品优质</view>
-  <view class="{{true? 'muti-images': 'image-group'}}">
-    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
-    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
-    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
-    <image src="/static/images/ava1.png" class="image-item" mode="aspectFit" />
+  <view class="comment-desc">观展有感：{{comment.content}}</view>
+  <view wx:if="{{comment.labels.length}}" class="impression">印象：
+    <block wx:for="{{comment.labels}}">{{(comment.labels.length === index + 1) ? item : item+'·'}}</block>
+    </view>
+  <view class="{{comment.images.length > 1 ? 'muti-images': 'image-group'}}">
+    <block wx:for="{{comment.images}}">
+      <image src="{{item}}" data-img="{{item}}" class="image-item" mode="{{comment.images.length > 1 ? 'aspectFill': 'widthFix'}}" catchtap="handleClickImg" />
+    </block>
   </view>
   <view class="info-line">
-    <view class="time">5小时前 ·20回复</view>
-    <image wx:if="{{false}}" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" />
-    <image wx:else class="info-notlike" src="/static/images/heart.png" mode="aspectFit" />
-    <view class="num">199</view>
+    <view class="time">{{comment.calTime}} ·{{comment.replied_count}}回复</view>
+    <image wx:if="{{comment.liked}}" data-idx="{{comment.comment_id}}" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" catchtap="handleClickNotLike" />
+    <image wx:else data-idx="{{comment.comment_id}}" class="info-notlike" src="/static/images/heart.png" mode="aspectFit" catchtap="handleClickLike" />
+    <view class="num">{{comment.liked_count}}</view>
+
+    <view class="del-txt" wx:if="{{comment.user_name===nickname}}" data-idx="{{comment.comment_id}}" catchtap="handleClickDelComment">删除</view>
   </view>
+    <!-- <view wx:if="{{ showBigImg }}" class="img-popup">
+      <image src="{{bigImg}}" class="full-img" mode="aspectFit"  />
+    </view> -->
 </view>

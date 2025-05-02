@@ -38,11 +38,14 @@
         width: 30rpx;
         height: 30rpx;
       }
+      .rotate {
+        transform: rotate(180deg);
+      }
     }
     .tag-group {
       width: 686rpx;
       max-height: 240rpx;
-      margin-bottom: 68rpx;
+      // margin-bottom: 68rpx;
       overflow-y: scroll;
       white-space: normal;
       margin-top: 32rpx;
@@ -55,11 +58,10 @@
         height: 56rpx;
         line-height: 52rpx;
         font-size: 26rpx;
-        color: #2C2F3B;
-        background: #F7F8F9;
+        color: #64676C;
+        background: #FFFFFF;
         padding: 0 20rpx;
         display: inline-block;
-        
         border: 1rpx solid #D3D9E0;
         vertical-align: middle;
         box-sizing: border-box;
@@ -68,6 +70,7 @@
         font-size: 26rpx;
         color: #2C2F3B;
         border: 1rpx solid #2C2F3B;
+        background: #F7F8F9;
       }
       .tag-icon {
         width: 28rpx;
@@ -77,11 +80,15 @@
         border: 1rpx solid #D3D9E0;
       }
     }
+    .no-display {
+      display: none;
+    }
     .upload-area {
       background: #F7F8F9;
       width: 670rpx;
       min-height: 480rpx;
       border-radius: 30rpx;
+      margin-top: 68rpx;
      
       border: 1rpx solid rgba(44, 47, 59, 0.2);
       .comment-textarea {
@@ -105,7 +112,7 @@
           position: relative;
           width: 160rpx;
           height: 160rpx;
-          background-color: rebeccapurple;
+          // background-color: rebeccapurple;
 
           .img-loaded {
             position: absolute;
@@ -184,6 +191,44 @@
     
       }
     }
+    .btn-group-gray {
+      position: relative;
+      width: 300rpx;
+      height: 96rpx;
+      border-radius: 8rpx;
+      margin-top: 60rpx;
+      padding-bottom: 100rpx;
+      text-align: center;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      .loc-btn {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+      }
+  
+      .loc-name {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 300rpx;
+        height: 96rpx;
+        font-size: 30rpx;
+        font-weight: 600;
+        line-height: 96rpx;
+        text-align: center;
+        font-family: MySimSun;
+  
+      }
+      .white {
+        color: #6B798E;
+        border-radius: 8px;
+        background-color: #F7F8F9;
+      }
+      
+    }
   }
   .popup-area {
     .content {
@@ -211,7 +256,7 @@
         font-size: 30rpx;
         line-height: 106rpx;
         box-sizing: border-box;
-        
+        text-align: left;
       }
       .btn-group {
         margin-top: 40rpx;

@@ -11,6 +11,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/exhibitiondetail/index",
+          "pathName": "pages/exhibitiondetail/index",
+          "query": "exhibition_id=4&city_id=4",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/commentdetail/index",
           "pathName": "pages/commentdetail/index",
           "query": "",
@@ -21,13 +28,6 @@
           "name": "pages/editcomment/index",
           "pathName": "pages/editcomment/index",
           "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitiondetail/index",
-          "pathName": "pages/exhibitiondetail/index",
-          "query": "exhibition_id=33&city_id=15",
           "launchMode": "default",
           "scene": null
         },

@@ -10,14 +10,14 @@
     <view class="content-group">
       <view class="top-area">
         <view class="left-group">
-          <view class="content-score">8.8</view>
+          <view class="content-score">{{score.score}}</view>
           <view class="content-name">推荐指数</view>
           <view class="content-star-group">
-            <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
-            <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
-            <image src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
-            <image src="/static/images/star_both.png" mode="aspectFit" class="content-star" />
-            <image src="/static/images/star_gray.png" mode="aspectFit" class="content-star" />
+            <block wx:for="{{starTemArr}}">
+              <image wx:if="{{score.score >= item['item'+index]}}" src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
+              <image wx:elif="{{(index>0) && (score.score < item['item'+index]) && (score.score >= (starTemArr[index-1]['item'+(index-1)] + item['item'+index])/2)}}" src="/static/images/star_both.png" mode="aspectFit" class="content-star" />
+              <image wx:else src="/static/images/star_gray.png" mode="aspectFit" class="content-star" />
+            </block>
           </view>
         </view>
         <view class="right-group">
@@ -29,7 +29,7 @@
                 </block>
               </view>
               <view class="percent-line">
-                <view class="yellow-area"></view>
+                <view class="yellow-area" style="width: {{100 * (score.star_distribution[index]/score.comment_count) + '%'}}"></view>
                 <view class="gray-area"></view>
               </view>
             </view>
@@ -39,12 +39,12 @@
       </view>
       <view class="bottom-area">
         <view class="bottom-left">
-          <view class="texts">60.2万人看过</view>
+          <view class="texts">{{score.visited_count}}人看过</view>
           <view class="fenge"></view>
-          <view class="texts">50.8万人想看</view>
+          <view class="texts">{{score.want_visit_count}}人想看</view>
         </view>
         <view class="bottom-right">
-          <view class="texts">182930人评分</view>
+          <view class="texts">{{score.comment_count}}人评分</view>
         </view>
       </view>
     </view>

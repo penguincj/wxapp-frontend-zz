@@ -22,6 +22,18 @@
           </view>
           <image bindtap="handleClickPlayIcon" src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
           <view class="desc">{{exhibitionInfo.description}}</view>
+          <view class="btn-line">
+            <view class="btn" bindtap="handleClickWantVisit">
+              <image wx:if="{{isClickWantVisit}}" class="btn-image" src="/static/images/wantvisit-red.png" mode="aspectFix" />
+              <image wx:else class="btn-image" src="/static/images/wantvisit-gray.png" mode="aspectFix" />
+              <text class="cont">想看</text>
+            </view>
+            <view class="btn" bindtap="handleClickVisited">
+              <image wx:if="{{isClickVisited}}" class="btn-image" src="/static/images/visited-yel.png" mode="aspectFix" />
+              <image wx:else class="btn-image" src="/static/images/visited-gray.png" mode="aspectFix" />
+              <text class="cont">看过</text>
+            </view>
+          </view>
           <view class="line"></view>
           <view class="group-two">
             <view class="address text-flex">
@@ -98,13 +110,24 @@
         </view>
       </view>
       <view class="score-card-area">
-        <score-card></score-card>
+        <score-card score="{{data_area}}"></score-card>
       </view>
       <view class="comment-list-area">
-        <comment-list></comment-list>
+        <comment-list 
+          userid="{{userid}}" 
+          nickname="{{nickname}}"
+          exhibitionid="{{curExhibitionId}}" 
+          labels="{{label_area}}" 
+          comments="{{comment_area}}" 
+          bindClickCommentIcon="handleClickCommentIcon"
+          bindShowFullImage="handleShowFullImage"
+          bindSelectLabel="handleSelectLabel"
+          bindDelCommentSuc="handleDelCommentSuc"
+        ></comment-list>
       </view>
       
       </view>
     </scroll-view>
   </view>
+  <image-popup image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
 </page-meta>

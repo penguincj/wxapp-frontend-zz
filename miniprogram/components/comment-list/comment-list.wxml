@@ -6,16 +6,28 @@
     </view>
   </view>
   <view class="tag-group">
-    <view class="tag-item">全部</view>
-    <block wx:for="{{tagArr}}">
-      <view class="tag-item">{{item.name}}（{{item.num}}）</view>
+    <view class="tag-item {{(selectLabel === '') ? 'selected':''}}" bindtap="handleClickAllLabel">全部</view>
+    <block wx:for="{{labels}}">
+      <view 
+        class="tag-item {{(selectLabel === item.name) ? 'selected':''}}" 
+        data-name="{{item.name}}" 
+        bindtap="handleLabelClick"
+        
+      >{{item.name}}({{item.count}})</view>
     </block>
   </view>
   <view class="comment-group">
-    <block wx:for="{{[1,1,1,1]}}">
-     <comment-item></comment-item>
+    <block wx:for="{{comments}}">
+     <comment-item 
+      userid="{{userid}}" 
+      nickname="{{nickname}}"
+      exhibitionid="{{exhibitionid}}" 
+      comment="{{item}}"
+      bindShowFullImage="handleShowFullImage"
+      bindDelCommentSuc="handleDelCommentSuc"
+    ></comment-item>
     </block>
   </view>
   
-  <image src="/static/images/comment.png" mode="aspectFill" class="cmt-icon" />
+  <image src="/static/images/comment.png" mode="aspectFill" class="cmt-icon" bindtap="handleClickCommentIcon" />
 </view>

@@ -1,10 +1,10 @@
 
 .comment-reply {
-  border-top: 1rpx solid #E4E6EC;
-  padding: 30rpx 40rpx;
+  // border-top: 1rpx solid #E4E6EC;
+  padding: 24rpx 0 30rpx 0rpx;
   background-color: #FFFFFF;
   .orderby-line {
-    margin: 24rpx 0;
+    margin: 0 0 16rpx 0;
     display: flex;
     align-items: center;
     .title {
@@ -36,14 +36,17 @@
         }
         .com-content {
           margin-left: 16rpx;
+          margin-bottom: 40rpx;
+          width: 500rpx;
           .username-group {
-            display: flex;
-            align-items: center;
+            // display: flex;
+            // align-items: center;
+
             .user-name {
               font-size: 28rpx;
               color: #909399;
               line-height: 40rpx;
-             
+              display: inline;
             }
             .author {
               width: 80rpx;
@@ -55,17 +58,22 @@
               line-height: 44rpx;
               text-align: center;
               margin-left: 12rpx;
+              display: inline-block;
             }
             .reply {
               color: #909399;
               font-size: 26rpx;
               line-height: 40rpx;
               padding-left: 12rpx;
+              display: inline;
             }
+            
+            
           }
           
           .com-detail {
             width: 510rpx;
+            margin-top: 6rpx;
             .content {
               font-size: 28rpx;
               line-height: 44rpx;
@@ -73,6 +81,7 @@
               
             }
             .time {
+              padding-left: 10rpx;
               font-size: 24rpx;
               color: #909399;
             }
@@ -80,6 +89,13 @@
               font-size: 24rpx;
               color: #606266;
               padding-left: 8rpx;
+              padding-right: 5%;
+            }
+            .del-txt {
+              color: #909399;
+              font-size: 24rpx;
+              
+              display: inline-block;
             }
           }
          
@@ -112,6 +128,7 @@
         margin-top: 24rpx;
         .content-group {
           .com-content {
+
             .com-detail {
               width: 428rpx;
             }

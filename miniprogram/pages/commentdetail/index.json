@@ -2,6 +2,8 @@
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
     "comment-item": "/components/comment-item/comment-item",
-    "comment-reply": "/components/comment-reply/comment-reply"
-  }
+    "comment-reply": "/components/comment-reply/comment-reply",
+    "image-popup": "/components/image-popup/image-popup"
+  },
+  "disableScroll": true
 }

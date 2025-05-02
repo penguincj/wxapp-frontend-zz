@@ -5,7 +5,26 @@ Component({
    * 组件的属性列表
    */
   properties: {
-   
+    labels: {
+      type: Array,
+      value: [],
+    },
+    comments: {
+      type: Array,
+      value: [],
+    },
+    exhibitionid: {
+      type: Number,
+      value: -1,
+    },
+    userid: {
+      type: Number,
+      value: -1,
+    },
+    nickname: {
+      type: String,
+      value: "",
+    }
   },
   /**
    * 组件的初始数据
@@ -25,7 +44,8 @@ Component({
       {name: '推荐', num: 334},
       {name: '推荐', num: 334},
       {name: '推荐', num: 334},
-    ]
+    ],
+    selectLabel: "",
   },
   lifetimes: {
     attached() {
@@ -36,6 +56,28 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    
+    handleClickCommentIcon() {
+      this.triggerEvent('ClickCommentIcon')
+    },
+    handleShowFullImage(e: any) {
+      const {img, showBigImg} = e.detail;
+      this.triggerEvent('ShowFullImage', {img, showBigImg})
+    },
+    handleLabelClick(e: any) {
+      const {name} = e.currentTarget.dataset;
+      this.setData({
+        selectLabel: name,
+      })
+      this.triggerEvent('SelectLabel', name)
+    },
+    handleClickAllLabel() {
+      this.setData({
+        selectLabel: "",
+      })
+      this.triggerEvent('SelectLabel', "")
+    },
+    handleDelCommentSuc() {
+      this.triggerEvent('DelCommentSuc');
+    },
   },
 })

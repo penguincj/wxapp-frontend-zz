@@ -1,0 +1,9 @@
+<view class="popup-comp" aria-role="dialog" aria-modal="true" aria-hidden="{{!showDialog}}">
+  <view 
+    class="mask {{showPupup ? 'show' : ''}}" 
+    bindtap="handleClose"
+    catchtouchmove="return">
+    <image src="{{image}}" class="full-image" mode="aspectFit" />
+  </view>
+  
+</view>
