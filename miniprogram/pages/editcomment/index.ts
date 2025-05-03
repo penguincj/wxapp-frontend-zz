@@ -61,6 +61,13 @@ Page({
           if (data_obj.code === 0 && data_obj.url) {
             resolve(data_obj.url)
           } else {
+            // const title = (data_obj && data_obj.details) || '对不起，请仔细检查您上传的图片是否符合规范！'
+            const title = '对不起，请仔细检查您上传的图片是否符合规范！'
+            wx.showToast({
+              title,
+              icon: 'none',
+              duration: 2000
+            })
             reject(res)
           }
         },
