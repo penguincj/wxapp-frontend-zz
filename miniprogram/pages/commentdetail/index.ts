@@ -41,7 +41,7 @@ Page({
     this.initPage();
   },
   handleDelCommentSuc() {
-    this.initPage();
+    wx.navigateBack();
   },
   handleShowFullImage(e: any) {
     const { img, showBigImg } = e.detail;
@@ -135,6 +135,13 @@ Page({
     if (res && res.code === 0) {
       this.initPage();
 
+    } else {
+      const title = (res && res.details) || '对不起，请仔细检查您输入的内容是否符合规范！'
+      wx.showToast({
+        title,
+        icon: 'none',
+        duration: 2000
+      })      
     }
     console.log(res)
   },

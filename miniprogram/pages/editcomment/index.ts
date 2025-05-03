@@ -17,6 +17,7 @@ Page({
     message: "",
     userid: -1,
     isShowLabels: false,
+    imgArr: [] as any,
   },
   handleClickShowLabel() {
     console.log('handleClickShowLabel');
@@ -80,14 +81,23 @@ Page({
       sourceType: ['album', 'camera'],
       maxDuration: 30,
       camera: 'back',
-      async success(res) {
-        res.tempFiles.forEach(async (file: any) => {
-          const res = await that.uploadFilePromise(file.tempFilePath);
-          console.log('res', res);
+      async success(res: any) {
+        for (let i = 0; i< res.tempFiles.length; i++) {
+          const file = res.tempFiles[i];
+          const result = await that.uploadFilePromise(file.tempFilePath);
+          console.log('result', result);
           that.setData({
-            uploadedImages: [...that.data.uploadedImages, res]
+            uploadedImages: [...that.data.uploadedImages, result],
+            imgArr: [...that.data.imgArr, i]
           })
-        })
+        }
+        // res.tempFiles.forEach(async (file: any) => {
+        //   const res = await that.uploadFilePromise(file.tempFilePath);
+        //   console.log('res', res);
+        //   that.setData({
+        //     uploadedImages: [...that.data.uploadedImages, res]
+        //   })
+        // })
       }
     })
   },
@@ -121,6 +131,13 @@ Page({
       })
       if (res && res.code === 0) {
         wx.navigateBack();
+      } else {
+        const title = (res && res.message) || '对不起，请仔细检查您输入的内容是否符合规范！'
+        wx.showToast({
+          title,
+          icon: 'none',
+          duration: 2000
+        }) 
       }
       console.log('res', res)
     } else {

@@ -1,5 +1,6 @@
 // @ts-nocheck
 var log = require('../utils/log')
+import { base_api } from "../api/api"
 
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
@@ -277,7 +278,7 @@ export const getLoginStatus = async () => {
     const { code } = await login_request();
     console.log('code------------', code);
     
-    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/test-api/v1/sessions/'+code, {method: 'POST'});
+    const { token, user: {nickname, avatar, id, openid}} = await map_request(`https://gewugo.com/${base_api}/v1/sessions/`+code, {method: 'POST'});
     console.log('login users', token, nickname, avatar);
     wx.setStorageSync('token', token);
     wx.setStorageSync('userinfo', {
@@ -324,7 +325,7 @@ export const clearAndFreshLoginStatus = async () => {
     const { code } = await login_request();
     console.log('code------------', code);
     
-    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/test-api/v1/sessions/'+code, {method: 'POST'});
+    const { token, user: {nickname, avatar, id, openid}} = await map_request(`https://gewugo.com/${base_api}/v1/sessions/`+code, {method: 'POST'});
     console.log('login users', token, nickname, avatar);
     wx.setStorageSync('token', token);
     wx.setStorageSync('userinfo', {

@@ -1,5 +1,5 @@
 import { request } from "../utils/util"
-export const base_api = false ? 'api' : 'test-api'
+export const base_api = true ? 'api' : 'test-api'
 
 export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);

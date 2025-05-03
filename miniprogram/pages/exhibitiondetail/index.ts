@@ -166,7 +166,6 @@ Page({
   },
   handleShowFullImage(e: any) {
     const {img, showBigImg} = e.detail;
-    console.log('detail', e)
     this.setData({
       bigImg: img,
       showBigImg,
