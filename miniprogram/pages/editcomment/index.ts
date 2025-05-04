@@ -16,7 +16,7 @@ Page({
     selectLabels: [] as any,
     message: "",
     userid: -1,
-    isShowLabels: false,
+    isShowLabels: true,
     imgArr: [] as any,
   },
   handleClickShowLabel() {

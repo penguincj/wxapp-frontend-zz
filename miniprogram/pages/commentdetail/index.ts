@@ -153,6 +153,11 @@ Page({
       focus: false,
     })
   },
+  handleClickCommentIcon() {
+    this.setData({
+      focus: true,
+    })
+  },
   async getComment() {
     const res: any = await getCommentDetail(this.data.curExhibitionId, this.data.commentId);
     if (res && res.code === 0) {

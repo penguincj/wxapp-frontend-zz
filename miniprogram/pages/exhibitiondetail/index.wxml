@@ -6,7 +6,8 @@
   module.exports.getMin = getMin;
 </wxs>
 <page-meta page-style="">
-  <navigation-bar back extClass="transparent" loading="{{false}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar>
+  <!-- <navigation-bar back extClass="transparent" loading="{{false}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar> -->
+  <navigation-bar back styleType="dark" loading="{{false}}" title="{{exhibitionInfo.name}}" color="dark" background="#FFF" style="text-align: center;"></navigation-bar>
   <view class="player-area">
     <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
   </view>

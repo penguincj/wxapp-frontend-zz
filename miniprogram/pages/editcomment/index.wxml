@@ -22,7 +22,7 @@
       <image class="tag-icon" bindtap="handleAddTagClick" src="/static/images/plus.png" mode="aspectFit" />
     </view>
     <view class="upload-area">
-      <textarea value="{{message}}" placeholder="写几句评价叭..." class="comment-textarea" maxlength="-1" auto-height="{{true}}" bindinput="inputChange" />
+      <textarea value="{{message}}" placeholder="写几句评价叭..." class="comment-textarea" maxlength="800" auto-height="{{true}}" bindinput="inputChange" />
       <view class="image-group">
         <block wx:for="{{uploadedImages}}">
           <view class="image-wrapper">

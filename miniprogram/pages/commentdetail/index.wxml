@@ -36,10 +36,14 @@
         <view class="heart-num">{{comment.liked_count}}</view>
       </view>
       <view class="com-g">
-        <image class="info-comment" src="/static/images/icon_chat.png" mode="aspectFit" />
+        <image class="info-comment" bindtap="handleClickCommentIcon" src="/static/images/icon_chat.png" mode="aspectFit" />
         <view class="reply-num">{{comment.replied_count}}</view>
       </view>
-      <view wx:if="{{message}}" class="submit-btn" catchtap="submitReply">回复</view>
+      <view wx:if="{{message}}" class="btn-group" bindtap="submitReply">
+        <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
+        <view class="loc-name white">回复</view>
+      </view>
+      <!-- <view wx:if="{{message}}" class="submit-btn" catchtap="submitReply">回复</view> -->
     </view>
   </scroll-view>
   <image-popup image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
