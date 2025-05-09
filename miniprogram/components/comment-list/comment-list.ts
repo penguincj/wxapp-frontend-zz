@@ -60,8 +60,8 @@ Component({
       this.triggerEvent('ClickCommentIcon')
     },
     handleShowFullImage(e: any) {
-      const {img, showBigImg} = e.detail;
-      this.triggerEvent('ShowFullImage', {img, showBigImg})
+      const {imglist, img, showBigImg, idx} = e.detail;
+      this.triggerEvent('ShowFullImage', {imglist, img, showBigImg, idx})
     },
     handleLabelClick(e: any) {
       const {name} = e.currentTarget.dataset;

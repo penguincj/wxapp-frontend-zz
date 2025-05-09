@@ -46,5 +46,5 @@
       <!-- <view wx:if="{{message}}" class="submit-btn" catchtap="submitReply">回复</view> -->
     </view>
   </scroll-view>
-  <image-popup image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
+  <image-popup list="{{imgList}}" current="{{currentImageIndex}}" image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
 </view>

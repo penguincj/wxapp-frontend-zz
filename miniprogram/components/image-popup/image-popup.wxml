@@ -3,7 +3,14 @@
     class="mask {{showPupup ? 'show' : ''}}" 
     bindtap="handleClose"
     catchtouchmove="return">
-    <image src="{{image}}" class="full-image" mode="aspectFit" />
+      <swiper current="{{current}}" indicator-dots="{{true}}" autoplay="{{false}}" interval="{{2000}}" duration="{{100}}">
+          <block wx:for="{{list}}" wx:key="*this">
+            <swiper-item>
+              <image src="{{item}}" class="full-image" mode="aspectFit" />
+              <!-- <view class="swiper-item {{item}}"></view> -->
+            </swiper-item>
+          </block>
+      </swiper>
   </view>
   
 </view>

@@ -82,12 +82,12 @@ Component({
 
     handleClickImg(e: any) {
       console.log();
-      const { img } = e.currentTarget.dataset;
+      const { img, imglist, idx } = e.currentTarget.dataset;
       // this.setData({
       //   showBigImg: true,
       //   bigImg: img,
       // })
-      this.triggerEvent('ShowFullImage', {img, showBigImg: true});
+      this.triggerEvent('ShowFullImage', {img, imglist, showBigImg: true, idx});
     },
   },
 

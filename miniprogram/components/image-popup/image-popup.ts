@@ -19,6 +19,14 @@ Component({
       type: String,
       value: ""
     },
+    list: {
+      type: Array,
+      value: [],
+    },
+    current: {
+      type: Number,
+      value: 0,
+    }
 
   },
   /**

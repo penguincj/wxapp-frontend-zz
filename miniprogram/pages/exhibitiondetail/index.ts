@@ -20,8 +20,10 @@ Page({
     comment_area: [],
     label_area: [],
     bigImg: "",
+    imgList: [],
     showBigImg: false,
     currentLabel: "",
+    currentImgIndex: 0,
   },
   scroll(e: any) {
     // console.log(e)
@@ -165,10 +167,13 @@ Page({
     })
   },
   handleShowFullImage(e: any) {
-    const {img, showBigImg} = e.detail;
+    const {imglist, img, showBigImg, idx} = e.detail;
+    console.log('item', idx)
     this.setData({
       bigImg: img,
       showBigImg,
+      imgList: imglist,
+      currentImgIndex: idx,
     })
   },
   handleDelCommentSuc() {

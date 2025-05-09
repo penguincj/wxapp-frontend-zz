@@ -31,6 +31,8 @@ Page({
     focus: false,
     placeholder: '说点什么...',
     parent_id: -1,
+    currentImageIndex: 0,
+    imgList: [],
   },
   handleClosePopup() {
     this.setData({
@@ -44,10 +46,12 @@ Page({
     wx.navigateBack();
   },
   handleShowFullImage(e: any) {
-    const { img, showBigImg } = e.detail;
+    const { img, showBigImg, idx, imglist } = e.detail;
     this.setData({
       bigImg: img,
       showBigImg,
+      currentImageIndex: idx,
+      imgList: imglist,
     })
   },
   handleNotLikeClick() {

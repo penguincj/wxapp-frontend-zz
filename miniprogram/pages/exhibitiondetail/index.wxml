@@ -132,5 +132,5 @@
   </view>
       </scroll-view>
 
-  <image-popup image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
+  <image-popup current="{{currentImgIndex}}" list="{{imgList}}" image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
 </page-meta>
