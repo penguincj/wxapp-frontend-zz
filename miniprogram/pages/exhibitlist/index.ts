@@ -19,6 +19,7 @@ Page({
     searchList: [] as any,
     showFindDialog: false,
     showMapDialog: false,
+    showRateDialog: false,
     showInput: true,
 
     // 一定用到的
@@ -38,6 +39,11 @@ Page({
     audiolist: [],
     mapPoints: Exhpoints, // 地图点
     currentPointIdx: 0, // 当前点index
+
+    rateSlider: 2,
+    rateMax: 6,
+    rateMin: 3,
+    curRate: getApp().globalData.audio.curRate || "1.0",
    
     // playProgress: 0,
   },
@@ -169,6 +175,35 @@ Page({
       showMapDialog: false,
     })
     
+  },
+  handleClickOpenRate() {
+    this.setData({
+      showRateDialog: true,
+    })
+  },
+  handleRateSliderChange(event: any) {
+    const value = event.detail.value;
+    let curRate = (value / 4).toFixed(2);
+    if (curRate === "1.00") {
+      curRate = "1.0";
+    } else if (curRate === "1.50") {
+      curRate = "1.5"; 
+    }
+    this.setData({
+      curRate,
+    })
+    getApp().globalData.audio.curRate = curRate;
+
+    this.handlePlayRate(value / 4)
+  },
+  handlePlayRate(rate: number) {
+    var player = this.selectComponent("#player");
+    player.playRate(rate);
+  },
+  handleCloseRateDialog() {
+    this.setData({
+      showRateDialog: false,
+    })
   },
   handleOpenFindDialog() {
     this.setData({
@@ -411,6 +446,7 @@ Page({
       loading: true,
       listAreaHeight: hei + 'px',
       lastExhibitionId: getApp().globalData.audio.curExhibition,
+      curRate: getApp().globalData.audio.curRate,
     })
     const player = this.selectComponent("#player");
     player.pageTimeUpateContinue();

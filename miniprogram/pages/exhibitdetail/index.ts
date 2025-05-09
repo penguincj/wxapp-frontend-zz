@@ -41,7 +41,7 @@ Page({
     rateSlider: 2,
     rateMax: 6,
     rateMin: 3,
-    curRate: "1.0",
+    curRate: getApp().globalData.audio.curRate || "1.0",
     listConfig,
     topSwiperSelectIdx: 1,
     audioList: [],
@@ -233,6 +233,7 @@ Page({
     this.setData({
       curRate,
     })
+    getApp().globalData.audio.curRate = curRate;
     this.handlePlayRate(value / 4)
   },
   async handleClickCollect() {
@@ -428,6 +429,7 @@ Page({
     player.pageTimeUpateContinue();
     this.setData({
       loading: false,
+      curRate: getApp().globalData.audio.curRate,
     })
     setTimeout(() => {      
       const { exhibition_id, museum_id, narration_id } = getCurrentPageParam();

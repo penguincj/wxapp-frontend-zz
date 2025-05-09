@@ -130,10 +130,24 @@
               text-align: center;
               box-sizing: border-box;
               padding-top: 8rpx;
+              position: relative;
               // margin-right: 40rpx;
               .img {
                 width: 36rpx;
                 height: 36rpx;
+              }
+              .o-beisu-txt {
+                position: absolute;
+                top: 14rpx;
+                left: 25rpx;
+                // width: 12rpx;
+                // height: 12rpx;
+                font-size: 20rpx;
+                color: #9AA7B1;
+                font-weight: 800;
+                transform: scale(0.7);
+                text-align: center;
+
               }
             }
           }
@@ -161,6 +175,99 @@
       align-items: center;
     }
 
+  }
+  .rate-area {
+    .rate-group {
+      margin: 54rpx 0rpx 0 0rpx;
+      position: relative;
+      .title {
+        font-size: 38rpx;
+        color: #2C2F3B;
+        text-align: center;
+        font-family: PingFang SC;
+        font-weight: 600;
+      }
+      .rate-slider {
+        position: relative;
+        // top: 0rpx;
+        // left: 0;
+        width: 670rpx;
+        height: 100rpx;
+        margin-top: 70rpx;
+        z-index: 10;
+        // transform: scaleY(2);
+        .fake-slider {
+          position: absolute;
+          width: 670rpx;
+          height: 70rpx;
+          background: rgba(44, 47, 59, 0.05);
+          border-radius: 70rpx;
+          .circle {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 70rpx;
+            height: 70rpx;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            // background-color: green;
+            transition: all 0.5s;
+            text-align: center;
+            
+            .rate-txt {
+              color: #2C2F3B;
+              font-size: 24rpx;
+              line-height: 70rpx;
+              display: inline-block;
+              vertical-align: middle;
+              font-family: DIN;
+              font-weight: 600;
+            }
+          }
+          .dark-bg {
+            background-color: rgba(44, 47, 59, 0.05);
+            height: 70rpx;
+            width: 200rpx;
+            border-radius: 70rpx;
+            transition: all 0.5s;
+          }
+        }
+        .real-slider {
+          position: absolute;
+          width: 670rpx;
+          height: 100rpx;
+          z-index: 11;
+          opacity: 0;
+        }
+      }
+      .rate-txt-group {
+        position: absolute;
+        top:12rpx;
+        left: 0;
+        width: 670rpx;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 0 30rpx;
+        .rate-speed {
+          color: #2C2F3B;
+          font-size: 30rpx;
+        }
+      }
+      .rate-number {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10rpx 20rpx;
+        .rate-txt {
+          font-family: DIN;
+          font-size: 28rpx;
+          color: #9AA7B1;
+        }
+      }
+    }
   }
 
 }
