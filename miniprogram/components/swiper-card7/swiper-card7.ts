@@ -226,10 +226,8 @@ Component({
   observers: {
     'dataList': function(dataList) {
       console.log('dataList changed', this.data.dataList, dataList);
-      if (this.data.currentGuestIndex) {
-        return
-      }
-      this.towerSwiper(dataList)
+      
+      this.towerSwiper(dataList);
       this.setData({
         currentGuestIndex: 0,
       })

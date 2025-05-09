@@ -1,0 +1,81 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+  <view class="player-area">
+    <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+  </view>
+  <navigation-bar loading="{{false}}" back="{{false}}" color="black" background="#ffffff" style="text-align: center;">
+    <view slot="left">
+      <view class="loc-area">
+        <loc-select 
+          locStyle="margin: 0 20rpx;" 
+          pannelStyle="padding: 30rpx 20rpx;" 
+          selectedId="{{curCityId}}" 
+          selectedName="{{cityName}}" 
+          list="{{cityList}}" 
+          bindCityChange="handleCityChange"
+        />
+      </view>
+    </view>
+  </navigation-bar>
+
+  <view class="gird-view-page">
+    
+    <view class="content-area">
+      <scroll-view 
+        wx:if="{{exhibitionList.length}}" 
+        scroll-y="{{true}}" 
+        show-scrollbar="{{false}}" 
+        enhanced="{{true}}"
+        bindscroll="scroll" 
+        bindscrolltolower="handleScrolltolower"
+        style="height: calc(100vh - 210px)">
+        <view class="water-container">
+          <!-- 瀑布流容器 -->
+          <view class="waterfall">
+            <!-- 左列 -->
+            <view class="column">
+              <block wx:for="{{leftList}}" wx:key="id">
+                <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+                  <image src="{{item.image_url}}" class="img-pic" mode="widthFix" />
+                  <view class="title">{{item.name}}</view>
+                  <!-- <view class="content">{{item.description}}</view> -->
+                  <view class="desc-opendate">
+                    <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
+                    {{item.opendate}}
+                  </view>
+                  <!-- <view class="time">{{item.opendate}}</view> -->
+                </view>
+              </block>
+            </view>
+            <!-- 右列 -->
+            <view class="column">
+              <block wx:for="{{rightList}}" wx:key="id">
+                <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+                  <image src="{{item.image_url}}" class="img-pic" mode="widthFix" />
+                  <view class="title">{{item.intro}}</view>
+                  <!-- <view class="content">{{item.description}}</view> -->
+                   <view class="desc-opendate">
+                    <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
+                    {{item.opendate}}
+                  </view>
+                </view>
+              </block>
+            </view>
+          </view>
+          <!-- 加载提示 -->
+          <view class="loading" wx:if="{{loading}}">加载中...</view>
+          <view class="no-more" wx:if="{{!hasMore && !loading}}">没有更多数据了</view>
+        </view>
+       
+      </scroll-view>
+      <view wx:if="{{!loading && exhibitionList.length === 0}}" class="empty-content">
+        <image src="/static/images/kong.png" class="empty-img" mode="aspectFill" />
+        <view class="empty-text">暂无内容</view>
+      </view>
+    </view>
+    <!-- <loading show="{{loading}}"></loading> -->
+    <view>
+      <custom-tab-bar></custom-tab-bar>
+    </view>
+  </view>
+</page-meta>

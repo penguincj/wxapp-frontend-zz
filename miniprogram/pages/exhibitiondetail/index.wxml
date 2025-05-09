@@ -11,8 +11,9 @@
   <view class="player-area">
     <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
   </view>
+  <scroll-view style="height: calc(100vh - 88px);" class="scroll-view_H" scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll">
+
   <view class="page-exhibition-detail">
-    <scroll-view class="scroll-view_H" scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll">
       <view class="s-content">
       <view class="museum-info">
         <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
@@ -70,7 +71,7 @@
           <!-- <view class="price11">{{exhibitionInfo.ticket_price}}</view> -->
         </view>
       </view>
-      <view class="jiangjie-area">
+      <view class="jiangjie-area" wx:if="{{narrationList && narrationList.length}}">
         <view class="title-line">
           <view class="title">
             <view class="title-name">导览讲解</view>
@@ -128,7 +129,8 @@
       </view>
       
       </view>
-    </scroll-view>
   </view>
+      </scroll-view>
+
   <image-popup image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
 </page-meta>

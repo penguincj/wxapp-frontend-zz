@@ -435,3 +435,9 @@ export const generateDateFormat = (_time: any) => {
     return (Math.floor(diffSec)) + '秒前';
   }
 }
+
+export const dealTradePic = () => {
+  return {
+    obj: []
+  }
+}

@@ -1,5 +1,5 @@
 import { request } from "../utils/util"
-export const base_api = true ? 'api' : 'test-api'
+export const base_api = false ? 'api' : 'test-api'
 
 export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);
@@ -14,8 +14,8 @@ export const getMuseumById = (_museumid: any) => {
 }
 
 
-export const getExhibitionList = (_museumid: any) => {
-    return request(`/${base_api}/v1/exhibitions?museumID=${_museumid}`);
+export const getExhibitionList = (_museumid: any, _num=999, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 
@@ -24,44 +24,53 @@ export const getExhibitionById = (_exhibitionid: any) => {
 }
 
 // 推荐展
-export const getRecoExhibitionList = (_museumid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=recommend&museumID=${_museumid}&num=${_num}`);
+export const getRecoExhibitionList = (_museumid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=recommend&museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
+}
+
+// 推荐展
+export const getFutureExhibitionList = (_museumid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=future&museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 // 推荐城市展
-export const getCityRecoExhibitionList = (_cityid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=recommend&cityID=${_cityid}&num=${_num}`);
+export const getCityRecoExhibitionList = (_cityid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=recommend&cityID=${_cityid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
+// 展览feed流
+export const getCityExhibitionFeedList = (_cityid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/feeds?cityID=${_cityid}&num=${_num}&pageNum=${_pagenum}`);
+}
 
 // 常设展
-export const getLongExhibitionList = (_museumid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=long&museumID=${_museumid}&num=${_num}`);
+export const getLongExhibitionList = (_museumid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=long&museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 // 城市常设展
-export const getCityLongExhibitionList = (_cityid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=long&cityID=${_cityid}&num=${_num}`);
+export const getCityLongExhibitionList = (_cityid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=long&cityID=${_cityid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 // 临时展
-export const getShortExhibitionList = (_museumid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=short&museumID=${_museumid}&num=${_num}`);
+export const getShortExhibitionList = (_museumid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=short&museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 // 城市临时展
-export const getCityShortExhibitionList = (_cityid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=short&cityID=${_cityid}&num=${_num}`);
+export const getCityShortExhibitionList = (_cityid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=short&cityID=${_cityid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 // 往期展
-export const getPastExhibitionList = (_museumid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=past&museumID=${_museumid}&num=${_num}`);
+export const getPastExhibitionList = (_museumid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=past&museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 // 城市往期展
-export const getCityPastExhibitionList = (_cityid: any, _num=1) => {
-    return request(`/${base_api}/v1/exhibitions?type=past&cityID=${_cityid}&num=${_num}`);
+export const getCityPastExhibitionList = (_cityid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/exhibitions?type=past&cityID=${_cityid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 export const getExhibitionListAll = (_querystr: any) => {

@@ -27,6 +27,7 @@
       bindDelCommentSuc="handleDelCommentSuc"
     ></comment-item>
     </block>
+    <view wx:if="{{comments.length === 0}}" class="no-comment">— 暂无评价 —</view>
   </view>
   
   <image src="/static/images/comment.png" mode="aspectFill" class="cmt-icon" bindtap="handleClickCommentIcon" />

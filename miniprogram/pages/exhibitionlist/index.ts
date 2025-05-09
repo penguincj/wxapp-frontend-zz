@@ -93,6 +93,7 @@ Page({
       const res_long: any = await getCityLongExhibitionList(city_id, 999);
       const res_past: any = await getCityPastExhibitionList(city_id, 999);
       if (res_reco && res_reco.exhibitions) {
+        console.log('res_reco.exhibitions.length', res_reco.exhibitions)
         this.setData({
           recommendList: res_reco.exhibitions,
         })
@@ -111,6 +112,7 @@ Page({
         loading: false
       })
     } catch (error) {
+      console.log(error)
       this.setData({
         loading: false
       })

@@ -7,7 +7,7 @@
   </view>
   <view class="card-group">
     <block wx:for="{{list}}" wx:key="{{item.id}}">
-      <view class="item-vertical" data-idx="{{item.id}}" bindtap="handleClickItem">
+      <view wx:if="{{index<4}}" class="item-vertical" data-idx="{{item.id}}" bindtap="handleClickItem">
         <view class="card-item">
           <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
           <view class="item-desc-group">

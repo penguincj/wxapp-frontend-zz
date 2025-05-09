@@ -1,4 +1,4 @@
-import { getMuseumById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList } from "../../../api/api";
+import { getMuseumById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList } from "../../../api/api";
 import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../../utils/util";
 
 
@@ -12,6 +12,7 @@ Page({
     recommendList: [],
     normalList: [],
     outofdateList: [],
+    futureList: [],
     curMuseumId: -1,
     loading: false,
   },
@@ -24,11 +25,13 @@ Page({
       const normalList_res: any = await getLongExhibitionList(_museumid, 999);
       const recommendList_res: any = await getShortExhibitionList(_museumid, 999);
       const pastList_res: any = await getPastExhibitionList(_museumid, 999);
+      const futureList_res: any = await getFutureExhibitionList(_museumid, 999);
       this.setData({
         museumInfo: museumInfo.museum,
         normalList: normalList_res.exhibitions,
         recommendList: recommendList_res.exhibitions,
         outofdateList: pastList_res.exhibitions,
+        futureList: futureList_res.exhibitions,
         loading: false,
       })
 
@@ -48,6 +51,15 @@ Page({
   handleClickMoreReco() {
     const url_params = generateNewUrlParams({
       exhibition_type: 'recommend',
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitionall/index'+ url_params
+    })
+  },
+
+  handleClickMoreFuture() {
+    const url_params = generateNewUrlParams({
+      exhibition_type: 'future',
     })
     wx.navigateTo({
       url: '/pages/exhibitionall/index'+ url_params
