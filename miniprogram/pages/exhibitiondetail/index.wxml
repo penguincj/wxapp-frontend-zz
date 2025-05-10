@@ -22,7 +22,7 @@
             <span class="title-name">{{exhibitionInfo.name}}</span>
             <view class="zhanlan-type">{{exhibitionInfo.short === 1 ? '临时展': '常设展'}}</view>
           </view>
-          <image bindtap="handleClickPlayIcon" src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
+          <image wx:if="{{exhibitionInfo.narration_ids}}" bindtap="handleClickPlayIcon" src="/static/images/play1.png" class="play-icon" mode="aspectFill" />
           <view class="desc">{{exhibitionInfo.description}}</view>
           <view class="btn-line">
             <view class="btn" bindtap="handleClickWantVisit">
@@ -127,7 +127,6 @@
           bindDelCommentSuc="handleDelCommentSuc"
         ></comment-list>
       </view>
-      
       </view>
   </view>
       </scroll-view>

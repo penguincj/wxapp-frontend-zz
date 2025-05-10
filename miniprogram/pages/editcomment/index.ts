@@ -202,8 +202,9 @@ Page({
     console.log('请输入大于0的字符')
   },
   handleChangeLabel(e: any) {
-    const { value } = e.detail;
+    let { value } = e.detail;
     console.log('---input', value);
+    value = value.substr(0, 8)
     this.setData({
       label: value,
     })

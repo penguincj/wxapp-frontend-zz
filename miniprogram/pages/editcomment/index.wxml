@@ -49,7 +49,7 @@
           <view class="content">
             <view class="title">添加标签</view>
             <view class="desc">请输入你想添加的标签，最多8字符</view>
-            <input class="input" value="{{label}}" placeholder="标签" maxlength="8" placeholder-style="line-height:106rpx;" bindchange="handleChangeLabel"  />
+            <input class="input" value="{{label}}" placeholder="标签" placeholder-style="line-height:106rpx;" bindchange="handleChangeLabel"  />
             <view class="btn-group">
               <view class="btn" bindtap="handleClosePopup">取消</view>
               <view class="btn confirm" bindtap="handleConfirmPopup">确认</view>
