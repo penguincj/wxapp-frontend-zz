@@ -52,7 +52,7 @@
               <block wx:for="{{rightList}}" wx:key="id">
                 <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
                   <image src="{{item.image_url}}" class="img-pic" mode="widthFix" />
-                  <view class="title">{{item.intro}}</view>
+                  <view class="title">{{item.name}}</view>
                   <!-- <view class="content">{{item.description}}</view> -->
                    <view class="desc-opendate">
                     <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
