@@ -1,27 +1,40 @@
+.scroll-view_H{
+  white-space: nowrap;
+  width: 750rpx;
+  height: 100vh;
+
+  .s-content {
+    width: 750rpx;
+    overflow: hidden;
+    // height: 100vh;
+  }
+}
 .page-exhibition-detail {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
 
+ 
+
   .museum-info {
     position: relative;
     width: 100%;
-    height: 700rpx;
+    height: 600rpx;
     .museum-img {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 563rpx;
+      height: 400rpx;
       
     }
     .museum-text-group {
       position: absolute;
       bottom: 40rpx;
       left: 40rpx;
-      height: 286rpx;
+      height: 364rpx;
       width: 670rpx;
       // background: rgba(0, 0, 0, 0.35);
       // backdrop-filter: blur(10rpx);
@@ -79,6 +92,7 @@
           line-height: 32rpx;
           text-align: center;
           margin-top: -2rpx;
+          margin-left: 10rpx;
         }
       }
       .desc {
@@ -91,6 +105,38 @@
         white-space: nowrap;
         font-size: 28rpx;
         padding-top: 10rpx;
+      }
+      .btn-line {
+        display: flex;
+        align-items: center;
+        margin-left: 32rpx;
+        gap: 24rpx;
+        margin-top: 8rpx;
+        margin-bottom: 8rpx;
+        .btn {
+          width: 160rpx;
+          height: 60rpx;
+          border-radius: 8rpx;
+          border: 1rpx solid #2C2F3B;
+          box-sizing: border-box;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          justify-content: center;
+          .btn-image {
+            width: 26rpx;
+            height: 24rpx;
+            transform: translateY(1rpx);
+          }
+          .cont {
+            font-size: 30rpx;
+            color: #2C2F3B;
+            padding-left: 10rpx;
+            line-height: 58rpx;
+            vertical-align: middle;
+          }
+        }
       }
       .line {
         margin-left: 30rpx;
@@ -153,7 +199,7 @@
   }
   .jiangjie-card {
     margin-top: 40rpx;
-    padding-bottom: 100rpx;
+    padding-bottom: 10rpx;
     .card-group {
       position: relative;
       height: 200rpx;
@@ -305,6 +351,7 @@
       .text-whole {
         width: 93%;
         display: inline-block;
+        white-space: initial;
       }
       .text-visible {
         height: auto;
@@ -344,6 +391,7 @@
       margin-top: 30rpx;
       padding: 30rpx;
       box-sizing: border-box;
+      display: none;
       .title {
         font-size: 30rpx;
         line-height: 30px;        
@@ -364,6 +412,14 @@
 
   .jiangjie-area {
     padding: 0 40rpx;
+  }
+
+  .score-card-area {
+    padding: 0 40rpx 20rpx 40rpx;
+  }
+
+  .comment-list-area {
+    padding: 0 40rpx 40rpx 40rpx;
   }
 
   .expried-area {

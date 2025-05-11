@@ -3,13 +3,34 @@
   "projectname": "wxapp-frontend",
   "setting": {
     "compileHotReLoad": true,
-    "skylineRenderEnable": true,
+    "skylineRenderEnable": false,
     "urlCheck": true
   },
   "libVersion": "3.7.7",
   "condition": {
     "miniprogram": {
       "list": [
+        {
+          "name": "pages/gridview/index",
+          "pathName": "pages/gridview/index",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "pages/commentdetail/index",
+          "pathName": "pages/commentdetail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/editcomment/index",
+          "pathName": "pages/editcomment/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
         {
           "name": "pages/exhibitionall/index",
           "pathName": "pages/exhibitionall/index",
@@ -21,13 +42,6 @@
           "name": "pages/agent/index",
           "pathName": "pages/agent/index",
           "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitiondetail/index",
-          "pathName": "pages/exhibitiondetail/index",
-          "query": "museum_id=8&exhibition_id=15",
           "launchMode": "default",
           "scene": null
         },

@@ -1,0 +1,50 @@
+<!-- index.wxml -->
+<navigation-bar back="{{true}}" title="评论详情" extClass="transparent" styleType="dark" color="black" background="#FFF"></navigation-bar>
+<view class="comment-detail-page" bindtap="handleClickPage">
+  <scroll-view scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 164rpx)">
+    <view class="comment-item-area">
+      <comment-item 
+        comment="{{comment}}" 
+        exhibitionid="{{curExhibitionId}}" 
+        userid="{{userid}}" 
+        nickname="{{nickname}}"
+        bindShowFullImage="handleShowFullImage"
+        bindNotLikeClick="handleNotLikeClick"
+        bindLikeClick="handleLikeClick"
+        bindDelCommentSuc="handleDelCommentSuc"
+      ></comment-item>
+    </view>
+    
+    <view class="fenge-area"></view>
+    <view class="reply-area">
+      <comment-reply 
+        childcomment="{{childComment}}" 
+        parentusername="{{comment.user_name}}"
+        parentcommentid="{{comment.comment_id}}"
+        exhibitionid="{{curExhibitionId}}" 
+        userid="{{userid}}"
+        nickname="{{nickname}}"
+        bindFocusInput="handleFocusInput"
+        bindDelReplySuc="handleDelReplySuc"
+        ></comment-reply>
+    </view>
+    <view class="bottom-reply">
+      <input class="input-reply" focus="{{focus}}" placeholder="{{placeholder}}" value="{{message}}" bindinput="handleInputChange" bindblur="handleBlur" bindfocus="handleFocus" />
+      <view class="zan-g">
+        <image wx:if="{{comment.liked}}" data-idx="{{comment.comment_id}}" catchtap="handleClickNotLike" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" />
+        <image wx:else class="info-notlike" data-idx="{{comment.comment_id}}" catchtap="handleClickLike" src="/static/images/heart.png" mode="aspectFit" />
+        <view class="heart-num">{{comment.liked_count}}</view>
+      </view>
+      <view class="com-g">
+        <image class="info-comment" bindtap="handleClickCommentIcon" src="/static/images/icon_chat.png" mode="aspectFit" />
+        <view class="reply-num">{{comment.replied_count}}</view>
+      </view>
+      <view wx:if="{{message}}" class="btn-group" bindtap="submitReply">
+        <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
+        <view class="loc-name white">回复</view>
+      </view>
+      <!-- <view wx:if="{{message}}" class="submit-btn" catchtap="submitReply">回复</view> -->
+    </view>
+  </scroll-view>
+  <image-popup list="{{imgList}}" current="{{currentImageIndex}}" image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
+</view>

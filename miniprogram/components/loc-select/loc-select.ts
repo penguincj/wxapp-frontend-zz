@@ -1,41 +1,3 @@
-const cityConfig = [
-  {
-    id: 0,
-    name: '北京',
-  },
-  {
-    id: 1,
-    name: '上海',
-  },
-  {
-    id: 2,
-    name: '西安',
-  },
-  {
-    id: 3,
-    name: '兰州',
-  },
-  {
-    id: 4,
-    name: '北京',
-  },
-  {
-    id: 5,
-    name: '上海',
-  },
-  {
-    id: 6,
-    name: '西安',
-  },
-  {
-    id: 7,
-    name: '哈尔滨',
-  },
-  {
-    id: 8,
-    name: '哈尔滨',
-  },
-]
 Component({
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -73,19 +35,16 @@ Component({
    * 组件的初始数据
    */
   data: {
-    cityConfig: cityConfig,
     isPannelOpen: false,
     // selectedId: 999,
     // selectedName: '',
   },
   lifetimes: {
     attached() {
-      if (cityConfig && cityConfig.length) {
         // this.setData({
         //   selectedId: cityConfig[0].id,
         //   selectedName: cityConfig[0].name,
         // })
-      }
     },
   },
   /**

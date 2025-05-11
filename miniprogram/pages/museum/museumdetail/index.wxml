@@ -43,6 +43,14 @@
       bindClickItem="handleClickItem"
     ></card-group1>
   </view>
+  <view class="future-area">
+    <card-group1
+      title="展览预告"
+      list="{{futureList}}"
+      bindClickMore="handleClickMoreFuture"
+      bindClickItem="handleClickItem"
+    ></card-group1>
+  </view>
   <view class="expried-area">
     <card-group1
       title="往期展览"
@@ -51,6 +59,7 @@
       bindClickItem="handleClickItem"
     ></card-group1>
   </view>
+  
 </view>
 
 </page-meta>  

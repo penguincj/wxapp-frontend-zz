@@ -63,8 +63,12 @@
           <image wx:else bindtap="handleAudioPause" class="img-icon pause-icon" src="/static/images/pause1.png" mode="aspectFill" />
           <image bindtap="handlePlayNext" class="img-icon reverse" src="/static/images/play-before.png" mode="aspectFix" />
           <view class="img-dingwei-group">
-            <view class="img-wrapper" bindtap="handleOpenMapDialog">
+            <!-- <view class="img-wrapper" bindtap="handleOpenMapDialog">
               <image class="img" src="/static/images/play-huajuan.png" mode="aspectFix" />
+            </view> -->
+            <view class="img-wrapper" bindtap="handleClickOpenRate">
+              <image src="/static/images/player-speed.png" class="img" mode="aspectFix" />
+              <view class="o-beisu-txt">{{curRate}}</view>
             </view>
             <view class="img-wrapper" bindtap="handleOpenFindDialog">
               <image class="img" src="/static/images/play-dingwei.png" mode="aspectFix" />
@@ -106,6 +110,50 @@
         <local-map id="map" Exhpoints="{{mapPoints}}" currentPointIdx="{{currentPointIdx}}"></local-map>
       </view>
     </view>
+    </dialog-half>
+  </view>
+
+  <view class="rate-area">
+    <dialog-half
+      showDialog="{{showRateDialog}}"
+      bindCloseDialog="handleCloseRateDialog"
+    >
+      <view slot="content">
+        <view class="rate-group">
+          <view class="title">倍速{{curRate}}x</view>
+          
+          <view class="rate-slider">
+            <view class="fake-slider">
+              <view class="dark-bg" style="width:{{800*(curRate-0.75) + 70}}rpx"></view>
+              <view class="rate-txt-group">
+                <view class="rate-speed">慢</view>
+                <view class="rate-speed">快</view>
+              </view>
+              <view class="circle" style="transform: translateX({{800*(curRate-0.75)}}rpx)"><text class="rate-txt">{{curRate}}x</text></view>
+          </view>
+          <view class="real-slider">
+            <slider
+              block-color="#ffffff" 
+              block-size="18"
+              backgroundColor="rgba(44, 47, 59, 0.05)"
+              activeColor="rgba(44, 47, 59, 0.05)"
+              value="{{rateSlider}}"
+              min="{{rateMin}}"
+              max="{{rateMax}}"
+              bindchange="handleRateSliderChange"
+            >
+            </slider>
+          </view>
+          
+          </view>
+          <view class="rate-number">
+            <view class="rate-txt">0.75x</view>
+            <view class="rate-txt">1x</view>
+            <view class="rate-txt">1.25x</view>
+            <view class="rate-txt">1.5x</view>
+          </view>
+        </view>
+      </view>
     </dialog-half>
   </view>
 

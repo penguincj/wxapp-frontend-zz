@@ -17,6 +17,7 @@ App<IAppOption>({
       exhibitlistParams: '',
       curUnitId: 0,
       curExhibition: -1,
+      curRate: '1.0',
     },
     ai: {
       x: 280,

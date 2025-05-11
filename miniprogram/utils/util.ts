@@ -1,5 +1,6 @@
 // @ts-nocheck
 var log = require('../utils/log')
+import { base_api } from "../api/api"
 
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
@@ -277,7 +278,7 @@ export const getLoginStatus = async () => {
     const { code } = await login_request();
     console.log('code------------', code);
     
-    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/api/v1/sessions/'+code, {method: 'POST'});
+    const { token, user: {nickname, avatar, id, openid}} = await map_request(`https://gewugo.com/${base_api}/v1/sessions/`+code, {method: 'POST'});
     console.log('login users', token, nickname, avatar);
     wx.setStorageSync('token', token);
     wx.setStorageSync('userinfo', {
@@ -324,7 +325,7 @@ export const clearAndFreshLoginStatus = async () => {
     const { code } = await login_request();
     console.log('code------------', code);
     
-    const { token, user: {nickname, avatar, id, openid}} = await map_request('https://gewugo.com/api/v1/sessions/'+code, {method: 'POST'});
+    const { token, user: {nickname, avatar, id, openid}} = await map_request(`https://gewugo.com/${base_api}/v1/sessions/`+code, {method: 'POST'});
     console.log('login users', token, nickname, avatar);
     wx.setStorageSync('token', token);
     wx.setStorageSync('userinfo', {
@@ -399,5 +400,44 @@ export const calTimeTxt = (_time: number) => {
     const second_str = (second < 10) ? ('0' + second) : second;
 
     return hour_str + ':' + minute_str + ':' + second_str;
+  }
+}
+
+export const generateDateFormat = (_time: any) => {
+  const date = new Date(_time);
+  // const month = date.getMonth() + 1;
+  // const day = date.getDate();
+  // const hour = date.getHours();
+  // const minute = date.getMinutes();
+  // const second = date.getSeconds();
+
+  const datenow = new Date(Date.now())
+  // const now_month = datenow.getMonth() + 1;
+  // const now_day = datenow.getDate();
+  // const now_hour = datenow.getHours();
+  // const now_minute = datenow.getMinutes();
+  // const now_second = datenow.getSeconds();
+
+  const diffDay = (datenow - date) / 1000/60/60/24;
+  const diffHour = (datenow - date) / 1000/60/60;
+  const diffMin = (datenow - date) / 1000/60;
+  const diffSec = (datenow - date) / 1000;
+
+  if (diffDay > 30) {
+    return (Math.floor(diffDay / 30)) + '个月前';
+  } else if (diffDay <= 30 && (diffDay > 1)) {
+    return (Math.floor(diffDay)) + '天前';
+  } else if (diffHour > 1 && (diffHour < 24)) {
+    return (Math.floor(diffHour)) + '小时前';
+  } else if (diffMin >1 && (diffMin < 60)) {
+    return (Math.floor(diffMin)) + '分钟前';
+  } else if (diffSec >0 && (diffSec < 60)) {
+    return (Math.floor(diffSec)) + '秒前';
+  }
+}
+
+export const dealTradePic = () => {
+  return {
+    obj: []
   }
 }

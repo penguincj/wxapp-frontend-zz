@@ -54,7 +54,7 @@ Page({
 
   },
   onLoad(options) {
-    let query_obj: any = { num: 999};
+    let query_obj: any = { num: 999, pagenum : 1};
     if (options && options.exhibition_type) {
       query_obj = {
         ...query_obj,

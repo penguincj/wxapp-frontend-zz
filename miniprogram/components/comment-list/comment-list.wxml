@@ -1,0 +1,34 @@
+<view class="comment-list">
+  <view class="title-line">
+    <view class="title">
+      <view class="title-name">观众评价</view>
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+    </view>
+  </view>
+  <view class="tag-group">
+    <view class="tag-item {{(selectLabel === '') ? 'selected':''}}" bindtap="handleClickAllLabel">全部</view>
+    <block wx:for="{{labels}}">
+      <view 
+        class="tag-item {{(selectLabel === item.name) ? 'selected':''}}" 
+        data-name="{{item.name}}" 
+        bindtap="handleLabelClick"
+        
+      >{{item.name}}({{item.count}})</view>
+    </block>
+  </view>
+  <view class="comment-group">
+    <block wx:for="{{comments}}">
+     <comment-item 
+      userid="{{userid}}" 
+      nickname="{{nickname}}"
+      exhibitionid="{{exhibitionid}}" 
+      comment="{{item}}"
+      bindShowFullImage="handleShowFullImage"
+      bindDelCommentSuc="handleDelCommentSuc"
+    ></comment-item>
+    </block>
+    <view wx:if="{{comments.length === 0}}" class="no-comment">— 暂无评价 —</view>
+  </view>
+  
+  <image src="/static/images/comment.png" mode="aspectFill" class="cmt-icon" bindtap="handleClickCommentIcon" />
+</view>

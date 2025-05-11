@@ -1,0 +1,62 @@
+<!-- index.wxml -->
+<navigation-bar back="{{true}}" extClass="transparent" styleType="dark" color="black" background="#FFF"></navigation-bar>
+<view class="edit-comment-page">
+  <view class="page-content">
+    <view class="title">点击星星评分</view>
+    <view class="content-star-group">
+      <image data-idx="0" bindtap="handleClickStar" src="{{starPic[isStarLight[0]]}}" mode="aspectFit" class="content-star" />
+      <image data-idx="1" bindtap="handleClickStar" src="{{starPic[isStarLight[1]]}}" mode="aspectFit" class="content-star" />
+      <image data-idx="2" bindtap="handleClickStar" src="{{starPic[isStarLight[2]]}}" mode="aspectFit" class="content-star" />
+      <image data-idx="3" bindtap="handleClickStar" src="{{starPic[isStarLight[3]]}}" mode="aspectFit" class="content-star" />
+      <image data-idx="4" bindtap="handleClickStar" src="{{starPic[isStarLight[4]]}}" mode="aspectFit" class="content-star" />
+    </view>
+    <view class="tag-wrapper" bindtap="handleClickShowLabel">
+      <view class="title">为展览打标签</view>
+      <image src="/static/images/direction-down.png" mode="aspectFit" class="img-icon {{isShowLabels ? '': 'rotate'}}" />
+    </view>
+    <view class="tag-group {{isShowLabels ? '': 'no-display'}}">
+      <!-- <block wx:for="{{labels}}"> -->
+      <block wx:for="{{tagArr}}">
+        <view class="tag-item {{item.isSelected ? 'selected': ''}}" data-idx="{{item.id}}" bindtap="handleClickLabel">{{item.label_name}}</view>
+      </block>
+      <image class="tag-icon" bindtap="handleAddTagClick" src="/static/images/plus.png" mode="aspectFit" />
+    </view>
+    <view class="upload-area">
+      <textarea value="{{message}}" placeholder="写几句评价叭..." class="comment-textarea" maxlength="800" auto-height="{{true}}" bindinput="inputChange" />
+      <view class="image-group">
+        <block wx:for="{{uploadedImages}}">
+          <view class="image-wrapper">
+            <image src="{{item}}" class="img-loaded" mode="aspectFit" />
+            <image bindtap="handleClickRemoveImage" data-idx="{{index}}" src="/static/images/close-gray.png" class="img-close" mode="aspectFill" />
+          </view>
+        </block>
+        
+        <view wx:if="{{uploadedImages.length < 9}}" class="image-upload" bindtap="handleUpload">
+          <image class="upload-icon" src="/static/images/plus-gray.png" mode="aspectFit" />
+          <view class="upload-text">上传图片</view>
+        </view>
+      </view>
+    </view>
+    <view class="{{(message && stars) ? 'btn-group': 'btn-group-gray'}}" bindtap="handleSubmit">
+      <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
+      <view class="loc-name white">发布评论</view>
+    </view>
+  </view>
+
+  <view class="popup-area">
+      <popup showPupup="{{showAddTagPopup}}" popupStyle="width:590rpx;height:470rpx" bindClosePopup="handleClosePopup">
+        <view slot="content">
+          <view class="content">
+            <view class="title">添加标签</view>
+            <view class="desc">请输入你想添加的标签，最多8字符</view>
+            <input class="input" value="{{label}}" placeholder="标签" placeholder-style="line-height:106rpx;" bindchange="handleChangeLabel"  />
+            <view class="btn-group">
+              <view class="btn" bindtap="handleClosePopup">取消</view>
+              <view class="btn confirm" bindtap="handleConfirmPopup">确认</view>
+            </view>
+          </view>
+        </view>
+      </popup>
+
+    </view>
+</view>

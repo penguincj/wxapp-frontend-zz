@@ -7,8 +7,8 @@
     <view slot="left">
       <view class="loc-ara-chosen">
         <loc-select 
-          locStyle="" 
-          pannelStyle="" 
+          locStyle="margin: 0 20rpx;" 
+          pannelStyle="padding: 30rpx 20rpx;" 
           list="{{cityList}}" 
           selectedName="{{cityName}}" 
           selectedId="{{curCityId}}" 
@@ -17,7 +17,7 @@
     </view>
   </navigation-bar>
   <view class="exhibition-list-page">
-    <view class="swiper-card-area" wx:if="{{recommendList && recommendList.length}}">
+    <view class="swiper-card-area">
       <!-- <swiper-card1
       title="首推展览"
       dateData="{{dateObj}}"

@@ -1,5 +1,5 @@
-import { getExhibitionById, getNarrowList, sendViewExhibitionAction } from "../../api/api";
-import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../utils/util";
+import { getCommentsByExhibitionID, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction } from "../../api/api";
+import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
 
 Page({
   data: {
@@ -11,7 +11,63 @@ Page({
     statusBarHeight: 0,
     curExhibitionId: -1,
     loading: false,
-    isShowIntro: true,
+    isShowIntro: false,
+    isClickWantVisit: false,
+    isClickVisited: false,
+    userid: -1,
+    nickname: "",
+    data_area: {},
+    comment_area: [],
+    label_area: [],
+    bigImg: "",
+    imgList: [],
+    showBigImg: false,
+    currentLabel: "",
+    currentImgIndex: 0,
+  },
+  scroll(e: any) {
+    // console.log(e)
+  },
+  handleClosePopup() {
+    this.setData({
+      showBigImg: false,
+    })
+  },
+  async handleClickWantVisit() {
+    if (this.data.isClickWantVisit) {
+      const res: any = await delWantVisit(this.data.curExhibitionId, this.data.userid);
+      if(res && res.code === 0) {
+        this.setData({
+          isClickWantVisit: false
+        })
+      }
+    } else {
+      const res: any = await postWantVisit(this.data.curExhibitionId, this.data.userid);
+      if(res && res.code === 0) {
+        this.setData({
+          isClickWantVisit: true
+        })
+      }
+    }
+
+  },
+  async handleClickVisited() {
+    if (this.data.isClickVisited) {
+      const res: any = await delVisited(this.data.curExhibitionId, this.data.userid);
+      if(res && res.code === 0) {
+        this.setData({
+          isClickVisited: false
+        })
+      }
+    } else {
+      const res: any = await postVisited(this.data.curExhibitionId, this.data.userid);
+      if(res && res.code === 0) {
+        this.setData({
+          isClickVisited: true
+        })
+      }
+    }
+
   },
   handleClickJiangjie(event: any) {
     console.log('handleClickJiangjie', event.currentTarget.dataset);
@@ -46,6 +102,14 @@ Page({
     const targetPage = "pages/exhibitlist/index";
     backToTargetPage(targetPage);
   },
+  handleSelectLabel(e: any) {
+    const label = e.detail;
+    this.setData({
+      currentLabel: label,
+    })
+    this.getComments(this.data.curExhibitionId, label);
+
+  },
 
   async initPage(_exhibitionid: any) {
     try {
@@ -56,20 +120,74 @@ Page({
           exhibitionInfo: res.exhibition,
           narrationList: res_narr.narrations,
           loading: false,
+          isClickWantVisit: Boolean(res.exhibition.want_visit),
+          isClickVisited: Boolean(res.exhibition.visited)
         })
       }
-      console.log('initPage', res, res_narr)
     } catch (error) {
       this.setData({
         loading: false,
       })
     }
   },
+  
+  async getComments(exhibition_id: any, labelname = "") {
+    const res: any = await getCommentsByExhibitionID(exhibition_id, labelname);
+    console.log(res);
+    if(res && res.code === 0) {
+      const { comment_area, data_area, label_area} = res.data;
+      const star_distribution = data_area.star_distribution.reverse();
+      const score = Number(data_area.score.toFixed(1));
+
+      const comments = comment_area.map((item: any) => {
+        const calTime = generateDateFormat(item.timestamp);
+        return {
+          ...item,
+          calTime,
+        }
+      })
+      this.setData({
+        comment_area: comments,
+        data_area: {
+          ...data_area,
+          star_distribution,
+          score,
+        },
+        label_area: label_area
+      })
+    }
+  },
+  handleClickCommentIcon() {
+    console.log('handleClickCommentIcon');
+    const url_params = generateNewUrlParams({
+      exhibition_id: this.data.curExhibitionId
+    })
+    wx.navigateTo({
+      url: '/pages/editcomment/index' + url_params
+    })
+  },
+  handleShowFullImage(e: any) {
+    const {imglist, img, showBigImg, idx} = e.detail;
+    console.log('item', idx)
+    this.setData({
+      bigImg: img,
+      showBigImg,
+      imgList: imglist,
+      currentImgIndex: idx,
+    })
+  },
+  handleDelCommentSuc() {
+    this.getComments(this.data.curExhibitionId, this.data.currentLabel);
+  },
   async onShow() {
     this.setData({
       loading: true,
     })
-    const { userid } = await wx.getStorageSync('userinfo');
+    const { userid, nickname } = await wx.getStorageSync('userinfo');
+    this.setData({
+      userid,
+      nickname,
+    })
     console.log('show');
     const info = wx.getMenuButtonBoundingClientRect();
     const windowInfo = wx.getWindowInfo();
@@ -83,8 +201,11 @@ Page({
     }
     try {
       setTimeout(() => {
-        sendViewExhibitionAction(userid, this.data.curExhibitionId, { method: 'POST' });
-      }, 300)
+        sendViewExhibitionAction(getApp().globalData.userinfo.userid, this.data.curExhibitionId, { method: 'POST' });
+      }, 2000)
+      console.log('show this.data.currentLabel', this.data.currentLabel)
+      this.getComments(this.data.curExhibitionId, this.data.currentLabel);
+
     } catch (error) {
 
     }

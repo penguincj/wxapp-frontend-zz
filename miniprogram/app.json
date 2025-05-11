@@ -15,6 +15,9 @@
     "pages/feedback/index",
     "pages/logs/logs",
     "pages/museumlist/index",
+    "pages/editcomment/index",
+    "pages/commentdetail/index",
+    "pages/gridview/index",
     "pages/agent/index"
   ],
   "subpackages": [
@@ -77,19 +80,26 @@
       {
         "current": 1,
         "pagePath": "pages/museumlist/index",
-        "text": "场馆",
+        "text": "博物馆",
         "iconPath": "/static/images/ichangguan.png",
         "selectedIconPath": "/static/images/ichangguan-c.png"
       },
       {
         "current": 2,
         "pagePath": "pages/exhibitionlist/index",
+        "text": "讲解",
+        "iconPath": "/static/images/ijiangjie.png",
+        "selectedIconPath": "/static/images/ijiangjie-c.png"
+      },
+      {
+        "current": 3,
+        "pagePath": "pages/gridview/index",
         "text": "展览",
         "iconPath": "/static/images/izhanlan.png",
         "selectedIconPath": "/static/images/izhanlan-c.png"
       },
       {
-        "current": 3,
+        "current": 4,
         "pagePath": "pages/profile/index",
         "text": "我的",
         "iconPath": "/static/images/iwode.png",
