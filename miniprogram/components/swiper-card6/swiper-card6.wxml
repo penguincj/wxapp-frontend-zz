@@ -9,8 +9,8 @@
       <text class="title-num">{{list.length}}</text>
     </view>
     <view class="title-right">
-      <!-- <image class="title-icon" src="/static/images/xunhuan1.png" mode="aspectFix" /> -->
-      
+      <image wx:if="{{isKeepPlayingActive}}" class="title-icon-type2" src="/static/images/xunhuan-active.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
+      <image wx:else class="title-icon-type2" src="/static/images/xunhuan.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
       <cache-audio playingIndex="{{playingIndex}}" audiolist="{{audiolist}}"></cache-audio>
     </view>
   </view>

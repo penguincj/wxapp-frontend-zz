@@ -70,9 +70,15 @@ Page({
 
   },
   handleEndAudio() {
-    this.setData({
-      isPlay: false,
-    })
+    console.log('------end !!!')
+    if (getApp().globalData.audio.isKeepPlaying) {
+      this.handlePlayNext();
+    } else {
+      this.setData({
+        isPlay: false,
+      })
+    }
+    
   },
   playSelectedAudio() {
     console.log('playSelectedAudio');
