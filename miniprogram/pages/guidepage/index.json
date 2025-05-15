@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "swiper-unit2": "/components/swiper-unit2/swiper-unit2"
+  }
+}

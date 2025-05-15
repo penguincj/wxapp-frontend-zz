@@ -83,7 +83,8 @@ Component({
   },
   pageLifetimes: {
     show() {
-      const hei = getApp().globalData.system.statusBarHeight;
+      const windowinfo = wx.getWindowInfo();
+      const hei = windowinfo.statusBarHeight;
       this.setData({
         statusBarHeight: hei + 'px'
       });

@@ -27,39 +27,51 @@
       </view>
     </view>
   </view>
-  <view class="recommend-area">
-    <swiper-card2
-      title="推荐展览"
-      list="{{recommendList}}"
-      bindClickMore="handleClickMoreReco"
-      bindClickItem="handleClickItem"
-    ></swiper-card2>
+  <view class="swiper-unit-area" wx:if="{{isShowSwiperUnit}}">
+    <swiper-unit2 list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit2>
   </view>
-  <view class="normal-area">
-    <card-group1
-      title="常设展览"
-      list="{{normalList}}"
-      bindClickMore="handleClickMoreLong"
-      bindClickItem="handleClickItem"
-    ></card-group1>
+  <view class="unit-tab-pannel-area" wx:if="{{topSwiperSelectIdx === 2}}">
+    <block wx:for="{{iconsConfig}}" wx:key="{{index}}">
+      <view class="pannel-item" data-idx="{{item.id}}" catchtap="handlePannelClick">
+        <image src="{{item.icon}}" class="i-icon" mode="aspectFit" />
+        <view class="i-name">{{item.name}}</view>
+      </view>
+    </block>
   </view>
-  <view class="future-area">
-    <card-group1
-      title="展览预告"
-      list="{{futureList}}"
-      bindClickMore="handleClickMoreFuture"
-      bindClickItem="handleClickItem"
-    ></card-group1>
+  <view wx:if="{{topSwiperSelectIdx === 1}}">
+    <view class="recommend-area">
+      <swiper-card2
+        title="推荐展览"
+        list="{{recommendList}}"
+        bindClickMore="handleClickMoreReco"
+        bindClickItem="handleClickItem"
+      ></swiper-card2>
+    </view>
+    <view class="normal-area">
+      <card-group1
+        title="常设展览"
+        list="{{normalList}}"
+        bindClickMore="handleClickMoreLong"
+        bindClickItem="handleClickItem"
+      ></card-group1>
+    </view>
+    <view class="future-area">
+      <card-group1
+        title="展览预告"
+        list="{{futureList}}"
+        bindClickMore="handleClickMoreFuture"
+        bindClickItem="handleClickItem"
+      ></card-group1>
+    </view>
+    <view class="expried-area">
+      <card-group1
+        title="往期展览"
+        list="{{outofdateList}}"
+        bindClickMore="handleClickMorePast"
+        bindClickItem="handleClickItem"
+      ></card-group1>
+    </view>
   </view>
-  <view class="expried-area">
-    <card-group1
-      title="往期展览"
-      list="{{outofdateList}}"
-      bindClickMore="handleClickMorePast"
-      bindClickItem="handleClickItem"
-    ></card-group1>
-  </view>
-  
 </view>
 
 </page-meta>  

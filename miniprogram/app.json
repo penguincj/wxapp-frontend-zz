@@ -18,6 +18,7 @@
     "pages/editcomment/index",
     "pages/commentdetail/index",
     "pages/gridview/index",
+    "pages/guidepage/index",
     "pages/agent/index"
   ],
   "subpackages": [

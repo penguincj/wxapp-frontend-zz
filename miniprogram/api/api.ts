@@ -1,5 +1,5 @@
 import { request } from "../utils/util"
-export const base_api = true ? 'api' : 'test-api'
+export const base_api = false ? 'api' : 'test-api'
 
 export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);
@@ -12,7 +12,10 @@ export const getMuseumList = (_cityid: any) => {
 export const getMuseumById = (_museumid: any) => {
     return request(`/${base_api}/v1/museums/${_museumid}`);
 }
-
+// 获取博物馆信息
+export const getMuseumInfoById = (_museumid: any) => {
+    return request(`/${base_api}/v1/museums/${_museumid}/visitGuide`);
+}
 
 export const getExhibitionList = (_museumid: any, _num=999, _pagenum=1) => {
     return request(`/${base_api}/v1/exhibitions?museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);

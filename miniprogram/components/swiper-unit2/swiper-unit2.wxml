@@ -1,0 +1,27 @@
+<view class="swiper-unit2">
+	<view class="container">
+		<view class="page-section-spacing">
+			<scroll-view
+			 class="scroll-view_H"
+			 scroll-left="{{scrollLeft}}"
+			 scroll-x="{{true}}"
+			 show-scrollbar="{{false}}"
+			 enhanced="{{true}}"
+			 bindscroll="scroll"
+       		 bindtap="selectItem"
+			 style="width: 100%;"
+			>
+				<block wx:for="{{list}}">
+					<view class="item-group item-group-{{index}} {{item.id === selectedId ? 'select': ''}}">
+						<view class="item-txt" data-name="{{item.name}}" data-id="{{item.id}}">
+						{{item.name}}
+						</view>
+						<image src="{{iconline || '/static/images/unit-group-icon2.png'}}" class="chose-item-icon {{item.id === selectedId ? 'display': ''}}" mode="widthFix" />
+					</view>
+				</block>
+
+			</scroll-view>
+		</view>
+	</view>
+</view>
+
