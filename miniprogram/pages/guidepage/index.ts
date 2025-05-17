@@ -20,8 +20,35 @@ Page({
     curGuideContent: [],
     statusBarHei: 0,
     appid: "",
+    bigImg: "",
+    showBigImg: false,
+    currentImageIndex: 0,
+    imgList: [] as any,
   },
 
+  handleClosePopup() {
+    this.setData({
+      showBigImg: false,
+    })
+  },
+  handleImageClick(e: any) {
+    const { img } = e.currentTarget.dataset;
+
+    this.setData({
+      imgList: [img],
+      bigImg: img,
+      showBigImg: true,
+    })
+  },
+  handleShowFullImage(e: any) {
+    const { img, showBigImg, idx, imglist } = e.detail;
+    this.setData({
+      bigImg: img,
+      showBigImg,
+      currentImageIndex: idx,
+      imgList: imglist,
+    })
+  },
   // swiper-unit组件
   handleChangePannelId(event: any) {
     const { selectId } = event.detail;
@@ -31,9 +58,14 @@ Page({
 
   tabChange(_id: number) {
     const curSelectedObj: {type: String} = (iconsConfigMap.find(i => i.id === _id)) || {type: 'openTime'};
+    // @ts-ignore
+    let origin_data = this.data.visitGuide[curSelectedObj.type];
+    if (!origin_data) {
+      origin_data = [{content: '<br>暂时未获取到官方信息哦，如果您有准确的信息，欢迎反馈给我们～'}]
+    }
     this.setData({
       // @ts-ignore
-      curGuideContent: this.data.visitGuide[curSelectedObj.type],
+      curGuideContent: origin_data,
       topSwiperSelectIdx: _id,
     })
   },
