@@ -50,8 +50,8 @@ Component({
     },
 
     selectItem(e: any) {
-      console.log('selectItem', e.target.dataset);
-      const { id, name } = e.target.dataset;
+      console.log('selectItem', e);
+      const { id, name } = e.currentTarget.dataset;
         // this.setData({
         //   selectId: id,
         //   selectName: name,
