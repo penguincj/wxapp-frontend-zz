@@ -59,7 +59,7 @@ Page({
           const arr = i.image_width_height.split(",");
           const width = arr[0];
           const hei = arr[1];
-          const titleline = i.name.length > 12 ? 118: 80;
+          const titleline = i.name.length > 12 ? 148: 80;
           const height = 360 * (hei/width) + titleline;
           return {
             ...i,

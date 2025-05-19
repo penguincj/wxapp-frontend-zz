@@ -3,7 +3,7 @@
   <view class="navBar" wx:if="{{chatMode === 'bot'}}">
     <view class="nav-content">
       <!-- <image src="{{bot.avatar}}" mode="aspectFill" class="bot-avatar"/> -->
-      <text class="bot-name">{{bot.name}}</text>
+      <text class="bot-name"></text>
     </view>
   </view>
   <!-- 聊天对话区 -->

@@ -1,0 +1,156 @@
+.guide-page {
+  padding-bottom: 200rpx;
+  .museum-info {
+    width: 670rpx;
+    height: 184rpx;
+    background: linear-gradient(90deg, #FFF8DF 0%, #FEF9EC 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 0 22rpx;
+    margin: 0 40rpx;
+    box-sizing: border-box;
+
+    .img {
+      width: 120rpx;
+      height: 120rpx;
+      border-radius: 50%;
+    }
+
+    .content {
+      .title {
+        font-size: 36rpx;
+        color: #12141A;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        width: 364rpx;
+        overflow: hidden;
+      }
+      .desc {
+        font-size: 28rpx;
+        color: #6C737A;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        width: 364rpx;
+        overflow: hidden;
+      }
+    }
+    .pinzhi {
+      width: 128rpx;
+      height: 40rpx;
+      transform: translateY(24rpx);
+    }
+  }
+  .unit-area {
+    margin-top: 40rpx;
+    .swiper-unit2 {
+      .item-group {
+        .chose-item-icon {
+          width: 90rpx;
+          height: 6rpx;
+        }
+      }
+    } 
+  }
+  .content-area {
+    margin: 0 40rpx;
+    .item {
+      margin-top: 24rpx;
+      .title-line {
+        display: flex;
+        justify-content: space-between;
+        height: 40rpx;
+       
+        // align-items: center;
+        .title {
+          position: relative;
+          margin-top: 10rpx;
+          .title-name {
+            position: absolute;
+            top:0;
+            left: 0;
+            font-size: 38rpx;
+            line-height: 38rpx;
+            color: #2C2F3B;
+            display: inline-block;
+            width: 600rpx;
+            font-family: MySimSun;
+    
+          }
+          .title-img {
+            position: absolute;
+            top:18rpx;
+            left: 0;
+            width: 152rpx;
+            height: 16rpx;
+          }
+        }
+      }
+      .content {
+        color: #2C2F3B;
+        font-size: 28rpx;
+        padding: 24rpx 0;
+        .rich-text-content {
+          word-break: break-all;
+          white-space: pre-warp;
+        }
+      }
+      .i-img {
+        width: 670rpx;
+        height: 400rpx;
+      }
+    }
+  }
+  .button-area {
+    position: fixed;
+    bottom: 0rpx;
+    left: 0;
+    width: 750rpx;
+    height: 160rpx;
+    background-color: #FFFFFF;
+
+    .btn-group {
+      position: relative;
+      margin-left: 40rpx;
+      width: 670rpx;
+      height: 96rpx;
+      border-radius: 8rpx;
+      .loc-btn {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 670rpx;
+        height: 96rpx;
+      }
+
+      .loc-name {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 670rpx;
+        height: 96rpx;
+        font-size: 30rpx;
+        font-weight: 600;
+        line-height: 64rpx;
+        text-align: center;
+        font-family: MySimSun;
+
+      }
+      .white {
+        color: #FFFFFF;
+        background-color: transparent;
+      }
+      .gray {
+        color: #6B798E;
+        border-radius: 8px;
+        background-color: #F7F8F9;
+        // background-color: red;
+    
+      }
+    }
+  }
+}
+
+.player-area {
+  position: absolute;
+}

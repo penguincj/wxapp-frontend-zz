@@ -40,7 +40,7 @@
                   <view class="title">{{item.name}}</view>
                   <!-- <view class="content">{{item.description}}</view> -->
                   <view class="desc-opendate">
-                    <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
+                    <image src="https://gewugo.com/api/v1/storage/image/icons8-clock-52-5413724062.webp" class="opendate-icon" mode="aspectFill" />
                     {{item.opendate}}
                   </view>
                   <!-- <view class="time">{{item.opendate}}</view> -->
@@ -55,8 +55,8 @@
                   <view class="title">{{item.name}}</view>
                   <!-- <view class="content">{{item.description}}</view> -->
                    <view class="desc-opendate">
-                    <image src="/static/images/dateicon.png" class="opendate-icon" mode="aspectFill" />
-                    {{item.opendate}}
+                    <image src="https://gewugo.com/api/v1/storage/image/icons8-clock-52-5413724062.webp" class="opendate-icon" mode="aspectFill" />
+                    <text class="desc-txt">{{item.opendate}}</text>
                   </view>
                 </view>
               </block>

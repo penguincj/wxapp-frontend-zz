@@ -1,0 +1,54 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar homeButton="{{true}}" title="参观指南" color="black" background="#FFF" styleType="dark" style="text-align: center;" />
+  <view class="player-area">
+  <player-comp
+    bindClickPlayerComp="handleClickPlayerComp"
+  ></player-comp>
+  </view>
+  <scroll-view scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - ({{statusBarHei + 44}}px))">
+    <view class="guide-page">
+      <view class="museum-info">
+        <image class="img" src="{{musuemInfo.image_url}}" mode="aspectFill"  />
+        <view class="content">
+          <view class="title">{{musuemInfo.name}}</view>
+          <view class="desc">{{musuemInfo.description}}</view>
+        </view>
+        <image src="https://gewugo.com/api/v1/storage/image/等级@2x-4647765461.webp" class="pinzhi" mode="aspectFit" />
+      </view>
+      <view class="unit-area">
+        <swiper-unit2 
+          list="{{listConfig}}" 
+          selectedId="{{topSwiperSelectIdx}}" 
+          iconline="https://gewugo.com/api/v1/storage/image/Rectangle34626547@1x-6591218368.webp"
+          bindChangeUnit="handleChangePannelId"></swiper-unit2>
+      </view>
+      <view class="content-area">
+        <block wx:for="{{curGuideContent}}">
+          <view class="item">
+            <view class="title-line" wx:if="{{item.title}}">
+              <view class="title">
+                <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+                <view class="title-name">{{item.title}}</view>
+              </view>
+            </view>
+            <view class="content" wx:if="{{item.content}}">
+              <rich-text class="rich-text-content" nodes="{{item.content}}"></rich-text>
+              
+            </view>
+            <image wx:if="{{item.image_url}}" data-img="{{item.image_url}}" class="i-img" mode="widthFix" src="{{item.image_url}}" catchtap="handleImageClick" />
+          </view>
+        </block>
+      </view>
+      <view class="button-area" wx:if="{{appid && topSwiperSelectIdx === 1}}">
+        <view class="btn-group" bindtap="handleClickBuyTicket">
+          <image src="https://gewugo.com/api/v1/storage/image/but@2x-6726059410.webp" class="loc-btn" mode="aspectFix" />
+          <view class="loc-name white"></view>
+          
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <image-popup list="{{imgList}}" current="{{currentImageIndex}}" image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
+  
+</page-meta>

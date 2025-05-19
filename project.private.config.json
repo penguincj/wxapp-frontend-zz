@@ -11,23 +11,23 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/gridview/index",
-          "pathName": "pages/gridview/index",
-          "query": "",
+          "name": "pages/guidepage/index",
+          "pathName": "pages/guidepage/index",
+          "query": "museum_id=11&select_id=1",
           "scene": null,
           "launchMode": "default"
         },
         {
-          "name": "pages/commentdetail/index",
-          "pathName": "pages/commentdetail/index",
+          "name": "pages/gridview/index",
+          "pathName": "pages/gridview/index",
           "query": "",
           "launchMode": "default",
           "scene": null
         },
         {
-          "name": "pages/editcomment/index",
-          "pathName": "pages/editcomment/index",
-          "query": "",
+          "name": "pages/museum/museumdetail/index",
+          "pathName": "pages/museum/museumdetail/index",
+          "query": "museum_id=11",
           "launchMode": "default",
           "scene": null
         },
