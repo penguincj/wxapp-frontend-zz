@@ -8,12 +8,11 @@
 			 show-scrollbar="{{false}}"
 			 enhanced="{{true}}"
 			 bindscroll="scroll"
-       		 bindtap="selectItem"
 			 style="width: 100%;"
 			>
 				<block wx:for="{{list}}">
-					<view class="item-group item-group-{{index}} {{item.id === selectedId ? 'select': ''}}">
-						<view class="item-txt" data-name="{{item.name}}" data-id="{{item.id}}">
+					<view data-name="{{item.name}}" data-id="{{item.id}}" bindtap="selectItem" class="item-group item-group-{{index}} {{item.id === selectedId ? 'select': ''}}">
+						<view class="item-txt">
 						{{item.name}}
 						</view>
 						<image src="{{iconline || '/static/images/unit-group-icon2.png'}}" class="chose-item-icon {{item.id === selectedId ? 'display': ''}}" mode="widthFix" />

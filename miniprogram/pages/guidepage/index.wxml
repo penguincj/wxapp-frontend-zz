@@ -26,28 +26,29 @@
       <view class="content-area">
         <block wx:for="{{curGuideContent}}">
           <view class="item">
-            <view class="title-line">
+            <view class="title-line" wx:if="{{item.title}}">
               <view class="title">
                 <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
                 <view class="title-name">{{item.title}}</view>
               </view>
             </view>
-            <view class="content">
+            <view class="content" wx:if="{{item.content}}">
               <rich-text class="rich-text-content" nodes="{{item.content}}"></rich-text>
               
             </view>
-            <image class="i-img" mode="widthFix" src="{{item.image_url}}" />
+            <image wx:if="{{item.image_url}}" data-img="{{item.image_url}}" class="i-img" mode="widthFix" src="{{item.image_url}}" catchtap="handleImageClick" />
           </view>
         </block>
       </view>
-      <view class="button-area" wx:if="{{appid}}">
+      <view class="button-area" wx:if="{{appid && topSwiperSelectIdx === 1}}">
         <view class="btn-group" bindtap="handleClickBuyTicket">
-          <image src="https://gewugo.com/api/v1/storage/image/but@2x-6726059410.webp" class="loc-btn" mode="aspectFix" />
+          <image src="https://gewugo.com/api/v1/storage/image/but@2x(1)-1931426388.webp" class="loc-btn" mode="aspectFix" />
           <view class="loc-name white"></view>
           
         </view>
       </view>
     </view>
   </scroll-view>
-    
+  <image-popup list="{{imgList}}" current="{{currentImageIndex}}" image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
+  
 </page-meta>

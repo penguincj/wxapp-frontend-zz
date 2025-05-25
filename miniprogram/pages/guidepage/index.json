@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "image-popup": "/components/image-popup/image-popup",
     "swiper-unit2": "/components/swiper-unit2/swiper-unit2"
   }
 }
