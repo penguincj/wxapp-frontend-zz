@@ -26,7 +26,6 @@
         scroll-y="{{true}}" 
         show-scrollbar="{{false}}" 
         enhanced="{{true}}"
-        bindscroll="scroll" 
         bindscrolltolower="handleScrolltolower"
         style="height: calc(100vh - 210px)">
         <view class="water-container">

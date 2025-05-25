@@ -17,6 +17,16 @@ export const getMuseumInfoById = (_museumid: any) => {
     return request(`/${base_api}/v1/museums/${_museumid}/visitGuide`);
 }
 
+// 获取博物馆重点文物列表
+export const getTreatureList = (_museumid: any, _num: any, _pagenum: any) => {
+    return request(`/${base_api}/v1/treasures/?museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
+}
+
+// 获取重点文物信息
+export const getTreatureInfoById = (_treasureid: any) => {
+    return request(`/${base_api}/v1/treasures/${_treasureid}`);
+}
+
 export const getExhibitionList = (_museumid: any, _num=999, _pagenum=1) => {
     return request(`/${base_api}/v1/exhibitions?museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
 }

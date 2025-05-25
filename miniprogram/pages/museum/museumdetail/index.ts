@@ -1,9 +1,13 @@
-import { getMuseumById, getMuseumInfoById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList } from "../../../api/api";
+import { getMuseumById, getTreatureList, getMuseumInfoById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList } from "../../../api/api";
 import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../../utils/util";
 const listConfig = [
   {
     id: 1,
     name: '展览信息',
+  },
+  {
+    id: 3,
+    name: '重点文物',
   },
   {
     id: 2,
@@ -19,6 +23,8 @@ const iconsConfig = [
   {id: 5, name: '文创商店', type: 'shop', icon: 'https://gewugo.com/api/v1/storage/image/Storemanagement-message@2x-9670115457.webp'},
   {id: 6, name: '交通路线', type: 'trafficRoute', icon: 'https://gewugo.com/api/v1/storage/image/notification-message@2x-7885296907.webp'},
 ]
+
+const PAGE_SIZE = 10;
 
 Page({
   data: {
@@ -37,6 +43,13 @@ Page({
     listConfig,
     iconsConfig,
     isShowSwiperUnit: false,
+
+    leftList: [] as any,   // 左列数据
+    rightList: [] as any,  // 右列数据
+    page: 1,        // 当前页码
+    pageSize: PAGE_SIZE,   // 每页加载数量
+    hasMore: true,   // 是否还有更多数据
+    waterfallloading: false,
   },
   async initPage(_museumid: any) {
     this.setData({
@@ -58,6 +71,7 @@ Page({
       })
 
       this.getMuseumInfo();
+      this.getTreatureListInfo(this.data.curMuseumId);
 
     } catch (error) {
       this.setData({
@@ -83,6 +97,70 @@ Page({
     }
   },
 
+
+  // 分配项目到左右列（简单高度平衡算法）
+  distributeItems(items: any) {
+    let leftHeight = this.getColumnHeight(this.data.leftList);
+    let rightHeight = this.getColumnHeight(this.data.rightList);
+    
+    const leftList = [] as any;
+    const rightList = [] as any;
+    
+    items.forEach((item: any) => {
+      if (leftHeight <= rightHeight) {
+        leftList.push(item);
+        leftHeight += item.height;
+      } else {
+        rightList.push(item);
+        rightHeight += item.height;
+      }
+    });
+    
+    return { leftList, rightList };
+  },
+
+  // 计算列的总高度
+  getColumnHeight(list= []) {
+    return list.reduce((sum, item: any) => sum + item.height, 0);
+  },
+
+  async getTreatureListInfo(_museumid: any, _pagenum =1) {
+    const res :any = await getTreatureList(_museumid, this.data.pageSize,  _pagenum);
+    if (res && res.code === 0) {
+      const exlist = res.treasures;
+        const list = exlist.map((i: any) => {
+          
+          const arr = i.image_width_height.split(",");
+          // const arr = "100,105".split(",");
+          const width = Number(arr[0]);
+          const hei = Number(arr[1]);
+          const titleline = 132;
+          const height = 360 * (hei/width) + titleline;
+          return {
+            ...i,
+            height,
+          }
+        })
+        // this.setData({
+        //   exhibitionList: list,
+        // })
+        console.log('------list', list)
+        // 根据高度决定放入左列还是右列
+        const { total_page_num = 10, page_num = 1} = res;
+        const { leftList, rightList } = this.distributeItems(list);
+        const totalPage = total_page_num;
+        const curPageNum = page_num;
+
+        this.setData({
+          leftList: [...this.data.leftList, ...leftList],
+          rightList: [...this.data.rightList, ...rightList],
+          page: curPageNum,
+          waterfallloading: false,
+          hasMore: curPageNum < totalPage
+        });
+    }
+  },
+
   handlePannelClick(e: any) {
     const { idx } = e.currentTarget.dataset;
     const url_params = generateNewUrlParams({
@@ -91,6 +169,13 @@ Page({
     wx.navigateTo({
       url: '/pages/guidepage/index'+ url_params
     })
+  },
+
+  handleScrolltolower() {
+    console.log('1', this.data.hasMore);
+    if (this.data.hasMore) {
+      this.getTreatureListInfo(this.data.curMuseumId, this.data.page + 1);
+    }
   },
 
   // swiper-unit组件
@@ -145,10 +230,11 @@ Page({
     })
   },
   handleClickItem(event: any) {
-    const { id } = event.detail;
-    const url_params = generateNewUrlParams({exhibition_id: id})
+    const { idx } = event.currentTarget.dataset;
+    console.log('-----idx', idx)
+    const url_params = generateNewUrlParams({treature_id: idx})
     wx.navigateTo({
-      url: '/pages/exhibitiondetail/index' + url_params,
+      url: '/pages/treaturedetail/index' + url_params,
     })
   },
   onLoad(options) {

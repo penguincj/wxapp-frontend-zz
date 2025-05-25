@@ -11,9 +11,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/exhibitlist/index",
-          "pathName": "pages/exhibitlist/index",
-          "query": "exhibition_id=12&narration_id=7",
+          "name": "pages/treature/index",
+          "pathName": "pages/treaturedetail/index",
+          "query": "treature_id=5",
           "scene": null,
           "launchMode": "default"
         },
