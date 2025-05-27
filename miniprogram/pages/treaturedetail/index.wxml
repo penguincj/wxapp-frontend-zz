@@ -9,12 +9,12 @@
       <view class="swiper-image-area">
         <swiper indicator-dots="{{true}}"
           autoplay="{{false}}" interval="{{500}}" duration="{{200}}">
-          <block wx:for="{{treatureInfo.more_image_urls}}" wx:key="*this">
+          <block wx:for="{{imageInfo}}" wx:key="*this">
             <swiper-item>
               <view class="item-swi">
-                <view class="img-bg" style="background-image: url({{item}})"></view>
+                <view class="img-bg" style="background-image: url({{item.image}})"></view>
                 <view class="image-item">
-                  <image src="{{item}}" class="img-pic" mode="heightFix" />
+                  <image src="{{item.image}}" class="img-pic" mode="{{item.isWid ? 'aspectFill' : 'heightFix'}}" />
                 </view>
               </view>
             </swiper-item>

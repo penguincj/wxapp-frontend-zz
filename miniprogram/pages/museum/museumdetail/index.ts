@@ -40,9 +40,10 @@ Page({
     curMuseumId: -1,
     loading: false,
     topSwiperSelectIdx: 1,
-    listConfig,
+    listConfig: [] as any,
     iconsConfig,
     isShowSwiperUnit: false,
+    museumGuideInfo: [] as any,
 
     leftList: [] as any,   // 左列数据
     rightList: [] as any,  // 右列数据
@@ -70,8 +71,32 @@ Page({
         loading: false,
       })
 
-      this.getMuseumInfo();
-      this.getTreatureListInfo(this.data.curMuseumId);
+      await this.getMuseumInfo();
+      await this.getTreatureListInfo(this.data.curMuseumId);
+      let list_data = [] as any;
+      if (this.data.museumGuideInfo.length || this.data.leftList.length) {
+        list_data = [
+          {
+            id: 1,
+            name: '展览信息',
+          },
+        ]
+      }
+      if (this.data.leftList.length) {
+        list_data.push({
+          id: 3,
+          name: '重点文物',
+        })
+      }
+      if (this.data.museumGuideInfo.length) {
+        list_data.push({
+          id: 2,
+          name: '参观指南',
+        })
+      }
+      this.setData({
+        listConfig: list_data,
+      })
 
     } catch (error) {
       this.setData({
@@ -86,8 +111,9 @@ Page({
     if (res && res.code === 0) {
       if (res.visitGuide && res.visitGuide.guide_items && res.visitGuide.guide_items.length) {
         this.setData({
-          isShowSwiperUnit: true,
-        })
+          museumGuideInfo: res.visitGuide.guide_items
+        });
+        
       } else {
         this.setData({
           isShowSwiperUnit: false,
@@ -173,7 +199,7 @@ Page({
 
   handleScrolltolower() {
     console.log('1', this.data.hasMore);
-    if (this.data.hasMore) {
+    if (this.data.hasMore && (this.data.topSwiperSelectIdx === 3)) {
       this.getTreatureListInfo(this.data.curMuseumId, this.data.page + 1);
     }
   },
@@ -229,12 +255,19 @@ Page({
       url: '/pages/exhibitionall/index'+ url_params
     })
   },
-  handleClickItem(event: any) {
+  handleClickTreatureItem(event: any) {
     const { idx } = event.currentTarget.dataset;
     console.log('-----idx', idx)
     const url_params = generateNewUrlParams({treature_id: idx})
     wx.navigateTo({
       url: '/pages/treaturedetail/index' + url_params,
+    })
+  },
+  handleClickItem(event: any) {
+    const { id } = event.detail;
+    const url_params = generateNewUrlParams({exhibition_id: id})
+    wx.navigateTo({
+      url: '/pages/exhibitiondetail/index' + url_params,
     })
   },
   onLoad(options) {

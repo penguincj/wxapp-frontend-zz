@@ -5,9 +5,24 @@ Page({
   data: {
     treatureInfo: {} as any,
     exhibitionList: [] as any,
+    imageInfo: [] as any,
   },
   scroll(e: any) {
     // console.log(e)
+  },
+
+  getImageInfoAsync(_url: any) {
+    return new Promise((resolve, reject) => {
+      wx.getImageInfo({
+        src: _url,
+        success(res) {
+          resolve(res)
+        },
+        fail(error) {
+          reject(error)
+        }
+      })
+    })
   },
  
 
@@ -15,7 +30,30 @@ Page({
     try {
       const res: any = await getTreatureInfoById(_treatureid);
       if (res && res.treasure) {
+        let image_info = [];
+        const urls = res.treasure.more_image_urls;
+        
+        for (let i = 0; i< urls.length; i++) {
+          console.log('error', urls[i]);
+          let isWid = false;
+          try {
+            const res: any = await this.getImageInfoAsync(urls[i]);
+            console.log('res---------', res)
+            if ((res.width / res.height) > (750/700)) {
+              isWid = true;
+            }
+          } catch (error) {
+            console.log('error---------', error)
+          } finally {
+            image_info.push({
+              image: urls[i],
+              isWid,
+            })
+          }
+        }
+        console.log('image_info---------', image_info)
         this.setData({
+          imageInfo: image_info,
           treatureInfo: res.treasure,
           loading: false,
         })

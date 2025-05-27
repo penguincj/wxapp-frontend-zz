@@ -33,7 +33,7 @@
       </view>
     </view>
   </view>
-  <view class="swiper-unit-area" wx:if="{{isShowSwiperUnit}}">
+  <view class="swiper-unit-area" wx:if="{{listConfig.length}}">
     <swiper-unit2 list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit2>
   </view>
   <view class="unit-tab-pannel-area" wx:if="{{topSwiperSelectIdx === 2}}">
@@ -85,7 +85,7 @@
         <!-- 左列 -->
         <view class="column">
           <block wx:for="{{leftList}}" wx:key="id">
-            <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+            <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
               <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
               <view class="title">{{item.name}}</view>
               <!-- <view class="content">{{item.description}}</view> -->
@@ -100,7 +100,7 @@
         <!-- 右列 -->
         <view class="column">
           <block wx:for="{{rightList}}" wx:key="id">
-            <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+            <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
               <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
               <view class="title">{{item.name}}</view>
               <view class="desc-opendate">

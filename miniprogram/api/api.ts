@@ -19,7 +19,7 @@ export const getMuseumInfoById = (_museumid: any) => {
 
 // 获取博物馆重点文物列表
 export const getTreatureList = (_museumid: any, _num: any, _pagenum: any) => {
-    return request(`/${base_api}/v1/treasures/?museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
+    return request(`/${base_api}/v1/treasures?museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
 // 获取重点文物信息
