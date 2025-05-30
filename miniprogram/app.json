@@ -19,6 +19,7 @@
     "pages/commentdetail/index",
     "pages/gridview/index",
     "pages/guidepage/index",
+    "pages/treaturedetail/index",
     "pages/agent/index"
   ],
   "subpackages": [

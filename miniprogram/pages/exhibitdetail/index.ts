@@ -87,10 +87,16 @@ Page({
     })
   },
   handleEndAudio() {
-    this.setData({
-      isPlay: false,
-
-    })
+    console.log('handleEndAudio----')
+    if (getApp().globalData.audio.isKeepPlaying) {
+      this.handlePlayNext();
+    } else {
+      
+      this.setData({
+        isPlay: false,
+      })
+    }
+    
   },
   handleClickPlayerComp() {
     const targetPage = "pages/exhibitlist/index";
@@ -197,6 +203,13 @@ Page({
       })
       const player = this.selectComponent("#player");
       player.playNextAudio();
+    } else {
+      wx.showToast({
+        title: '本单元已播放完毕～',
+        icon: 'none',
+        duration: 2000
+      })
+      
     }
   },
   handlePlayPrev() {
@@ -359,6 +372,7 @@ Page({
 
   handleAudioEnd() {
     console.log('handleAudioEnd');
+    
   },
   handleAudioPlay() {
     console.log('handleAudioPlay');

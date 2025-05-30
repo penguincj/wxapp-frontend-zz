@@ -70,7 +70,6 @@ Component({
     isReadyPlay: false, //是否已经准备好可以播放了
 
     isLoop: false, //是否循环播放
-
     speedValue: [0.5, 0.8, 1.0, 1.25, 1.5, 2.0],
     speedValueIndex: 2,
     playSpeed: '1.0', //播放倍速 可取值：0.5/0.8/1.0/1.25/1.5/2.0
@@ -120,8 +119,13 @@ Component({
     },
     playNextAudio() {
       const { playingIndex, audioList } = global_audio;
-      if (playingIndex + 1 >= audioList) {
-        console.log('last one')
+      if (playingIndex + 1 >= audioList.length) {
+        console.log('last one');
+        wx.showToast({
+          title: '本单元已播放完毕～',
+          icon: 'none',
+          duration: 2000
+        })
       } else {
         this.triggerEvent('UpatePlayingIndex', {
           playingIndex: playingIndex + 1,
@@ -226,9 +230,9 @@ Component({
     },
     onEndAudio() {
       global_audio.bgAudio.onEnded(() => {
-        console.log('end');
+        console.log('end----------------------------');
         global_audio.isPlay = false;
-        this.triggerEvent('EndAudio')
+        this.triggerEvent('EndAudio');
         this.setData({
           isPlaying: false,
         })

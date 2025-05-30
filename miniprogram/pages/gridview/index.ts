@@ -19,9 +19,7 @@ Page({
     loading: false, // 是否正在加载
     hasMore: true   // 是否还有更多数据
   },
-  scroll() {
 
-  },
   handleClickMuseum(event: any) {
     const { idx } = event.currentTarget.dataset;
     let url_obj = getCurrentPageParam();

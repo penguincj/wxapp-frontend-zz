@@ -1,0 +1,69 @@
+<page-meta page-style="">
+  <!-- <navigation-bar back extClass="transparent" loading="{{false}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar> -->
+  <navigation-bar back styleType="dark" loading="{{false}}" title="{{treatureInfo.name}}" color="dark" background="#FFF" style="text-align: center;"></navigation-bar>
+  <view class="player-area">
+    <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+  </view>
+  <scroll-view style="height: calc(100vh - 88px);" class="scroll-view_H" scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll">
+    <view class="page-treature-detail">
+      <view class="swiper-image-area">
+        <swiper indicator-dots="{{true}}"
+          autoplay="{{false}}" interval="{{500}}" duration="{{200}}">
+          <block wx:for="{{imageInfo}}" wx:key="*this">
+            <swiper-item>
+              <view class="item-swi">
+                <view class="img-bg" style="background-image: url({{item.image}})"></view>
+                <view class="image-item">
+                  <image src="{{item.image}}" class="img-pic" mode="{{item.isWid ? 'aspectFill' : 'heightFix'}}" />
+                </view>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+      <view class="content-wrapper">
+        <view class="content-item">
+          <view class="title-line">
+            <view class="title">
+              <view class="title-name">详情</view>
+              <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+            </view>
+          </view>
+          <view class="type">{{treatureInfo.classification}}</view>
+          <view class="cont">{{treatureInfo.period}}</view>
+          <view class="cont">{{treatureInfo.dimensions}}</view>
+          <view class="cont">{{treatureInfo.museum_name}}</view>
+        </view>
+        <view class="content-item">
+          <view class="title-line">
+            <view class="title">
+              <view class="title-name">简介</view>
+              <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+            </view>
+          </view>
+          <view class="cont">{{treatureInfo.intro}}</view>
+        </view>
+        <view class="content-item">
+          <view class="swiper-card3-area">
+            <card-group1 title="所在展览" list="{{exhibitionList}}" bindClickItem="handleClickItem"></card-group1>
+          </view>
+        </view>
+        
+      </view>
+      <!-- <view class="comment-list-area">
+        <comment-list 
+          userid="{{userid}}" 
+          nickname="{{nickname}}"
+          exhibitionid="{{curExhibitionId}}" 
+          labels="{{label_area}}" 
+          comments="{{comment_area}}" 
+          bindClickCommentIcon="handleClickCommentIcon"
+          bindShowFullImage="handleShowFullImage"
+          bindSelectLabel="handleSelectLabel"
+          bindDelCommentSuc="handleDelCommentSuc"
+        ></comment-list>
+      </view> -->
+    </view>
+  </scroll-view>
+
+</page-meta>
