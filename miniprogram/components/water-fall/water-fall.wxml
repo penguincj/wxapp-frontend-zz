@@ -1,0 +1,37 @@
+<view class="water-container">
+  <!-- 瀑布流容器 -->
+  <view class="waterfall">
+    <!-- 左列 -->
+    <view class="column">
+      <block wx:for="{{leftList}}" wx:key="id">
+        <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+          <image src="{{item.image_url}}" class="img-pic" mode="widthFix" />
+          <view class="title">{{item.name}}</view>
+          <!-- <view class="content">{{item.description}}</view> -->
+          <view class="desc-opendate">
+            <image src="https://gewugo.com/api/v1/storage/image/icons8-clock-52-5413724062.webp" class="opendate-icon" mode="aspectFill" />
+            {{item.opendate}}
+          </view>
+          <!-- <view class="time">{{item.opendate}}</view> -->
+        </view>
+      </block>
+    </view>
+    <!-- 右列 -->
+    <view class="column">
+      <block wx:for="{{rightList}}" wx:key="id">
+        <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+          <image src="{{item.image_url}}" class="img-pic" mode="widthFix" />
+          <view class="title">{{item.name}}</view>
+          <!-- <view class="content">{{item.description}}</view> -->
+          <view class="desc-opendate">
+            <image src="https://gewugo.com/api/v1/storage/image/icons8-clock-52-5413724062.webp" class="opendate-icon" mode="aspectFill" />
+            <text class="desc-txt">{{item.opendate}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <!-- 加载提示 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!hasMore && !loading}}">没有更多数据了</view>
+</view>

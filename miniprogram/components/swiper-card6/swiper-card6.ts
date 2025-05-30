@@ -42,6 +42,7 @@ Component({
     selectId: 999,
     selectName: "",
     keyword: "",
+    isKeepPlayingActive: false,
   },
   lifetimes: {
     attached() {
@@ -76,6 +77,32 @@ Component({
         selectId: idx,
       })
     },
+    handleClickRepeatPlaying() {
+      console.log('handleClickRepeatPlaying')
+      if (getApp().globalData.audio.isKeepPlaying) {
+        getApp().globalData.audio.isKeepPlaying = false;
+        this.setData({
+          isKeepPlayingActive: false
+        })
+        wx.showToast({
+          title: '已为您关闭联播～',
+          icon: 'none',
+          duration: 2000
+        })
+        
+      } else {
+        getApp().globalData.audio.isKeepPlaying = true;
+        this.setData({
+          isKeepPlayingActive: true
+        })
+        wx.showToast({
+          title: '已为您开启联播～',
+          icon: 'none',
+          duration: 2000
+        })
+        
+      }
+    },
     confirmTap() {
       console.log('按下完成触发');
       this.triggerEvent('ClickSearch', {
@@ -90,4 +117,17 @@ Component({
       })
     }
   },
+  pageLifetimes: {
+    show() {
+      if (getApp().globalData.audio.isKeepPlaying) {
+        this.setData({
+          isKeepPlayingActive: true
+        })
+      } else {
+        this.setData({
+          isKeepPlayingActive: false
+        })
+      }
+    },
+  }
 })

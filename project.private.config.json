@@ -46,13 +46,6 @@
           "scene": null
         },
         {
-          "name": "pages/exhibitlist/index",
-          "pathName": "pages/exhibitlist/index",
-          "query": "museum_id=8&exhibition_id=15&narration_id=25",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
           "name": "pages/personal/collectionlist/index",
           "pathName": "pages/personal/collectionlist/index",
           "query": "",

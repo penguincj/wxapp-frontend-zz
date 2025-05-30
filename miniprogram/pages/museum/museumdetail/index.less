@@ -137,6 +137,100 @@
     // padding-top: 30rpx;
     
   }
+  .water-container {
+    width: 750rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding-top: 20rpx;
+    background-color: #f7f8f9;
+    // padding-bottom: 100rpx;
+    .waterfall {
+      width: 680rpx;
+      display: flex;
+      justify-content: space-between;
+
+      // gap: 10rpx;
+      /* 列样式 */
+      .column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12rpx;
+        // margin: 0 10rpx;
+      }
+      
+      /* 项目卡片样式 */
+      .item {
+        width: 330rpx;
+        // margin-bottom: 20rpx;
+        border-radius: 12rpx;
+        padding: 0rpx;
+        box-sizing: border-box;
+        box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        background-color: #FFFFFF;
+        border-radius: 12rpx;
+        
+      }
+
+      .img-pic {
+        width: 330rpx;
+        border-radius: 12rpx;
+      }
+      
+      .title {
+        font-size: 32rpx;
+        line-height: 38rpx;
+        margin-top: 10rpx;
+        padding: 0 16rpx;
+        color: #45465E;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 38rpx;
+        max-height: 76rpx;
+      }
+      
+      .content {
+        font-size: 28rpx;
+        margin-top: 2rpx;
+        padding: 0 16rpx;
+        color: #6B798E;
+      }
+      
+      .desc-opendate {
+       
+        padding: 10rpx 16rpx 20rpx 16rpx; 
+        // box-shadow: 1rpx 1rpx 1rpx 0px rgba(0, 0, 0, 0.3);
+        
+        .txt {
+          font-size: 26rpx;
+          line-height: 39rpx;
+          letter-spacing: 0px;
+          color: #9AA7B1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          
+          
+        }
+      }
+      
+      
+    }
+    /* 加载提示样式 */
+    .loading, .no-more {
+      text-align: center;
+      padding: 30rpx 0;
+      font-size: 28rpx;
+      color: #6B798E;
+    }
+  }
 }
 .player-area {
   position: absolute;

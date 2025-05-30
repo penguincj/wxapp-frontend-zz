@@ -18,6 +18,7 @@ App<IAppOption>({
       curUnitId: 0,
       curExhibition: -1,
       curRate: '1.0',
+      isKeepPlaying: false,
     },
     ai: {
       x: 280,

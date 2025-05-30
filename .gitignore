@@ -1,4 +1,4 @@
-.DS_Store
+miniprogram/static/.DS_Store
 node_modules
 cloudfunctions
 miniprogram/miniprogram_npm
