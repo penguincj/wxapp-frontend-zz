@@ -127,7 +127,7 @@ export const getCurrentCity = async () => {
         lng = longitude;
       }
       const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
-      // const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=30.290937,120.213803`);
+      // const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=32.53279,120.467854`);
       if (city_res && city_res.result && city_res.result.address_component && city_res.result.address_component.city) {
         city = city_res.result.address_component.city;
       } else {

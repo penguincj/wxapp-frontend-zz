@@ -1,4 +1,4 @@
-import { getMuseumById, getMuseumInfoById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList } from "../../../api/api";
+import { getMuseumById, getMuseumInfoById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList, getPostersOfMuseum } from "../../../api/api";
 import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../../utils/util";
 const listConfig = [
   {
@@ -37,6 +37,7 @@ Page({
     listConfig,
     iconsConfig,
     isShowSwiperUnit: false,
+    showPosterBtn: false,
   },
   async initPage(_museumid: any) {
     this.setData({
@@ -58,6 +59,7 @@ Page({
       })
 
       this.getMuseumInfo();
+      this.getPoster(_museumid)
 
     } catch (error) {
       this.setData({
@@ -66,6 +68,35 @@ Page({
     }
   },
 
+  handleClickSharePoster() {
+    const url_params = generateNewUrlParams({
+      museum_id: this.data.curMuseumId,
+      type: 'museum'
+    })
+    wx.navigateTo({
+      url: '/pages/bglist/index' + url_params,
+    })
+  },
+  
+  async getPoster(_museumid: any) {
+    try {
+      const res : any = await getPostersOfMuseum(_museumid);
+      if (res && res.code === 0 && res.poster && res.poster.image_urls && res.poster.image_urls.length) {
+        this.setData({
+          showPosterBtn: true
+        })
+      } else {
+        this.setData({
+          showPosterBtn: false
+        })
+      }
+    } catch (error) {
+      this.setData({
+        showPosterBtn: false
+      })
+    }
+    
+  },
 
   async getMuseumInfo() {
     const res: any = await getMuseumInfoById(this.data.curMuseumId);

@@ -19,6 +19,8 @@
     "pages/commentdetail/index",
     "pages/gridview/index",
     "pages/guidepage/index",
+    "pages/poster/index",
+    "pages/bglist/index",
     "pages/agent/index"
   ],
   "subpackages": [

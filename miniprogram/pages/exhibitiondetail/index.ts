@@ -1,4 +1,4 @@
-import { getCommentsByExhibitionID, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction } from "../../api/api";
+import { getCommentsByExhibitionID, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters } from "../../api/api";
 import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
 
 Page({
@@ -24,6 +24,7 @@ Page({
     showBigImg: false,
     currentLabel: "",
     currentImgIndex: 0,
+    showPosterBtn: false,
   },
   scroll(e: any) {
     // console.log(e)
@@ -68,6 +69,15 @@ Page({
       }
     }
 
+  },
+  handleClickSharePoster() {
+    const url_params = generateNewUrlParams({
+      exhibition_id: this.data.curExhibitionId,
+      type: 'exhibition',
+    })
+    wx.navigateTo({
+      url: '/pages/bglist/index' + url_params,
+    })
   },
   handleClickJiangjie(event: any) {
     console.log('handleClickJiangjie', event.currentTarget.dataset);
@@ -124,11 +134,32 @@ Page({
           isClickVisited: Boolean(res.exhibition.visited)
         })
       }
+      this.getPoster(_exhibitionid);
     } catch (error) {
       this.setData({
         loading: false,
       })
     }
+  },
+
+  async getPoster(exhibition_id: any) {
+    try {
+      const res : any = await getPosters(exhibition_id);
+      if (res && res.code === 0 && res.poster && res.poster.image_urls && res.poster.image_urls.length) {
+        this.setData({
+          showPosterBtn: true
+        })
+      } else {
+        this.setData({
+          showPosterBtn: false
+        })
+      }
+    } catch (error) {
+      this.setData({
+        showPosterBtn: false
+      })
+    }
+    
   },
   
   async getComments(exhibition_id: any, labelname = "") {
