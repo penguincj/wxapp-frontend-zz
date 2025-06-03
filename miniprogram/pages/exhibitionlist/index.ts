@@ -1,4 +1,4 @@
-import { getCityList, getCityRecoExhibitionList, getCityLongExhibitionList, getCityPastExhibitionList } from '../../api/api';
+import { getCityList, getCityListFilter, getCityRecoExhibitionList, getCityLongExhibitionList, getCityPastExhibitionList } from '../../api/api';
 import { getCurrentCity, generateNewUrlParams, backToTargetPage } from "../../utils/util";
 
 Page({
@@ -129,7 +129,7 @@ Page({
     })
     try {
       const city = await getCurrentCity();
-      const citylist:any = await getCityList();
+      const citylist:any = await getCityListFilter();
       let city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
       this.setData({
         cityList: citylist.cities 

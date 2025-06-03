@@ -22,9 +22,9 @@
     <view class="page-section-spacing" style="{{scrollStyle}}">
       <scroll-view wx:if="{{list && list.length}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll" style="{{scrollStyle}}">
         <block wx:for="{{list}}">
-          <view class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
+          <view class="card-group" bindtap="selectItem" data-idx="{{item.id}}" catchtap="clickItemImg">
             <view class="group-one">
-              <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFix" />
+              <image class="card-img" data-idx="{{item.id}}" src="{{item.image_url}}" mode="aspectFix" />
               <view class="card-info">
                 <view class="card-title">{{item.name}}</view>
                 <view class="card-desc">
