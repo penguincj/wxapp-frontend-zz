@@ -18,6 +18,12 @@
     <view class="museum-text-group">
       <view class="title">{{museumInfo.name}}</view>
       <view class="desc">{{museumInfo.description}}</view>
+      <view class="btn-line" wx:if="{{showPosterBtn}}">
+        <view class="btn btn-poster" bindtap="handleClickSharePoster">
+          <image class="btn-image" src="/static/images/share1.png" mode="aspectFix" />
+          <text class="cont">生成分享海报</text>
+        </view>
+      </view>
       <view class="line"></view>
       <view class="open-date text-flex">
           <image src="/static/images/date.png" class="museum-icon" mode="aspectFill" />

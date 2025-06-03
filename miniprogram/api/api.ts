@@ -239,3 +239,14 @@ export const delCommentLike = (_exhibitionid: any,  _userid: any,  _commentid: a
         method: 'DELETE'
     })
 }
+
+// 海报背景列表
+export const getPosters = (_exhibitionid: any) => {
+    return request(`/${base_api}/v1/posters?type=exhibition&id=${_exhibitionid}`)
+}
+
+
+// 海报背景列表
+export const getPostersOfMuseum = (_museumid: any) => {
+    return request(`/${base_api}/v1/posters?type=museum&id=${_museumid}`)
+}

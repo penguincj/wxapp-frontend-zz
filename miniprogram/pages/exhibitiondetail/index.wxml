@@ -35,6 +35,10 @@
               <image wx:else class="btn-image" src="/static/images/visited-gray.png" mode="aspectFix" />
               <text class="cont">看过</text>
             </view>
+            <view wx:if="{{showPosterBtn}}" class="btn btn-poster" bindtap="handleClickSharePoster">
+              <image class="btn-image" src="/static/images/share1.png" mode="aspectFix" />
+              <text class="cont">生成分享海报</text>
+            </view>
           </view>
           <view class="line"></view>
           <view class="group-two">

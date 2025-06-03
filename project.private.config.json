@@ -11,22 +11,15 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/treature/index",
-          "pathName": "pages/treaturedetail/index",
-          "query": "treature_id=5",
+          "name": "pages/bglist/index",
+          "pathName": "pages/bglist/index",
+          "query": "",
           "scene": null,
           "launchMode": "default"
         },
         {
-          "name": "pages/guidepage/index",
-          "pathName": "pages/guidepage/index",
-          "query": "museum_id=11&select_id=1",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/gridview/index",
-          "pathName": "pages/gridview/index",
+          "name": "pages/poster/index",
+          "pathName": "pages/poster/index",
           "query": "",
           "launchMode": "default",
           "scene": null
