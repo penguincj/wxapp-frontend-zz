@@ -127,7 +127,7 @@ Page({
         const recoExhibition: any = await getCityRecoExhibitionList(city_id, 1);
         console.log('museums', res.museums, recoExhibition);
   
-        if (res && res.museums) {
+        if (res && res.code === 0 && res.museums) {
           this.setData({
             museumList: res.museums,
           })

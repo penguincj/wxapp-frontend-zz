@@ -10,7 +10,7 @@ export const getCityListFilter = () => {
 }
 
 export const getMuseumList = (_cityid: any) => {
-    return request(`/${base_api}/v1/museums?cityID=${_cityid}`);
+    return request(`/${base_api}/v1/museums?hidden=0&cityID=${_cityid}`);
 }
 
 export const getMuseumById = (_museumid: any) => {
