@@ -10,7 +10,7 @@
       </block>
     </view>
   </view>
-  <view class="comment-desc">观展有感：{{comment.content}}</view>
+  <view class="comment-desc">{{comment.content}}</view>
   <view wx:if="{{comment.labels.length}}" class="impression">印象：
     <block wx:for="{{comment.labels}}">{{(comment.labels.length === index + 1) ? item : item+'·'}}</block>
     </view>

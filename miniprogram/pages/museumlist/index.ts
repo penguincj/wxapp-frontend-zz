@@ -53,12 +53,7 @@ Page({
         showLoading: false,
       })
     }
-    const museum_res: any = await getMuseumList(_cityid);
-      if (museum_res && museum_res.museums) {
-        this.setData({
-          museumList: museum_res.museums,
-        })
-      }
+
   },
   handleClickPlayerComp() {
     const targetPage = "pages/exhibitlist/index";
@@ -89,17 +84,8 @@ Page({
         })
       }
       console.log(city_item);
+      await this.getMuseumList(city_id)
       
-      const museum_res: any = await getMuseumList(city_id);
-      if (museum_res && museum_res.museums) {
-        console.log('museumlist onLoad', museum_res);
-        this.setData({
-          museumList: museum_res.museums,
-        })
-      }
-      this.setData({
-        showLoading: false,
-      })
     } catch (error) {
       console.log(error);
       

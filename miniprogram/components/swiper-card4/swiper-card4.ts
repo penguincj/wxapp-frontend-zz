@@ -23,7 +23,7 @@ Component({
     vertical: false,
     autoplay: false,
     interval: 2000,
-    duration: 1000,
+    duration: 500,
     current: 0,
   },
   lifetimes: {

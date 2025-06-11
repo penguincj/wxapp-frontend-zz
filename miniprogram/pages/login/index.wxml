@@ -11,9 +11,10 @@
           <view class="right">
             <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
               <image class="avatar" src="{{userInfo.avatar}}"></image>
+              <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+
             </button>
 
-            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
           </view>
         </view>
       </view>
@@ -23,8 +24,8 @@
             <text class="text">昵称</text>
           </view>
           <view class="right">
-            <input type="nickname" class="nickname-input" placeholder="请输入昵称" value="{{userInfo.nickname}}" bind:change="onInputChange" />
-            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" />
+            <input type="nickname" class="nickname-input" placeholder="请输入昵称" focus="{{isInputFocus}}" value="{{userInfo.nickname}}" bindfocus="handleFocus" bindblur="handleBlur" bind:change="onInputChange" />
+            <image class="title-img" src="/static/images/arr-r.png" mode="aspectFix" bindtap="handleClickNickArr" />
           </view>
         </view>
       </view>

@@ -13,6 +13,7 @@ Component({
       nickname: '',
       userid: -1,
     },
+    isInputFocus: false,
     hasUserInfo: false,
     canIUseGetUserProfile: wx.canIUse('getUserProfile'),
     canIUseNicknameComp: wx.canIUse('input.type.nickname'),
@@ -32,7 +33,7 @@ Component({
       const token = await wx.getStorageSync('token');
       if (avatarUrl) {
         wx.uploadFile({
-          url: `https://gewugo.com/api/v1/users/${userid}/avatar`, //仅为示例，非真实的接口地址
+          url: `https://gewugo.com/api/v1/users/${userid}/avatar`, 
           header: {
             "Content-Type": "multipart/form-data",
             'Authorization': 'Bearer ' + token
@@ -44,7 +45,6 @@ Component({
             if (typeof(data) === 'string') {
               data = JSON.parse(data);
             }
-            console.log('upload success 222', data.code);
 
             if (data && data.code === 0) {
               this.modifyUserInfoAsync(userid, nickname, data.url);
@@ -67,6 +67,9 @@ Component({
       //   hasUserInfo: nickname && avatar && avatar !== defaultAvatar,
       // })
     },
+    handleClickAvaArr() {
+      
+    },
     async modifyUserInfoAsync(userid: any, nickname: any, avatar: any) {
       try {
         const info_res: any = await modifyNameAndAva(userid, {
@@ -76,7 +79,7 @@ Component({
             avatar,
           }
         })
-        if (info_res && info_res.user) {
+        if (info_res && info_res.code === 0 && info_res.user) {
           const {avatar, nickname} = info_res.user;
           this.setData({
             userInfo: {
@@ -91,6 +94,13 @@ Component({
             avatar,
             nickname
           })
+        } else {
+          wx.showToast({
+            title: '修改失败',
+            icon: 'error',
+            duration: 2000
+          })
+          
         }
         console.log('info_res', info_res)
       } catch (error) {
@@ -108,6 +118,21 @@ Component({
         }
       })
       this.modifyUserInfoAsync(userid, nickname, avatar);
+    },
+    handleClickNickArr() {
+      this.setData({
+        isInputFocus: true,
+      })
+    },
+    handleFocus() {
+      this.setData({
+        isInputFocus: true,
+      })
+    },
+    handleBlur() {
+      this.setData({
+        isInputFocus: false,
+      })
     },
     // getUserProfile() {
     //   // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

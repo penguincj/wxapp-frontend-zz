@@ -5,8 +5,12 @@ export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);
 }
 
+export const getCityListFilter = () => {
+    return request(`/${base_api}/v1/cities?type=has_narration`);
+}
+
 export const getMuseumList = (_cityid: any) => {
-    return request(`/${base_api}/v1/museums?cityID=${_cityid}`);
+    return request(`/${base_api}/v1/museums?hidden=0&cityID=${_cityid}`);
 }
 
 export const getMuseumById = (_museumid: any) => {
