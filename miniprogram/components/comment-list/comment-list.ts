@@ -5,6 +5,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    pageindex: {
+      type: String,
+      value: ''
+    },
+    title: {
+      type: String,
+      value: '',
+    },
     labels: {
       type: Array,
       value: [],

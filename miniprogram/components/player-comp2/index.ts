@@ -2,7 +2,6 @@
 // import { audioList } from './mock';
 import { throttle, getCurrentPageParamStr } from '../../utils/util';
 import { getExhibitList, sendListenAudioAction } from '../../api/api';
-import { destroy } from 'XrFrame/kanata/lib/frontend';
 
 const global_audio = getApp().globalData.audio;
 Component({
@@ -11,21 +10,8 @@ Component({
       type: Boolean,
       value: false
     },
-    exhibitName: {
-      type: String,
-      value: '',
-    }
   },
   data: {
-    // audioList: audioList,
-    // bgAudio: null as any,
-    // playingIndex: 0,
-    // stored_audio: [] as string[],
-    // curExhibit: {},
-
-    // totalTimeText: '00:00', //视频总长度文字
-    // currentTimeText: '00:00:00', //视频已播放长度文字
-
     isPlaying: false, //播放状态
 
     // sliderIndex: 0, //滑块当前值
@@ -274,7 +260,6 @@ Component({
       const { src, startTime, title, epname, singer, coverImgUrl, audio_id } = audio_i;      
 
       let local_audio = await this.findLocalAudio(src);
-      
       console.log('local', local_audio)
       // wx.getStorage({
       //   key: 'audios',
@@ -310,7 +295,6 @@ Component({
         global_audio.bgAudio = bgAudio;
         global_audio.isPlay = true;
         global_audio.lastPlayIndex = global_audio.playingIndex;
-        global_audio.bgAudio.manualStop = false;
         // this.setData({
         //   isPlay: true,
         //   bgAudio,
@@ -341,8 +325,7 @@ Component({
         global_audio.bgAudio = bgAudio;
         global_audio.isPlay = true;
         global_audio.lastPlayIndex = global_audio.playingIndex;
-        global_audio.bgAudio.manualStop = false;
-        console.log('bgAudiobgAudiobgAudiobgAudiobgAudio', bgAudio)
+
         // this.setData({
         //   isPlay: true,
         //   bgAudio,
@@ -416,32 +399,6 @@ Component({
       await this.initPageAudio(_curExhibit);
     },
 
-    destroyBgAudio () {
-      if (global_audio.bgAudio) {
-        // global_audio = {
-        //   bgAudio: null,
-        //   audioList: [],
-        //   playingIndex: 0,
-        //   stored_audio: [],
-        //   curExhibit: null,
-        //   isPlay: false,
-        //   lastPlayIndex: 0,
-        //   duration: 0,
-        //   totalTimeText: '00:00',
-        //   exhibitlistParams: '',
-        //   curUnitId: 0,
-        //   curExhibition: -1,
-        //   curRate: '1.0',
-        //   isKeepPlaying: false,
-        // }
-        global_audio.bgAudio.stop();
-        global_audio.bgAudio.manualStop = true;
-        this.setData({
-          isShow: false,
-        })
-      }
-    },
-
     handleClickPlayerComp() {
       this.triggerEvent('ClickPlayerComp')
     },
@@ -485,11 +442,6 @@ Component({
     
   },
 
-  handleClickClosePlayer() {
-    console.log('handleClickClosePlayer');
-    this.destroyBgAudio();
-  },
-
   },
 
   
@@ -512,7 +464,7 @@ Component({
       console.log('in attached player comp',global_audio.bgAudio.paused);
 
         this.setData({
-          isShow: !global_audio.bgAudio.manualStop,
+          isShow: true,
           moveplayx: getApp().globalData.play.x,
           moveplayy: getApp().globalData.play.y
         })
@@ -555,14 +507,10 @@ Component({
       console.log('in attached player comp show', global_audio.bgAudio);
       if (global_audio && global_audio.bgAudio) {
         this.setData({
-          isShow: !global_audio.bgAudio.manualStop,
+          isShow: true,
           isPlaying: !global_audio.bgAudio.paused,
           moveplayx: getApp().globalData.play.x,
           moveplayy: getApp().globalData.play.y
-        })
-      } else {
-        this.setData({
-          isShow: false,
         })
       }
 

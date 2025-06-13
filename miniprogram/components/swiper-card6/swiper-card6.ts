@@ -65,7 +65,6 @@ Component({
       this.triggerEvent('ChangeItem', {
         selectId: idx,
       })
-      
     },
     clickItemImg(e: any) {
       console.log('clickItemImg', e);

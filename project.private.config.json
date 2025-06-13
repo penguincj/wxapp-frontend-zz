@@ -11,15 +11,15 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/bglist/index",
-          "pathName": "pages/bglist/index",
+          "name": "pages/index2/index",
+          "pathName": "pages/index2/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
         },
         {
-          "name": "pages/poster/index",
-          "pathName": "pages/poster/index",
+          "name": "pages/bglist/index",
+          "pathName": "pages/bglist/index",
           "query": "",
           "launchMode": "default",
           "scene": null

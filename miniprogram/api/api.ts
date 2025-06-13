@@ -1,5 +1,5 @@
 import { request } from "../utils/util"
-export const base_api = true ? 'api' : 'test-api'
+export const base_api = false ? 'api' : 'test-api'
 
 export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);
@@ -253,4 +253,9 @@ export const getPosters = (_exhibitionid: any) => {
 // 海报背景列表
 export const getPostersOfMuseum = (_museumid: any) => {
     return request(`/${base_api}/v1/posters?type=museum&id=${_museumid}`)
+}
+
+// 首页二期评价列表
+export const getHotComments = (_num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/communities/exhibitions/12/comments?label_name=&num=${_num}&pageNum=${_pagenum}`)
 }

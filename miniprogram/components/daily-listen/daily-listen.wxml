@@ -1,0 +1,29 @@
+<view class="daily-listen-comp">
+  <view class="title-line">
+    <view class="title">
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+      <view class="title-name">{{title}}</view>
+    </view>
+  </view>
+  <view class="card-area">
+    <view class="card-group" bindtap="selectItem" data-idx="{{exhibition.id}}" catchtap="clickItemImg">
+      <view class="group-one">
+        <image class="card-img" data-idx="{{exhibition.id}}" src="{{exhibition.img}}" mode="aspectFix" />
+        <view class="card-info">
+          <view class="card-title">{{exhibition.exhibit_name}}</view>
+          <view class="card-desc">
+            <view class="exhibition-name">{{exhibition.exhibition_name}}</view>
+            <view class="desc-item">
+              <image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
+              {{exhibition.duration_fmt}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="card-icon">
+        <image wx:if="{{isPlay}}" class="play-icon" src="/static/images/pause2.png" mode="aspectFix" bindtap="handleClickPause" />
+        <image wx:else class="play-icon" src="/static/images/play1.png" mode="aspectFix" bindtap="handleClickPlay" />
+      </view>
+    </view>
+  </view>
+</view>

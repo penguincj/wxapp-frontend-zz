@@ -1,13 +1,19 @@
-<view class="comment-item" data-idx="{{comment.comment_id}}" bindtap="handleClickComment">
-  <view class="hr-line"></view>
+<view class="comment-item" data-idx="{{comment.comment_id}}" data-eid="{{comment.exhibition_id || 12}}" bindtap="handleClickComment">
+  <view class="{{pageindex ? 'hr-line-empty': 'hr-line'}}"></view>
   <view class="title-line">
     <image src="{{comment.user_avatar}}" class="c-ava" mode="aspectFit" />
-    <view class="c-name">{{comment.user_name}}</view>
-    <view class="content-star-group">
-      <block wx:for="{{[1,2,3,4,5]}}">
-        <image wx:if="{{comment.stars >= item}}" src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
-        <image wx:else src="/static/images/star_gray.png" mode="aspectFit" class="content-star" />
-      </block>
+    <view class="name-group">
+      <view class="c-name">
+        {{comment.user_name}}
+        <!-- <text wx:if="{{comment.exhibition_name}}">评论了<text style="font-weight: bold;">「{{comment.exhibition_name}}」</text></text> -->
+        <text style="font-weight: 400;">评论了<text style="font-weight: bold;">「预出昆钢」</text></text>
+      </view>
+      <view class="content-star-group">
+        <block wx:for="{{[1,2,3,4,5]}}">
+          <image wx:if="{{comment.stars >= item}}" src="/static/images/star_yellow.png" mode="aspectFit" class="content-star" />
+          <image wx:else src="/static/images/star_gray.png" mode="aspectFit" class="content-star" />
+        </block>
+      </view>
     </view>
   </view>
   <view class="comment-desc">{{comment.content}}</view>
@@ -16,7 +22,7 @@
     </view>
   <view class="{{comment.images.length > 1 ? 'muti-images': 'image-group'}}">
     <block wx:for="{{comment.images}}">
-      <image src="{{item}}" data-idx="{{index}}" data-imglist="{{comment.images}}" data-img="{{item}}" class="image-item" mode="{{comment.images.length > 1 ? 'aspectFill': 'widthFix'}}" catchtap="handleClickImg" />
+      <image src="{{item}}" data-idx="{{index}}" data-imglist="{{comment.images}}" data-img="{{item}}" data-comment="{{comment}}" class="image-item" mode="{{comment.images.length > 1 ? 'aspectFill': 'widthFix'}}" catchtap="handleClickImg" />
     </block>
   </view>
   <view class="info-line">

@@ -3,6 +3,10 @@ import { generateNewUrlParams, getCurrentPageUrl } from "../../utils/util";
 
 Component({
   properties: {
+    pageindex: {
+      type: String,
+      value: '',
+    },
     comment: {
       type: Object,
       value: {} as any
@@ -64,30 +68,52 @@ Component({
     },
 
     handleClickComment(e: any) {
+      console.log(e)
+      const { idx, eid } = e.currentTarget.dataset;
       const currentPage = getCurrentPageUrl();
       console.log('currentPage', currentPage);
-      if (currentPage.indexOf('commentdetail/index') !== -1) {
-        return;
+
+      if(this.data.pageindex && eid) {
+        const url_params = generateNewUrlParams({
+          exhibition_id: eid
+        })
+        wx.navigateTo({
+          url: '/pages/exhibitiondetail/index' + url_params,
+        })
+        
+      } else {
+        if (currentPage.indexOf('commentdetail/index') !== -1) {
+          return;
+        }
+        const url_params = generateNewUrlParams({
+          comment_id: idx,
+          exhibition_id: this.data.exhibitionid
+        })
+        wx.navigateTo({
+          url: '/pages/commentdetail/index' + url_params,
+        })
       }
-      const { idx } = e.currentTarget.dataset;
-      console.log(e)
-      const url_params = generateNewUrlParams({
-        comment_id: idx,
-        exhibition_id: this.data.exhibitionid
-      })
-      wx.navigateTo({
-        url: '/pages/commentdetail/index' + url_params,
-      })
+      
     },
 
     handleClickImg(e: any) {
       console.log();
-      const { img, imglist, idx } = e.currentTarget.dataset;
+      const { img, imglist, idx, comment } = e.currentTarget.dataset;
       // this.setData({
       //   showBigImg: true,
       //   bigImg: img,
       // })
-      this.triggerEvent('ShowFullImage', {img, imglist, showBigImg: true, idx});
+      if(this.data.pageindex === 'index') {
+        const { exhibition_id = 12 } = comment;
+        const url_params = generateNewUrlParams({
+          exhibition_id: exhibition_id
+        })
+        wx.navigateTo({
+          url: '/pages/exhibitiondetail/index' + url_params,
+        })
+      } else {
+        this.triggerEvent('ShowFullImage', {img, imglist, showBigImg: true, idx});
+      }
     },
   },
 

@@ -1,0 +1,27 @@
+<view class="scroll-exhibition-comp">
+	<view class="container">
+		<view class="page-section-spacing">
+			<scroll-view
+			 class="scroll-view_H"
+			 scroll-x="{{true}}"
+			 show-scrollbar="{{false}}"
+			 enhanced="{{true}}"
+			 style="width: 100%;"
+			>
+				<block wx:for="{{list}}">
+					<view class="item-group" data-idx="{{item.id}}" bindtap="selectItem">
+						<image src="{{item.img}}" mode="aspectFill" class="item-img" />
+						<image src="/static/images/play-index.png" class="play-item-icon" mode="aspectFit" />
+						<image src="/static/images/index-new.png" class="tag-item-icon" mode="aspectFit" />
+            <view class="text-group">
+              <view class="item-txt">{{item.exhibition_name}}</view>
+						  <view class="item-detail" wx:if="{{item.exhibition_name.length < 7}}">{{item.museum_name}}</view>
+            </view>
+					</view>
+				</block>
+
+			</scroll-view>
+		</view>
+	</view>
+</view>
+

@@ -6,21 +6,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    title: {
-      type: String,
-      value: '',
-    },
     list: {
       type: Array,
       value: [],
-    },
-    smalllist: {
-      type: Array,
-      value: [],
-    },
-    len: {
-      type: Number,
-      value: 0,
     },
   },
   /**
@@ -43,10 +31,13 @@ Component({
    */
   methods: {
     handleClickItem(e: any) {
-      const { idx } = e.currentTarget.dataset;
+      const { idx, link } = e.currentTarget.dataset;
+      
       this.triggerEvent('ClickItem', {
         id: idx,
-      })
+        link,
+      });
+     
     },
     handleClickMore() {
       this.triggerEvent('ClickMore')
