@@ -19,7 +19,7 @@
             </view>
 					</view>
 				</block>
-        <view wx:if="{{totalLen > 5}}" class="more-ex" bindtap="handleClickMore">更多展览 ></view>
+        <view wx:if="{{totalLen > 15}}" class="more-ex" bindtap="handleClickMore">更多展览 ></view>
 			</scroll-view>
 		</view>
 	</view>
