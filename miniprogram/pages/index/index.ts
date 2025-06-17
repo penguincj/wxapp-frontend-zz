@@ -1,141 +1,5 @@
-import { getHotComments, getCityList, getMuseumList, getCityRecoExhibitionList } from "../../api/api";
-import { generateDateFormat, getCurrentCity, backToTargetPage, getCurrentPageParamStr, throttle, generateNewUrlParams } from "../../utils/util";
-
-const bannerList = [{
-  id: 1,
-  image_url: 'https://gewugo.com/test-api/v1/storage/image/纯图版-9333554936.webp',
-  app_url: '/pages/exhibitiondetail/index?exhibition_id=4&city_id=4'
-}, {
-  id: 2,
-  image_url: 'https://gewugo.com/test-api/v1/storage/image/Rectangle8@2x-3418066973.webp',
-  app_url: '/pages/exhibitionlist/index'
-}, {
-  id: 3,
-  image_url: 'https://gewugo.com/test-api/v1/storage/image/Rectangle7@2x-3743156654.webp',
-  app_url: '/pages/exhibitionlist/index'
-}, {
-  id: 4,
-  image_url: 'https://gewugo.com/test-api/v1/storage/image/Rectangle6@2x-1761610838.webp',
-  app_url: '/pages/exhibitionlist/index'
-}, {
-  id: 5,
-  image_url: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-  app_url: '/pages/exhibitionlist/index'
-}, {
-  id: 6,
-  image_url: 'https://gewugo.com/test-api/v1/storage/image/arr-r-6468210569.webp',
-  app_url: '/pages/exhibitionlist/index'
-}];
-const exhibitionList = [
-  {
-    id: 1,
-    img: 'https://gewugo.com/test-api/v1/storage/image/Rectangle7@2x-3743156654.webp',
-    exhibition_name: '玉出昆冈',
-    museum_name: '故宫博物院',
-    tags: ['new'],
-  },
-  {
-    id: 2,
-    img: 'https://gewugo.com/test-api/v1/storage/image/Rectangle7@2x-3743156654.webp',
-    exhibition_name: '了不起的民间艺术',
-    museum_name: '故宫博物院',
-    tags: ['new'],
-  },
-  {
-    id: 3,
-    img: 'https://gewugo.com/test-api/v1/storage/image/Rectangle7@2x-3743156654.webp',
-    exhibition_name: '玉出昆冈',
-    museum_name: '故宫博物院',
-    tags: ['new'],
-  },
-  {
-    id: 4,
-    img: 'https://gewugo.com/test-api/v1/storage/image/Rectangle7@2x-3743156654.webp',
-    exhibition_name: '了不起的民间艺术',
-    museum_name: '故宫博物院',
-    tags: ['new'],
-  },
-];
-const dailyListen = {
-  id: 1,
-  exhibition_name: '文物名称',
-  exhibit_name: '海外瑰宝回归东方展',
-  duration: 111,
-  duration_fmt: '22:35',
-  img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-  audio_url: 'https://gewugo.com/test-api/v1/storage/audio/%E5%8A%9F%E5%8B%8B%E5%96%B7%E6%B0%94%E5%BC%8F%E6%AD%BC%E5%87%BB%E6%9C%BA-9076931046.mp3',
-};
-const museumArrayList = [
-  [
-    {
-      id: 1,
-      rank: 1,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-    {
-      id: 2,
-      rank: 2,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-    {
-      id: 3,
-      rank: 3,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-  ],
-  [
-    {
-      id: 1,
-      rank: 4,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-    {
-      id: 2,
-      rank: 1,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-    {
-      id: 3,
-      rank: 1,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-  ],
-  [
-    {
-      id: 1,
-      rank: 1,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-    {
-      id: 2,
-      rank: 1,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-    {
-      id: 3,
-      rank: 1,
-      museum_name: '故宫博物院',
-      detail: '乐林泉、万物和生等展览',
-      img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-    },
-  ],
-] as any;
+import { getHotComments, getCityList, getIndexData, getIndexCityData, getCityRecoExhibitionList } from "../../api/api";
+import { generateDateFormat, calTimeTxt, backToTargetPage, generateCityList, getLocation, throttle, generateNewUrlParams } from "../../utils/util";
 
 const museumList = [
   {
@@ -161,35 +25,37 @@ const museumList = [
   },
 ] as any;
 
-
+let interval = null as any;
 
 Page({
   data: {
-    bannerList,
-    exhibitionList,
-    dailyListen,
-    museumArrayList: museumArrayList as any,
-    museumList: museumList as any,
+    loading: false,
+    bannerList: [] as any,
+    exhibitionList: [] as any,
+    showExhibitionList: [] as any,
+    dailyListen: {} as any,
+    museumArrayList: [] as any,
+    museumList: [] as any,
     comment_list: [] as any,
     hasMore: false,
     page: 1,
     cityList: [] as any,
-    curCityId: -1,
+    curCityId: 1,
     cityName: "",
     isShowMask: false,
     curExhibit: {} as any,
+    isNew: false,
+    curExhibitName: '',
+    curExhibitImg: '',
+    comment_loading: false,
   },
 
   handleBannerClickItem(e: any) {
     const { id, link } = e.detail;
     if (link) {
-      try {
-        wx.navigateTo({
-          url: link
-        })
-      } catch (error) {
-        console.log(error)
-      }
+      wx.navigateTo({
+        url: link
+      })
       console.log('-----111----', link)
     }
   },
@@ -206,69 +72,175 @@ Page({
     }
   },
 
+  freshPage() {
+    let that = this;
+    interval = setInterval(function () {
+      //  需要执行的代码
+      const cur_exhibit = getApp().globalData.audio.curExhibit;
+      if (cur_exhibit && cur_exhibit.name && cur_exhibit.name !== that.data.curExhibitName) {
+        that.setData({
+          curExhibitName: cur_exhibit.name,
+          curExhibitImg: cur_exhibit.image_url,
+        })
+      }
+  }, 2000); // 2000为毫秒级参数，表示2秒
+  },
+
+  destoryInverval() {
+    clearInterval(interval);
+  },
+
+  handleMuseumClickItem(e: any) {
+    const { id } = e.detail;
+    if (id) {
+      const url_params = generateNewUrlParams({
+        museum_id: Number(id)
+      })
+      wx.navigateTo({
+        url: '/pages/museum/museumdetail/index' + url_params,
+      })
+    }
+  },
+
   async getComments(_pagenum=1) {
-    const res: any = await getHotComments(10, _pagenum);
-    console.log(res);
-    if (res && res.code === 0) {
-      const { comment_area, pagenum=1, total=1 } = res.data;
-      // const star_distribution = data_area.star_distribution.reverse();
-      // const score = Number(data_area.score.toFixed(1));
-
-      const comments = comment_area.map((item: any) => {
-        const calTime = generateDateFormat(item.timestamp);
-        return {
-          ...item,
-          calTime,
-        }
-      })
-      this.setData({
-        comment_list: [...this.data.comment_list, ...comments],
-        page: pagenum,
-        hasMore: Number(total) > Number(pagenum)
-      })
-    }
-  },
-
-  async getCityListAsync() {
-    const city = await getCurrentCity();
-    const citylist:any = await getCityList();
-    let city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
-    console.log('citylist---', citylist);
-    const list = [{
-      id: 0,
-      name: '全国'
-    }, ...citylist.cities] as any;
-    
-    let city_id = -1;
-
-    if(city_item && city_item.name) {
-      city_id = city_item.id;
-    } else {
-      city_item = ((citylist || {}).cities || []).find((i: any) => i.name === '北京市');
-      city_id = city_item.id;
-      // this.generateSelectCityList(city_item, citylist.cities);
-    }
     this.setData({
-      cityList: list,
-      curCityId: city_id,
-      cityName: city_item.name,
+      comment_loading: true,
     })
-    console.log(city_item);
+    try {
+      const res: any = await getHotComments(10, _pagenum, this.data.curCityId);
+      console.log(res);
+      if (res && res.code === 0) {
+        const { data, page_num, total_page_num } = res;
+        // const star_distribution = data_area.star_distribution.reverse();
+        // const score = Number(data_area.score.toFixed(1));
+
+        const comments = data.map((item: any) => {
+          const calTime = generateDateFormat(item.timestamp);
+          return {
+            ...item,
+            calTime,
+          }
+        })
+        this.setData({
+          comment_list: [...this.data.comment_list, ...comments],
+          page: page_num,
+          hasMore: Number(total_page_num) > Number(page_num)
+        })
+      }
+      this.setData({
+        comment_loading: false,
+      })
+    } catch (error) {
+      this.setData({
+        comment_loading: false,
+      })
+    }
     
   },
 
+  generateMuseumArr(_mlist: any) {
+    let museumArrayList = [];
+    let len = 0;
+    if ((_mlist.length % 3) === 0) {
+      len = Math.floor(_mlist.length / 3);
+    } else {
+      len = Math.floor(_mlist.length / 3) + 1;
+    }
+
+    for (let i=0; i< len; i++) {
+      let arr = [];
+      for (let j=0; j<3; j++) {
+        if(_mlist[i*3 + j]) {
+          arr.push(_mlist[i*3 + j])
+        }
+      }
+      museumArrayList.push(arr);
+      arr = [];
+    }
+    return museumArrayList;
+  },
+
+  generateFlags(_exhibitionlist: any) {
+    const exhibitionList = _exhibitionlist.map((i: any) => 
+       
+      {
+        let flag = false;
+        if (i.tags && i.tags.length && i.tags.includes('NEW')) {
+          flag = true;
+        } 
+        return {
+          ...i, 
+          is_new_flag: flag,
+        }
+      }
+    );
+    return exhibitionList;
+  },
+
+  handleClickMoreExh() {
+    wx.switchTab({
+      url: '/pages/gridview/index'
+    })
+  },
+
+  async getPageIndex(_lat: any, _lng: any, _cityid=0) {
+    let res: any;
+    if (_cityid) {
+      res = await getIndexCityData(_lat, _lng, _cityid);
+    } else {
+      res= await getIndexData(_lat, _lng);
+    }
+    if (res && res.code === 0) {
+      const { banner_list, city_list, current_city_id, daily_listen, exhibition_list, is_new, museum_list } = res.data;
+      const museumList = museum_list.map((i: any, index: any) => ({...i, museum_name: (index+1) + '.' + i.museum_name}));
+      const museumArrayList = this.generateMuseumArr(museumList);
+      const exhibitionList = this.generateFlags(exhibition_list);
+      const showExhibitionList = exhibitionList.slice(0, 15);
+      const cityList = generateCityList(city_list);
+      const city = cityList.find((i: any)=> i.id === current_city_id);
+      let cityName = '';
+      if (city) {
+        cityName = city.d_name
+      }
+      const duration_fmt = calTimeTxt(daily_listen.duration);
+      
+      this.setData({
+        bannerList: banner_list,
+        exhibitionList,
+        showExhibitionList,
+        curCityId: current_city_id,
+        cityList,
+        dailyListen: {...daily_listen, duration_fmt},
+        isNew: is_new,
+        museumList,
+        museumArrayList,
+        cityName,
+      })
+      wx.hideLoading();
+      this.setData({
+        loading: false
+      })
+    }
+    wx.hideLoading();
+    this.setData({
+      loading: false
+    })
+
+  },
+
+ 
   handleCityChange(event: any) {
+    console.log('event.detail', event.detail)
     const { selectedId, selectedName } = event.detail;
     this.setData({
       curCityId: selectedId,
       cityName: selectedName
     });
-    // this.clearList();
-    // this.getExhibitionList(selectedId);
+    this.initPage(selectedId);
   },
 
   handleClickReLoc() {
-    // this.initPage();
+    this.initPage();
   },
 
   handleCityPannelOpenStateChange(e: any) {
@@ -293,14 +265,73 @@ Page({
     }
   },
 
-  handleClickPlayerComp() {
-    const targetPage = "pages/exhibitlist/index";
-    backToTargetPage(targetPage);
+  handleClickPlayerComp(e: any) {
+    const { continueListen, continueObj } = e.detail;
+    if (continueListen && continueObj && continueObj.exhibit_id) {
+      const { exhibit_id, exhibition_id, museum_id, narration_id, unit_id} = continueObj;
+
+      console.log('continueListencontinueListencontinueListen', continueObj);
+      const url_params = generateNewUrlParams({
+        exhibition_id: Number(exhibition_id),
+        narration_id: Number(narration_id),
+        exhibit_id: Number(exhibit_id),
+      })
+      getApp().globalData.audio.curUnitId = Number(unit_id);
+      wx.navigateTo({
+        url: '/pages/exhibitlist/index' + url_params,
+      })
+    } else {
+      const targetPage = "pages/exhibitlist/index";
+      backToTargetPage(targetPage);
+    }
+   
   },
 
-  initPage() {
-    this.getComments(12);
-    this.getCityListAsync();
+  handleUpatePlayingIndex() {
+    console.log('handleUpatePlayingIndex-------------------------')
+
+  },
+
+  handlePlayerCompIndexChange(e: any) {
+    console.log('exhibitName-------------------------', e)
+
+    const { exhibitName, exhibitImg} = e.detail;
+    this.setData({
+      curExhibitName: exhibitName,
+      curExhibitImg: exhibitImg,
+    })
+  },
+
+  async initPage(_cityid=0) {
+    wx.showLoading({
+      title: '加载中',
+    });
+    this.setData({
+      loading: true
+    })
+    const lat = await wx.getStorageSync('latitude');
+    const lng = await wx.getStorageSync('longitude');
+    try {
+      if (!lat || !lng) {
+        // @ts-expect-error
+        const { latitude, longitude } = await getLocation();
+        await this.getPageIndex(latitude, longitude, _cityid);
+        await this.getComments(1);
+      } else {
+        await this.getPageIndex(lat, lng, _cityid);
+        await this.getComments(1);
+      }
+    } catch (error) {
+      this.getPageIndex(0, 0, _cityid);
+      this.getComments(1);
+      wx.hideLoading();
+      this.setData({
+        loading: false
+      })
+      console.log(error)
+    }
+    
+    // this.getCityListAsync();
   },
 
 
@@ -316,16 +347,25 @@ Page({
         selected: 0    // 根据tab的索引值设置
       })
     }
-    this.setData({
-      curExhibit: getApp().globalData.audio.curExhibit
-    })
+    const cur_exhibit = getApp().globalData.audio.curExhibit;
+    if (cur_exhibit && cur_exhibit.name) {
+      this.setData({
+        curExhibitName: cur_exhibit.name,
+        curExhibitImg: cur_exhibit.image_url,
+      })
+    }
+
+    this.freshPage();
+   
     console.log('getApp().globalData.audio.curExhibit', getApp().globalData.audio.curExhibit)
   },
 
   onUnload() {
+    this.destoryInverval();
   },
 
   onHide() {
+    this.destoryInverval();
   },
 
 

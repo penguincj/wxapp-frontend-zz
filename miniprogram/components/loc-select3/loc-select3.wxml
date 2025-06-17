@@ -17,8 +17,8 @@
     </view>
     <view class="more-cities-pannel" bindtap="handleCityChange">
       <block wx:for="{{list}}" key="{{item.id}}">
-        <view class="loc-city-item {{selectedId === item.id ? 'white-bg':'gray-bg'}}" data-citykey="{{item.id}}" data-cityname="{{item.name}}">
-          {{item.name}}
+        <view class="loc-city-item {{selectedId === item.id ? 'white-bg':'gray-bg'}}" data-citykey="{{item.id}}" data-cityname="{{item.d_name}}">
+          {{item.d_name}}
         </view>
       </block>
     </view>

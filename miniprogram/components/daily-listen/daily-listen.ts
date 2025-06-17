@@ -52,14 +52,31 @@ Component({
           innerAudioContext,
           isPlay: true,
         })
+        this.onEnded();
+
+      }
+    },
+    onEnded() {
+      if (this.data.innerAudioContext) {
+        this.data.innerAudioContext.onEnded(() => {
+          console.log('音频已停止');
+          this.setData({
+            isPlay: false
+          });
+        });
       }
     },
     handleClickPause() {
       if (this.data.innerAudioContext) {
         this.data.innerAudioContext.stop();
-        if (this.data.innerAudioContext && typeof this.data.innerAudioContext.destroy === 'function') {
-          this.data.innerAudioContext.destroy(); // 释放音频资源
+        try {
+          if (this.data.innerAudioContext && typeof this.data.innerAudioContext.destroy === 'function') {
+            this.data.innerAudioContext.destroy(); // 释放音频资源
+          }
+        } catch (error) {
+          console.log(error)
         }
+       
         
       }
       this.setData({

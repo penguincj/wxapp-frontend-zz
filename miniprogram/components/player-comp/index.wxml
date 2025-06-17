@@ -9,11 +9,10 @@
     </view>
   </movable-view>
 </movable-area>
-
 <view wx:if="{{isNewStyle && isShow}}" class="player-comp-new" bindtap="handleClickPlayerComp">
   <view class="player-wrapper">
     <view class="img-group">
-      <image src="/static/images/lock.png" mode="aspectFill" class="img" />
+      <image src="{{exhibitImg}}" mode="aspectFill" class="img {{isPlaying ? 'img-animate': ''}}" />
     </view>
     <view class="title">继续播放：{{exhibitName}}</view>
     <image wx:if="{{!isPlaying}}" src="/static/images/play-white.png" mode="aspectFill" class="play-img" />

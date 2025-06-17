@@ -1,3 +1,15 @@
+@keyframes rotatecirle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .player-comp {
   width: 120rpx;
   height: 120rpx;
@@ -59,6 +71,9 @@
         width: 84rpx;
         height: 84rpx;
         border-radius: 50%;
+      }
+      .img-animate {
+        animation: rotatecirle 4s linear 0s infinite;
       }
     }
     .title {

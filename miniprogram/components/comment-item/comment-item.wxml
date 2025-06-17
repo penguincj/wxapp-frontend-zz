@@ -1,12 +1,12 @@
-<view class="comment-item" data-idx="{{comment.comment_id}}" data-eid="{{comment.exhibition_id || 12}}" bindtap="handleClickComment">
+<view class="comment-item" data-idx="{{comment.comment_id}}" data-eid="{{comment.exhibition_id}}" bindtap="handleClickComment">
   <view class="{{pageindex ? 'hr-line-empty': 'hr-line'}}"></view>
   <view class="title-line">
     <image src="{{comment.user_avatar}}" class="c-ava" mode="aspectFit" />
     <view class="name-group">
       <view class="c-name">
         {{comment.user_name}}
-        <!-- <text wx:if="{{comment.exhibition_name}}">评论了<text style="font-weight: bold;">「{{comment.exhibition_name}}」</text></text> -->
-        <text style="font-weight: 400;">评论了<text style="font-weight: bold;">「预出昆钢」</text></text>
+        <text style="font-weight: 400;" wx:if="{{comment.exhibition_name}}">评论了<text style="font-weight: bold;">「{{comment.exhibition_name}}」</text></text>
+        <!-- <text style="font-weight: 400;">评论了<text style="font-weight: bold;">「{{item.exhibition}}」</text></text> -->
       </view>
       <view class="content-star-group">
         <block wx:for="{{[1,2,3,4,5]}}">

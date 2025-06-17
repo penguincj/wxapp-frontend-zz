@@ -1,7 +1,7 @@
 // @ts-nocheck
 // import { audioList } from './mock';
 import { throttle, getCurrentPageParamStr } from '../../utils/util';
-import { getExhibitList, sendListenAudioAction } from '../../api/api';
+import { getExhibitList, sendListenAudioAction, getContinueListen } from '../../api/api';
 import { destroy } from 'XrFrame/kanata/lib/frontend';
 
 const global_audio = getApp().globalData.audio;
@@ -12,6 +12,10 @@ Component({
       value: false
     },
     exhibitName: {
+      type: String,
+      value: '',
+    },
+    exhibitImg: {
       type: String,
       value: '',
     }
@@ -51,6 +55,10 @@ Component({
     moveplayy: getApp().globalData.play.y,
     screenWidth:0,
     screenHeight:0, //手机屏幕高度
+    continueListen: false, // 60分钟内 首页重启
+    continueObj: {} as any,
+    exhibit_name: '',
+    exhibit_img: '', 
   },
   methods: {
     sendListenAction(_audioid: any) {
@@ -275,7 +283,7 @@ Component({
 
       let local_audio = await this.findLocalAudio(src);
       
-      console.log('local', local_audio)
+      console.log('audio_iaudio_i', audio_i)
       // wx.getStorage({
       //   key: 'audios',
       //   success(res){
@@ -283,6 +291,7 @@ Component({
       //     tmp_src = res.data;
       //   }
       // });
+
 
       if (!global_audio.bgAudio) {
         console.log('in !global_audio.bgAudio')
@@ -351,7 +360,6 @@ Component({
       }
       setTimeout(() => {
         let duration = global_audio.bgAudio.duration;
-        console.log('audio_itemaudio_itemaudio_item', audio_item);
 
         if (!duration || !isFinite(duration)) {
           duration = audio_item.audioitem.duration;
@@ -359,13 +367,10 @@ Component({
         }
         const playingIdx = global_audio.audioList.findIndex(i => i.id === global_audio.curExhibit.id);
         global_audio.playingIndex = playingIdx;
-        console.log('app.globalData.bgAudio.playingIdx', playingIdx)
 
         const dur = Math.round(duration);
         const durTxt = this.calTimeTxt(dur);
-        console.log('this..bgAudio.durTxt', durTxt)
-        console.log('app.globalData.bgAudio', global_audio)
-
+        
         global_audio.bgAudio.duration = dur;
         global_audio.totalTimeText = durTxt;
 
@@ -379,7 +384,12 @@ Component({
           totalTimeText: durTxt,
           playingIndex: global_audio.playingIndex,
           curExhibit: global_audio.curExhibit,
-        })
+        });
+
+        // 更新首页继续播放浮窗字段
+  
+        
+
         this.setData({
           isPlaying: true,
         })
@@ -392,7 +402,8 @@ Component({
         isShow: true,
       })
       try {
-        sendListenAudioAction(audio_id, {method: 'POST'})
+        sendListenAudioAction(audio_id, {method: 'POST'});
+        console.log('sendListenAudioAction', title, coverImgUrl)
       } catch (error) {
         console.error(error)
       }
@@ -418,24 +429,12 @@ Component({
 
     destroyBgAudio () {
       if (global_audio.bgAudio) {
-        // global_audio = {
-        //   bgAudio: null,
-        //   audioList: [],
-        //   playingIndex: 0,
-        //   stored_audio: [],
-        //   curExhibit: null,
-        //   isPlay: false,
-        //   lastPlayIndex: 0,
-        //   duration: 0,
-        //   totalTimeText: '00:00',
-        //   exhibitlistParams: '',
-        //   curUnitId: 0,
-        //   curExhibition: -1,
-        //   curRate: '1.0',
-        //   isKeepPlaying: false,
-        // }
         global_audio.bgAudio.stop();
         global_audio.bgAudio.manualStop = true;
+        this.setData({
+          isShow: false,
+        })
+      } else if (this.data.continueListen) {
         this.setData({
           isShow: false,
         })
@@ -443,7 +442,13 @@ Component({
     },
 
     handleClickPlayerComp() {
-      this.triggerEvent('ClickPlayerComp')
+      const params = this.data.continueListen ? {
+        continueListen: this.data.continueListen,
+        continueObj: this.data.continueObj,
+      }: {
+        continueListen: this.data.continueListen,
+      }
+      this.triggerEvent('ClickPlayerComp',params)
     },
     
   handleClickAiRobot() {
@@ -490,7 +495,22 @@ Component({
     this.destroyBgAudio();
   },
 
+  async getContinueListenContent() {
+    const res: any = await getContinueListen();
+    if (res && res.code === 0 && res.data && res.data.exhibit_id) {
+      console.log('getContinueListenContent', res.data.exhibit_id)
+      this.setData({
+        exhibitName: res.data.exhibit_name,
+        exhibitImg: res.data.exhibit_img_url,
+        isShow: true,
+        continueListen: true,
+        continueObj: res.data,
+      })
+    }
   },
+
+  },
+
 
   
 
@@ -558,11 +578,15 @@ Component({
           isShow: !global_audio.bgAudio.manualStop,
           isPlaying: !global_audio.bgAudio.paused,
           moveplayx: getApp().globalData.play.x,
-          moveplayy: getApp().globalData.play.y
+          moveplayy: getApp().globalData.play.y,
+          continueListen: false,
         })
+      } else if(this.data.isNewStyle) {
+        this.getContinueListenContent();
       } else {
         this.setData({
           isShow: false,
+          continueListen: false,
         })
       }
 

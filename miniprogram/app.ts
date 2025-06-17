@@ -17,6 +17,7 @@ App<IAppOption>({
       exhibitlistParams: '',
       curUnitId: 0,
       curExhibition: -1,
+      curNarration: -1,
       curRate: '1.0',
       isKeepPlaying: false,
       manualStop: false, // 手动关闭播放器

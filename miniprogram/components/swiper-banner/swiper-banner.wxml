@@ -1,10 +1,10 @@
 <view wx:if="{{list.length}}" class="swiper-banner-compontent">
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="{{false}}" autoplay="{{true}}" interval="{{interval}}" duration="{{duration}}">
+    <swiper circular="{{true}}" indicator-dots="{{false}}" autoplay="{{true}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{list}}" wx:key="id">
         <swiper-item>
-          <view class="swiper-item" data-idx="{{item.id}}" data-link="{{item.app_url}}" bindtap="handleClickItem">
-            <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
+          <view class="swiper-item" data-idx="{{item.id}}" data-link="{{item.url}}" bindtap="handleClickItem">
+            <image src="{{item.img}}" class="item-img" mode="aspectFill" />
           </view>
         </swiper-item>
       </block>

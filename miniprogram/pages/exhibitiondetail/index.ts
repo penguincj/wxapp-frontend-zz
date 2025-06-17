@@ -86,6 +86,7 @@ Page({
       narration_id: idx,
       exhibition_id: this.data.curExhibitionId
     })
+    getApp().globalData.audio.curNarration = idx
     wx.navigateTo({
       url: '/pages/exhibitlist/index' + url_params,
     })
@@ -97,6 +98,7 @@ Page({
         narration_id: nid,
         exhibition_id: this.data.curExhibitionId
       })
+      getApp().globalData.audio.curNarration = nid
       wx.navigateTo({
         url: '/pages/exhibitlist/index' + url_params,
       })

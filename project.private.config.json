@@ -11,15 +11,15 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/index2/index",
-          "pathName": "pages/index2/index",
-          "query": "",
+          "name": "pages/exhibitlist/index",
+          "pathName": "pages/exhibitlist/index",
+          "query": "exhibition_id=35&narration_id=9&exhibit_id=188",
           "scene": null,
           "launchMode": "default"
         },
         {
-          "name": "pages/bglist/index",
-          "pathName": "pages/bglist/index",
+          "name": "pages/index2/index",
+          "pathName": "pages/index2/index",
           "query": "",
           "launchMode": "default",
           "scene": null

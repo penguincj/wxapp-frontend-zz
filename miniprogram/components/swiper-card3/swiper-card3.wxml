@@ -11,10 +11,10 @@
         <image src="{{item.img}}" class="item-img" mode="aspectFill" />
         <view class="item-desc-group">
           <view class="line-one">
-            <span class="desc-title">{{item.museum_name}}</span>
+            <text class="desc-title">{{item.museum_name}}</text>
             <!-- <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" /> -->
           </view>
-          <view class="desc-desc">{{item.detail}}</view>
+          <view wx:if="{{item.museum_name.length < 17}}" class="desc-desc">{{item.intro}}</view>
         </view>
       </view>
     </block>
@@ -35,15 +35,13 @@
                 <image src="{{item.img}}" class="item-img" mode="aspectFill" />
                 <view class="item-desc-group">
                   <view class="line-one">
-                    <span class="desc-title">{{item.museum_name}}</span>
-                    <!-- <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" /> -->
+                    <text class="desc-title">{{item.museum_name}}</text>
                   </view>
-                  <view class="desc-desc">{{item.detail}}</view>
+                  <view wx:if="{{item.museum_name.length < 11}}" class="desc-desc">{{item.intro}}</view>
                 </view>
               </view>
             </block>
           </view>
-					
 				</swiper-item>
 			</block>
 		</swiper>

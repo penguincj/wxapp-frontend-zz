@@ -8,9 +8,9 @@
   <view class="card-area">
     <view class="card-group" bindtap="selectItem" data-idx="{{exhibition.id}}" catchtap="clickItemImg">
       <view class="group-one">
-        <image class="card-img" data-idx="{{exhibition.id}}" src="{{exhibition.img}}" mode="aspectFix" />
+        <image class="card-img" data-idx="{{exhibition.id}}" src="{{exhibition.image_url}}" mode="aspectFill" />
         <view class="card-info">
-          <view class="card-title">{{exhibition.exhibit_name}}</view>
+          <view class="card-title">{{exhibition.name}}</view>
           <view class="card-desc">
             <view class="exhibition-name">{{exhibition.exhibition_name}}</view>
             <view class="desc-item">

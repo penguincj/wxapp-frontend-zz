@@ -151,13 +151,8 @@ Page({
    
   },
 
- 
-
-
   onLoad(options) {
     console.log(options);
-   
-
     this.setData({
       loading: true,
     })
@@ -180,7 +175,6 @@ Page({
 
   onHide() {
     this.stopListenGyro();
-
   },
 
 

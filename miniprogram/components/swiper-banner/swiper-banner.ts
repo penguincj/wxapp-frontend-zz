@@ -18,7 +18,7 @@ Component({
     indicatorDots: true,
     vertical: false,
     autoplay: false,
-    interval: 2000,
+    interval: 4000,
     duration: 500
   },
   lifetimes: {

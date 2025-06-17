@@ -10,6 +10,10 @@ Component({
       type: Array,
       value: [],
     },
+    totalLen: {
+      type: Number,
+      value: 0,
+    }
   },
   /**
    * 组件的初始数据
@@ -42,8 +46,8 @@ Component({
     },
 
     selectItem(e: any) {
-      console.log('selectItem', e.target.dataset);
-      const { idx } = e.target.dataset;
+      console.log('selectItem', e.currentTarget.dataset);
+      const { idx } = e.currentTarget.dataset;
         // this.setData({
         //   selectId: id,
         //   selectName: name,
@@ -53,6 +57,10 @@ Component({
           // selectName: name,
         })
     },
+
+    handleClickMore() {
+      this.triggerEvent('ClickMore');
+    }
 
     // tap() {
     //   for (let i = 0; i < order.length; ++i) {
