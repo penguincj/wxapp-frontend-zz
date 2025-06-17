@@ -40,7 +40,9 @@
         </block>
       </block>
       <block wx:else>
-        <slot name="left"></slot>
+        <view style="margin-top: 3px;">
+          <slot name="left"></slot>
+        </view>
       </block>
     </view>
 
