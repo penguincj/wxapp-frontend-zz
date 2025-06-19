@@ -1,30 +1,6 @@
 import { getHotComments, getCityList, getIndexData, getIndexCityData, getCityRecoExhibitionList } from "../../api/api";
 import { generateDateFormat, calTimeTxt, backToTargetPage, generateCityList, getLocation, throttle, generateNewUrlParams } from "../../utils/util";
 
-const museumList = [
-  {
-    id: 1,
-    rank: 1,
-    museum_name: '故宫博物院',
-    detail: '乐林泉、万物和生等展览乐林泉、万物和生等展览',
-    img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-  },
-  {
-    id: 2,
-    rank: 2,
-    museum_name: '故宫博物院',
-    detail: '乐林泉、万物和生等展览',
-    img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-  },
-  {
-    id: 3,
-    rank: 3,
-    museum_name: '故宫博物院',
-    detail: '乐林泉、万物和生等展览',
-    img: 'https://gewugo.com/test-api/v1/storage/image/Image@2x(2)-6860764179.webp',
-  },
-] as any;
-
 let interval = null as any;
 
 Page({
@@ -48,6 +24,7 @@ Page({
     curExhibitName: '',
     curExhibitImg: '',
     comment_loading: false,
+    bannerCurrentIndex: 0,
   },
 
   handleBannerClickItem(e: any) {
@@ -58,6 +35,13 @@ Page({
       })
       console.log('-----111----', link)
     }
+  },
+
+  handleBannerSwiperChange(e: any) {
+    const { idx } = e.detail;
+    this.setData({
+      bannerCurrentIndex: idx,
+    })
   },
 
   handleExClickItem(e: any) {
@@ -161,20 +145,23 @@ Page({
   },
 
   generateFlags(_exhibitionlist: any) {
-    const exhibitionList = _exhibitionlist.map((i: any) => 
+    if (_exhibitionlist) {
+      const exhibitionList = _exhibitionlist.map((i: any) => 
        
-      {
-        let flag = false;
-        if (i.tags && i.tags.length && i.tags.includes('NEW')) {
-          flag = true;
-        } 
-        return {
-          ...i, 
-          is_new_flag: flag,
+        {
+          let flag = false;
+          if (i.tags && i.tags.length && i.tags.includes('NEW')) {
+            flag = true;
+          } 
+          return {
+            ...i, 
+            is_new_flag: flag,
+          }
         }
-      }
-    );
-    return exhibitionList;
+      );
+      return exhibitionList;
+    }
+    return [];
   },
 
   handleClickMoreExh() {
@@ -191,7 +178,7 @@ Page({
       res= await getIndexData(_lat, _lng);
     }
     if (res && res.code === 0) {
-      const { banner_list, city_list, current_city_id, daily_listen, exhibition_list, is_new, museum_list } = res.data;
+      const { banner_list=[], city_list=[], current_city_id, daily_listen, exhibition_list=[], is_new, museum_list=[] } = res.data;
       const museumList = museum_list.map((i: any, index: any) => ({...i, museum_name: (index+1) + '.' + i.museum_name}));
       const museumArrayList = this.generateMuseumArr(museumList);
       const exhibitionList = this.generateFlags(exhibition_list);
@@ -202,6 +189,7 @@ Page({
       if (city) {
         cityName = city.d_name
       }
+      const bannerCurrentIndex = (is_new || banner_list.length < 3) ? 0 : 2;
       const duration_fmt = calTimeTxt(daily_listen.duration);
       
       this.setData({
@@ -212,6 +200,7 @@ Page({
         cityList,
         dailyListen: {...daily_listen, duration_fmt},
         isNew: is_new,
+        bannerCurrentIndex,
         museumList,
         museumArrayList,
         cityName,
@@ -307,7 +296,8 @@ Page({
       title: '加载中',
     });
     this.setData({
-      loading: true
+      loading: true,
+      comment_list: [],
     })
     const lat = await wx.getStorageSync('latitude');
     const lng = await wx.getStorageSync('longitude');

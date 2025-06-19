@@ -10,6 +10,10 @@ Component({
       type: Array,
       value: [],
     },
+    currentIndex: {
+      type: Number,
+      value: 0,
+    }
   },
   /**
    * 组件的初始数据
@@ -42,5 +46,32 @@ Component({
     handleClickMore() {
       this.triggerEvent('ClickMore')
     },
+    swiperChange(e: any) {
+      this.triggerEvent('SwiperChange', {
+        idx: Number(e.detail.current)
+      })
+    }
   },
+  pageLifetimes: {
+    show() {
+      if (this.data.autoplay) {
+        this.setData({
+          autoplay: false,
+        }, () => {
+          this.setData({
+            autoplay: true
+          })
+        })
+      } else {
+        this.setData({
+          autoplay: true
+        })
+      }
+    },
+    hide() {
+      this.setData({
+        autoplay: false
+      })
+    },
+  }
 })

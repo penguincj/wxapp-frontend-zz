@@ -40,7 +40,7 @@
         </block>
       </block>
       <block wx:else>
-        <view style="margin-top: 3px;">
+        <view style="{{innerPaddingTop}}">
           <slot name="left"></slot>
         </view>
       </block>

@@ -30,6 +30,9 @@ Component({
   },
   methods: {
     async handleClickNotLike(e: any) {
+      if (this.data.pageindex === 'index'){
+        return;
+      }
       const { idx } = e.currentTarget.dataset;
       const res: any = await delCommentLike(this.data.exhibitionid, this.data.userid, idx);
       if (res && res.code === 0) {
@@ -44,6 +47,9 @@ Component({
       }
     },
     async handleClickLike(e: any) {
+      if (this.data.pageindex === 'index'){
+        return;
+      }
       const { idx } = e.currentTarget.dataset;
   
       const res: any = await postCommentLike(this.data.exhibitionid, this.data.userid, idx);

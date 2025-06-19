@@ -73,11 +73,12 @@ Component({
       const isDevtools = res.platform === 'devtools'
       this.setData({
         ios: !isAndroid,
-        // innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
-        innerPaddingRight: `padding-right: 10px`,
-        // leftWidth: `width: ${res.windowWidth - rect.left }px`,
+        innerPaddingRight: `padding-right: ${windowInfo.windowWidth - rect.left}px`,
+        // innerPaddingRight: `padding-right: 10px`,
+        // leftWidth: `width: ${windowInfo.windowWidth - rect.left }px`,
+        innerPaddingTop: `margin-top: ${rect.top-windowInfo.statusBarHeight}px`,
         leftWidth: `width: 40px`,
-        safeAreaTop: isDevtools || isAndroid ? `;height: calc(var(--height) + ${windowInfo.safeArea.top}px); padding-top: ${windowInfo.safeArea.top}px` : ``
+        safeAreaTop: isDevtools || isAndroid ? `;height: calc(var(--height) + ${windowInfo.statusBarHeight}px); padding-top: ${windowInfo.statusBarHeight}px` : ``
       })
     },
   },

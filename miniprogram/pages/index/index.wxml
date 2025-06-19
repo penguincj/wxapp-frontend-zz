@@ -4,7 +4,7 @@
     <view slot="left">
       <view class="loc-area">
         <loc-select3 
-          locStyle="margin: 0 20rpx;" 
+          locStyle="margin: 0 40rpx;" 
           pannelStyle="padding: 30rpx 20rpx; margin-top: 24rpx; " 
           selectedId="{{curCityId}}" 
           selectedName="{{cityName}}" 
@@ -27,7 +27,7 @@
   <view class="index-page page-section page-section-spacing full-height">
       <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscrolltolower="handleScrolltolower" style="height: calc(100vh - 164rpx)">
         <view class="banner-area">
-          <swiper-banner list="{{bannerList}}" bindClickItem="handleBannerClickItem"></swiper-banner>
+          <swiper-banner list="{{bannerList}}" currentIndex="{{bannerCurrentIndex}}" bindClickItem="handleBannerClickItem" bindSwiperChange="handleBannerSwiperChange"></swiper-banner>
         </view>
         <view class="exhibition-area">
           <view class="title">热门展览</view>

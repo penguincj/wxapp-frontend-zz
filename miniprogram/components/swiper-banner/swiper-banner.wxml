@@ -1,6 +1,14 @@
 <view wx:if="{{list.length}}" class="swiper-banner-compontent">
   <view class="page-section page-section-spacing swiper">
-    <swiper circular="{{true}}" indicator-dots="{{false}}" autoplay="{{true}}" interval="{{interval}}" duration="{{duration}}">
+    <swiper 
+      circular="{{true}}" 
+      indicator-dots="{{false}}" 
+      autoplay="{{autoplay}}" 
+      interval="{{interval}}" 
+      duration="{{duration}}"
+      current="{{currentIndex}}"
+      bindchange="swiperChange"
+      >
       <block wx:for="{{list}}" wx:key="id">
         <swiper-item>
           <view class="swiper-item" data-idx="{{item.id}}" data-link="{{item.url}}" bindtap="handleClickItem">
