@@ -11,15 +11,22 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/bglist/index",
-          "pathName": "pages/bglist/index",
-          "query": "",
+          "name": "pages/exhibitiondetail/index",
+          "pathName": "pages/exhibitiondetail/index",
+          "query": "exhibition_id=394",
           "scene": null,
           "launchMode": "default"
         },
         {
-          "name": "pages/poster/index",
-          "pathName": "pages/poster/index",
+          "name": "pages/exhibitlist/index",
+          "pathName": "pages/exhibitlist/index",
+          "query": "exhibition_id=35&narration_id=9&exhibit_id=188",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/index2/index",
+          "pathName": "pages/index2/index",
           "query": "",
           "launchMode": "default",
           "scene": null

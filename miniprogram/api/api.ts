@@ -254,3 +254,23 @@ export const getPosters = (_exhibitionid: any) => {
 export const getPostersOfMuseum = (_museumid: any) => {
     return request(`/${base_api}/v1/posters?type=museum&id=${_museumid}`)
 }
+
+// 首页二期评价列表
+export const getHotComments = (_num=1, _pagenum: any, _city_id: any) => {
+    return request(`/${base_api}/v1/communities/hotComments?num=${_num}&pageNum=${_pagenum}&cityID=${_city_id}`)
+}
+
+// 首页二期 index 有city参数
+export const getIndexCityData = (_lat: any, _lng: any, _cityid: any) => {
+    return request(`/${base_api}/v1/index?lat=${_lat}&lon=${_lng}&cityID=${_cityid}`)
+}
+
+// 首页二期 index 无city参数
+export const getIndexData = (_lat: any, _lng: any) => {
+    return request(`/${base_api}/v1/index?lat=${_lat}&lon=${_lng}`)
+}
+
+// 首页二期 续听接口
+export const getContinueListen = () => {
+    return request(`/${base_api}/v1/continueListen`)
+}

@@ -1,0 +1,505 @@
+@keyframes show-ani {
+  0% {
+    opacity: 0;
+  }
+  98% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.index-card-group-hide-ani {
+  transform: translateY(1000rpx);
+  transition: all 0.5s ease-out;
+}
+.page-section {
+  // height: 100vh;
+  background: white;
+  position: relative;
+}
+
+.full-height {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.index-page {
+  .swiper-item {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiper-item-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiper-item-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 95%);
+  }
+  
+  .swiper-item-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiper-item-text-text {
+    font-size: 100rpx;
+    color: white;
+    display: block;
+    text-align: center;
+    line-height: 100rpx;
+    margin-top: 350rpx;
+    font-weight: bold;
+  }
+  
+  .swiper-item-text-text-2 {
+    font-size: 50rpx;
+    color: white;
+    display: block;
+    text-align: center;
+    line-height: 50rpx;
+    margin-top: 30rpx;
+  }
+  
+  .icon-group {
+    position: absolute;
+    top: 150rpx;
+    left: 0;
+  
+    z-index: 100;
+  }
+  
+  .icon-group-item {
+    width: 100rpx;
+    height: 100rpx;
+  }
+  
+  .icon-group-item-img {
+    width: 60rpx;
+    height: 60rpx;
+    margin: 40rpx 0 0 40rpx;
+  }
+  
+  .swiper-item-museum {
+    position: absolute;
+    bottom: 150rpx;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    color: #ffffff;
+    text-align: center;
+  }
+  
+  .swiper-item-museum-item {
+    display: block;
+    margin: 0 40px;
+    line-height: 50rpx;
+    border: 1rpx solid #ffffff;
+    border-radius: 20rpx;
+    padding: 10rpx;
+    margin-top: 20rpx;
+  }
+  
+  .swiper-item-museum-more {
+    display: block;
+    line-height: 50rpx;
+    margin-top: 50rpx;
+    text-decoration: underline;
+  }
+  
+  .swiper-item-museum-more-text {
+    font-size: 30rpx;
+    color: #ffffff;
+  }
+  
+  .recommend-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 72vh;
+    transform: translateZ(0);
+    transition: all 0.5s ease-in-out;
+    // background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  
+  .recommend-detail {
+    position: absolute;
+    bottom: 224rpx;
+    width: 100%;
+    color: #FFFFFF;
+    left: 0;
+    padding: 0 40rpx;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateZ(0);
+    transition: all 0.5s ease-in-out;
+  }
+  .recommend-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .right-img {
+      width: 30rpx;
+      height: 30rpx;
+    }
+  }
+  .recommend-detail-content {
+    margin-right: 80rpx;
+  }
+  .recommend-detail-title{
+    font-family: MySimSun;
+    font-size: 44rpx;
+    line-height: 44rpx;
+    color: #2C2F3B;
+    margin-bottom: 30rpx;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
+  }
+  .recommend-detail-desc {
+    font-family: PingFang SC;
+    font-size: 28rpx;
+    line-height: 28rpx;
+    color: rgba(44, 47, 59, 0.8);
+  }
+  .recommend-detail-museum-title {
+    font-family: PingFang SC;
+    font-size: 30rpx;
+    line-height: 30rpx;  
+    color: #2C2F3B;
+    margin-bottom: 30rpx;
+  }
+  .recommend-detail-fenge {
+    width: 100%;
+    height: 1rpx;
+    margin: 60rpx 0;
+    border-bottom: 2rpx dashed rgba(44, 47, 59, 0.4);
+  }
+  
+  .bg-group-ani > .recommend-img {
+    width: 75vh;
+    height: 100vh;
+    margin-left: -30%;
+    transition: all 0.5s ease-in-out;
+  }
+  .bg-group-ani > .recommend-group {
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+  }
+  .bg-group-ani > .recommend-detail {
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+  
+  }
+  
+  .recommend-img-mask {
+    position: absolute;
+    top: 50vh;
+    left: 0;
+    width: 100%;
+    // background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, #ffffff 0%, rgba(0, 0, 0, 0) 100%);
+    height: calc(50vh - 164rpx);
+  }
+
+  .recommend-img-mask-two {
+    position: absolute;
+    top: 70vh;
+    left: 0;
+    width: 100%;
+    height: calc(30vh - 164rpx);
+    background: linear-gradient(to top, #ffffff 0%, rgba(0, 0, 0, 0) 100%);
+
+    backdrop-filter: blur(10px);
+  }
+  .ani-show {
+    animation: show-ani 0.1s;
+
+  }
+  .ani-hide {
+    opacity: 0;
+  }
+ 
+ 
+  .bg-group {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // background-color: #000000;
+    background-color: #ffffff;
+    .museum-icon {
+      position: absolute;
+      top: 92rpx;
+      left: 40rpx;
+      width: 44rpx;
+      height: 44rpx;
+      z-index: 201;
+      
+    }
+    .no-display {
+      display: none;
+    }
+  }
+  
+  .recommend-group {
+    position: absolute;
+    top: 320rpx;
+    left: 50%;
+    font-weight: normal;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    transform: translateX(-50%) translateZ(0);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .recommend-title {
+    text-align: center;
+  }
+  
+  .recommend-name {
+    font-family: MySimSun;
+    font-size: 60rpx;
+    line-height: 60rpx;
+    margin-top: 30rpx;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  .title-png {
+    width: 55rpx;
+    height: 6rpx;
+    transform: translateY(-5rpx);
+  }
+  
+  .title-text {
+    font-family: PingFang SC;
+    font-size: 24rpx;
+    font-weight: normal;
+    line-height: 24rpx;
+    padding: 0 10rpx;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3)
+  }
+  
+  .title-png-rotate {
+    transform: translateY(-5rpx) rotate(180deg);
+  }
+  
+  .index-card-group {
+    position: absolute;
+    top: 557rpx;
+    left: 40rpx;
+    // display: FLEX;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    width: 100%;
+    // height: 930rpx;
+    height: calc(100vh - 721rpx);
+    overflow: hidden;
+    transition: all 0.5s ease-out;
+    
+  }
+  .few-museum {
+    // background-color: red;
+    position: absolute;
+    bottom: 0;
+    max-height: 100%;
+    overflow: scroll;
+  }
+  
+  .index-card {
+    position: relative;
+    width: 670rpx;
+    height: 346rpx;
+    color: #FFFFFF;
+    margin-bottom: 30rpx;
+    // border: 1rpx solid #FFFFFF;
+    // border-radius: 30rpx;
+    &:last-child {
+      content: "";
+      padding-bottom: 20rpx;
+    }
+  }
+  
+  .index-card-img {
+    position: absolute;
+    width: 670rpx;
+    height: 346rpx;
+    border-radius: 30rpx;
+  }
+  .index-card-img-mask {
+    position: absolute;
+    width: 670rpx;
+    height: 346rpx;
+    top:0;
+    left: 0;
+    display: block;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+    border-radius: 30rpx;
+  }
+
+  .index-card-museum-title {
+    position: absolute;
+    top:30rpx;
+    left: 30rpx;
+    font-size: 44rpx;
+    font-weight: normal;
+    line-height: 44rpx;
+    color: #FFFFFF;
+    font-family:"MySimSun";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  }
+  .index-card-museum-num-group {
+    position: absolute;
+    top:280rpx;
+    left: 30rpx;
+    color: #FFFFFF;
+  }
+  .index-card-museum-num {
+    font-family: MyDIN;
+    font-size: 40rpx;
+    line-height: 40rpx;
+    letter-spacing: 0;
+    font-weight: bold;
+    padding-right: 4rpx;
+    transform: translateY(2rpx);
+    display: inline-block;
+    // vertical-align: text-bottom;
+  }
+  .index-card-museum-num-text {
+    vertical-align: baseline;
+    font-size: 26rpx;
+    font-weight: normal;
+
+  }
+  .index-card-arrow {
+    position: absolute;
+    width: 30rpx;
+    height: 30rpx;
+    top:286rpx;
+    right: 30rpx;
+  }
+  
+  .index-close {
+    position: absolute;
+    top: 100rpx;
+    left: 40rpx;
+    width: 60rpx;
+    height: 60rpx;
+    z-index: 200;
+    opacity: 0;
+  }
+  .index-close-display {
+    opacity: 1;
+    transform: translateZ(0);
+    transition: all 0.5s ease-in-out 0.5s;
+  }
+
+
+
+  .demo{
+    width: 500rpx;
+    height: 500rpx;
+    box-shadow: 0rpx 0rpx 10rpx rgba(0,0,0);
+    position: relative;
+  }
+  .img{
+    height: 880rpx;
+    width: 500rpx;
+    position: relative;
+    box-shadow: 0rpx 0rpx 20rpx #000000;
+  }
+  @keyframes hd{
+    form{
+      transform: none;
+    }
+    35% {
+      transform: translate3d(0%, 0, 0) rotate3d(1, 0, 0, 4deg);
+    }
+    65% {
+      transform: translate3d(0%, 0, 0) rotate3d(1, 0, 0, -4deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes lf{
+    form{
+      transform: none;
+    }
+    to {
+      transform: translate3d(5%, 0, 0) rotate3d(0, 1, 0, 4deg);
+    }
+  }
+  @keyframes rf{
+    form{
+      transform: none;
+    }
+    to {
+      transform: translate3d(-5%, 0, 0) rotate3d(0, 1, 0, -4deg);
+    }
+  }
+
+ 
+  
+  
+}
+.popup-area {
+  .content {
+    text-align: center;
+    padding: 40rpx 0;
+    .title {
+      font-size: 34rpx;
+      color: #3D3D3D;
+      font-weight: 600;
+    }
+    .desc {
+      font-size: 28rpx;
+      line-height: 48rpx;
+      color: #3D3D3D;
+      padding-top: 40rpx;
+    }
+    .btn-group {
+      margin-top: 40rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .btn {
+        width: 240rpx;
+        height: 96rpx;
+        font-size: 38rpx;
+        line-height: 90rpx;
+        background: #F7F8F9;
+        color: #2C2F3B;
+        border-radius: 8rpx;
+        box-sizing: border-box;
+      }
+      .confirm {
+        color: #FFFFFF;
+        background: #2C2F3B;
+      }
+      .unconfirm {
+        color: #FFFFFF;
+        background:#b2b2b2;
+      }
+    }
+  }
+}

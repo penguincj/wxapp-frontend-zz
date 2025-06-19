@@ -1,0 +1,141 @@
+.scroll-exhibition-comp {
+  width: 710rpx;
+  .container {
+    padding: 0;
+  }
+  .page-section-spacing{
+    width: 710rpx;
+    height: 388rpx;
+    display: flex;
+    text-align: center;
+    position: relative;
+  }
+  .scroll-view_H{
+    white-space: nowrap;
+  }
+
+  .item-group {
+    width: 212rpx;
+    height: 388rpx;
+    color: #9AA7B1;
+    text-align: center;
+    box-sizing: border-box;
+    margin-top: 8rpx;
+    font-family: MySimSun;
+    // display: inline-flex;
+    display: inline-flex;
+    margin-right: 16rpx;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    .item-bg {
+      width: 212rpx;
+      height: 282rpx;
+      background-position: left top;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 10rpx;
+    }
+
+    .item-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 212rpx;
+      height: 282rpx;
+      border-radius: 10rpx;
+    }
+    .play-item-icon {
+      position: absolute;
+      width: 32rpx;
+      height: 32rpx;
+      top: 12rpx;
+      left: 12rpx;
+    }
+    .tag-item-icon {
+      position: absolute;
+      top: 12rpx;
+      left: 56rpx;
+      width: 64rpx;
+      height: 32rpx;
+    }
+
+    .text-group {
+      position: absolute;
+      left: 0;
+      top: 282rpx;
+      width: 100%;
+      height: 106rpx;
+      background: #F7F8F9;
+      padding: 12rpx 16rpx;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      box-sizing: border-box;
+      border-radius: 0 0 20rpx 20rpx;
+      .item-txt{
+        font-size: 28rpx;
+        line-height: 150%;
+        color: #2C2F3B;
+        width: 180rpx;
+        white-space: break-spaces;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; 
+        overflow: hidden;
+      }
+      .item-detail{
+        font-size: 24rpx;
+        line-height: 140%;
+        color: #9AA7B1;
+        width: 180rpx;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    
+    .chose-item-icon {
+      width: 34rpx;
+      height: 16rpx;
+      // margin-top: -6rpx;
+      // transform: translateY(-7rpx);
+      opacity: 0;
+    }
+    .display {
+      opacity: 1;
+    }
+  }
+  .select {
+    color: #2C2F3B;
+  }
+
+  .more-ex {
+    position: absolute;
+    font-family: MySimSun;
+    margin-top: 8rpx;
+    font-size: 28rpx;
+    color: #9AA7B1;
+    line-height: 38rpx;
+    // background-color: red;
+    width: 80rpx;
+    height: 388rpx;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    // transform: translateY(-90rpx);
+    overflow-wrap: break-word; 
+    white-space: pre-wrap;
+    padding: 80rpx 30rpx 30rpx 30rpx;
+    box-sizing: border-box;
+    background-color: #F7F8F9;
+    // margin-left: -16rpx;
+    border-radius: 10rpx;
+  }
+
+  
+}

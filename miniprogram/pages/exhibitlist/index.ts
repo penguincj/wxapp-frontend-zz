@@ -1,4 +1,4 @@
-import { getUnitList, getExhibitList, queryExhibitListAll } from '../../api/api';
+import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll } from '../../api/api';
 import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt } from '../../utils/util';
 import { Exhpoints } from './points';
 
@@ -334,6 +334,16 @@ Page({
     })
   },
 
+  // 业务逻辑
+
+  formatExhibitByIDData(_exhibit: any, _narrationid: any) {
+    const audioitem = _exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
+    return {
+      ..._exhibit,
+      audioitem,
+    }
+  },
+
   async getExhibitDataWithNoPlayer(_unitid: any, _playingIndex: any) {
     this.setData({
       loading: true,
@@ -384,8 +394,38 @@ Page({
     }
   },
 
+  async initExhibitByIDData(_unitid: any, _exhibitid: any) {
+    this.setData({
+      loading: true,
+    })
+    try {
+      const res: any = await getExhibitById(_exhibitid);
+      const exhibit_info = this.formatExhibitByIDData(res.exhibit, this.data.narrationId);
+
+      const res_exhibitlist: any = await getExhibitList(_unitid);
+      const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
+      console.log('initExhibitData 111', f_exhibitlist)
+      // const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
+      console.log('initExhibitByIDData',exhibit_info)
+
+      this.setData({
+        exhibitList: f_exhibitlist,
+        curExhibit: exhibit_info,
+      })
+      const player = this.selectComponent("#player");
+      player.initAudioList(f_exhibitlist, exhibit_info);
+      this.setData({
+        loading: false,
+      })
+    } catch (error) {
+      this.setData({
+        loading: false,
+      })
+    }
+  },
+
   // 业务逻辑
-  async initPage(_exhibitionid: any) {
+  async initPage(_exhibitionid: any, _exhibitid=0) {
     try {
       const res_unit : any = await getUnitList(_exhibitionid);
       const player = this.selectComponent("#player");
@@ -403,8 +443,12 @@ Page({
           })
           getApp().globalData.audio.curUnitId = res_unit.units[0].id;
           console.log('isPlayingAudio', isPlayingAudio)
+          if (_exhibitid) {
+            this.initExhibitByIDData(res_unit.units[0].id, _exhibitid);
+          } else {
+            this.initExhibitData(res_unit.units[0].id);
+          }
           
-          this.initExhibitData(res_unit.units[0].id);
         } else {
           const lastUnitId = getApp().globalData.audio.curUnitId;
           const { isPlay, playingIndex, totalTimeText, duration } = isPlayingAudio;
@@ -456,10 +500,7 @@ Page({
     })
     const player = this.selectComponent("#player");
     player.pageTimeUpateContinue();
-    // if (this.data.exhibitionId !== -1) {
-    //   this.initPage(this.data.exhibitionId);
-    // }
-    // this.initPage(getApp().globalData.audio.curExhibition);
+    
     setTimeout(() => {
       const params = getCurrentPageParamStr();
       const { exhibition_id } = getCurrentPageParam();
@@ -467,8 +508,6 @@ Page({
       getApp().globalData.audio.exhibitlistParams = params;
       getApp().globalData.audio.curExhibition = exhibition_id;
     }, 1000)
-   
-    
 
   },
   onLoad(options) {
@@ -485,7 +524,12 @@ Page({
       // if (!isPlayingAudio) {
         
       // }
-      this.initPage(options.exhibition_id);
+      if (options.exhibit_id) {
+        this.initPage(options.exhibition_id, Number(options.exhibit_id));
+      } else {
+        this.initPage(options.exhibition_id);
+      }
+     
       this.getAudioListAll();
     }
     

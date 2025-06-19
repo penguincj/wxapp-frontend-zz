@@ -1,0 +1,83 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar back="{{false}}" extClass="transparent" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+  <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
+  <view>
+    <!-- <view class="page-section page-section-spacing swiper" style="height: {{windowHeight - topBarHeight-2}}px;"> -->
+    <view class="index-page page-section page-section-spacing full-height">
+      <view class="bg-group {{isRecoClicked ? 'bg-group-ani': 'bg-group-ani-reverse'}}">
+        <image 
+          class="recommend-img" 
+          style="transform: scale(1.1) translateX({{x}}px) translateY({{y}}px)"
+          data-idx="{{recoExhibition.id}}" 
+          src="{{recoExhibition.home_image_url}}" 
+          mode="aspectFill" 
+          catchtouchend="handleClick"
+          catchtouchstart="handleTouchStart" 
+          catchtouchmove="handleTouchMove" />
+        <view wx:if="{{isRecoClicked}}" class="recommend-img-mask"></view>
+        <view class="recommend-img-mask-two {{isRecoClicked ? 'ani-hide': 'ani-show'}}"></view>
+        <view class="recommend-group" bindtap="handleClickRecoImg">
+          <view class="recommend-title">
+            <image class="title-png" src="/static/images/shouye-jinri.png" mode="aspectFix" />
+            <span class="title-text">今日推荐</span>
+            <image class="title-png title-png-rotate" src="/static/images/shouye-jinri.png" mode="aspectFix" />
+          </view>
+          <view class="recommend-name">{{recoExhibition.name}}</view>
+        </view>
+        <view class="recommend-detail" data-idx="{{recoExhibition.id}}" catchtap="handleClickRecoImg">
+          <view class="recommend-detail-content">
+            <view class="recommend-detail-title">{{recoExhibition.name}}</view>
+            <view class="recommend-detail-desc">{{recoExhibition.description}}</view>
+            <view class="recommend-detail-fenge"></view>
+            <view class="recommend-detail-museum-title">{{recoExhibition.museum_name}}</view>
+            <view class="recommend-line">
+              <view class="recommend-detail-desc">中国.{{recoExhibition.city_name}}</view>
+              <image src="/static/images/right-dark.png" class="right-img" mode="aspectFill" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="index-card-group {{isRecoClicked ? 'index-card-group-hide-ani' : ''}}">
+        <scroll-view wx:if="{{museumList && museumList.length > 2}}" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 721rpx)">
+          <block wx:for="{{museumList}}">
+            <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
+              <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />
+              <view class="index-card-img-mask"></view>
+              <view class="index-card-museum-title">{{item.name}}</view>
+              <view class="index-card-museum-num-group">
+                <text class="index-card-museum-num">{{item.exhibition_num}}</text>
+                <text class="index-card-museum-num-text">个展览</text>
+              </view>
+              <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />
+            </view>
+          </block>
+        </scroll-view>
+        <view wx:else class="few-museum">
+          <block wx:for="{{museumList}}">
+            <view class="index-card" data-idx="{{item.id}}" bindtap="handleClickMuseumItem">
+              <image class="index-card-img" src="{{item.image_url}}" mode="aspectFill" />
+              <view class="index-card-img-mask"></view>
+              <view class="index-card-museum-title">{{item.name}}</view>
+              <view class="index-card-museum-num-group">
+                <span class="index-card-museum-num">{{item.exhibition_num}}</span>
+                <span class="index-card-museum-num-text">个展览</span>
+              </view>
+              <image class="index-card-arrow" src="/static/images/right-arrow.png" mode="aspectFix" />
+            </view>
+          </block>
+        </view>
+      </view>
+      <image src="/static/images/close.png" bindtap="handleCloseDetail" class="index-close {{isRecoClicked ? 'index-close-display': ''}}" mode="aspectFix" />
+    </view>
+  </view>
+  <view>
+    <custom-tab-bar></custom-tab-bar>
+  </view>
+  <!-- <view wx:if="{{showPrivacy}}" class="">
+    <view>隐私弹窗内容....</view>
+    <button bindtap="handleClickPlayerComp">查看隐私协议</button>
+    <button id="agree-btn" open-type="agreePrivacyAuthorization" bindagreeprivacyauthorization="handleAgreePrivacyAuthorization">同意</button>
+  </view> -->
+  <!-- <privacyPopup></privacyPopup> -->
+</page-meta>

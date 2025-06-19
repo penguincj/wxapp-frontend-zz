@@ -1,21 +1,22 @@
 <movable-area style="width: 750rpx;height: {{screenHeight - 130}}px">
-	<movable-view animation="{{false}}"  class="move-area" x="{{movex}}" y="{{movey}}" direction="all" bindchange="handleChange">
-    <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix"  bindtap="handleClickAiRobot" />
+  <movable-view animation="{{false}}" class="move-area" x="{{movex}}" y="{{movey}}" direction="all" bindchange="handleChange">
+    <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix" bindtap="handleClickAiRobot" />
   </movable-view>
-
-  <movable-view animation="{{false}}"  class="move-area" x="{{moveplayx}}" y="{{moveplayy}}" direction="all" bindchange="handlePlayIconChange">
-    <!-- <view class="move-area-content">text</view> -->
+  <movable-view wx:if="{{!isNewStyle}}" animation="{{false}}" class="move-area" x="{{moveplayx}}" y="{{moveplayy}}" direction="all" bindchange="handlePlayIconChange">
     <view class="player-comp" wx:if="{{isShow}}" bindtap="handleClickPlayerComp">
       <image wx:if="{{isPlaying}}" src="/static/images/fuchuang-playing.png" class="img" mode="aspectFill" />
       <image wx:else src="/static/images/fuchuang-pause.png" class="img" mode="aspectFill" />
-
-
     </view>
-
   </movable-view>
-
 </movable-area>
-
-<!-- <movable-area style="width: 750rpx;height: {{screenHeight - 130}}px">
-	
-</movable-area> -->
+<view wx:if="{{isNewStyle && isShow}}" class="player-comp-new" bindtap="handleClickPlayerComp">
+  <view class="player-wrapper">
+    <view class="img-group">
+      <image src="{{exhibitImg}}" mode="aspectFill" class="img {{isPlaying ? 'img-animate': ''}}" />
+    </view>
+    <view class="title">继续播放：{{exhibitName}}</view>
+    <image wx:if="{{!isPlaying}}" src="/static/images/play-white.png" mode="aspectFill" class="play-img" />
+    <image wx:else src="/static/images/pause-white.png" mode="aspectFill" class="play-img" />
+  </view>
+  <image catchtap="handleClickClosePlayer" src="/static/images/close-index.png" mode="aspectFill" class="close-img" />
+</view>

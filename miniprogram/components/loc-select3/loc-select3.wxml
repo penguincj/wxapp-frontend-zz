@@ -1,0 +1,27 @@
+<view class="location-select3-comp">
+  <view class="loc-chosen" bindtap="handleOpenPannel" style="{{locStyle}}">
+    <image src="/static/images/loc.png" class="loc-icon" mode="aspectFix" />
+    <span class="loc-name">{{selectedName}}</span>
+    <image src="/static/images/arrow-bottom.png" class="loc-arrow {{isPannelOpen ? 'loc-arrow-reverse':''}}" mode="aspectFix" />
+  </view>
+  <view class="more-cities-zhankai {{isPannelOpen ? 'pannel-display': ''}}" style="{{pannelStyle}}">
+    <view class="pannel-text-group">
+      <view class="left-group">
+         <text class="pannel-text-title">更多城市</text>
+        <image src="/static/images/arrow-bottom.png" class="loc-arrow-reverse" mode="aspectFix" bindtap="handleClosePannel" />
+      </view>
+      <view class="right-group" catchtap="handleClickReLoc">
+        <image src="/static/images/play-dingwei.png" class="loc-reloc" mode="aspectFix" />
+        <view class="btn-reloc">重新定位</view>
+      </view>
+    </view>
+    <view class="more-cities-pannel" bindtap="handleCityChange">
+      <block wx:for="{{list}}" key="{{item.id}}">
+        <view class="loc-city-item {{selectedId === item.id ? 'white-bg':'gray-bg'}}" data-citykey="{{item.id}}" data-cityname="{{item.d_name}}">
+          {{item.d_name}}
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+

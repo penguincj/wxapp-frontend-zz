@@ -1,0 +1,22 @@
+<view wx:if="{{list.length}}" class="swiper-banner-compontent">
+  <view class="page-section page-section-spacing swiper">
+    <swiper 
+      circular="{{true}}" 
+      indicator-dots="{{false}}" 
+      autoplay="{{autoplay}}" 
+      interval="{{interval}}" 
+      duration="{{duration}}"
+      current="{{currentIndex}}"
+      bindchange="swiperChange"
+      >
+      <block wx:for="{{list}}" wx:key="id">
+        <swiper-item>
+          <view class="swiper-item" data-idx="{{item.id}}" data-link="{{item.url}}" bindtap="handleClickItem">
+            <image src="{{item.img}}" class="item-img" mode="aspectFill" />
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <!-- <view wx:if="{{list.length > 10}}" class="find-more" bindtap="handleClickMore">查看更多</view> -->
+</view>

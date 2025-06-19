@@ -367,14 +367,22 @@ export const backToTargetPage = (_pagename: String) => {
     const pageId = pages.findIndex((i: any) => i.route === _pagename);
     if (pageId !== -1) {
       const listpageIndex = pages.length - pageId - 1;
-      console.log('pages', pages);
+      console.log('-----params pages', pages);
       wx.navigateBack({
         delta: listpageIndex
       })
     } else {
       
       const params = getApp().globalData.audio.exhibitlistParams;
-      console.log('params', params)
+      if (params === '') {
+        const paramstr = transferObjToUrlParams({
+          exhibition_id: getApp().globalData.audio.curExhibition,
+          narration_id: getApp().globalData.audio.curNarration
+        })
+        console.log('-----params str paramstr', paramstr)
+        getApp().globalData.audio.exhibitlistParams = paramstr;
+      }
+      console.log('-----params', params)
       wx.navigateTo({
         url: '/' + _pagename + params,
       })
@@ -440,4 +448,14 @@ export const dealTradePic = () => {
   return {
     obj: []
   }
+}
+
+export const generateCityList = (_citylist: any) => {
+  const list = _citylist.map((i: any) => {
+    return {
+      ...i,
+      d_name: i.name.split('市')[0]
+    }
+  })
+  return list;
 }

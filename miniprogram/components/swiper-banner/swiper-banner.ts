@@ -6,22 +6,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    title: {
-      type: String,
-      value: '',
-    },
     list: {
       type: Array,
       value: [],
     },
-    smalllist: {
-      type: Array,
-      value: [],
-    },
-    len: {
+    currentIndex: {
       type: Number,
       value: 0,
-    },
+    }
   },
   /**
    * 组件的初始数据
@@ -30,7 +22,7 @@ Component({
     indicatorDots: true,
     vertical: false,
     autoplay: false,
-    interval: 2000,
+    interval: 4000,
     duration: 500
   },
   lifetimes: {
@@ -43,13 +35,43 @@ Component({
    */
   methods: {
     handleClickItem(e: any) {
-      const { idx } = e.currentTarget.dataset;
+      const { idx, link } = e.currentTarget.dataset;
+      
       this.triggerEvent('ClickItem', {
         id: idx,
-      })
+        link,
+      });
+     
     },
     handleClickMore() {
       this.triggerEvent('ClickMore')
     },
+    swiperChange(e: any) {
+      this.triggerEvent('SwiperChange', {
+        idx: Number(e.detail.current)
+      })
+    }
   },
+  pageLifetimes: {
+    show() {
+      if (this.data.autoplay) {
+        this.setData({
+          autoplay: false,
+        }, () => {
+          this.setData({
+            autoplay: true
+          })
+        })
+      } else {
+        this.setData({
+          autoplay: true
+        })
+      }
+    },
+    hide() {
+      this.setData({
+        autoplay: false
+      })
+    },
+  }
 })

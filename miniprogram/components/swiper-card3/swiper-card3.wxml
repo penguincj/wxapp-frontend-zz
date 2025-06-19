@@ -1,11 +1,25 @@
 <view wx:if="{{list.length}}" class="swiper-card-three">
 	<view class="title-line">
 		<view class="title">
-			<view class="title-name">往期展览</view>
+			<view class="title-name">{{title}}</view>
 			<image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
 		</view>
 	</view>
-	<view class="page-section page-section-spacing swiper">
+  <view wx:if="{{len < 6}}" class="list-wrapper">
+    <block wx:for="{{smalllist}}">
+      <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">
+        <image src="{{item.img}}" class="item-img" mode="aspectFill" />
+        <view class="item-desc-group">
+          <view class="line-one">
+            <text class="desc-title">{{item.museum_name}}</text>
+            <!-- <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" /> -->
+          </view>
+          <view wx:if="{{item.museum_name.length < 17}}" class="desc-desc">{{item.intro}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+	<view wx:else class="page-section page-section-spacing swiper">
 		<swiper
 		 indicator-dots="{{false}}"
 		 autoplay="{{autoplay}}"
@@ -13,35 +27,25 @@
 		 duration="{{duration}}"
      next-margin="160rpx"
 		>
-			<block wx:for="{{list}}" wx:key="{{item.id}}">
+			<block wx:for="{{list}}" wx:for-item="fatheritem" wx:for-index="fatherindex" wx:key="index">
 				<swiper-item>
           <view class="item-vertical" >
-            <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">
-              <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
-              <view class="item-desc-group">
-                <view class="line-one">
-                  <span class="desc-title">{{item.name}}</span>
-                  <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" />
+            <block wx:for="{{fatheritem}}">
+              <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">
+                <image src="{{item.img}}" class="item-img" mode="aspectFill" />
+                <view class="item-desc-group">
+                  <view class="line-one">
+                    <text class="desc-title">{{item.museum_name}}</text>
+                  </view>
+                  <view wx:if="{{item.museum_name.length < 11}}" class="desc-desc">{{item.intro}}</view>
                 </view>
-                <view class="desc-desc">{{item.opendate}}</view>
               </view>
-            </view>
-            <view class="swiper-item">
-              <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
-              <view class="item-desc-group">
-                <view class="line-one">
-                  <span class="desc-title">{{item.name}}</span>
-                  <image class="btn-img" src="/static/images/arr-r.png" mode="aspectFix" />
-                </view>
-                <view class="desc-desc">{{item.opendate}}</view>
-              </view>
-            </view>
+            </block>
           </view>
-					
 				</swiper-item>
 			</block>
 		</swiper>
 	</view>
-  <view wx:if="{{list.length>10}}" class="find-more" bindtap="handleClickMore">查看更多</view>
+  <!-- <view wx:if="{{list.length>10}}" class="find-more" bindtap="handleClickMore">查看更多</view> -->
 </view>
 
