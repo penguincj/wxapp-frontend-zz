@@ -1,23 +1,26 @@
 <view class="swiper-card-six">
-  <view class="title-line" wx:if="{{showType === 'jiangjiedaoyu'}}">
-    <view class="title-left">
-      <view class="title">
-        <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
-        <view class="title-name">讲解导语</view>
+  <view wx:if="{{title}}">
+    <view class="title-line" wx:if="{{showType === 'jiangjiedaoyu'}}">
+      <view class="title-left">
+        <view class="title">
+          <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+          <view class="title-name">{{title}}</view>
+        </view>
+        <image class="title-icon small-icon" src="/static/images/dianshi.png" mode="aspectFix" />
+        <text class="title-num">{{list.length}}</text>
       </view>
-      <image class="title-icon small-icon" src="/static/images/dianshi.png" mode="aspectFix" />
-      <text class="title-num">{{list.length}}</text>
+      <view class="title-right">
+        <image wx:if="{{isKeepPlayingActive}}" class="title-icon-type2" src="/static/images/xunhuan-active.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
+        <image wx:else class="title-icon-type2" src="/static/images/xunhuan.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
+        <cache-audio playingIndex="{{playingIndex}}" audiolist="{{audiolist}}"></cache-audio>
+      </view>
     </view>
-    <view class="title-right">
-      <image wx:if="{{isKeepPlayingActive}}" class="title-icon-type2" src="/static/images/xunhuan-active.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
-      <image wx:else class="title-icon-type2" src="/static/images/xunhuan.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
-      <cache-audio playingIndex="{{playingIndex}}" audiolist="{{audiolist}}"></cache-audio>
+    <view class="title-line-simple" wx:if="{{showType === 'guanjianci'}}">
+      <view class="only-title">关键词</view>
+      <input wx:if="{{showInput}}" class="weui-input" value="{{keyword}}" bindinput="handInput" bindconfirm="confirmTap" placeholder="可搜索展品名称" />
     </view>
   </view>
-  <view class="title-line-simple" wx:if="{{showType === 'guanjianci'}}">
-    <view class="only-title">关键词</view>
-    <input wx:if="{{showInput}}" class="weui-input" value="{{keyword}}" bindinput="handInput" bindconfirm="confirmTap" placeholder="可搜索展品名称" />
-  </view>
+  
   <view class="container">
     <view class="page-section-spacing" style="{{scrollStyle}}">
       <scroll-view wx:if="{{list && list.length}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll" style="{{scrollStyle}}">

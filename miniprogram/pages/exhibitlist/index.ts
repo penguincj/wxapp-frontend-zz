@@ -1,5 +1,5 @@
 import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll } from '../../api/api';
-import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt } from '../../utils/util';
+import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt, getLoginStatus } from '../../utils/util';
 import { Exhpoints } from './points';
 
 const base_url = "http://gewugo.com";
@@ -256,11 +256,17 @@ Page({
     
   },
   async getAudioListAll() {
-    const { userid } = getApp().globalData.userinfo;
+    let { userid } = getApp().globalData.userinfo;
+    if (!userid || userid === -1) {
+      const { userinfo } = await getLoginStatus();
+      userid = userinfo.userid;
+    } 
     try {
       const url_params = transferObjToUrlParams({
         exhibitionID: this.data.exhibitionId,
       })
+      console.log('-----userid', userid)
+
       const res:any = await queryExhibitListAll(userid, url_params)
       if( res && res.exhibits) {
         const f_exhibitlist = this.formatExhibitData(res.exhibits, this.data.narrationId);
@@ -269,6 +275,7 @@ Page({
           audiolist,
         })
       }
+      
     } catch (error) {
       console.error(error)
     }

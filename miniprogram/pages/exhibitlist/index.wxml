@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
 <navigation-bar title="展览单元" loading="{{false}}" back styleType="dark" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
-<view class="player-area">
+<!-- <view class="player-area">
   <player-comp
       id="player"
       narrationId="{{narrationId}}"
@@ -10,23 +10,29 @@
       bindEndAudio="handleEndAudio"
       bindGetCurPlayingStatus="handleGetCurPlayingStatus"
     ></player-comp>
-</view>
+</view> -->
 
 
 <view class="exhibit-page">
   <view class="unit-choose-area">
     <swiper-unit list="{{unitList}}" selectedId="{{curUnitId}}" bindChangeUnit="handleChangeUnit"></swiper-unit>
+    <view class="pannel-group">
+      <image src="/static/images/{{true ? 'list': 'qrcode'}}@2x.png" mode="aspectFill" class="pannel-img" />
+      <image src="/static/images/download@2x.png" mode="aspectFill" class="pannel-img" />
+      <image src="/static/images/search@2x.png" mode="aspectFill" class="pannel-img" />
+    </view>
   </view>
-  <view class="unit-card-area">
+  <!-- <view class="unit-card-area">
     <swiper-card4
       list="{{exhibitList}}"
       currentIdx="{{playingIndex}}"
       bindSwiperItemClick="handleSwiperItemClick"
       bindSwiperItemChange="handleSwiperItemChange"
     ></swiper-card4>
-  </view>
+  </view> -->
   <view class="list-area">
-    <swiper-card6 
+    <swiper-card6
+        title=""
         showType="jiangjiedaoyu"
         showInput="{{false}}"
         list="{{exhibitList}}"
@@ -85,7 +91,8 @@
       bindCloseDialog="handleCloseFindDialog"
     >
     <view slot="content">
-      <swiper-card6 
+      <swiper-card6
+        title="讲解导语"
         showType="guanjianci"
         showInput="{{showInput}}"
         playingExhibitId="{{curExhibit.id}}"

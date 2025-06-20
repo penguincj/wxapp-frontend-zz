@@ -121,6 +121,7 @@
     >
     <view slot="content">
       <swiper-card6
+        title="讲解导语"
         showType="jiangjiedaoyu" 
         list="{{exhibitList}}"
         playingExhibitId="{{exhibitId}}"
