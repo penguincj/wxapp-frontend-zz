@@ -11,6 +11,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/searchpage/index",
+          "pathName": "pages/searchpage/index",
+          "query": "exhibition_id=35",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/exhibitlist/index",
           "pathName": "pages/exhibitlist/index",
           "query": "exhibition_id=35&narration_id=9",

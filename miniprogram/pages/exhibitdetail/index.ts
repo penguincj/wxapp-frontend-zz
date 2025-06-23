@@ -302,10 +302,12 @@ Page({
     })
     
     try {
+      console.log('unit----id', getApp().globalData.audio.curUnitId)
       const res: any = await getExhibitById(_exhibitid);
       const exhibit_info = this.formatExhibitData(res.exhibit, this.data.narrationId);
-      const unit_id = exhibit_info.unit_id;
-      const res_exhibitlist: any = await getExhibitList(unit_id);
+      // const unit_id = exhibit_info.unit_id;
+      const unit_id = getApp().globalData.audio.curUnitId;
+      const res_exhibitlist: any = await getExhibitList(unit_id, exhibit_info.exhibition_id);
 
       const exhibit_list = this.formatExhibitList(res_exhibitlist.exhibits, this.data.narrationId);
       console.log('exhibit_info 111', res.exhibit);

@@ -1,12 +1,16 @@
 // @ts-nocheck
 // import { audioList } from './mock';
 import { throttle, getCurrentPageParamStr } from '../../utils/util';
-import { getExhibitList, sendListenAudioAction, getContinueListen } from '../../api/api';
+import { getExhibitList, sendListenAudioAction, getContinueListen, sendListenedAudioAction } from '../../api/api';
 import { destroy } from 'XrFrame/kanata/lib/frontend';
 
 const global_audio = getApp().globalData.audio;
 Component({
   properties: {
+    isShowPlayer: {
+      type: Boolean,
+      value: true,
+    },
     isNewStyle: {
       type: Boolean,
       value: false
@@ -270,6 +274,21 @@ Component({
         //   sliderIndex: time,
         //   currentTimeText: timeTxt,
         // })
+        if (time > 1 && time > dur / 3 && (time < ((dur / 3) + 1.9))) {
+          // todo
+          const curAudio: any = global_audio.curExhibit;
+          if (curAudio && curAudio.audioitem && curAudio.audioitem.audio_id) {
+            sendListenedAudioAction(curAudio.audioitem.audio_id, { method: 'POST' })
+            // this.setData({
+            //   listenedExhibitList: {
+            //     ...this.data.listenedExhibitList,
+            //     [curAudio.id]: true,
+            //   }
+            // })
+            console.log('> 1/3', this.data.listenedExhibitList)
+    
+          }
+        }
         this.triggerEvent('TimeUpdate', {
           currentTime: time,
           sliderIndex: time,
@@ -404,6 +423,17 @@ Component({
       try {
         sendListenAudioAction(audio_id, {method: 'POST'});
         console.log('sendListenAudioAction', title, coverImgUrl)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async initAudioListNotPlay(_audioList) {
+      try {
+        // const res = await getExhibitList(this.data.unitId);
+        console.log('initAudioListNotPlay', _audioList);
+        global_audio.audioList = _audioList;
+
       } catch (error) {
         console.error(error)
       }

@@ -1,25 +1,30 @@
 <!-- index.wxml -->
 <page-meta page-style="background: #ffffff">
-<navigation-bar title="展览单元" loading="{{false}}" back styleType="dark" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
-<!-- <view class="player-area">
+<navigation-bar title="{{pagetitle}}" loading="{{false}}" back styleType="dark" color="black" background="#ffffff" style="text-align: center;"></navigation-bar>
+<view class="player-area">
   <player-comp
       id="player"
+      isShowPlayer="{{false}}"
       narrationId="{{narrationId}}"
       bindReadyPlay="handleReadyPlay"
       bindTimeUpdate="handleTimeUpdate"
       bindEndAudio="handleEndAudio"
       bindGetCurPlayingStatus="handleGetCurPlayingStatus"
     ></player-comp>
-</view> -->
+</view>
 
 
 <view class="exhibit-page">
   <view class="unit-choose-area">
     <swiper-unit list="{{unitList}}" selectedId="{{curUnitId}}" bindChangeUnit="handleChangeUnit"></swiper-unit>
     <view class="pannel-group">
-      <image src="/static/images/{{true ? 'list': 'qrcode'}}@2x.png" mode="aspectFill" class="pannel-img" />
-      <image src="/static/images/download@2x.png" mode="aspectFill" class="pannel-img" />
-      <image src="/static/images/search@2x.png" mode="aspectFill" class="pannel-img" />
+      <image src="/static/images/{{!isListType ? 'list': 'qrcode'}}@2x.png" mode="aspectFit" class="pannel-img" catchtap="handleClickListType" />
+      <view class="download">
+        <cache-audio playingIndex="{{playingIndex}}" audiolist="{{audiolist}}"></cache-audio>
+        <!-- <circle-progress id="download" total="{{100}}" progress="{{50}}"></circle-progress> -->
+        <!-- <image src="/static/images/download@2x.png" mode="aspectFit" class="pannel-img" /> -->
+      </view>
+      <image src="/static/images/search@2x.png" mode="aspectFit" class="pannel-img" catchtap="handleClickPannelSearch" />
     </view>
   </view>
   <!-- <view class="unit-card-area">
@@ -33,15 +38,17 @@
   <view class="list-area">
     <swiper-card6
         title=""
+        isListType="{{isListType}}"
         showType="jiangjiedaoyu"
         showInput="{{false}}"
         list="{{exhibitList}}"
         audiolist="{{audiolist}}"
+        listenedExhibitList="{{listenedExhibitList}}"
         playingExhibitId="{{curExhibit.id}}"
         playingIndex="{{playingIndex}}"
         bindChangeItem="handleClickExhibitItem"
         bindClickItemImage="handleClickItemImage"
-        scrollStyle="height: calc(100vh - 922rpx - {{listAreaHeight}} )"
+        scrollStyle="height: calc({{safeAreaBottomHeight}} - 150rpx - 110rpx - {{listAreaHeight}} )"
       ></swiper-card6>
   </view>
 
@@ -50,7 +57,7 @@
       <view class="img-group">
         <!-- <view class="img-bg" style=""></view>
         <view class="img-bg-white"></view> -->
-        <circle-progress id="progressAni" curId="{{curExhibit.id}}" total="{{duration}}" progress="{{currentTime/duration}}"></circle-progress>
+        <circle-progress id="{{curExhibit.id}}" curId="{{curExhibit.id}}" total="{{duration}}" progress="{{currentTime/duration}}"></circle-progress>
         <image class="img-playing {{isPlay? 'img-animate': ''}}" src="{{curExhibit.image_url}}" mode="aspectFix" />
       </view>
       <view class="info-group">
@@ -73,11 +80,11 @@
               <image class="img" src="/static/images/play-huajuan.png" mode="aspectFix" />
             </view> -->
             <view class="img-wrapper" bindtap="handleClickOpenRate">
-              <image src="/static/images/player-speed.png" class="img" mode="aspectFix" />
-              <view class="o-beisu-txt">{{curRate}}</view>
+              <!-- <image src="/static/images/player-speed.png" class="img" mode="aspectFix" /> -->
+              <view class="o-beisu-txt">x{{curRate}}</view>
             </view>
-            <view class="img-wrapper" bindtap="handleOpenFindDialog">
-              <image class="img" src="/static/images/play-dingwei.png" mode="aspectFix" />
+            <view class="img-wrapper" bindtap="handleClickRepeatPlaying">
+              <image class="img" src="/static/images/{{isKeepPlayingActive ? 'xunhuan-1': 'xunhuan-p'}}.png" mode="aspectFix" />
             </view>
           </view>
         </view>

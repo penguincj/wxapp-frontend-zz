@@ -24,31 +24,85 @@
   <view class="container">
     <view class="page-section-spacing" style="{{scrollStyle}}">
       <scroll-view wx:if="{{list && list.length}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll" style="{{scrollStyle}}">
-        <block wx:for="{{list}}">
-          <view class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
-            <view class="group-one">
-              <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFix" />
-              <view class="card-info">
-                <view class="card-title" data-idx="{{item.id}}" catchtap="clickItemImg">{{item.name}}</view>
-                <view class="card-desc">
-                  <view class="desc-item">
-                    <image class="item-icon" src="/static/images/erji.png" mode="aspectFix" />
-                    {{item.audioitem.listen_count}}
+        <view class="list-group">
+          <block wx:for="{{list}}">
+            <view wx:if="{{isListType}}" class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
+              <view class="group-one">
+                <view class="img-group">
+                  <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFix" />
+                  <view wx:if="{{item.listened || ((listenedExhibitList[item.id]) && (!(playingIndex === index) || !(playingExhibitId === item.id)))}}" class="have-listened">
+                    <image src="/static/images/listened.png"  mode="aspectFit" class="listen-img" />
+                    <view class="listen-txt">听过</view>
+                    </view>
+                </view>
+                <view class="card-info">
+                  <view wx:if="{{!isSearch}}" class="card-title" data-idx="{{item.id}}" catchtap="clickItemImg">{{item.name}}</view>
+                  <view wx:else class="title-search" data-idx="{{item.id}}" catchtap="clickItemImg">
+                    <rich-text class="title-search" nodes="{{item.title_with_style}}"></rich-text>
                   </view>
-                  <view class="desc-item">
-                    <image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
-                    {{item.audioitem.duration_fmt}}
+                  <!-- <view class="card-tag" wx:if="{{isSearch}}">
+                    <view class="tag {{item.is_this_exhibition?'tag-green':'tag-blue'}}">{{item.is_this_exhibition?'本展览':'其他展'}}</view>
+                  </view> -->
+                  <view class="card-desc">
+                    <view class="desc-item">
+                      <image class="item-icon" src="/static/images/erji.png" mode="aspectFix" />
+                      {{item.audioitem.listen_count}}
+                    </view>
+                    <view class="desc-item">
+                      <image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
+                      {{item.audioitem.duration_fmt}}
+                    </view>
+                    <view class="tag-group">
+                      <view class="tag-item">{{(item.tags && item.tags.length) ? item.tags[0] : ''}}</view>
+                    </view>
                   </view>
                 </view>
               </view>
+              <view class="card-icon" wx:if="{{!isSearch}}">
+                <!-- <image wx:if="{{(playingIndex === index) && (playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" /> -->
+                <image wx:if="{{(playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
+                <image wx:elif="{{item.audioitem.locked === 0}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
+                <image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
+              </view>
             </view>
-            <view class="card-icon">
-              <image wx:if="{{(playingIndex === index) && (playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
-              <image wx:elif="{{item.audioitem.locked === 0}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
-              <image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
+            <view wx:else class="card-group-two" bindtap="selectItem" data-idx="{{item.id}}">
+              <view class="group-one">
+                <view class="img-group">
+                  <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFix" />
+                  <view wx:if="{{item.listened || ((listenedExhibitList[item.id]) && (!(playingIndex === index) || !(playingExhibitId === item.id)))}}" class="have-listened">
+                    <image src="/static/images/listened.png"  mode="aspectFit" class="listen-img" />
+                    <view class="listen-txt">听过</view>
+                  </view>
+                  <view class="card-icon">
+                    <image wx:if="{{(playingIndex === index) && (playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
+                    <image wx:elif="{{item.audioitem.locked === 0}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
+                    <image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
+                  </view>
+                </view>
+                <view class="card-info">
+                  <view class="card-title" data-idx="{{item.id}}" catchtap="clickItemImg">{{item.name}}</view>
+                  <view class="card-desc">
+                    <view class="desc-item">
+                      <image class="item-icon" src="/static/images/erji.png" mode="aspectFix" />
+                      {{item.audioitem.listen_count}}
+                    </view>
+                    <view class="desc-item">
+                      <image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
+                      {{item.audioitem.duration_fmt}}
+                    </view>
+                    <view class="tag-group">
+                      <view class="tag-item">{{(item.tags && item.tags.length) ? item.tags[0] : ''}}</view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+             
             </view>
-          </view>
-        </block>
+            <view
+              wx:if="{{!isSearch && index > 0 && (index < list.length -1) && (item.unit_id !== list[index+1].unit_id)}}"
+              class="fenge-hr"><view class="hr"></view><view class="txt">{{list[index+1].unit_name}}</view></view>
+          </block>
+        </view>
       </scroll-view>
       <view class="empty-list" wx:else>未查询到结果</view>
     </view>

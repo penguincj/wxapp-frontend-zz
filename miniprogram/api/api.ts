@@ -99,9 +99,17 @@ export const getUnitList = (_exhibitionid: any) => {
     return request(`/${base_api}/v1/units?exhibitionID=${_exhibitionid}`);
 }
 
-export const getExhibitList = (_unitid: any) => {
+export const getExhibitList = (_unitid: any, _exhibitionid = -1) => {
+    console.log('_unitid', _unitid)
+    if (Number(_unitid) === 999999) {
+        return request(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
+    }
     return request(`/${base_api}/v1/exhibits?unitID=${_unitid}`);
 }
+export const getAllExhibitList = (_exhibitionid: any) => {
+    return request(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
+}
+
 export const queryExhibitListAll = (_userid: any, _querystr: any) => {
     // return request(`/${base_api}/v1/queries` + _querystr);
     return request(`/${base_api}/v1/users/${_userid}/search` + _querystr);
@@ -145,6 +153,10 @@ export const sendViewExhibitionAction = (_userid: any, _exhibitionid: any, optio
 
 export const sendListenAudioAction = (_audioid: any, options: any) => {
     return request(`/${base_api}/v1/audios/${_audioid}/listen`, options)
+}
+
+export const sendListenedAudioAction = (_audioid: any, options: any) => {
+    return request(`/${base_api}/v1/audios/${_audioid}/listen?listened=1`, options)
 }
 
 export const sendFeedback = (_userid: any, options: any) => {

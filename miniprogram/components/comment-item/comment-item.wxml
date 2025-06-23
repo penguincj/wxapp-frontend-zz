@@ -5,7 +5,7 @@
     <view class="name-group">
       <view class="c-name">
         {{comment.user_name}}
-        <text style="font-weight: 400;" wx:if="{{comment.exhibition_name}}">评论了<text style="font-weight: bold;">「{{comment.exhibition_name}}」</text></text>
+        <text style="font-weight: 400;" wx:if="{{comment.exhibition_name}}">评论了展览<text style="font-weight: bold;">「{{comment.exhibition_name}}」</text></text>
         <!-- <text style="font-weight: 400;">评论了<text style="font-weight: bold;">「{{item.exhibition}}」</text></text> -->
       </view>
       <view class="content-star-group">

@@ -47,6 +47,7 @@ Component({
       this.triggerEvent('ClickMore')
     },
     swiperChange(e: any) {
+      // console.log(e.detail.current)
       this.triggerEvent('SwiperChange', {
         idx: Number(e.detail.current)
       })

@@ -10,6 +10,18 @@ Component({
       type: String,
       value: "",
     },
+    isSearch: {
+      type: Boolean,
+      value: false
+    },
+    listenedExhibitList: {
+      type: Object,
+      value: {},
+    },
+    isListType: {
+      type: Boolean,
+      value: true
+    },
     list: {
       type: Array,
       value: []
@@ -47,6 +59,7 @@ Component({
     selectName: "",
     keyword: "",
     isKeepPlayingActive: false,
+    test: '22<b>11</b>'
   },
   lifetimes: {
     attached() {

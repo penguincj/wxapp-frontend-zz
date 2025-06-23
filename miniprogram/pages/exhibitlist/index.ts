@@ -1,8 +1,9 @@
-import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll } from '../../api/api';
+import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll, sendListenedAudioAction } from '../../api/api';
 import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt, getLoginStatus } from '../../utils/util';
 import { Exhpoints } from './points';
 
 const base_url = "http://gewugo.com";
+const UNITALLID = 999999;
 
 Page({
   data: {
@@ -15,7 +16,7 @@ Page({
     bgAudio: null as any,
     isAutoPlay: false,
     stored_audio: [] as string[],
-    unitList: [],
+    unitList: [] as any,
     searchList: [] as any,
     showFindDialog: false,
     showMapDialog: false,
@@ -35,6 +36,7 @@ Page({
     narrationId: -1, // 页面params语音包id
     exhibitionId: -1,
     listAreaHeight: '0px', // 播放列表区域高度
+    safeAreaBottomHeight: '0px', // 安全区域底部高度
     lastExhibitionId: -1,
     audiolist: [],
     mapPoints: Exhpoints, // 地图点
@@ -44,8 +46,54 @@ Page({
     rateMax: 6,
     rateMin: 3,
     curRate: getApp().globalData.audio.curRate || "1.0",
+    isListType: true,
+    isKeepPlayingActive: false, // 是否联播
+    listenedExhibitList: {} as any, // 已听列表
+    pagetitle: '',
    
     // playProgress: 0,
+  },
+
+  handleClickListType() {
+    this.setData({
+      isListType: !this.data.isListType,
+    })
+  },
+
+  handleClickPannelSearch() {
+    const url_params = generateNewUrlParams({
+      type: 'exhibition',
+      exhibition_id: this.data.exhibitionId,
+    });
+    wx.navigateTo({
+      url: '/pages/searchpage/index' + url_params,
+    })
+  },
+
+  handleClickRepeatPlaying() {
+    if (getApp().globalData.audio.isKeepPlaying) {
+      getApp().globalData.audio.isKeepPlaying = false;
+      this.setData({
+        isKeepPlayingActive: false
+      })
+      wx.showToast({
+        title: '已为您关闭连续播放～',
+        icon: 'none',
+        duration: 2000
+      })
+      
+    } else {
+      getApp().globalData.audio.isKeepPlaying = true;
+      this.setData({
+        isKeepPlayingActive: true
+      })
+      wx.showToast({
+        title: '已为您开启连续播放～',
+        icon: 'none',
+        duration: 2000
+      })
+      
+    }
   },
 
   // player-comp
@@ -62,11 +110,26 @@ Page({
   },
   handleTimeUpdate(event: any) {
     const { sliderIndex, currentTimeText, currentTime } = event.detail;
+    // console.log('handleTimeUpdate', this.data.duration, currentTime)
     this.setData({
       currentTime,
       sliderIndex,
       currentTimeText,
     })
+    if (currentTime > 1 && currentTime > this.data.duration / 3 && (currentTime < ((this.data.duration / 3) + 1.9))) {
+      const curAudio: any = this.data.curExhibit;
+      if (curAudio && curAudio.audioitem && curAudio.audioitem.audio_id) {
+        // sendListenedAudioAction(curAudio.audioitem.audio_id, { method: 'POST' })
+        this.setData({
+          listenedExhibitList: {
+            ...this.data.listenedExhibitList,
+            [curAudio.id]: true,
+          }
+        })
+        console.log('> 1/3', this.data.listenedExhibitList)
+
+      }
+    }
 
   },
   handleEndAudio() {
@@ -103,6 +166,8 @@ Page({
       isPlay: false,
     });
     const { selectId } = event.detail;
+    console.log('event.detail', selectId)
+
     const player = this.selectComponent("#player");
     await player.handlePlayOtherAudioById(selectId);
   },
@@ -233,8 +298,9 @@ Page({
   },
   async handleClickSearch(event: any) {
     const { keyword } = event.detail;
-    console.log('keyword', keyword);
     const { userid } = getApp().globalData.userinfo;
+
+    console.log('keyword', keyword);
     this.setData({
       showInput: false,
     });
@@ -255,31 +321,8 @@ Page({
     }
     
   },
-  async getAudioListAll() {
-    let { userid } = getApp().globalData.userinfo;
-    if (!userid || userid === -1) {
-      const { userinfo } = await getLoginStatus();
-      userid = userinfo.userid;
-    } 
-    try {
-      const url_params = transferObjToUrlParams({
-        exhibitionID: this.data.exhibitionId,
-      })
-      console.log('-----userid', userid)
-
-      const res:any = await queryExhibitListAll(userid, url_params)
-      if( res && res.exhibits) {
-        const f_exhibitlist = this.formatExhibitData(res.exhibits, this.data.narrationId);
-        const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
-        this.setData({
-          audiolist,
-        })
-      }
-      
-    } catch (error) {
-      console.error(error)
-    }
-  },
+ 
+  
   async handleClickSearchExhibitItem(event: any) {
     this.setData({
       isPlay: false,
@@ -318,9 +361,8 @@ Page({
       curUnitId: selectId,
     });
     getApp().globalData.audio.curUnitId = selectId;
-
-    // this.updateUnitId(selectId);
     this.initExhibitData(selectId)
+   
   },
 
   formatExhibitData(_exhibitlist: any, _narrationid: any) {
@@ -329,15 +371,18 @@ Page({
       //   return null
       // }
       const audioitem = exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
-      const duration_fmt = calTimeTxt(audioitem.duration);
+      if (audioitem && audioitem.duration) {
+        const duration_fmt = calTimeTxt(audioitem.duration);
 
-      return {
-        ...exhibit,
-        audioitem: {
-          ...audioitem,
-          duration_fmt, 
-        },
+        return {
+          ...exhibit,
+          audioitem: {
+            ...audioitem,
+            duration_fmt, 
+          },
+        }
       }
+      
     })
   },
 
@@ -356,13 +401,14 @@ Page({
       loading: true,
     })
     try {
-      const res_exhibitlist: any = await getExhibitList(_unitid);
+      const res_exhibitlist: any = await getExhibitList(_unitid, this.data.exhibitionId);
       const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
 
       this.setData({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[_playingIndex],
       })
+      
       
       this.setData({
         loading: false,
@@ -374,13 +420,67 @@ Page({
       })
     }
   },
+  // async getAllExhibits() {
+  //   this.setData({
+  //     loading: true,
+  //   })
+  //   try {
+
+  //     // const url_params = transferObjToUrlParams({
+  //     //   exhibitionID: this.data.exhibitionId,
+  //     // })
+  //     const res:any = await getAllExhibitList(this.data.exhibitionId)
+  //     if( res && res.exhibits) {
+  //       const f_exhibitlist = this.formatExhibitData(res.exhibits, this.data.narrationId);
+  //       const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
+       
+  //       this.setData({
+  //         exhibitList: f_exhibitlist,
+  //         audiolist,
+  //       })
+  //       const player = this.selectComponent("#player");
+  //       // player.initAudioListNotPlay(f_exhibitlist);
+  //       player.initAudioList(f_exhibitlist, f_exhibitlist[0]);
+  //       this.setData({
+  //         loading: false,
+  //       })
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // },
+  // async getAudioListAll() {
+  //   let { userid } = getApp().globalData.userinfo;
+  //   if (!userid || userid === -1) {
+  //     const { userinfo } = await getLoginStatus();
+  //     userid = userinfo.userid;
+  //   } 
+  //   try {
+  //     const url_params = transferObjToUrlParams({
+  //       exhibitionID: this.data.exhibitionId,
+  //     })
+  //     console.log('-----userid', userid)
+
+  //     const res:any = await queryExhibitListAll(userid, url_params)
+  //     if( res && res.exhibits) {
+  //       const f_exhibitlist = this.formatExhibitData(res.exhibits, this.data.narrationId);
+  //       const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
+  //       this.setData({
+  //         audiolist,
+  //       })
+  //     }
+      
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // },
 
   async initExhibitData(_unitid: any) {
     this.setData({
       loading: true,
     })
     try {
-      const res_exhibitlist: any = await getExhibitList(_unitid);
+      const res_exhibitlist: any = await getExhibitList(_unitid, this.data.exhibitionId);
       const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
       console.log('initExhibitData 111', f_exhibitlist)
       // const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
@@ -389,6 +489,12 @@ Page({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[0],
       })
+      if (_unitid === UNITALLID) {
+        const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
+        this.setData({
+          audiolist,
+        })
+      }
       const player = this.selectComponent("#player");
       player.initAudioList(f_exhibitlist, f_exhibitlist[0]);
       this.setData({
@@ -409,7 +515,7 @@ Page({
       const res: any = await getExhibitById(_exhibitid);
       const exhibit_info = this.formatExhibitByIDData(res.exhibit, this.data.narrationId);
 
-      const res_exhibitlist: any = await getExhibitList(_unitid);
+      const res_exhibitlist: any = await getExhibitList(_unitid, this.data.exhibitionId);
       const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
       console.log('initExhibitData 111', f_exhibitlist)
       // const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
@@ -438,28 +544,40 @@ Page({
       const player = this.selectComponent("#player");
       const isPlayingAudio = player.checkIsAudioPlaying();
       const lastExhibitionId = this.data.lastExhibitionId;
+      
 
       if (res_unit && res_unit.units && res_unit.units.length) {
+        const units = [
+          {
+            id: UNITALLID,
+            name: '全部'
+          },
+          ...res_unit.units,
+        ]
         this.setData({
-          unitList: res_unit.units,
+          unitList: units,
+          pagetitle: units[1].exhibition_name
         })
 
         if (!isPlayingAudio.isAudioExist || lastExhibitionId !== _exhibitionid) {
+          const unitid = UNITALLID;
           this.setData({
-            curUnitId: res_unit.units[0].id,
+            curUnitId: unitid,
           })
-          getApp().globalData.audio.curUnitId = res_unit.units[0].id;
-          console.log('isPlayingAudio', isPlayingAudio)
+          getApp().globalData.audio.curUnitId = unitid;
           if (_exhibitid) {
-            this.initExhibitByIDData(res_unit.units[0].id, _exhibitid);
+            this.initExhibitByIDData(unitid, _exhibitid);
           } else {
-            this.initExhibitData(res_unit.units[0].id);
+            // this.getAllExhibits();
+            this.initExhibitData(unitid);
           }
           
         } else {
           const lastUnitId = getApp().globalData.audio.curUnitId;
           const { isPlay, playingIndex, totalTimeText, duration } = isPlayingAudio;
-          const unit_id = lastUnitId === -1 ? res_unit.units[0].id : lastUnitId;
+          // const unit_id = lastUnitId === -1 ? res_unit.units[0].id : lastUnitId;
+          const unit_id = lastUnitId === -1 ? UNITALLID : lastUnitId;
+          console.log('getApp().globalData.audio.curUnitId', getApp().globalData.audio.curUnitId)
           this.setData({
             isPlay,
             playingIndex,
@@ -495,23 +613,44 @@ Page({
 
 
   onShow() {
-    console.log('onShow onShow', getApp().globalData.audio.curExhibition)
+    console.log('onShow onShow')
 
     const hei = getApp().globalData.system.statusBarHeight;
+    const safeBotHei = getApp().globalData.system.bottomSafeHeight;
+    const curUnitId = getApp().globalData.audio.curUnitId;
+    const curExhibit = getApp().globalData.audio.curExhibit;
 
     this.setData({
       loading: true,
       listAreaHeight: hei + 'px',
+      safeAreaBottomHeight: safeBotHei + 'px',
       lastExhibitionId: getApp().globalData.audio.curExhibition,
       curRate: getApp().globalData.audio.curRate,
+      isKeepPlayingActive: !!getApp().globalData.audio.isKeepPlaying,
+      curExhibit: curExhibit,
     })
+    if (curExhibit && curExhibit.audioitem && curExhibit.audioitem.duration) {
+      this.setData({
+        duration: curExhibit.audioitem.duration
+      })
+    }
+    // 查找后返回 start
+    if (this.data.curUnitId !== getApp().globalData.audio.curUnitId && getApp().globalData.audio.curExhibit) {
+      this.setData({
+        curUnitId,
+      })
+      this.initExhibitByIDData(curUnitId, getApp().globalData.audio.curExhibit.id)
+      // this.playOtherUnit(curUnitId);
+    }
+    // 查找后返回 end
+
     const player = this.selectComponent("#player");
     player.pageTimeUpateContinue();
     
     setTimeout(() => {
       const params = getCurrentPageParamStr();
       const { exhibition_id } = getCurrentPageParam();
-     console.log('params ', params)
+      console.log('params ', params)
       getApp().globalData.audio.exhibitlistParams = params;
       getApp().globalData.audio.curExhibition = exhibition_id;
     }, 1000)
@@ -536,8 +675,6 @@ Page({
       } else {
         this.initPage(options.exhibition_id);
       }
-     
-      this.getAudioListAll();
     }
     
     if (options) {
@@ -545,7 +682,6 @@ Page({
         narrationId: Number(options.narration_id),
       },() => {
         console.log('initPageAudio options.narration_id', options.narration_id);
-
       })
 
     }

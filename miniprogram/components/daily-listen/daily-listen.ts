@@ -46,6 +46,9 @@ Component({
         const innerAudioContext = wx.createInnerAudioContext({
           useWebAudioImplement: false // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
         })
+        wx.setInnerAudioOption({
+          obeyMuteSwitch: false,
+        })
         innerAudioContext.src = this.data.exhibition.audio_url;
         innerAudioContext.play();
         this.setData({
@@ -53,13 +56,24 @@ Component({
           isPlay: true,
         })
         this.onEnded();
-
+        this.onError();
       }
     },
     onEnded() {
       if (this.data.innerAudioContext) {
         this.data.innerAudioContext.onEnded(() => {
           console.log('音频已停止');
+          this.setData({
+            isPlay: false
+          });
+        });
+      }
+    },
+    onError() {
+      if (this.data.innerAudioContext) {
+        const innerAudioContext = this.data.innerAudioContext;
+        innerAudioContext.onError((err: any) => {
+          console.log('播放失败，可能静音:', err.errMsg);
           this.setData({
             isPlay: false
           });
