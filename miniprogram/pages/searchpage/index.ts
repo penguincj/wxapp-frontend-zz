@@ -10,6 +10,7 @@ Page({
     keyword: '',
     type: '',
     exhibitionId: -1,
+    emptyMessage: '', // 结果是空时展示的文案
   },
 
   handInput(event: any) {
@@ -57,9 +58,16 @@ Page({
       })
       const res:any = await queryExhibitListAll(userid, url_params)
       if( res && res.exhibits) {
-        const f_exhibitlist = this.formatExhibitData(res.exhibits);
+        const list = res.exhibits.filter((i: any) => i.is_this_exhibition);
+        const f_exhibitlist = this.formatExhibitData(list);
         this.setData({
           searchList: f_exhibitlist,
+          emptyMessage: list.length ? '' : '本展览中未查询到结果～',
+        })
+      } else {
+        this.setData({
+          searchList: [],
+          emptyMessage: '本展览中未查询到结果～'
         })
       }
     } catch (error) {

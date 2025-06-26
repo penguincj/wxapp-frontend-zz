@@ -42,6 +42,7 @@
         showType="jiangjiedaoyu"
         showInput="{{false}}"
         list="{{exhibitList}}"
+        scrollTop="{{continueScrollTop}}"
         audiolist="{{audiolist}}"
         listenedExhibitList="{{listenedExhibitList}}"
         playingExhibitId="{{curExhibit.id}}"

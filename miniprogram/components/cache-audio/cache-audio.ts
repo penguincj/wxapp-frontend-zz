@@ -16,11 +16,10 @@ Component({
   },
   methods: {
     handleDownloadFile() {
-      console.log('handleDownloadFile');
+      console.log('handleDownloadFile', this.data.audiolist.length);
       // const audiolist = ['https://gewugo.com/storage/file/CB26976399343756.mp3', 'https://gewugo.com/storage/file/HB26976402540987.mp3'];
       const file_arr = [];
-      console.log('audiolist',this.data.audiolist)
-      for (let i = 0; i < this.data.audiolist.length; i++) {
+      for (let i = 0; i < Math.min(this.data.audiolist.length, 10); i++) {
         const url = this.data.audiolist[i];
         // this.batchDownload(url).then(()=> {
         //     console.log('@@@@'+i+'sucess!!!')
@@ -28,6 +27,8 @@ Component({
         console.log(url)
         file_arr.push(this.batchDownload(url))
       }
+      console.log('file_arr',file_arr)
+
       this.allWithProgress(file_arr, (progress: any) => {
         console.log(progress);
         console.log(store_file_path.length);

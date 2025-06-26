@@ -50,6 +50,7 @@ Page({
     isKeepPlayingActive: false, // 是否联播
     listenedExhibitList: {} as any, // 已听列表
     pagetitle: '',
+    continueScrollTop: '0rpx', // 首页续听 scrollTop
    
     // playProgress: 0,
   },
@@ -403,10 +404,12 @@ Page({
     try {
       const res_exhibitlist: any = await getExhibitList(_unitid, this.data.exhibitionId);
       const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
+      const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
 
       this.setData({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[_playingIndex],
+        audiolist,
       })
       
       
@@ -475,6 +478,15 @@ Page({
   //   }
   // },
 
+  calContinueScrollTop(_exhibitlist: any, _exhibit: any) {
+    let scroll_top = '0rpx';
+    const unit_idx = this.data.unitList.findIndex((i: any) => i.id === _exhibit.unit_id);
+    const exhibit_idx = _exhibitlist.findIndex((i: any) => i.id === _exhibit.id);
+    scroll_top = (220 * exhibit_idx) + (86 * (unit_idx -1)) - 440 + 'rpx';
+    console.log('unit_idx', unit_idx, exhibit_idx)
+    return scroll_top;
+  },
+
   async initExhibitData(_unitid: any) {
     this.setData({
       loading: true,
@@ -483,18 +495,15 @@ Page({
       const res_exhibitlist: any = await getExhibitList(_unitid, this.data.exhibitionId);
       const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
       console.log('initExhibitData 111', f_exhibitlist)
-      // const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
 
       this.setData({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[0],
       })
-      if (_unitid === UNITALLID) {
-        const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
-        this.setData({
-          audiolist,
-        })
-      }
+      const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
+      this.setData({
+        audiolist,
+      })
       const player = this.selectComponent("#player");
       player.initAudioList(f_exhibitlist, f_exhibitlist[0]);
       this.setData({
@@ -517,13 +526,14 @@ Page({
 
       const res_exhibitlist: any = await getExhibitList(_unitid, this.data.exhibitionId);
       const f_exhibitlist = this.formatExhibitData(res_exhibitlist.exhibits, this.data.narrationId);
-      console.log('initExhibitData 111', f_exhibitlist)
-      // const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url.replace('http', 'https'));
-      console.log('initExhibitByIDData',exhibit_info)
+      const continueScrollTop = this.calContinueScrollTop(f_exhibitlist, exhibit_info);
+      const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
 
       this.setData({
         exhibitList: f_exhibitlist,
         curExhibit: exhibit_info,
+        continueScrollTop,
+        audiolist,
       })
       const player = this.selectComponent("#player");
       player.initAudioList(f_exhibitlist, exhibit_info);
@@ -566,6 +576,7 @@ Page({
           })
           getApp().globalData.audio.curUnitId = unitid;
           if (_exhibitid) {
+            // 首页续播逻辑，此时unitid = UNITALLID（999999）
             this.initExhibitByIDData(unitid, _exhibitid);
           } else {
             // this.getAllExhibits();
@@ -658,35 +669,22 @@ Page({
   },
   onLoad(options) {
     console.log('onShow onLoad')
-
+    if (options) {
+      this.setData({
+        narrationId: Number(options.narration_id),
+      })
+    }
     if(options && options.exhibition_id) {
-
       this.setData({
         exhibitionId: Number(options.exhibition_id),
       })
-      // const player = this.selectComponent("#player");
-      // const isPlayingAudio = player.checkIsAudioPlaying();
-      // console.log('isPlayingAudio', isPlayingAudio)
-      // if (!isPlayingAudio) {
-        
-      // }
+      // 只有首页续播时需要传入exhibit_id，为了精准播放
       if (options.exhibit_id) {
         this.initPage(options.exhibition_id, Number(options.exhibit_id));
       } else {
         this.initPage(options.exhibition_id);
       }
     }
-    
-    if (options) {
-      this.setData({
-        narrationId: Number(options.narration_id),
-      },() => {
-        console.log('initPageAudio options.narration_id', options.narration_id);
-      })
-
-    }
-    
   }
-
 
 })

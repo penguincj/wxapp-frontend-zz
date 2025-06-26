@@ -20,6 +20,7 @@
       isSearch="{{true}}"
       showInput="{{false}}"
       list="{{searchList}}"
+      emptyMessage="{{emptyMessage}}"
       bindChangeItem="handleClickExhibitItem"
       bindClickItemImage="handleClickExhibitItem"
       scrollStyle="height: calc(100vh - 88px -  88rpx )"

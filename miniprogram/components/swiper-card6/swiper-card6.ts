@@ -14,6 +14,10 @@ Component({
       type: Boolean,
       value: false
     },
+    emptyMessage: {
+      type: String,
+      value: "",
+    },
     listenedExhibitList: {
       type: Object,
       value: {},
@@ -49,6 +53,10 @@ Component({
     playingExhibitId: {
       type: Number,
       value: -1,
+    },
+    scrollTop: {
+      type: String,
+      value: '0rpx',
     }
   },
   /**
@@ -59,7 +67,6 @@ Component({
     selectName: "",
     keyword: "",
     isKeepPlayingActive: false,
-    test: '22<b>11</b>'
   },
   lifetimes: {
     attached() {
@@ -70,9 +77,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    scroll(e : any) {
-      // console.log(e)
-    },
     selectItem(e: any) {
       console.log('selectItem', e);
       const { idx } = e.currentTarget.dataset;

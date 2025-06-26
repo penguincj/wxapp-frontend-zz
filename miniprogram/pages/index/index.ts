@@ -263,7 +263,7 @@ Page({
       const url_params = generateNewUrlParams({
         exhibition_id: Number(exhibition_id),
         narration_id: Number(narration_id),
-        exhibit_id: Number(exhibit_id),
+        exhibit_id: Number(exhibit_id), // todo 只有首页需要这个参数，为了杀小程序后续播时进入列表页就播放
       })
       getApp().globalData.audio.curUnitId = Number(unit_id);
       wx.navigateTo({

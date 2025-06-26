@@ -23,13 +23,14 @@
   
   <view class="container">
     <view class="page-section-spacing" style="{{scrollStyle}}">
-      <scroll-view wx:if="{{list && list.length}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll" style="{{scrollStyle}}">
+      <scroll-view wx:if="{{list && list.length}}" scroll-top="{{scrollTop}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="{{scrollStyle}}">
         <view class="list-group">
           <block wx:for="{{list}}">
             <view wx:if="{{isListType}}" class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
               <view class="group-one">
                 <view class="img-group">
-                  <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFix" />
+                  <view class="img-bg" style="background-image: url({{item.image_url}})"></view>
+                  <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFit" />
                   <view wx:if="{{item.listened || ((listenedExhibitList[item.id]) && (!(playingIndex === index) || !(playingExhibitId === item.id)))}}" class="have-listened">
                     <image src="/static/images/listened.png"  mode="aspectFit" class="listen-img" />
                     <view class="listen-txt">听过</view>
@@ -68,7 +69,9 @@
             <view wx:else class="card-group-two" bindtap="selectItem" data-idx="{{item.id}}">
               <view class="group-one">
                 <view class="img-group">
-                  <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFix" />
+                  <view class="img-bg" style="background-image: url({{item.image_url}})"></view>
+
+                  <image class="card-img" data-idx="{{item.id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFit" />
                   <view wx:if="{{item.listened || ((listenedExhibitList[item.id]) && (!(playingIndex === index) || !(playingExhibitId === item.id)))}}" class="have-listened">
                     <image src="/static/images/listened.png"  mode="aspectFit" class="listen-img" />
                     <view class="listen-txt">听过</view>
@@ -104,7 +107,7 @@
           </block>
         </view>
       </scroll-view>
-      <view class="empty-list" wx:else>未查询到结果</view>
+      <view class="empty-list" wx:else>{{emptyMessage}}</view>
     </view>
   </view>
 </view>

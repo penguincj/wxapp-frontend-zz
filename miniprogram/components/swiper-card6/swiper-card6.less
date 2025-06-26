@@ -133,6 +133,20 @@
         position: relative;
         width: 200rpx;
         height: 150rpx;
+        border-radius: 10rpx;
+        overflow: hidden;
+
+        .img-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 200rpx;
+          height: 150rpx;
+          background-size: 200rpx 150rpx;
+          background-repeat: no-repeat;
+
+          filter: blur(3px);
+        }
         .have-listened {
           position: absolute;
           bottom: 0;
@@ -157,6 +171,9 @@
       }
     }
     .card-img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
       width: 200rpx;
       height: 150rpx;
       border-radius: 10rpx;
@@ -287,6 +304,18 @@
         position: relative;
         width: 330rpx;
         height: 246rpx;
+        border-radius: 10rpx;
+        overflow: hidden;
+        .img-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 330rpx;
+          height: 246rpx;
+          background-size: 330rpx 246rpx;
+          background-repeat: no-repeat;
+          filter: blur(3px);
+        }
         .have-listened {
           position: absolute;
           bottom: 0;
@@ -323,6 +352,9 @@
       }
     }
     .card-img {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 330rpx;
       height: 246rpx;
       border-radius: 10rpx;
@@ -372,8 +404,10 @@
   .fenge-hr {
     width: 670rpx;
     margin-top: 30rpx;
+    height: 46rpx;
     margin-bottom: 10rpx;
     text-align: center;
+    
     .hr {
       margin-left: 60rpx;
       height: 0rpx;
@@ -387,8 +421,8 @@
       padding: 0 20rpx;
       display: inline-block;
       background-color: #FFFFFF;
-      transform: translateY(-24rpx);
-
+      transform: translateY(-26rpx);
+      font-family: MySimSun;
     }
     
   }

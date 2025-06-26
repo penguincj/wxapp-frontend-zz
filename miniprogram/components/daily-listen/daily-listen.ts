@@ -41,6 +41,9 @@ Component({
    */
   methods: {
     handleClickPlay() {
+      if(this.data.innerAudioContext && this.data.isPlay) {
+        return;
+      }
       this.triggerEvent('PlayDailyListen')
       if (this.data.exhibition && this.data.exhibition.audio_url) {
         const innerAudioContext = wx.createInnerAudioContext({
