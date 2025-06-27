@@ -1,5 +1,5 @@
 import { request, request_aes } from "../utils/util"
-export const base_api = false ? 'api' : 'test-api'
+export const base_api = true ? 'api' : 'test-api'
 
 export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);
@@ -102,12 +102,12 @@ export const getUnitList = (_exhibitionid: any) => {
 export const getExhibitList = (_unitid: any, _exhibitionid = -1) => {
     console.log('_unitid', _unitid)
     if (Number(_unitid) === 999999) {
-        return request(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
+        return request_aes(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
     }
-    return request(`/${base_api}/v1/exhibits?unitID=${_unitid}`);
+    return request_aes(`/${base_api}/v1/exhibits?unitID=${_unitid}`);
 }
 export const getAllExhibitList = (_exhibitionid: any) => {
-    return request(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
+    return request_aes(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
 }
 
 export const queryExhibitListAll = (_userid: any, _querystr: any) => {
@@ -116,7 +116,7 @@ export const queryExhibitListAll = (_userid: any, _querystr: any) => {
 }
 
 export const getExhibitById = (_exhibitid: any) => {
-    return request(`/${base_api}/v1/exhibits/${_exhibitid}`);
+    return request_aes(`/${base_api}/v1/exhibits/${_exhibitid}`);
 }
 
 export const getNarrowList = (_exhibitionid: any) => {

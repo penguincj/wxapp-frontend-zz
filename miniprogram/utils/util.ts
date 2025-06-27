@@ -153,28 +153,20 @@ export const getDecryptedData = (_aesData: any) => {
   const res: any = _aesData;
   const key= 'key-bowudy-2025--2025-bowudy-key';
  
-  var encryptedBytes = aesjs.utils.utf8.toBytes(res);
-  // console.log('decryptedBytes--- encryptedBytes', encryptedBytes);
-  
   var encryptedBytes = new Uint8Array(res);
   console.log('decryptedBytes--- encryptedBytes', encryptedBytes);
 
   var count = encryptedBytes.slice(0, 16);
   var keyAes = aesjs.utils.utf8.toBytes(key);
-  console.log('decryptedBytes--- count', count)
 
   var counter = new aesjs.Counter(count);
-  console.log('decryptedBytes--- counter', counter)
 
   var aesCtr = new aesjs.ModeOfOperation.ctr(keyAes, counter);
-  console.log('decryptedBytes--- aesCtr', aesCtr)
 
   var eb = encryptedBytes.slice(16)
   var decryptedBytes = aesCtr.decrypt(eb);
-  console.log('decryptedBytes--- decryptedBytes', decryptedBytes)
 
   var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
-  console.log('decryptedBytes--- decryptedText', decryptedText);
   
   const res_obj = JSON.parse(decryptedText);
   console.log('decryptedBytes--- res_obj', res_obj);
@@ -233,6 +225,7 @@ export const request_aes = async function (url, options={}, base_url='https://ge
       url: base_url + url,
       method: options.method,
       data: options.data,
+      responseType: 'arraybuffer',
       // header这里根据业务情况自行选择需要还是不需要
       header: {
         'content-type': 'application/json',
