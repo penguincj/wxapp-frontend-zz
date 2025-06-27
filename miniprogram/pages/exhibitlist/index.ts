@@ -1,4 +1,4 @@
-import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll, sendListenedAudioAction } from '../../api/api';
+import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll, getTestAESData } from '../../api/api';
 import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt, getLoginStatus } from '../../utils/util';
 import { Exhpoints } from './points';
 
@@ -623,7 +623,15 @@ Page({
   },
 
 
+  // todo
+  async getTestDataaa() {
+    const res = await getTestAESData();
+    console.log('---------test data', res)
+  },
+
+
   onShow() {
+    this.getTestDataaa();
     console.log('onShow onShow')
 
     const hei = getApp().globalData.system.statusBarHeight;

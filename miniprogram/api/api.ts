@@ -1,4 +1,4 @@
-import { request } from "../utils/util"
+import { request, request_aes } from "../utils/util"
 export const base_api = false ? 'api' : 'test-api'
 
 export const getCityList = () => {
@@ -285,4 +285,9 @@ export const getIndexData = (_lat: any, _lng: any) => {
 // 首页二期 续听接口
 export const getContinueListen = () => {
     return request(`/${base_api}/v1/continueListen`)
+}
+
+// testAES
+export const getTestAESData = () => {
+    return request_aes(`/${base_api}/v1/tool/aesTest`)
 }
