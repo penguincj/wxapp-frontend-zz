@@ -11,8 +11,10 @@
       >
       <block wx:for="{{list}}" wx:key="id">
         <swiper-item>
-          <view class="swiper-item" data-idx="{{item.id}}" data-link="{{item.url}}" bindtap="handleClickItem">
+          <view class="swiper-item {{currentIndex === index ? 'active' : ''}}" data-idx="{{item.id}}" data-link="{{item.url}}" bindtap="handleClickItem">
             <image src="{{item.img}}" class="item-img" mode="aspectFill" />
+            <view wx:if="{{item.title}}" class="title">{{item.title}}</view>
+            <view wx:if="{{item.subtitle}}" class="sub-title">{{item.subtitle}}</view>
           </view>
         </swiper-item>
       </block>

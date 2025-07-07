@@ -11,12 +11,47 @@
     }
     .swiper-item {
       position: relative;
+      text-align: center;
+      width: 750rpx;
       .item-img {
         width: 750rpx;
         height: 550rpx;
         border-radius: 0px 0px 100rpx 100rpx;
         // border: 12rpx solid #FFFFFF;
         // border: 12rpx solid red;
+      }
+      .title {
+        position: absolute;
+        width: 750rpx;
+        top: 220rpx;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 48rpx;
+        line-height: 150%;
+        color: #FFFFFF;
+        opacity: 0;
+      }
+      .sub-title {
+        position: absolute;
+        width: 750rpx;
+        top: 300rpx;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 28rpx;
+        line-height: 150%;
+        color: #FFFFFF;
+        opacity: 0;
+      }
+    }
+    .active {
+      .title {
+        opacity: 1;
+        transition: opacity .2s ease-in-out 0.5s;
+      }
+      .sub-title {
+        opacity: 1;
+        transition: opacity .2s ease-in-out 0.7s;
+
       }
     }
     // .swiper-item-wrapper:nth-child(2) {

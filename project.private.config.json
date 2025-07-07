@@ -6,112 +6,28 @@
     "skylineRenderEnable": false,
     "urlCheck": true
   },
-  "libVersion": "3.7.7",
+  "libVersion": "3.8.9",
   "condition": {
     "miniprogram": {
       "list": [
         {
-          "name": "pages/exhibitiondetail/index",
-          "pathName": "pages/exhibitiondetail/index",
-          "query": "exhibition_id=394",
+          "name": "pages/museum/museumdetail/index",
+          "pathName": "pages/museum/museumdetail/index",
+          "query": "museum_id=19",
           "scene": null,
           "launchMode": "default"
         },
         {
+          "name": "pages/searchpage/index",
+          "pathName": "pages/searchpage/index",
+          "query": "exhibition_id=35",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/exhibitlist/index",
           "pathName": "pages/exhibitlist/index",
-          "query": "exhibition_id=35&narration_id=9&exhibit_id=188",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/index2/index",
-          "pathName": "pages/index2/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/museum/museumdetail/index",
-          "pathName": "pages/museum/museumdetail/index",
-          "query": "museum_id=11",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitionall/index",
-          "pathName": "pages/exhibitionall/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/agent/index",
-          "pathName": "pages/agent/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/personal/collectionlist/index",
-          "pathName": "pages/personal/collectionlist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/personal/looklist/index",
-          "pathName": "pages/personal/looklist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/personal/likelist/index",
-          "pathName": "pages/personal/likelist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/profile/index",
-          "pathName": "pages/profile/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/login/index",
-          "pathName": "pages/login/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/exhibitionlist/index",
-          "pathName": "pages/exhibitionlist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/museum/museumlist/index",
-          "pathName": "pages/museum/museumlist/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/museum/museumdetail/index",
-          "pathName": "pages/museum/museumdetail/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/museum/exhibitiondetail/index",
-          "pathName": "pages/museum/exhibitiondetail/index",
-          "query": "",
+          "query": "exhibition_id=35&narration_id=9",
           "launchMode": "default",
           "scene": null
         }

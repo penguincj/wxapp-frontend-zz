@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "swiper-card6": "/components/swiper-card6/swiper-card6"
+  }
+}

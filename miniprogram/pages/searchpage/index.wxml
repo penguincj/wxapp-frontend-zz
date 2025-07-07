@@ -1,0 +1,32 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+<navigation-bar title="搜索" styleType="dark" loading="{{false}}" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<!-- <view class="player-area">
+<player-comp
+  bindClickPlayerComp="handleClickPlayerComp"
+></player-comp>
+</view> -->
+<view class="search-page">
+  <view class="search-input-area">
+    <view class="input-group">
+      <input class="s-input" value="{{keyword}}" bindinput="handInput" bindconfirm="confirmTap" placeholder="可搜索展品名称" />
+      <image src="/static/images/search-gray.png" class="search-icon" mode="aspectFill" />
+    </view>
+    <view class="cancel" catchtap="handleClickCancel">取消</view>
+  </view>
+  <view class="search-list-area">
+    <swiper-card6
+      title=""
+      isSearch="{{true}}"
+      showInput="{{false}}"
+      list="{{searchList}}"
+      emptyMessage="{{emptyMessage}}"
+      bindChangeItem="handleClickExhibitItem"
+      bindClickItemImage="handleClickExhibitItem"
+      scrollStyle="height: calc(100vh - 88px -  88rpx )"
+    ></swiper-card6>
+  </view>
+  
+</view>
+  
+</page-meta>  

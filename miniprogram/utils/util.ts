@@ -1,5 +1,7 @@
 // @ts-nocheck
 var log = require('../utils/log')
+var aesjs = require('aes-js');
+
 import { base_api } from "../api/api"
 
 export const formatTime = (date: Date) => {
@@ -140,37 +142,48 @@ export const getCurrentCity = async () => {
       await wx.setStorageSync('city', city);
       console.error(error); 
     }
-    // wx.request({
-    //   url: `https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`,
-    //   header: {
-    //     'content-type': 'application/json',
-    //   },
-    //   success: (res) => {
-    //    if (res && res.data && res.data.status === 0) {
-    //     const loc_info = res.data.result;
-    //     if (loc_info && loc_info.address_component && loc_info.address_component.city) {
-    //       city = loc_info.address_component.city;
-    //       console.log('tengxun map', city);
-    //       wx.setStorageSync('city', city);
-    //     } else {
-    //       city = defaultCity
-    //       wx.setStorageSync('city', city);
-    //     }
-    //    } else {
-    //     city = defaultCity
-    //     wx.setStorageSync('city', city);
-    //    }
-    //   },
-    //   fail: (err) => {
-    //     city = defaultCity;
-    //     wx.setStorageSync('city', city);
-    //     console.error(err);
-    //   }
-    // })
+   
     // todo 地理位置反解
     return city;
     
   }
+}
+
+export const getDecryptedData = (_aesData: any) => {
+  const res: any = _aesData;
+  const key= 'key-bowudy-2025--2025-bowudy-key';
+ 
+  var encryptedBytes = new Uint8Array(res);
+  console.log('decryptedBytes--- encryptedBytes', encryptedBytes);
+
+  var count = encryptedBytes.slice(0, 16);
+  var keyAes = aesjs.utils.utf8.toBytes(key);
+
+  var counter = new aesjs.Counter(count);
+
+  var aesCtr = new aesjs.ModeOfOperation.ctr(keyAes, counter);
+
+  var eb = encryptedBytes.slice(16)
+  var decryptedBytes = aesCtr.decrypt(eb);
+
+  var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
+  
+  const res_obj = JSON.parse(decryptedText);
+  console.log('decryptedBytes--- res_obj', res_obj);
+
+  return res_obj;
+
+
+  // var encryptedBytes = aesjs.utils.utf8.toBytes(res);
+  // var count = encryptedBytes.slice(0, 16);
+  // var ivtxt = aesjs.utils.utf8.fromBytes(count);
+  // console.log('decryptedBytes--- 解密结果:', ivtxt);
+
+  // const iv = 'abcdefghijklmnop';  // 16字节 IV
+  // const result = decryptAESCTR(res, key, ivtxt);
+  // console.log('decryptedBytes--- 解密结果:', result);
+
+
 }
 
 export const request = async function (url, options={}, base_url='https://gewugo.com') {
@@ -191,18 +204,6 @@ export const request = async function (url, options={}, base_url='https://gewugo
       },
       success: async (res) => {
         resolve(res.data)
-        // if (res.statusCode === 200) {
-        //   console.log('requset----', res.statusCode)
-        //   resolve(res.data)
-        // } else if (res.statusCode === 401) {
-        //   console.log('request 401');
-          
-        //   resolve(res.data)
-        //   // return await request(...arguments);
-        //   // console.log( arguments)
-        // } else {
-        //   reject(res.error)
-        // }
       },
       fail: (err) => {
         reject(err)
@@ -211,6 +212,39 @@ export const request = async function (url, options={}, base_url='https://gewugo
     })
   })
 }
+
+
+export const request_aes = async function (url, options={}, base_url='https://gewugo.com') {
+  let token = await wx.getStorageSync('token');
+  if (!token) {
+    const res: any = await getLoginStatus(); 
+    token = res.token;
+  }
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: base_url + url,
+      method: options.method,
+      data: options.data,
+      responseType: 'arraybuffer',
+      // header这里根据业务情况自行选择需要还是不需要
+      header: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      success: async (res) => {
+        const decrypted_data = getDecryptedData(res.data);
+        console.log('decrypted_data', decrypted_data)
+        resolve(decrypted_data);
+      },
+      fail: (err) => {
+        reject(err)
+        
+      }
+    })
+  })
+}
+
+
 
 
 export const map_request = function (_url: any, options={} ) {

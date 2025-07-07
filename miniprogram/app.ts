@@ -23,8 +23,8 @@ App<IAppOption>({
       manualStop: false, // 手动关闭播放器
     },
     ai: {
-      x: 290,
-      y: 140,
+      x: 0,
+      y: 660,
     },
     play: {
       x: 320,

@@ -1,10 +1,10 @@
 <view class="cache-audio-comp">
-	<!-- <button bindtap="handleDownloadFile">离线下载</button> -->
-	<image class="title-icon" src="/static/images/xiazai.png" bindtap="handleDownloadFile" mode="aspectFix" />
+	<image wx:if="{{progress ===0 || (progress>=99)}}" class="title-icon" src="/static/images/download@2x.png" bindtap="handleDownloadFile" mode="aspectFix" />
+	<!-- <image wx:if="{{false}}" class="title-icon" src="/static/images/download@2x.png" bindtap="handleDownloadFile" mode="aspectFix" /> -->
     <!-- <circle-progress curId="{{playingIndex}}" progress="{{progress}}"></circle-progress> -->
 
-	<view class="progress-text">
-		{{progress === 0 ? "" : (progress >= 99 ? '完成' : (progress + '%'))}}
+	<view wx:else class="progress-text">
+		{{progress === 0 ? "" : (progress >= 99 ? '100%' : (progress + '%'))}}
 	</view>
 
 </view>

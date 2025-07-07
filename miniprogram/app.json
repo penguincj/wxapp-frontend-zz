@@ -22,6 +22,7 @@
     "pages/poster/index",
     "pages/bglist/index",
     "pages/treaturedetail/index",
+    "pages/searchpage/index",
     "pages/agent/index"
   ],
   "subpackages": [

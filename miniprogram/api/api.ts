@@ -1,4 +1,4 @@
-import { request } from "../utils/util"
+import { request, request_aes } from "../utils/util"
 export const base_api = true ? 'api' : 'test-api'
 
 export const getCityList = () => {
@@ -60,6 +60,11 @@ export const getCityExhibitionFeedList = (_cityid: any, _num=1, _pagenum=1) => {
     return request(`/${base_api}/v1/feeds?cityID=${_cityid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
+// 博物馆相册 /albums/{album_id}/images
+export const getAlbumsFeedList = (_albumid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/albums/${_albumid}/images?num=${_num}&pageNum=${_pagenum}`);
+}
+
 // 常设展
 export const getLongExhibitionList = (_museumid: any, _num=1, _pagenum=1) => {
     return request(`/${base_api}/v1/exhibitions?type=long&museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);
@@ -99,16 +104,24 @@ export const getUnitList = (_exhibitionid: any) => {
     return request(`/${base_api}/v1/units?exhibitionID=${_exhibitionid}`);
 }
 
-export const getExhibitList = (_unitid: any) => {
-    return request(`/${base_api}/v1/exhibits?unitID=${_unitid}`);
+export const getExhibitList = (_unitid: any, _exhibitionid = -1) => {
+    console.log('_unitid', _unitid)
+    if (Number(_unitid) === 999999) {
+        return request_aes(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
+    }
+    return request_aes(`/${base_api}/v1/exhibits?unitID=${_unitid}`);
 }
+export const getAllExhibitList = (_exhibitionid: any) => {
+    return request_aes(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
+}
+
 export const queryExhibitListAll = (_userid: any, _querystr: any) => {
     // return request(`/${base_api}/v1/queries` + _querystr);
     return request(`/${base_api}/v1/users/${_userid}/search` + _querystr);
 }
 
 export const getExhibitById = (_exhibitid: any) => {
-    return request(`/${base_api}/v1/exhibits/${_exhibitid}`);
+    return request_aes(`/${base_api}/v1/exhibits/${_exhibitid}`);
 }
 
 export const getNarrowList = (_exhibitionid: any) => {
@@ -145,6 +158,10 @@ export const sendViewExhibitionAction = (_userid: any, _exhibitionid: any, optio
 
 export const sendListenAudioAction = (_audioid: any, options: any) => {
     return request(`/${base_api}/v1/audios/${_audioid}/listen`, options)
+}
+
+export const sendListenedAudioAction = (_audioid: any, options: any) => {
+    return request(`/${base_api}/v1/audios/${_audioid}/listen?listened=1`, options)
 }
 
 export const sendFeedback = (_userid: any, options: any) => {
@@ -273,4 +290,9 @@ export const getIndexData = (_lat: any, _lng: any) => {
 // 首页二期 续听接口
 export const getContinueListen = () => {
     return request(`/${base_api}/v1/continueListen`)
+}
+
+// testAES
+export const getTestAESData = () => {
+    return request_aes(`/${base_api}/v1/tool/aesTest`)
 }

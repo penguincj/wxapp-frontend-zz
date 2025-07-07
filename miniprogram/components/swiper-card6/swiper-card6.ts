@@ -6,6 +6,26 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    title: {
+      type: String,
+      value: "",
+    },
+    isSearch: {
+      type: Boolean,
+      value: false
+    },
+    emptyMessage: {
+      type: String,
+      value: "",
+    },
+    listenedExhibitList: {
+      type: Object,
+      value: {},
+    },
+    isListType: {
+      type: Boolean,
+      value: true
+    },
     list: {
       type: Array,
       value: []
@@ -33,6 +53,10 @@ Component({
     playingExhibitId: {
       type: Number,
       value: -1,
+    },
+    scrollTop: {
+      type: String,
+      value: '0rpx',
     }
   },
   /**
@@ -53,9 +77,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    scroll(e : any) {
-      // console.log(e)
-    },
     selectItem(e: any) {
       console.log('selectItem', e);
       const { idx } = e.currentTarget.dataset;

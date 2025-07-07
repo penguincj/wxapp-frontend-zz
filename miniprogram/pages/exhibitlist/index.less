@@ -11,13 +11,47 @@
     }
   }
   .unit-choose-area {
+    position: relative;
+    .swiper-unit {
+      width: 502rpx;
+      .page-section-spacing {
+        .scroll-view_H {
+          text-align: left;
+        }
+      }
+    }
+    .pannel-group {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 248rpx;
+      height: 76rpx;
+      padding: 0 32rpx;
+      // background-color: red;
+      display: flex;
+      gap: 16rpx;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+      text-align: center;
+      // box-shadow: -4rpx 0rpx 7rpx 0px rgba(0, 0, 0, 0.1);
+      box-shadow: -5px 0 10px -5px rgba(0, 0, 0, 0.1);;
+      border-bottom: 1rpx solid #EDEDEA;
+      .pannel-img {
+        width: 40rpx;
+        height: 40rpx;
+      }
+      .download {
+        // position: relative;
 
+      }
+    }
   }
   .unit-card-area {
     // padding-bottom: 344rpx;
   }
   .list-area {
-    padding: 0 40rpx;
+    padding: 0 34rpx;
   }
  
   .audio-player {
@@ -27,6 +61,7 @@
     // background-color: red;
     bottom: 0;
     left: 0;
+    box-shadow: 0px -2rpx 40rpx 0px rgba(0, 0, 0, 0.1);
     .audio-wrapper {
       width: 100%;
       height: 150rpx;
@@ -73,7 +108,7 @@
         }
       }
       .info-group {
-        padding-left: 22rpx;
+        padding: 22rpx;
         width: 560rpx;
         .line-one {
           display: flex;
@@ -99,7 +134,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 30rpx 12px 0 12px;
+          padding: 10rpx 12px 0 12px;
 
           .img-icon {
             width: 27rpx;
@@ -129,23 +164,27 @@
               // background: red;
               text-align: center;
               box-sizing: border-box;
-              padding-top: 8rpx;
               position: relative;
               // margin-right: 40rpx;
               .img {
+                margin-top: 6rpx;
                 width: 36rpx;
                 height: 36rpx;
               }
               .o-beisu-txt {
                 position: absolute;
-                top: 14rpx;
-                left: 25rpx;
+                top: 0rpx;
+                left: 0rpx;
+                width: 80rpx;
+                height: 50rpx;
+                line-height: 50rpx;
+                vertical-align: middle;
                 // width: 12rpx;
                 // height: 12rpx;
-                font-size: 20rpx;
-                color: #9AA7B1;
+                font-size: 22rpx;
+                color: #2C2F3B;
                 font-weight: 800;
-                transform: scale(0.7);
+                // transform: scale(0.7);
                 text-align: center;
 
               }

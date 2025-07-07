@@ -1,6 +1,7 @@
 <!-- index.wxml -->
-<page-meta page-style="">
-<navigation-bar back styleType="dark" color="dark" loading="{{false}}" background="#FFF" title="{{museumInfo.name}}"></navigation-bar>
+<navigation-bar back="{{true}}" extClass="{{navIsTransparent ? 'transparent': ''}}" styleType="dark" color="black" background="#FFF"></navigation-bar>
+
+<page-meta class="page-meta-area">
 <view class="player-area">
 <player-comp
   bindClickPlayerComp="handleClickPlayerComp"
@@ -10,119 +11,131 @@
   scroll-y="{{true}}" 
   show-scrollbar="{{false}}" 
   enhanced="{{true}}"
-  bindscrolltolower="handleScrolltolower"
-  style="height: calc(100vh - 88px)">
-<view class="page-museum-detail">
+  bounces="{{false}}"
+  bindscroll="handlePageScroll"
+  style="height: 100vh">
+<view class="page-museum-detail" style="{{loading? 'visibility: hidden;': ''}}">
   <view class="museum-info">
     <image src="{{museumInfo.image_url}}" class="museum-img" mode="aspectFill" />
+    <view class="img-mask"></view>
     <view class="museum-text-group">
-      <view class="title">{{museumInfo.name}}</view>
+      <view class="title-line">
+        <view class="title">{{museumInfo.name}}</view>
+        <view wx:if="{{museumInfo.tags}}" class="tag">{{museumInfo.tags}}</view>
+      </view>
       <view class="desc">{{museumInfo.description}}</view>
-      <view class="btn-line" wx:if="{{showPosterBtn}}">
-        <view class="btn btn-poster" bindtap="handleClickSharePoster">
-          <image class="btn-image" src="/static/images/share1.png" mode="aspectFix" />
-          <text class="cont">生成分享海报</text>
-        </view>
-      </view>
-      <view class="line"></view>
-      <view class="open-date text-flex">
-          <image src="/static/images/date.png" class="museum-icon" mode="aspectFill" />
-        {{museumInfo.opentime}}
-      </view>
-      <view class="price text-flex">
-        <image src="/static/images/piao.png" class="museum-icon" mode="aspectFill" />
-        门票价格：{{museumInfo.ticket_price}}/人（普通票）
-      </view>
-      <view class="address text-flex">
-        <image src="/static/images/dingwei.png" class="museum-icon" mode="aspectFill" />
-      {{museumInfo.address}}
-      </view>
     </view>
   </view>
-  <view class="swiper-unit-area" wx:if="{{listConfig.length}}">
-    <swiper-unit2 list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit2>
+  <view class="note-area" style="background-color: {{navIsTransparent ? '#D9D9D9': '#FFFFFF'}}">
+    <scroll-note list="{{noteList}}" bindSelectItem="handleSelectNoteItem" selectedId="{{selectedNoteId}}"></scroll-note>
   </view>
-  <view class="unit-tab-pannel-area" wx:if="{{topSwiperSelectIdx === 2}}">
-    <block wx:for="{{iconsConfig}}" wx:key="{{index}}">
-      <view class="pannel-item" data-idx="{{item.id}}" catchtap="handlePannelClick">
-        <image src="{{item.icon}}" class="i-icon" mode="aspectFit" />
-        <view class="i-name">{{item.name}}</view>
-      </view>
-    </block>
-  </view>
-  <view wx:if="{{topSwiperSelectIdx === 1}}">
-    <view class="recommend-area">
-      <swiper-card2
-        title="推荐展览"
-        list="{{recommendList}}"
-        bindClickMore="handleClickMoreReco"
-        bindClickItem="handleClickItem"
-      ></swiper-card2>
+  <view class="sticky-area" style="top: 100px">
+    <view class="swiper-unit-area" wx:if="{{listConfig.length}}">
+      <swiper-unit3 list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit3>
     </view>
-    <view class="normal-area">
-      <card-group1
-        title="常设展览"
-        list="{{normalList}}"
-        bindClickMore="handleClickMoreLong"
-        bindClickItem="handleClickItem"
-      ></card-group1>
+    <view wx:if="{{topSwiperSelectIdx === 1}}">
+       <scroll-view 
+        scroll-y="{{!navIsTransparent}}" 
+        show-scrollbar="{{false}}" 
+        enhanced="{{true}}"
+        bounces="{{false}}"
+        bindscrolltolower="handleScrolltolower"
+        style="height: calc(100vh - 88px - 40px);">
+          <view class="normal-area">
+            <card-group2
+              list="{{recommendList}}"
+              bindClickMore="handleClickMoreLong"
+              bindClickItem="handleClickItem"
+            ></card-group2>
+          </view>
+      </scroll-view>
     </view>
-    <view class="future-area">
-      <card-group1
-        title="展览预告"
-        list="{{futureList}}"
-        bindClickMore="handleClickMoreFuture"
-        bindClickItem="handleClickItem"
-      ></card-group1>
-    </view>
-    <view class="expried-area">
-      <card-group1
-        title="往期展览"
-        list="{{outofdateList}}"
-        bindClickMore="handleClickMorePast"
-        bindClickItem="handleClickItem"
-      ></card-group1>
-    </view>
-  </view>
-  <view wx:if="{{topSwiperSelectIdx === 3}}">
-    <view class="water-container">
-      <!-- 瀑布流容器 -->
-      <view class="waterfall">
-        <!-- 左列 -->
-        <view class="column">
-          <block wx:for="{{leftList}}" wx:key="id">
-            <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
-              <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
-              <view class="title">{{item.name}}</view>
-              <!-- <view class="content">{{item.description}}</view> -->
-              <view class="desc-opendate">
-                <view class="txt">{{item.classification}}（{{item.period}}）</view>
-                <view class="txt">{{item.exhibition_name}}</view>
+    
+    <view wx:if="{{topSwiperSelectIdx === 2}}">
+      <scroll-view 
+        scroll-y="{{!navIsTransparent}}" 
+        show-scrollbar="{{false}}" 
+        enhanced="{{true}}"
+        bounces="{{false}}"
+        bindscrolltolower="handleScrolltolower"
+        style="height: calc(100vh - 88px - 40px);">
+          <view class="water-container">
+            <!-- 瀑布流容器 -->
+            <view class="waterfall">
+              <!-- 左列 -->
+              <view class="column col1">
+                <block wx:for="{{leftList}}" wx:key="id">
+                  <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
+                    <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
+                    <view class="title">{{item.name}}</view>
+                    <!-- <view class="content">{{item.description}}</view> -->
+                    <view class="desc-opendate">
+                      <view class="txt">{{item.classification}}（{{item.period}}）</view>
+                      <view class="txt">{{item.exhibition_name}}</view>
+                    </view>
+                    <!-- <view class="time">{{item.opendate}}</view> -->
+                  </view>
+                </block>
               </view>
-              <!-- <view class="time">{{item.opendate}}</view> -->
-            </view>
-          </block>
-        </view>
-        <!-- 右列 -->
-        <view class="column">
-          <block wx:for="{{rightList}}" wx:key="id">
-            <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
-              <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
-              <view class="title">{{item.name}}</view>
-              <view class="desc-opendate">
-                <view class="txt">{{item.classification}}（{{item.period}}）</view>
-                <view class="txt">{{item.exhibition_name}}</view>
+              <!-- 右列 -->
+              <view class="column col2">
+                <block wx:for="{{rightList}}" wx:key="id">
+                  <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
+                    <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
+                    <view class="title">{{item.name}}</view>
+                    <view class="desc-opendate">
+                      <view class="txt">{{item.classification}}（{{item.period}}）</view>
+                      <view class="txt">{{item.exhibition_name}}</view>
+                    </view>
+                  </view>
+                </block>
               </view>
             </view>
-          </block>
-        </view>
-      </view>
-      <!-- 加载提示 -->
-      <view class="loading" wx:if="{{waterfallloading}}">加载中...</view>
-      <view class="no-more" wx:if="{{!hasMore && !waterfallloading}}">没有更多数据了</view>
+            <!-- 加载提示 -->
+            <view class="loading" wx:if="{{waterfallloading}}">加载中...</view>
+            <view class="no-more" wx:if="{{!hasMore && !waterfallloading}}">没有更多数据了</view>
+          </view>
+      </scroll-view>
+    </view>
+
+
+    <view class="unit-tab-pannel-area" wx:if="{{topSwiperSelectIdx === 3}}">
+      <scroll-view 
+        scroll-y="{{!navIsTransparent}}" 
+        show-scrollbar="{{false}}" 
+        enhanced="{{true}}"
+        bounces="{{false}}"
+        bindscrolltolower="handleScrolltolower3"
+        style="height: calc(100vh - 88px - 40px);">
+          <view class="water-container">
+            <!-- 瀑布流容器 -->
+            <view class="waterfall">
+              <!-- 左列 -->
+              <view class="column col1">
+                <block wx:for="{{leftPhotoList}}" wx:key="id">
+                  <view class="item" style="height: {{item.height}}rpx;" data-url="{{item.url}}" catchtap="handlePhotoItem">
+                    <image src="{{item.url}}" class="img-pic" mode="widthFix" />
+                  </view>
+                </block>
+              </view>
+              <!-- 右列 -->
+              <view class="column col2">
+                <block wx:for="{{rightPhotoList}}" wx:key="id">
+                  <view class="item" style="height: {{item.height}}rpx;" data-url="{{item.url}}" catchtap="handlePhotoItem">
+                    <image src="{{item.url}}" class="img-pic" mode="widthFix" />
+                  </view>
+                </block>
+              </view>
+            </view>
+            <!-- 加载提示 -->
+            <view class="loading" wx:if="{{waterfallloadingPhoto}}">加载中...</view>
+            <view class="no-more" wx:if="{{!hasMorePhoto && !waterfallloadingPhoto}}">没有更多数据了</view>
+          </view>
+      </scroll-view>
     </view>
   </view>
 </view>
 </scroll-view>
+<image-scale image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopupPhoto"></image-scale>
 
 </page-meta>  
