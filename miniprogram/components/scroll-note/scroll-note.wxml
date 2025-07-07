@@ -1,0 +1,24 @@
+<view class="swiper-note">
+	<view class="container">
+		<view class="page-section-spacing">
+			<scroll-view
+			 class="scroll-view_H"
+			 scroll-x="{{true}}"
+			 show-scrollbar="{{false}}"
+			 enhanced="{{true}}"
+			 bindscroll="scroll"
+       		 
+			 style="width: 100%;"
+			>
+				<block wx:for="{{list}}">
+					<view class="item-group item-group-{{index}} {{item.id === selectedId ? 'select': ''}}" data-id="{{item.id}}" data-guideid="{{item.guideid}}" bindtap="selectItem">
+						<view class="item-txt">{{item.title}}</view>
+						<view class="item-desc">{{item.desc}}</view>
+					</view>
+				</block>
+
+			</scroll-view>
+		</view>
+	</view>
+</view>
+

@@ -60,6 +60,11 @@ export const getCityExhibitionFeedList = (_cityid: any, _num=1, _pagenum=1) => {
     return request(`/${base_api}/v1/feeds?cityID=${_cityid}&num=${_num}&pageNum=${_pagenum}`);
 }
 
+// 博物馆相册 /albums/{album_id}/images
+export const getAlbumsFeedList = (_albumid: any, _num=1, _pagenum=1) => {
+    return request(`/${base_api}/v1/albums/${_albumid}/images?num=${_num}&pageNum=${_pagenum}`);
+}
+
 // 常设展
 export const getLongExhibitionList = (_museumid: any, _num=1, _pagenum=1) => {
     return request(`/${base_api}/v1/exhibitions?type=long&museumID=${_museumid}&num=${_num}&pageNum=${_pagenum}`);

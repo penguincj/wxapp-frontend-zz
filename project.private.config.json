@@ -6,16 +6,23 @@
     "skylineRenderEnable": false,
     "urlCheck": true
   },
-  "libVersion": "3.7.7",
+  "libVersion": "3.8.9",
   "condition": {
     "miniprogram": {
       "list": [
         {
+          "name": "pages/museum/museumdetail/index",
+          "pathName": "pages/museum/museumdetail/index",
+          "query": "museum_id=19",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/searchpage/index",
           "pathName": "pages/searchpage/index",
           "query": "exhibition_id=35",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/exhibitlist/index",

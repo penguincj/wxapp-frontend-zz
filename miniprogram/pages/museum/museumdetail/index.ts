@@ -1,17 +1,9 @@
-import { getMuseumById, getTreatureList, getMuseumInfoById, getShortExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList, getPostersOfMuseum } from "../../../api/api";
+import { getMuseumById, getTreatureList, getMuseumInfoById, getRecoExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList, getPostersOfMuseum, getAlbumsFeedList } from "../../../api/api";
 import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../../utils/util";
 const listConfig = [
   {
     id: 1,
-    name: '展览信息',
-  },
-  {
-    id: 3,
-    name: '重点文物',
-  },
-  {
-    id: 2,
-    name: '参观指南',
+    name: '推荐展览',
   },
 ]
 
@@ -33,18 +25,16 @@ Page({
     safeHeight: 0,
     windowHeight: 0,
     statusBarHeight:0,
-    recommendList: [],
-    normalList: [],
-    outofdateList: [],
-    futureList: [],
+    recommendList: [] as any,
     curMuseumId: -1,
     loading: false,
     topSwiperSelectIdx: 1,
-    listConfig: [] as any,
+    listConfig: listConfig,
     iconsConfig,
     isShowSwiperUnit: false,
     showPosterBtn: false,
     museumGuideInfo: [] as any,
+    noteList: [], //
 
     leftList: [] as any,   // 左列数据
     rightList: [] as any,  // 右列数据
@@ -52,58 +42,131 @@ Page({
     pageSize: PAGE_SIZE,   // 每页加载数量
     hasMore: true,   // 是否还有更多数据
     waterfallloading: false,
+
+    leftPhotoList: [] as any,   // 左列数据
+    rightPhotoList: [] as any,  // 右列数据
+    pagePhoto: 1,        // 当前页码
+    pageSizePhoto: PAGE_SIZE,   // 每页加载数量
+    hasMorePhoto: true,   // 是否还有更多数据
+    waterfallloadingPhoto: false,
+
+    selectedNoteId: 0,
+    navIsTransparent: true,
+    bigImg: '',
+    showBigImg: false,
   },
+  handlePageScroll(e: any) {
+    const { scrollTop } = e.detail;
+
+    if (scrollTop > 200) {
+      console.log('1');
+      this.setData({
+        navIsTransparent: false
+      })
+    } else {
+      console.log('2');
+      this.setData({
+        navIsTransparent: true
+      })
+    }
+    
+  },
+  noScroll() {
+    console.log('noScroll')
+    return false;
+  },
+
+  handlePhotoItem(e: any) {
+    const { url } = e.currentTarget.dataset;
+    console.log('url', url)
+    this.setData({
+      bigImg: url,
+      showBigImg: true,
+    })
+  },
+
+  handleClosePopupPhoto() {
+    this.setData({
+      showBigImg: false,
+    })
+  },
+
+  handlePulling(e: any) {
+    console.log(e)
+  },
+  generateFlags(_exhibitionlist: any) {
+    if (_exhibitionlist) {
+      const exhibitionList = _exhibitionlist.map((i: any) => 
+       
+        {
+          let flag = false;
+          let flag_name = '';
+          if (i.tags && i.tags.length && i.tags.includes('NEW')) {
+            flag = true;
+            flag_name = 'NEW'
+          } else if (Number(i.on_display) === 0) {
+            flag = true;
+            flag_name = '已结束'
+          }
+          return {
+            ...i, 
+            is_flag: flag,
+            flag_name,
+          }
+        }
+      );
+      return exhibitionList;
+    }
+    return [];
+  },
+
   async initPage(_museumid: any) {
     this.setData({
       loading: true
     })
+    wx.showLoading({
+      title: '加载中',
+    });
     try {
       const museumInfo: any = await getMuseumById(_museumid);
-      const normalList_res: any = await getLongExhibitionList(_museumid, 999);
-      const recommendList_res: any = await getShortExhibitionList(_museumid, 999);
-      const pastList_res: any = await getPastExhibitionList(_museumid, 999);
-      const futureList_res: any = await getFutureExhibitionList(_museumid, 999);
+      const recommendList_res: any = await getRecoExhibitionList(_museumid, 999);
+      const recommendList = this.generateFlags(recommendList_res.exhibitions);
       this.setData({
         museumInfo: museumInfo.museum,
-        normalList: normalList_res.exhibitions,
-        recommendList: recommendList_res.exhibitions,
-        outofdateList: pastList_res.exhibitions,
-        futureList: futureList_res.exhibitions,
+        recommendList,
         loading: false,
       })
 
-      this.getPoster(_museumid)
       await this.getMuseumInfo();
       await this.getTreatureListInfo(this.data.curMuseumId);
-      let list_data = [] as any;
-      if (this.data.museumGuideInfo.length || this.data.leftList.length) {
-        list_data = [
-          {
-            id: 1,
-            name: '展览信息',
-          },
-        ]
+      if (museumInfo && museumInfo.museum && museumInfo.museum.album_id) {
+        await this.getPhotoListInfo(museumInfo.museum.album_id);
       }
+      let list_data = this.data.listConfig;
+
       if (this.data.leftList.length) {
         list_data.push({
-          id: 3,
+          id: 2,
           name: '重点文物',
         })
       }
-      if (this.data.museumGuideInfo.length) {
+      if (this.data.leftPhotoList.length) {
         list_data.push({
-          id: 2,
-          name: '参观指南',
+          id: 3,
+          name: '相册合集',
         })
       }
       this.setData({
         listConfig: list_data,
+        loading: false,
       })
+      wx.hideLoading();
 
     } catch (error) {
       this.setData({
         loading: false
       })
+      wx.hideLoading();
     }
   },
 
@@ -137,12 +200,34 @@ Page({
     
   },
 
+  generateNoteInfo(_visitguide: any) {
+    const { open_time, open_time_detail, ticket_info, ticket_info_detail, has_museum_map } = _visitguide;
+    const noteList = [{
+      id: 1,
+      guideid: 2,
+      title: open_time || '开放时间',
+      desc: open_time_detail || '查看 >'
+    }, {
+      id: 2,
+      guideid: 1,
+      title: ticket_info || '门票信息',
+      desc: ticket_info_detail || '查看 >'
+    }];
+    if (has_museum_map) {
+      noteList.push({id: 3, guideid: 3, title: '导览地图', desc: '查看 >'})
+    }
+    noteList.push({id: 4,guideid: 1,  title: '更多指南', desc: '查看 >' })
+    return noteList
+  },
+
   async getMuseumInfo() {
     const res: any = await getMuseumInfoById(this.data.curMuseumId);
     if (res && res.code === 0) {
-      if (res.visitGuide && res.visitGuide.guide_items && res.visitGuide.guide_items.length) {
+      if (res.visitGuide && res.visitGuide) {
+        const noteList = this.generateNoteInfo(res.visitGuide);
+        console.log('noteList', noteList)
         this.setData({
-          museumGuideInfo: res.visitGuide.guide_items
+          noteList,
         });
         
       } else {
@@ -198,9 +283,7 @@ Page({
             height,
           }
         })
-        // this.setData({
-        //   exhibitionList: list,
-        // })
+
         console.log('------list', list)
         // 根据高度决定放入左列还是右列
         const { total_page_num = 10, page_num = 1} = res;
@@ -218,6 +301,42 @@ Page({
     }
   },
 
+  async getPhotoListInfo(_albumid: any, _pagenum =1) {
+    const res :any = await getAlbumsFeedList(_albumid, this.data.pageSize,  _pagenum);
+    if (res && res.code === 0) {
+      const exlist = res.album.images;
+
+        const list = exlist.map((i: any) => {
+          
+          const arr = i.width_height.split(",");
+          // const arr = "100,105".split(",");
+          const width = Number(arr[0]);
+          const hei = Number(arr[1]);
+          const titleline = 0;
+          const height = 360 * (hei/width) + titleline;
+          return {
+            ...i,
+            height,
+          }
+        })
+
+        console.log('------photo list', list)
+        // 根据高度决定放入左列还是右列
+        const { total_page_num = 10, page_num = 1} = res;
+        const { leftList, rightList } = this.distributeItems(list);
+        const totalPage = total_page_num;
+        const curPageNum = page_num;
+
+        this.setData({
+          leftPhotoList: [...this.data.leftPhotoList, ...leftList],
+          rightPhotoList: [...this.data.rightPhotoList, ...rightList],
+          pagePhoto: curPageNum,
+          waterfallloadingPhoto: false,
+          hasMorePhoto: curPageNum < totalPage
+        });
+    }
+  },
+
   handlePannelClick(e: any) {
     const { idx } = e.currentTarget.dataset;
     const url_params = generateNewUrlParams({
@@ -230,8 +349,15 @@ Page({
 
   handleScrolltolower() {
     console.log('1', this.data.hasMore);
-    if (this.data.hasMore && (this.data.topSwiperSelectIdx === 3)) {
+    if (this.data.hasMore && (this.data.topSwiperSelectIdx === 2)) {
       this.getTreatureListInfo(this.data.curMuseumId, this.data.page + 1);
+    }
+  },
+
+  handleScrolltolower3() {
+    console.log('3', this.data.hasMorePhoto);
+    if (this.data.hasMorePhoto && (this.data.topSwiperSelectIdx === 3)) {
+      this.getPhotoListInfo(this.data.museumInfo.album_id, this.data.pagePhoto + 1);
     }
   },
 
@@ -250,6 +376,21 @@ Page({
     backToTargetPage(targetPage);
   },
 
+  handleSelectNoteItem(e: any) {
+    console.log(e);
+    const { selectId, guideId } = e.detail;
+    this.setData({
+      selectedNoteId: selectId,
+    })
+    if (guideId) {
+      const url_params = generateNewUrlParams({
+        select_id: guideId,
+      })
+      wx.navigateTo({
+        url: '/pages/guidepage/index'+ url_params
+      })
+    }
+  },
 
   handleClickMoreReco() {
     const url_params = generateNewUrlParams({

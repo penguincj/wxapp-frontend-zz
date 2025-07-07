@@ -1,3 +1,10 @@
+.page-meta-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #FFFFFF;
+}
 .page-museum-detail {
   position: absolute;
   top: 0;
@@ -8,31 +15,54 @@
   .museum-info {
     position: relative;
     width: 100%;
-    height: 757rpx;
+    height: 562rpx;
+   
     .museum-img {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 757rpx;
+      height: 562rpx;
+      border-bottom-left-radius: 50rpx;
+      border-bottom-right-radius: 50rpx;
+    }
+    .img-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 562rpx;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) -3%, rgba(0, 0, 0, 0) 66%, rgba(0, 0, 0, 0.32) 85%, rgba(0, 0, 0, 0.4) 100%);
       border-bottom-left-radius: 50rpx;
       border-bottom-right-radius: 50rpx;
     }
     .museum-text-group {
       position: absolute;
-      bottom: 40rpx;
+      bottom: 30rpx;
       left: 40rpx;
       // height: 420rpx;
       width: 670rpx;
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: 30rpx;
-      backdrop-filter: blur(10rpx);
       color: #FFFFFF;
-      padding: 30rpx;
       box-sizing: border-box;
+      .title-line {
+        display: flex;
+        align-items: center;
+        gap: 12rpx;
+      }
       .title {
         font-size: 44rpx;
         font-family: MySimSun;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+      }
+      .tag {
+        font-size: 20rpx;
+        height: 32rpx;
+        line-height: 32rpx;
+        vertical-align: middle;
+        color: #64676C;
+        background: #F2F4F7;
+        padding: 0rpx 8rpx;
+        border-radius: 4rpx;
       }
       .desc {
         width: 90%;
@@ -43,6 +73,7 @@
         white-space: nowrap;
         font-size: 28rpx;
         padding-top: 10rpx;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
       }
       .btn-line {
         display: flex;
@@ -119,13 +150,38 @@
     }
   }
 
+  .note-area {
+    // margin: 20rpx 40rpx;
+    margin-top: -36rpx;
+    margin-bottom: -40rpx;
+    // padding: 0 40rpx 0 40rpx;
+    padding: 0;
+    width: 750rpx;
+    height: 218rpx;
+    padding-top: 60rpx;
+    background-color: #D9D9D9;
+    box-sizing: border-box;
+  }
+
+  .sticky-area {
+    position: sticky;
+    width: 100%;
+    min-height: calc(100vh - 88px - 40rpx);
+    top: 100px; /* 设置距离顶部100rpx */
+    z-index: 100; /* 确保元素在其他内容之上 */
+    background-color: #fff; /* 可选背景色 */
+    border-radius: 20rpx 20rpx 0 0;
+    transform: translateY(-10rpx);
+  }
+
   .recommend-area {
     padding-left: 40rpx;
   }
 
   .normal-area {
-    padding: 0 40rpx;
-    padding-top: 50rpx;
+    padding: 0 14rpx;
+    padding-top: 0rpx;
+    background-color: #FFFFFF;
   }
 
   .expried-area {
@@ -145,10 +201,10 @@
     justify-content: space-between;
     box-sizing: border-box;
     padding-top: 20rpx;
-    background-color: #f7f8f9;
+    // background-color: #f7f8f9;
     // padding-bottom: 100rpx;
     .waterfall {
-      width: 680rpx;
+      width: 726rpx;
       display: flex;
       justify-content: space-between;
 
@@ -162,10 +218,16 @@
         gap: 12rpx;
         // margin: 0 10rpx;
       }
+      .col1 {
+        align-items: flex-start;
+      }
+      .col2 {
+        align-items: flex-end;
+      }
       
       /* 项目卡片样式 */
       .item {
-        width: 330rpx;
+        width: 357rpx;
         // margin-bottom: 20rpx;
         border-radius: 12rpx;
         padding: 0rpx;
@@ -179,7 +241,7 @@
       }
 
       .img-pic {
-        width: 330rpx;
+        width: 357rpx;
         border-radius: 12rpx;
       }
       
@@ -238,6 +300,8 @@
 
 .swiper-unit-area {
   margin-top: 40rpx;
+  // border-radius: 20rpx 20rpx 0 0;
+  // background-color: red;
   .page-section-spacing {
     border-bottom: 0;
   }
@@ -253,7 +317,7 @@
 }
 
 .unit-tab-pannel-area {
-  margin-top: 40rpx;
+  // margin-top: 40rpx;
   width: 100%;
   display: flex;
   align-items: center;
