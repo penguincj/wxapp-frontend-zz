@@ -1,7 +1,12 @@
 // app.ts
 import { clearAndFreshLoginStatus, getCurrentCity } from "./utils/util"
+import Tracker from "./utils/tracker";
+import { componentProxy, pageProxy } from "./utils/proxy";
 
 var log = require('./utils/log');
+componentProxy();
+// console.log('-----overwrite Components')
+pageProxy();
 App<IAppOption>({
   globalData: {
     audio: {
@@ -44,6 +49,14 @@ App<IAppOption>({
   async onLaunch() {
     // 展示本地存储能力
     try {
+      let track = Tracker;
+      track.log('view', {pagename: 'index'});
+      track.log('view', {pagename: 'index2'});
+      track.log('view', {pagename: 'index3'});
+      track.log('view', {pagename: 'index4'});
+      track.flush();
+      console.log(track);
+
       // wx.clearStorage();
       // const logs = wx.getStorageSync('logs') || []
       // logs.unshift(Date.now())
