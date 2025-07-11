@@ -103,7 +103,8 @@ Component({
     },
 
     handleClickImg(e: any) {
-      console.log();
+      // @ts-expect-error
+      this.tracker.report('componentClick', {pagename: 'todo---'})
       const { img, imglist, idx, comment } = e.currentTarget.dataset;
       // this.setData({
       //   showBigImg: true,
