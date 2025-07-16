@@ -57,12 +57,15 @@ Page({
           treatureInfo: res.treasure,
           loading: false,
         })
-        const res_exhibition: any = await getExhibitionById(res.treasure.exhibition_id);
-        if (res_exhibition && res_exhibition.code === 0) {
-          this.setData({
-            exhibitionList: [res_exhibition.exhibition]
-          })
+        if (res && res.treasure && res.treasure.exhibition_id) {
+          const res_exhibition: any = await getExhibitionById(res.treasure.exhibition_id);
+          if (res_exhibition && res_exhibition.code === 0) {
+            this.setData({
+              exhibitionList: [res_exhibition.exhibition]
+            })
+          }
         }
+        
       }
     } catch (error) {
       this.setData({
