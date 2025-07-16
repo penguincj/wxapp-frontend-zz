@@ -3,7 +3,8 @@
     "navigation-bar": "/components/navigation-bar/navigation-bar",
     "score-card": "/components/score-card/score-card",
     "comment-list": "/components/comment-list/comment-list",
+    "swiper-unit3": "/components/swiper-unit3/swiper-unit3",
     "image-popup": "/components/image-popup/image-popup"
   },
-  "disableScroll": false
+  "disableScroll": true
 }

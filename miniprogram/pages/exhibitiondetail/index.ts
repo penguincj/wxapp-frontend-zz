@@ -1,6 +1,14 @@
 import { getCommentsByExhibitionID, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters } from "../../api/api";
-import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
-
+import { throttle, generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
+const listConfig = [
+  {
+    id: 1,
+    name: '推荐展览',
+  },{
+    id: 2,
+    name: '推荐展览1',
+  }
+]
 Page({
   data: {
     exhibitionInfo: {} as any,
@@ -25,10 +33,22 @@ Page({
     currentLabel: "",
     currentImgIndex: 0,
     showPosterBtn: false,
+    navIsTransparent: true,
+    listConfig: listConfig,
+    topSwiperSelectIdx: 1,
   },
   scroll(e: any) {
     // console.log(e)
   },
+  // swiper-unit组件
+  handleChangePannelId(event: any) {
+    const { selectId } = event.detail;
+    console.log('handleChangePannelId', selectId);
+    this.setData({
+      topSwiperSelectIdx: selectId,
+    });
+  },
+  
   handleClosePopup() {
     this.setData({
       showBigImg: false,
@@ -212,6 +232,25 @@ Page({
   handleDelCommentSuc() {
     this.getComments(this.data.curExhibitionId, this.data.currentLabel);
   },
+  // handleScroll1(e: any) {
+  //   const scrollTop = e[0].scrollTop;
+  //   const isSticky = scrollTop > 100; // 假设100px时触发吸顶
+    
+  //   // 只有当值变化时才更新数据，减少不必要的setData
+  //   if (scrollTop > 100) {
+  //     this.setData({
+  //       navIsTransparent: false,
+  //     });
+  //   } else if (scrollTop < 100) {
+  //     this.setData({
+  //       navIsTransparent: true,
+  //     });
+  //   }
+    
+  //   // 这里可以添加其他滚动相关逻辑
+  //   console.log('截流后的滚动位置:', e[0].scrollTop);
+  // },
+
   async onShow() {
     this.setData({
       loading: true,
@@ -247,12 +286,26 @@ Page({
   },
   onLoad(options) {
     console.log('onLoad', options);
+
     this.setData({
       curExhibitionId: Number(options.exhibition_id),
     })
     this.initPage(options.exhibition_id);
-
+    // this.throttledScroll = throttle(this.handleScroll1, 30);
   },
+  // onPageScroll(e: any) {
+  //   // throttle((() => {
+  //   //   if (e.scrollTop > 100) {
+  //   //     // 执行吸顶逻辑
+  //   //     console.log('111111111', e)
+  //   //   }
+  //   // }), 10)
+  //   // if (e.scrollTop > 100) {
+  //   //   // 执行吸顶逻辑
+  //   //   console.log('111111111', e.scrollTop)
+  //   // }
+  //   this.throttledScroll(e);
+  // },
   onShareAppMessage() {
     const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
     console.log(this.data.exhibitionInfo.image_url);
