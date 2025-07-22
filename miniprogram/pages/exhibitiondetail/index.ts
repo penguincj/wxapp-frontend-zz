@@ -1,12 +1,12 @@
-import { getCommentsByExhibitionID, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters } from "../../api/api";
+import { getCommentsByExhibitionID, postReplyToParent, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters } from "../../api/api";
 import { throttle, generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
 const listConfig = [
   {
-    id: 1,
+    id: 'reco_exhi',
     name: '推荐展览',
   },{
-    id: 2,
-    name: '推荐展览1',
+    id: 'reco_comment',
+    name: '评价',
   }
 ]
 Page({
@@ -35,17 +35,41 @@ Page({
     showPosterBtn: false,
     navIsTransparent: true,
     listConfig: listConfig,
-    topSwiperSelectIdx: 1,
+    topSwiperSelectIdx: 'reco_exhi',
+    replyParentId: 0,
+    showReplayBar: false,
   },
-  scroll(e: any) {
-    // console.log(e)
-  },
+  // scroll(e: any) {
+  //   const { scrollTop } = e.detail;
+  //   if (scrollTop > 50) {
+  //     this.setData({
+  //       navIsTransparent: false,
+  //     })
+  //   } else {
+  //     this.setData({
+  //       navIsTransparent: true,
+  //     })
+  //   }
+  // },
   // swiper-unit组件
   handleChangePannelId(event: any) {
     const { selectId } = event.detail;
     console.log('handleChangePannelId', selectId);
-    this.setData({
-      topSwiperSelectIdx: selectId,
+    // this.setData({
+    //   topSwiperSelectIdx: selectId,
+    // });
+    
+    const query = wx.createSelectorQuery();
+    query.select(`#${selectId}`).boundingClientRect();
+    query.selectViewport().scrollOffset();
+    query.exec((res) => {
+      const rect = res[0];
+      const scrollTop = res[1].scrollTop;
+      wx.pageScrollTo({
+        scrollTop: scrollTop + rect.top - 127, // 减去 tab 的高度（大约45px）
+        duration: 300
+      });
+      // this.setData({ topSwiperSelectIdx: selectId });
     });
   },
   
@@ -125,6 +149,9 @@ Page({
     }
    
   },
+  handleClickImgLink() {
+    this.handleClickPlayIcon();
+  },
   handleClickIntro() {
     this.setData({
       isShowIntro: !this.data.isShowIntro,
@@ -156,7 +183,8 @@ Page({
           isClickVisited: Boolean(res.exhibition.visited)
         })
       }
-      this.getPoster(_exhibitionid);
+      this.getComments(this.data.curExhibitionId, this.data.currentLabel);
+      // this.getPoster(_exhibitionid);
     } catch (error) {
       this.setData({
         loading: false,
@@ -185,30 +213,50 @@ Page({
   },
   
   async getComments(exhibition_id: any, labelname = "") {
-    const res: any = await getCommentsByExhibitionID(exhibition_id, labelname);
-    console.log(res);
-    if(res && res.code === 0) {
-      const { comment_area, data_area, label_area} = res.data;
-      const star_distribution = data_area.star_distribution.reverse();
-      const score = Number(data_area.score.toFixed(1));
+    try {
+      const res: any = await getCommentsByExhibitionID(exhibition_id, labelname);
+      console.log(res);
+      if(res && res.code === 0) {
+        const { comment_area, data_area, label_area} = res.data;
+        const star_distribution = data_area.star_distribution.reverse();
+        const star_users_num = data_area.star_distribution.reduce((acc: number, cur: number) => acc + cur, 0);
+        const score = Number((data_area.score).toFixed(1));
+        const score_txt = Number((data_area.score/2).toFixed(1));
 
-      const comments = comment_area.map((item: any) => {
-        const calTime = generateDateFormat(item.timestamp);
-        return {
-          ...item,
-          calTime,
-        }
-      })
+        const comments = comment_area.map((item: any) => {
+          return item.map((child_item: any) => {
+            const calTime = generateDateFormat(child_item.timestamp);
+            return {
+              ...child_item,
+              calTime,
+            }
+          })
+        
+        })
+        const listconfig_new = [...this.data.listConfig];
+        listConfig[1].name = '评价（' + data_area.comment_count + '）' 
+        console.log('comments', comments)
+        this.setData({
+          comment_area: comments,
+          data_area: {
+            ...data_area,
+            star_distribution,
+            star_users_num,
+            score,
+            score_txt,
+          },
+          label_area: label_area,
+          listConfig,
+          loading: false
+        })
+      }
+    } catch (error) {
       this.setData({
-        comment_area: comments,
-        data_area: {
-          ...data_area,
-          star_distribution,
-          score,
-        },
-        label_area: label_area
+        loading: false,
       })
+      console.log(error)
     }
+    
   },
   handleClickCommentIcon() {
     console.log('handleClickCommentIcon');
@@ -230,26 +278,58 @@ Page({
     })
   },
   handleDelCommentSuc() {
-    this.getComments(this.data.curExhibitionId, this.data.currentLabel);
+    this.initPage(this.data.curExhibitionId);
   },
-  // handleScroll1(e: any) {
-  //   const scrollTop = e[0].scrollTop;
-  //   const isSticky = scrollTop > 100; // 假设100px时触发吸顶
+  handleReplayToParentSuc() {
+    this.setData({
+      showReplayBar: false,
+    })
+    this.initPage(this.data.curExhibitionId);
+  },
+  handleScroll1(e: any) {
+    this.setData({
+      showReplayBar: false,
+    })
+    const scrollTop = e[0].scrollTop;
+    // console.log('scrollTop', scrollTop)
+    const isSticky = scrollTop > 200; // 假设100px时触发吸顶
     
-  //   // 只有当值变化时才更新数据，减少不必要的setData
-  //   if (scrollTop > 100) {
-  //     this.setData({
-  //       navIsTransparent: false,
-  //     });
-  //   } else if (scrollTop < 100) {
-  //     this.setData({
-  //       navIsTransparent: true,
-  //     });
-  //   }
+    // 只有当值变化时才更新数据，减少不必要的setData
+    if (isSticky) {
+      this.setData({
+        navIsTransparent: false,
+      });
+    } else {
+      this.setData({
+        navIsTransparent: true,
+      });
+    }
+
+    const query = wx.createSelectorQuery();
+    query.selectAll('.section').boundingClientRect();
+    query.exec((res) => {
+      const rects = res[0];
+      for (let i = rects.length - 1; i >= 0; i--) {
+        if (rects[i].top <= 134) { // tab 区大约高度
+          this.setData({
+            topSwiperSelectIdx: this.data.listConfig[i].id
+          });
+          break;
+        }
+      }
+    });
     
-  //   // 这里可以添加其他滚动相关逻辑
-  //   console.log('截流后的滚动位置:', e[0].scrollTop);
-  // },
+    // 这里可以添加其他滚动相关逻辑
+    // console.log('截流后的滚动位置:', e[0].scrollTop);
+  },
+  handleClickParentReply(e: any) {
+    const { parentid , showReplayBar} = e.detail;
+    console.log('parent_id11', showReplayBar);
+    this.setData({
+      showReplayBar,
+    })
+  },
+
 
   async onShow() {
     this.setData({
@@ -288,24 +368,27 @@ Page({
     console.log('onLoad', options);
 
     this.setData({
+      loading: true,
       curExhibitionId: Number(options.exhibition_id),
     })
     this.initPage(options.exhibition_id);
-    // this.throttledScroll = throttle(this.handleScroll1, 30);
+    this.throttledScroll = throttle(this.handleScroll1, 50);
   },
-  // onPageScroll(e: any) {
-  //   // throttle((() => {
-  //   //   if (e.scrollTop > 100) {
-  //   //     // 执行吸顶逻辑
-  //   //     console.log('111111111', e)
-  //   //   }
-  //   // }), 10)
-  //   // if (e.scrollTop > 100) {
-  //   //   // 执行吸顶逻辑
-  //   //   console.log('111111111', e.scrollTop)
-  //   // }
-  //   this.throttledScroll(e);
-  // },
+  onPageScroll(e: any) {
+    // throttle((() => {
+    //   if (e.scrollTop > 100) {
+    //     // 执行吸顶逻辑
+    //     console.log('111111111', e)
+    //   }
+    // }), 10)
+    // if (e.scrollTop > 100) {
+    //   // 执行吸顶逻辑
+    //   console.log('111111111', e.scrollTop)
+    // }
+
+    this.throttledScroll(e);
+    
+  },
   onShareAppMessage() {
     const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
     console.log(this.data.exhibitionInfo.image_url);

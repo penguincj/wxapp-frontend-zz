@@ -26,10 +26,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  width: 100vw;
   height: 100vh;
-  min-width: 100vw;
-  max-width: 100vw;
-  overflow-x: clip;
+  overflow-x: hidden;
 
   .museum-info {
     position: relative;
@@ -412,17 +411,6 @@
 
   .comment-list-area {
     padding: 0 40rpx 40rpx 40rpx;
-    .reply-area {
-      background-color: red;
-
-      .comment-reply {
-        padding-bottom: 0 !important;
-        .comment-list {
-          margin-bottom: 0 !important;
-        }
-      }
-      
-    }
   }
 
   .expried-area {
@@ -432,12 +420,13 @@
   .sticky-area {
     position: sticky;
     width: 100%;
-    top: 0; /* 设置距离顶部100rpx */
+    min-height: calc(100vh - 88px - 40rpx);
+    top: 100px; /* 设置距离顶部100rpx */
     z-index: 100; /* 确保元素在其他内容之上 */
     background-color: #fff; /* 可选背景色 */
     border-radius: 20rpx 20rpx 0 0;
     z-index: 100;
-    // overflow-y: scroll;
+    overflow-y: scroll;
     // transform: translateY(-10rpx);
     .swiper-unit-area {
       margin-top: 40rpx;
