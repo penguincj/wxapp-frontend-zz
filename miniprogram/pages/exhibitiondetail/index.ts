@@ -66,7 +66,7 @@ Page({
       const rect = res[0];
       const scrollTop = res[1].scrollTop;
       wx.pageScrollTo({
-        scrollTop: scrollTop + rect.top - 127, // 减去 tab 的高度（大约45px）
+        scrollTop: scrollTop + rect.top - 132, // 减去 tab 的高度（大约45px）
         duration: 300
       });
       // this.setData({ topSwiperSelectIdx: selectId });

@@ -17,7 +17,7 @@
         <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
         <view class="museum-texts">
           <view class="title">
-            <span class="title-name">{{exhibitionInfo.name}}</span>
+            <text class="title-name">{{exhibitionInfo.name}}</text>
             <view class="zhanlan-type {{exhibitionInfo.short ? 'tag-green': 'tag-blue'}}">{{exhibitionInfo.short === 1 ? '特展': '常展'}}</view>
           </view>
           <view class="desc">{{exhibitionInfo.description}}</view>
@@ -64,7 +64,7 @@
           <view class="line-group">
             <image class="line-icon" src="/static/images/ed-i1.png" mode="aspectFill" />
             <view class="line-txt">
-              <text>{{exhibitionInfo.need_reservation ? '': '不'}}需要预约 {{exhibitionInfo.ticket_price}}/人</text>
+              <text>{{exhibitionInfo.need_reservation ? '': '不'}}需要预约 {{exhibitionInfo.ticket_price}}元/人</text>
             </view>
           </view>
           <view class="line-group">
