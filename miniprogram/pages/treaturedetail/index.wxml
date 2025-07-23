@@ -43,7 +43,7 @@
           </view>
           <view class="cont">{{treatureInfo.intro}}</view>
         </view>
-        <view class="content-item">
+        <view class="content-item" wx:if="{{exhibitionList && exhibitionList.length}}">
           <view class="swiper-card3-area">
             <card-group1 title="所在展览" list="{{exhibitionList}}" bindClickItem="handleClickItem"></card-group1>
           </view>
