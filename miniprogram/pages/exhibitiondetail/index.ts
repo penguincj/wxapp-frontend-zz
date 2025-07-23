@@ -3,7 +3,7 @@ import { throttle, generateNewUrlParams, backToTargetPage, getCurrentPageParamSt
 const listConfig = [
   {
     id: 'reco_exhi',
-    name: '推荐展览',
+    name: '展览介绍',
   },{
     id: 'reco_comment',
     name: '评价',
@@ -66,7 +66,7 @@ Page({
       const rect = res[0];
       const scrollTop = res[1].scrollTop;
       wx.pageScrollTo({
-        scrollTop: scrollTop + rect.top - 132, // 减去 tab 的高度（大约45px）
+        scrollTop: scrollTop + rect.top - (43 + this.data.statusBarHeight + 50), // 减去 tab 的高度（大约45px）
         duration: 300
       });
       // this.setData({ topSwiperSelectIdx: selectId });
@@ -234,7 +234,7 @@ Page({
         
         })
         const listconfig_new = [...this.data.listConfig];
-        listConfig[1].name = '评价（' + data_area.comment_count + '）' 
+        listConfig[1].name = data_area.comment_count ? ('评价（' + data_area.comment_count + '）'): '评价';
         console.log('comments', comments)
         this.setData({
           comment_area: comments,
@@ -310,7 +310,7 @@ Page({
     query.exec((res) => {
       const rects = res[0];
       for (let i = rects.length - 1; i >= 0; i--) {
-        if (rects[i].top <= 134) { // tab 区大约高度
+        if (rects[i].top <= (43 + this.data.statusBarHeight + 46)) { // tab 区大约高度
           this.setData({
             topSwiperSelectIdx: this.data.listConfig[i].id
           });

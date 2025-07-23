@@ -117,7 +117,7 @@
           </block>
         </view>
       </view>
-      <view class="sticky-area" style="top: 88px">
+      <view class="sticky-area" style="top: {{43+statusBarHeight}}px">
         <view class="swiper-unit-area" wx:if="{{listConfig.length}}">
           <swiper-unit4 list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit4>
         </view>

@@ -5,9 +5,9 @@
       <view class="top-area">
         <view class="left-group">
           <view class="content-score">
-            <text>岛屿用户评分 </text>
-            <text>{{score.score_txt}}分</text>
+            <text><text>{{score.score_txt ? ('岛屿用户评分 ' + score.score_txt): '我来做第一个评'}}分</text></text>
           </view>
+          
           <view class="content-star-num">
             <view class="content-star-group">
             <block wx:for="{{starTemArr}}">
