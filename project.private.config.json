@@ -13,7 +13,7 @@
         {
           "name": "pages/exhibitiondetail/index",
           "pathName": "pages/exhibitiondetail/index",
-          "query": "exhibition_id=35",
+          "query": "exhibition_id=57",
           "scene": null,
           "launchMode": "default"
         },
