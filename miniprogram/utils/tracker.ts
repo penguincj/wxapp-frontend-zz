@@ -26,7 +26,7 @@ class Tracker {
       }
     }
 
-    // 立即尝试上报
+    // 立即尝试上报 todo
     report(event: any, properties = {}) {
       const otherParams = this.generateOtherParams();
       const log = {
@@ -37,7 +37,7 @@ class Tracker {
         time_stamp: Date.now(),
       }
       wx.request({
-        url: 'http://localhost:4000/log/batch',
+        url: 'https://gewugo.com/api/report/log/batch',
         method: 'POST',
         header: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ class Tracker {
       if (_logs.length === 0) return
       try {
         await wx.request({
-          url: 'http://localhost:4000/log/batch',
+          url: 'https://gewugo.com/api/report/log/batch',
           method: 'POST',
           header: {
             'Content-Type': 'application/json',
