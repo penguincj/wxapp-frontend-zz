@@ -291,8 +291,3 @@ export const getIndexData = (_lat: any, _lng: any) => {
 export const getContinueListen = () => {
     return request(`/${base_api}/v1/continueListen`)
 }
-
-// testAES
-export const getTestAESData = () => {
-    return request_aes(`/${base_api}/v1/tool/aesTest`)
-}
