@@ -1,0 +1,71 @@
+<view class="comment-list2">
+  <view class="title-line" wx:if="{{title}}">
+    <view class="title">
+      <view class="title-name">{{title}}</view>
+      <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+    </view>
+  </view>
+  <view class="tag-group" wx:if="{{labels.length}}">
+    <view class="tag-item {{(selectLabel === '') ? 'selected':''}}" bindtap="handleClickAllLabel">全部</view>
+    <block wx:for="{{labels}}">
+      <view 
+        class="tag-item {{(selectLabel === item.name) ? 'selected':''}}" 
+        data-name="{{item.name}}" 
+        bindtap="handleLabelClick"
+      >{{item.name}}({{item.count}})</view>
+    </block>
+  </view>
+  <view class="comment-group">
+    <block wx:for="{{comments}}" wx:key="id">
+      <view class="comments-wraper">
+        <view class="comment-item-area">
+          <comment-item2
+            pageindex="{{pageindex}}"
+            userid="{{userid}}" 
+            nickname="{{nickname}}"
+            exhibitionid="{{exhibitionid}}" 
+            comment="{{item[0]}}"
+            bindShowFullImage="handleShowFullImage"
+            bindDelCommentSuc="handleDelCommentSuc"
+            bindClickParentReply="handleClickParentReply"
+          ></comment-item2>
+        </view>
+        <view class="reply-area-group" wx:if="{{item && item[1]}}">
+          <!-- <view class="fenge-area"></view> -->
+          <view class="reply-area">
+            <comment-reply 
+              childcomment="{{item}}" 
+              parentusername="{{item[0].user_name}}"
+              parentcommentid="{{item[0].comment_id}}"
+              exhibitionid="{{exhibitionid}}" 
+              userid="{{userid}}"
+              nickname="{{nickname}}"
+              bindFocusInput="handleFocusInput"
+              bindDelReplySuc="handleDelReplySuc"
+              ></comment-reply>
+          </view>
+          <view class="bottom-reply" wx:if="{{showReplayBar}}">
+            <input class="input-reply" focus="{{true}}" placeholder="{{placeholder}}" value="{{message}}" bindinput="handleInputChange" bindfocus="handleFocus" />
+            <!-- <view class="zan-g">
+              <image wx:if="{{comment.liked}}" data-idx="{{comment.comment_id}}" catchtap="handleClickNotLike" class="info-like" src="/static/images/heart-fill.png" mode="aspectFit" />
+              <image wx:else class="info-notlike" data-idx="{{comment.comment_id}}" catchtap="handleClickLike" src="/static/images/heart.png" mode="aspectFit" />
+              <view class="heart-num">{{comment.liked_count}}</view>
+            </view> -->
+            <!-- <view class="com-g">
+              <image class="info-comment" bindtap="handleClickCommentIcon" src="/static/images/icon_chat.png" mode="aspectFit" />
+              <view class="reply-num">{{comment.replied_count}}</view>
+            </view> -->
+            <view wx:if="{{message}}" class="btn-group" bindtap="submitReply">
+              <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
+              <view class="loc-name white">回复</view>
+            </view>
+            <!-- <view wx:if="{{message}}" class="submit-btn" catchtap="submitReply">回复</view> -->
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{comments.length === 0}}" class="no-comment">— 暂无评价 —</view>
+  </view>
+  
+  <!-- <image wx:if="{{pageindex===''}}" src="/static/images/comment.png" mode="aspectFill" class="cmt-icon" bindtap="handleClickCommentIcon" /> -->
+</view>

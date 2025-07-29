@@ -1,8 +1,9 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "score-card": "/components/score-card/score-card",
-    "comment-list": "/components/comment-list/comment-list",
+    "score-card2": "/components/score-card2/score-card2",
+    "comment-list2": "/components/comment-list2/comment-list2",
+    "swiper-unit4": "/components/swiper-unit4/swiper-unit4",
     "image-popup": "/components/image-popup/image-popup"
   },
   "disableScroll": false

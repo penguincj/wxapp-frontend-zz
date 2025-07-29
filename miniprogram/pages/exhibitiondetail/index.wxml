@@ -5,19 +5,24 @@
   }
   module.exports.getMin = getMin;
 </wxs>
-<page-meta page-style="">
+<page-meta page-style="{{loading? 'visibility: hidden;': ''}}" class="page-meta-area">
   <!-- <navigation-bar back extClass="transparent" loading="{{false}}" title="{{exhibitionInfo.name}}" color="white" background="#FFF" style="text-align: center;"></navigation-bar> -->
-  <navigation-bar back styleType="dark" loading="{{false}}" title="{{exhibitionInfo.name}}" color="dark" background="#FFF" style="text-align: center;"></navigation-bar>
+  <navigation-bar back="{{true}}" extClass="{{navIsTransparent ? 'transparent': ''}}" styleType="dark" color="black" background="#FFF"></navigation-bar>
   <view class="player-area">
     <player-comp bindClickPlayerComp="handleClickPlayerComp"></player-comp>
   </view>
-  <scroll-view style="height: calc(100vh - 88px);" class="scroll-view_H" scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" bindscroll="scroll">
-
   <view class="page-exhibition-detail">
-      <view class="s-content">
+    <view class="s-content">
       <view class="museum-info">
         <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
-        <view class="museum-text-group">
+        <view class="museum-texts">
+          <view class="title">
+            <text class="title-name">{{exhibitionInfo.name}}</text>
+            <view class="zhanlan-type {{exhibitionInfo.short ? 'tag-green': 'tag-blue'}}">{{exhibitionInfo.short === 1 ? '特展': '常展'}}</view>
+          </view>
+          <view class="desc">{{exhibitionInfo.description}}</view>
+        </view>
+        <!-- <view class="museum-text-group">
           <view class="title">
             <span class="title-name">{{exhibitionInfo.name}}</span>
             <view class="zhanlan-type">{{exhibitionInfo.short === 1 ? '临时展': '常设展'}}</view>
@@ -51,37 +56,35 @@
               开放时间：{{exhibitionInfo.opendate}}
             </view>
           </view>
-        </view>
+        </view> -->
       </view>
-      <view class="exhibition-intro">
-        <view class="title-line">
-          <view class="title">
-            <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
-            <view class="title-name">展览介绍</view>
+      <view class="info-card">
+        <image class="card-bg" src="/static/images/btn2.png" mode="aspectFix" />
+        <view class="content">
+          <view class="line-group">
+            <image class="line-icon" src="/static/images/ed-i1.png" mode="aspectFill" />
+            <view class="line-txt">
+              <text>{{exhibitionInfo.need_reservation ? '': '不'}}需要预约 {{exhibitionInfo.ticket_price}}元/人</text>
+            </view>
+          </view>
+          <view class="line-group">
+            <image class="line-icon" src="/static/images/ed-i2.png" mode="aspectFill" />
+            <view class="line-txt">{{exhibitionInfo.address}}</view>
+          </view>
+          <view class="line-group">
+            <image class="line-icon" src="/static/images/ed-i3.png" mode="aspectFill" />
+            <view class="line-txt">开放时间：{{exhibitionInfo.opendate}}</view>
           </view>
         </view>
-        <view class="intro-content">
-          <view class="{{isShowIntro ? 'text-whole': 'text'}}">{{exhibitionInfo.intro}}</view>
-          <view class="img-wrapper" bindtap="handleClickIntro">
-            <image class="arrow-img {{isShowIntro ? 'img-rotate': ''}}" src="/static/images/arrow-bottom.png" mode="aspectFix" />
-          </view>
-        </view>
-        <view class="ticket-group">
-          <view>
-            <text class="title">展览票</text>
-            <text class="tehui">{{exhibitionInfo.ticket_price === 0? '免费' : ''}}</text>
-          </view>
-          <view class="price">¥{{exhibitionInfo.ticket_price}}</view>
-          <!-- <view class="price11">{{exhibitionInfo.ticket_price}}</view> -->
-        </view>
+        
       </view>
       <view class="jiangjie-area" wx:if="{{narrationList && narrationList.length}}">
-        <view class="title-line">
+        <!-- <view class="title-line">
           <view class="title">
             <view class="title-name">导览讲解</view>
             <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
           </view>
-        </view>
+        </view> -->
         <view class="jiangjie-card">
           <block wx:for="{{narrationList}}" wx:key="id">
             <view class="card-group">
@@ -89,51 +92,84 @@
               <view class="card-content-line-one">
                 <view class="first-area">
                   <image class="avatar" src="{{item.url}}" mode="aspectFix" />
-                  <text class="name">{{item.description ? item.description : '博物观展独家讲解'}}</text>
-                  <!-- <text class="fenge">|</text>
-              <text class="title">{{item.name}}</text> -->
+                  <text class="name">{{item.name ? item.name : '深度讲解'}}</text>
+                  <text class="fenge">|</text>
+                  <text class="title-time">{{m1.getMin(item.duration)}}分钟</text>
                 </view>
-                <view class="sec-area">
-                  <view class="price">
-                    <text class="unit">¥</text>
-                    {{item.price}}
-                  </view>
-                  <view class="time">
-                    <text class="per">/</text>
-                    {{m1.getMin(item.duration)}}分钟
-                  </view>
-                </view>
-              </view>
-              <view class="card-content-line-two">
-                <view class="type">{{item.name}}</view>
                 <view class="btn-group" data-idx="{{item.id}}" bindtap="handleClickJiangjie">
                   <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
-                  <view class="loc-name white">播放</view>
+                  <view class="loc-name white">
+                    <text>免费</text>
+                    <image class="bofang" src="/static/images/ed-t.png" mode="aspectFix" />
+                  </view>
+                </view>
+
+              </view>
+              <view class="card-content-line-two">
+                <view class="type">{{item.description}}</view>
+                <view class="sec-area">
+                  <view class="time">
+                    {{exhibitionInfo.listen_count}}人听过
+                  </view>
                 </view>
               </view>
             </view>
           </block>
         </view>
       </view>
-      <view class="score-card-area">
-        <score-card score="{{data_area}}"></score-card>
+      <view class="sticky-area" style="top: {{43+statusBarHeight}}px">
+        <view class="swiper-unit-area" wx:if="{{listConfig.length}}">
+          <swiper-unit4 list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit4>
+        </view>
       </view>
-      <view class="comment-list-area">
-        <comment-list 
-          userid="{{userid}}" 
-          nickname="{{nickname}}"
-          exhibitionid="{{curExhibitionId}}" 
-          labels="{{label_area}}" 
-          comments="{{comment_area}}" 
-          bindClickCommentIcon="handleClickCommentIcon"
-          bindShowFullImage="handleShowFullImage"
-          bindSelectLabel="handleSelectLabel"
-          bindDelCommentSuc="handleDelCommentSuc"
-        ></comment-list>
+      <view class="neirong">
+        <view class="exhibition-intro section" id="reco_exhi">
+          <!-- <view class="title-line">
+              <view class="title">
+              <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
+              <view class="title-name">展览介绍</view>
+            </view>
+          </view> -->
+          <view class="intro-content">
+            <view class="{{isShowIntro || true ? 'text-whole': 'text'}}">{{exhibitionInfo.intro}}</view>
+            <!-- <view class="img-wrapper" bindtap="handleClickIntro">
+              <image class="arrow-img {{isShowIntro ? 'img-rotate': ''}}" src="/static/images/arrow-bottom.png" mode="aspectFix" />
+            </view> -->
+          </view>
+          <view class="images-group">
+            <block wx:if="{{exhibitionInfo.more_image_urls}}" wx:for="{{exhibitionInfo.more_image_urls}}">
+              <image src="{{item}}" class="img-item" mode="aspectFill" />
+              <!-- <image src="/static/images/image@1x.png" class="img-item" mode="aspectFill" /> -->
+            </block>
+            
+          </view>
+          <view class="btn-link" catchtap="handleClickImgLink">
+            <text>更多展品进入讲解查看</text>
+            <image class="link-icon" src="/static/images/back-dark.png" mode="aspectFix" />
+            
+          </view>
+        </view>
+        <view class="score-card-area section" id="reco_comment">
+          <score-card2 score="{{data_area}}" bindClickCommentIcon="handleClickCommentIcon"></score-card2>
+        </view>
+        <view class="comment-list-area">
+          <comment-list2 
+            userid="{{userid}}" 
+            nickname="{{nickname}}"
+            exhibitionid="{{curExhibitionId}}" 
+            labels="{{label_area}}" 
+            comments="{{comment_area}}" 
+            showReplayBar="{{showReplayBar}}"
+            bindClickCommentIcon="handleClickCommentIcon"
+            bindShowFullImage="handleShowFullImage"
+            bindSelectLabel="handleSelectLabel"
+            bindDelCommentSuc="handleDelCommentSuc"
+            bindClickParentReply="handleClickParentReply"
+            bindReplayToParentSuc="handleReplayToParentSuc"
+          ></comment-list2>
+        </view>
       </view>
-      </view>
+    </view>
   </view>
-      </scroll-view>
-
   <image-popup current="{{currentImgIndex}}" list="{{imgList}}" image="{{bigImg}}" showPupup="{{showBigImg}}" bindClosePopup="handleClosePopup"></image-popup>
 </page-meta>
