@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "comment-item2": "/components/comment-item2/comment-item2",
+    "comment-reply": "/components/comment-reply/comment-reply"
+  }
+}

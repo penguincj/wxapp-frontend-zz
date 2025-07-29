@@ -5,6 +5,9 @@ import { sendListenAudioAction, delCommentLike, postCommentLike, delReplyToParen
 
 const global_audio = getApp().globalData.audio;
 Component({
+  options: {
+    styleIsolation: 'shared' // 可选 isolated(默认) | apply-shared | shared
+  },
   properties: {
     childcomment: {
       type: Object,
@@ -45,6 +48,11 @@ Component({
       const { idx } = e.currentTarget.dataset;
       const res: any = await delReplyToParent(this.data.exhibitionid, this.data.userid, idx);
       if (res && res.code === 0) {
+        wx.showToast({
+          title: '删除成功',
+          icon: 'none',
+          duration: 2000
+        });
         this.triggerEvent('DelReplySuc')
       }
     },

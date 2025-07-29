@@ -6,14 +6,14 @@
     "skylineRenderEnable": false,
     "urlCheck": true
   },
-  "libVersion": "3.8.9",
+  "libVersion": "3.8.11",
   "condition": {
     "miniprogram": {
       "list": [
         {
-          "name": "pages/exhibitdetail/index",
-          "pathName": "pages/exhibitdetail/index",
-          "query": "exhibition_id=35&narration_id=9&exhibit_id=223&unit_id=999999",
+          "name": "pages/exhibitiondetail/index",
+          "pathName": "pages/exhibitiondetail/index",
+          "query": "exhibition_id=57",
           "scene": null,
           "launchMode": "default"
         },
