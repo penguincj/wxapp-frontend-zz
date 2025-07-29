@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="">
-<navigation-bar loading="{{false}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<navigation-bar back styleType="dark" loading="{{false}}" color="dark" background="#FFF" style="text-align: center;"></navigation-bar>
 <view class="player-area">
 <player-comp
   id="player"
@@ -13,10 +13,10 @@
 ></player-comp>
 </view>
 <view class="page-exhibit-detail">
-  <view class="top-swiper-area">
+  <!-- <view class="top-swiper-area">
     <swiper-unit list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit>
-  </view>
-  <view wx:if="{{topSwiperSelectIdx === 1}}" class="images-area">
+  </view> -->
+  <view class="images-area">
     <swiper-card5 
       title="{{exhibitInfo.name}}"
       list="{{exhibitInfo.more_image_urls}}"
