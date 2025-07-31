@@ -75,33 +75,56 @@
         height: 118rpx;
         // padding-right: 110rpx;
         margin-left: 40rpx;
-        // .img-bg {
-        //   position: absolute;
-        //   top: 0;
-        //   left: 0;
-        //   width: 11rpx;
-        //   height: 110rpx;
-        //   // background: conic-gradient(#2C2F3B 10%, #ffffff 90%);
-        //   background: conic-gradient(green 0%, green 10%, #f1f1f1 90%, #f1f1f1 100%);
-        //   border-radius: 50%;
-        // }
-        // .img-bg-white {
-        //   position: absolute;
-        //   top: 4rpx;
-        //   left: 4rpx;
-        //   width: 102rpx;
-        //   height: 102rpx;
-        //   background: white;
-        //   border-radius: 50%;
-        // }
-        .img-playing {
+        
+        .progress-container {
+          margin-top: 8rpx;
+          width: 102rpx;
+          height: 102rpx;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        
+        .progress-circle {
+          width: 102rpx;
+          height: 102rpx;
+          border-radius: 50%;
+          background: conic-gradient(#2C2F3B var(--progress, 0%), #FFFFFF 0%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+        
+        .progress-circle::before {
+          content: '';
           position: absolute;
-          top: 13rpx;
-          left: 13rpx;
           width: 94rpx;
           height: 94rpx;
+          background: #FFFFFF;
           border-radius: 50%;
         }
+        
+        .progress-text {
+          font-size: 28rpx;
+          color: #333;
+        }
+        .img-playing {
+          position: relative;
+          z-index: 1;
+          width: 90rpx;
+          height: 90rpx;
+          border-radius: 50%;
+        }
+
+        // .img-playing {
+        //   position: absolute;
+        //   top: 13rpx;
+        //   left: 13rpx;
+        //   width: 94rpx;
+        //   height: 94rpx;
+        //   border-radius: 50%;
+        // }
         .img-animate {
           animation: rotatecirle 4s linear 0s infinite;
 
@@ -134,7 +157,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 10rpx 12px 0 12px;
+          padding: 10rpx 0px 0 6px;
 
           .img-icon {
             width: 27rpx;

@@ -1,7 +1,6 @@
 .swiper-card-five {
-  padding-top: 40rpx;
-  // padding-right: 30rpx;
   text-align: center;
+  position: relative;
   
   .title {
     font-size: 32rpx;
@@ -16,56 +15,71 @@
     white-space: nowrap;
   }
   .dots-group {
-    margin-top: 20rpx;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-top: -40rpx;
     text-align: center;
+    width: 100%;
+    height: 60rpx;
+    gap: 8rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: red;
     .dot-img {
-      width: 20rpx;
-      height: 20rpx;
-      padding-right: 30rpx;
+      width: 12rpx;
+      height: 12rpx;
     }
   }
   .page-section {
     position: relative;
     left: 0;
-    top: 0rpx;
+    top: -4rpx;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-
-    margin-top: 28rpx;
-    height:720rpx;
-    max-height: calc(100vh - 44px - 800rpx - env(safe-area-inset-top));
+    height:750rpx;
     swiper {
       width: 750rpx;
-      height:720rpx;
-      max-height: calc(100vh - 44px - 800rpx - env(safe-area-inset-top));
+      height: 750rpx;
     }
 
     
     .swiper-item {
       position: relative;
+      width: 750rpx;
+      height: 750rpx;
       // width: 610rpx;
         // height: 344rpx;
       box-shadow: 0px 10px 35px -30px rgba(0, 0, 0, 0.2);
-      .item-img {
-        width: 540rpx;
-        height:720rpx;
-        max-height: calc(100vh - 44px - 800rpx - env(safe-area-inset-top));
-      }
-      .share-btn {
+      .item-img-bg {
         position: absolute;
-        width: 36rpx;
-        height: 70rpx;
-        top: 20rpx;
-        right: 130rpx;
-        background: transparent;
+        top: 0;
+        left: 0;
+        width: 750rpx;
+        height: 750rpx;
+        filter: blur(24px);
       }
-      .share-img {
-        // position: absolute;
-        width: 36rpx;
-        height: 36rpx;
+      .item-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 750rpx;
+        height: 750rpx;
+        // display: none;
       }
+      .img-mengceng {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 750rpx;
+        height: 750rpx;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 66%, rgba(0, 0, 0, 0.32) 85%, rgba(0, 0, 0, 0.4) 100%);
+      }
+     
+      
 
       .item-desc-group {
         position: absolute;
@@ -90,6 +104,35 @@
           padding-bottom: 30rpx;
         }
 
+      }
+    }
+
+    .bottom-btn {
+      position: absolute;
+      bottom: 32rpx;
+      left: 0;
+      width: 100%;
+      height: 70rpx;
+      padding: 0 32rpx;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .share-btn {
+        width: 70rpx;
+        height: 70rpx;
+        background: transparent;
+        margin: 0;
+      }
+      .share-img {
+        width: 48rpx;
+        height: 48rpx;
+        transform: translateX(-2rpx);
+      }
+      .collect-img {
+        width: 48rpx;
+        height: 48rpx;
       }
     }
     // .swiper-item-wrapper:nth-child(2) {

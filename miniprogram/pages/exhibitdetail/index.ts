@@ -19,7 +19,7 @@ const listConfig = [
 Page({
   data: {
     exhibitInfo: {} as any,
-    playingIndex: -1, // 当前播放index
+    playingIndex: getApp().globalData.audio.playingIndex, // 当前播放index
     lastPlayIndex: -1, // 之前播放index
     sliderIndex: 0, // 当前播放进度
     duration: 0, // 当前audio时长
@@ -44,7 +44,8 @@ Page({
     curRate: getApp().globalData.audio.curRate || "1.0",
     listConfig,
     topSwiperSelectIdx: 1,
-    audioList: [],
+    audioList: getApp().globalData.audio.audioList,
+    d_audiolist: [],
     isCollected: 0,
     isLiked: 0,
     narrationId: -1,
@@ -52,6 +53,8 @@ Page({
     userid: -1,
     exhibitId: -1,
     mapPoints: Exhpoints, // 地图点
+    navIsTransparent: true,
+    isKeepPlayingActive: getApp().globalData.audio.isKeepPlaying  ,
   },
 
   handleReadyPlay(event: any) {
@@ -86,17 +89,13 @@ Page({
       playingIndex,
     })
   },
-  handleEndAudio() {
-    console.log('handleEndAudio----')
+  handleOnPlayerEnded() {
+    console.log('handleOnPlayerEnded----', getApp().globalData.audio.isKeepPlaying)
     if (getApp().globalData.audio.isKeepPlaying) {
       this.handlePlayNext();
     } else {
-      
-      this.setData({
-        isPlay: false,
-      })
+      this.handleEndAudio();
     }
-    
   },
   handleClickPlayerComp() {
     const targetPage = "pages/exhibitlist/index";
@@ -234,6 +233,32 @@ Page({
       showDialog: true,
     })
   },
+  handleClickRepeatPlaying() {
+    console.log('handleClickRepeatPlaying')
+    if (getApp().globalData.audio.isKeepPlaying) {
+      getApp().globalData.audio.isKeepPlaying = false;
+      this.setData({
+        isKeepPlayingActive: false
+      })
+      wx.showToast({
+        title: '已为您关闭连续播放',
+        icon: 'none',
+        duration: 2000
+      })
+      
+    } else {
+      getApp().globalData.audio.isKeepPlaying = true;
+      this.setData({
+        isKeepPlayingActive: true
+      })
+      wx.showToast({
+        title: '已为您开启连续播放',
+        icon: 'none',
+        duration: 2000
+      })
+      
+    }
+  },
 
   handleRateSliderChange(event: any) {
     const value = event.detail.value;
@@ -249,11 +274,27 @@ Page({
     getApp().globalData.audio.curRate = curRate;
     this.handlePlayRate(value / 4)
   },
+  handlePageScroll(e: any) {
+    const { scrollTop } = e.detail;
+
+    if (scrollTop > 325) {
+      this.setData({
+        navIsTransparent: false
+      })
+    } else {
+      this.setData({
+        navIsTransparent: true
+      })
+    }
+    
+  },
   async handleClickCollect() {
     const isCollected = + !this.data.isCollected;
     const {userid, exhibitId } = this.data;
     let options = { method: 'POST'};
+    let txt = '已添加至收藏列表'; // todo
     if (!isCollected) {
+      txt = '已取消收藏'
       options = { method: 'DELETE'};
     }
     const res: any = await collectExhibit(userid, exhibitId, options);
@@ -261,6 +302,11 @@ Page({
     if (res && res.code === 0) {
       this.setData({
         isCollected: + !this.data.isCollected,
+      });
+      wx.showToast({
+        title: txt,
+        icon: 'none',
+        duration: 2000
       })
     }
   },
@@ -287,6 +333,7 @@ Page({
       return {
         ..._exhibit,
         audioitem,
+        more_image_urls: [_exhibit.image_url, ..._exhibit.more_image_urls],
       }
   },
 
@@ -310,10 +357,25 @@ Page({
       const res_exhibitlist: any = await getExhibitList(unit_id, exhibit_info.exhibition_id);
 
       const exhibit_list = this.formatExhibitList(res_exhibitlist.exhibits, this.data.narrationId);
-      console.log('exhibit_info 111', res.exhibit);
-
+      const d_audiolist = exhibit_list.map((i: any) => i.audioitem.audio_url);
       const player = this.selectComponent("#player");
-      player.initAudioList(exhibit_list, exhibit_info);
+      if (getApp().globalData.audio && getApp().globalData.audio.bgAudio) {
+        player.pageTimeUpateContinue();
+        const { bgAudio: {currentTime, paused, }, currentTimeText, playingIndex, sliderIndex, curExhibit: {audioitem: {duration}} } = getApp().globalData.audio;
+        console.log('onLoad currentTime duration', getApp().globalData.audio)
+        this.setData({
+          currentTime,
+          sliderIndex,
+          duration,
+          currentTimeText,
+          isPlay: !paused,
+          playingIndex: playingIndex,
+          d_audiolist: d_audiolist
+        })
+      } else {
+        player.initAudioList(exhibit_list, exhibit_info);
+       
+      }
       this.setData({
         exhibitInfo: exhibit_info,
         exhibitList: exhibit_list,
@@ -321,6 +383,7 @@ Page({
         isLiked: exhibit_info.liked,
         loading: false,
       })
+      
     } catch (error) {
       console.error(error); 
       this.setData({
@@ -329,10 +392,13 @@ Page({
     }
   },
   handleGetCurPlayingStatus(event: any) {
-    const { isPlay } = event.detail;
+    const { isPlay, playingIndex, totalTimeText, duration } = event.detail;
     console.log('handleGetCurPlayingStatus', isPlay)
     this.setData({
       isPlay,
+      playingIndex,
+      totalTimeText,
+      duration,
     })
   },
   
@@ -431,9 +497,48 @@ Page({
   handleAudioShare() {
     console.log('handleAudioShare')
   },
+  handleOnPlayerPause() {
+    console.log('handleOnPlayerPause');
+    this.setData({
+      isPlay: false,
+    })
+  },
+  handleOnPlayerPlay() {
+    console.log('handleOnPlayerPlay');
+    this.setData({
+      isPlay: true,
+    })
+  },
+  handleOnPlayerStop() {
+    console.log('handleOnPlayerStop');
+    this.setData({
+      isPlay: false,
+      currentTime: 0,
+      sliderIndex: 0,
+      currentTimeText: '00:00',
+    })
+  },
+  handleEndAudio() {
+    console.log('handleEndAudio');
+    this.setData({
+      isPlay: false,
+      currentTime: getApp().globalData.audio.bgAudio.duration,
+      sliderIndex: getApp().globalData.audio.bgAudio.duration,
+      currentTimeText: getApp().globalData.audio.totalTimeText,
+    })
+  },
+  handleOnSliderChange(e: any) {
+    console.log('handleOnSliderChange', e)
+    const { value } = e.detail;
+    var player = this.selectComponent("#player")
+    player.handleSeekPlay(value);
+    
+  },
+  
 
 
   async onShow() {
+    console.log('-----------onshow')
 
     const { userid= 0 } = await wx.getStorageSync('userinfo'); 
     if (userid) {
@@ -441,11 +546,12 @@ Page({
         userid,
       })
     }
-    const player = this.selectComponent("#player");
-    player.pageTimeUpateContinue();
+    // const player = this.selectComponent("#player");
+    // player.pageTimeUpateContinue();
     this.setData({
       loading: false,
       curRate: getApp().globalData.audio.curRate,
+      isKeepPlayingActive: getApp().globalData.audio.isKeepPlaying,
     })
     setTimeout(() => {      
       const { exhibition_id, museum_id, narration_id } = getCurrentPageParam();
@@ -463,6 +569,7 @@ Page({
     console.log('curUnitId curExhibition', getApp().globalData.audio.curExhibition)
   },
   onLoad(options) {
+    console.log('--------------onload')
     if (options) {
       this.setData({
         narrationId: Number(options.narration_id),
@@ -470,6 +577,7 @@ Page({
         exhibitId: Number(options.exhibit_id),
       }, () => {
         this.initPage(options.exhibit_id);
+
       })
       getApp().globalData.audio.curUnitId = options.unit_id;
       getApp().globalData.audio.curExhibition = options.exhibition_id;

@@ -3,9 +3,16 @@
     <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix" bindtap="handleClickAiRobot" />
   </movable-view>
   <movable-view wx:if="{{!isNewStyle && isShowPlayer}}" animation="{{false}}" class="move-area" x="{{moveplayx}}" y="{{moveplayy}}" direction="all" bindchange="handlePlayIconChange">
+  <!-- <movable-view wx:if="{{true}}" animation="{{false}}" class="move-area" x="{{moveplayx}}" y="{{moveplayy}}" direction="all" bindchange="handlePlayIconChange"> -->
     <view class="player-comp" wx:if="{{isShow}}" bindtap="handleClickPlayerComp">
-      <image wx:if="{{isPlaying}}" src="/static/images/fuchuang-playing.png" class="img" mode="aspectFill" />
-      <image wx:else src="/static/images/fuchuang-pause.png" class="img" mode="aspectFill" />
+      <view class="img-group">
+        <view class="progress-container">
+          <view class="progress-circle" style="--progress: {{currentTime/duration * 100}}%;">
+            <image src="{{curExhibit && curExhibit.image_url}}" class="img-playing" mode="aspectFill" />
+          </view>
+        </view>
+      </view>
+      <image src="/static/images/{{isPlaying ? 'pause': 'play'}}-white.png" class="music-status" mode="aspectFill" />
     </view>
   </movable-view>
 </movable-area>
