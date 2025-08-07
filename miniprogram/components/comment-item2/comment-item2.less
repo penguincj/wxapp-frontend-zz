@@ -1,0 +1,140 @@
+
+.comment-item {
+  // border-top: 1rpx solid #E4E6EC;
+  padding: 0 0 30rpx 0rpx;
+  background: #FFFFFF;
+  .hr-line {
+    width: 750rpx;
+    border-top: 1rpx solid #E4E6EC;
+    margin-left: -40rpx;
+    margin-bottom: 30rpx;
+  }
+  .hr-line-empty {
+    width: 750rpx;
+    margin-left: -40rpx;
+    margin-bottom: 30rpx;
+  }
+  .title-line {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-right: 30rpx;
+
+    .c-ava {
+      width: 56rpx;
+      height: 56rpx;
+      border-radius: 50%;
+    }
+    .name-group {
+      display: inline-block;
+      margin-left: 10rpx;
+    }
+    .c-name {
+      padding: 0 10rpx 0 0;
+      color: #101011;
+      font-size: 28rpx;
+      font-weight: bold;
+      display: inline;
+    }
+    .content-star-group {
+      display: inline-flex;
+      align-items: center;
+      width: 128rpx;
+      height: 24rpx;
+      // margin-top: 10rpx;
+      justify-content: space-between;
+      .content-star {
+        width: 22rpx;
+        height: 22rpx;
+
+      }
+    }
+  }
+  .comment-desc {
+    font-size: 30rpx;
+    color: #101011;
+    margin-top: 24rpx;
+    white-space: normal;
+    // padding-top: 24rpx;
+  }
+  .impression {
+    color: #95989D;
+    font-size: 26rpx;
+    padding-top: 24rpx;
+    
+  }
+  .image-group {
+    padding-top: 24rpx;
+    .image-item {
+      width: 450rpx;
+      max-height: 800rpx;
+      border-radius: 12rpx;
+    }
+  }
+  .muti-images {
+    padding-top: 24rpx;
+    display: flex;
+    gap: 12rpx;
+    align-items: center;
+    flex-wrap: wrap;
+    
+    .image-item {
+      width: 214rpx;
+      height: 216rpx;
+      border-radius: 12rpx;
+    }
+  }
+  .info-line {
+    display: flex;
+    align-items: center;
+    // gap: 32rpx;
+    color: #95989D;
+    font-size: 26rpx;
+    // padding-bottom: 10rpx;
+    padding-top: 16rpx;
+    .time {
+      padding-right: 32rpx;
+    }
+    .info-like {
+      width: 28rpx;
+      height: 28rpx;
+    }
+    .info-notlike {
+      width: 28rpx;
+      height: 28rpx;
+      // padding-right: 2rpx;
+    }
+    .num {
+      padding-left: 4rpx;
+    }
+    .del-txt {
+      margin-left: 100rpx;
+    }
+    .reply-btn {
+      padding-left: 34rpx;
+      color: #606266;
+    }
+  }
+
+  .img-popup {
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100vh;
+    // overflow-y: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    
+    .full-img {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 750rpx;
+      height: 1000rpx;
+      z-index: 1001;
+      transform: translateY(-50%);
+      
+    }
+  }
+}

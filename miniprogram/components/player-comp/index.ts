@@ -63,6 +63,10 @@ Component({
     continueObj: {} as any,
     exhibit_name: '',
     exhibit_img: '', 
+    curExhibit: {} as any,
+    duration: getApp().globalData.audio.bgAudio?.duration,
+    currentTime: getApp().globalData.audio.bgAudio?.currentTime,
+    manStop: false,
   },
   methods: {
     sendListenAction(_audioid: any) {
@@ -82,7 +86,19 @@ Component({
       // })
     },
     handleAudioPlay() {
-      global_audio.bgAudio.play();
+      const { playingIndex, audioList } = global_audio;
+
+      console.log('global_audio.bgAudio', JSON.stringify(global_audio.bgAudio));
+
+      if (global_audio.bgAudio && global_audio.bgAudio.src && !this.data.manStop) {
+        global_audio.bgAudio.play();
+      } else {
+        this.handlePlayOtherAudio(audioList[playingIndex]);
+        this.setData({
+          manStop: false,
+        })
+      }
+      
       this.setData({
         isPlaying: true,
       })
@@ -204,16 +220,16 @@ Component({
         return hour_str + ':' + minute_str + ':' + second_str;
       }
     },
-    onEndAudio() {
-      global_audio.bgAudio.onEnded(() => {
-        console.log('end----------------------------');
-        global_audio.isPlay = false;
-        this.triggerEvent('EndAudio');
-        this.setData({
-          isPlaying: false,
-        })
-      })
-    },
+    // onEndAudio() {
+    //   global_audio.bgAudio.onEnded(() => {
+    //     console.log('end----------------------------');
+    //     global_audio.isPlay = false;
+    //     this.triggerEvent('EndAudio');
+    //     this.setData({
+    //       isPlaying: false,
+    //     })
+    //   })
+    // },
     checkIsAudioPlaying() {
       if (global_audio && global_audio.bgAudio) {
         if (global_audio.bgAudio.paused) {
@@ -256,6 +272,7 @@ Component({
       if (global_audio && global_audio.bgAudio) {
         this.refreshPageStatusFromCurrentPlayingStatus();
         this.onBgTimeUpdate();
+        console.log('audio continue');
       } else {
         console.log('no audio continue');
       }
@@ -263,6 +280,7 @@ Component({
     onBgTimeUpdate() {
 
       global_audio.bgAudio.onTimeUpdate(throttle(() => {
+       
         const time = Number(parseFloat(global_audio.bgAudio.currentTime).toFixed(2));
         const dur = global_audio.bgAudio.duration;
 
@@ -289,12 +307,54 @@ Component({
     
           }
         }
+        this.setData({
+          currentTime: time,
+          isPlaying: !global_audio.bgAudio.paused,
+        })
+        
         this.triggerEvent('TimeUpdate', {
           currentTime: time,
           sliderIndex: time,
           currentTimeText: timeTxt,
         })
-      }, 1000))
+      }, 1000));
+
+      global_audio.bgAudio.onPause(() => {
+        console.log('onPause')
+        this.triggerEvent('OnPlayerPause');
+        this.setData({
+          isPlaying: false,
+        })
+      })
+
+      global_audio.bgAudio.onPlay(() => {
+        console.log('onPlay')
+        this.triggerEvent('OnPlayerPlay');
+        this.setData({
+          isPlaying: true,
+        })
+      })
+
+      global_audio.bgAudio.onEnded(() => {
+        console.log('onEnded')
+        this.triggerEvent('OnPlayerEnded');
+        this.setData({
+          isPlaying: false,
+        })
+      })
+      global_audio.bgAudio.onStop(() => {
+        console.log('onStop')
+        this.triggerEvent('OnPlayerStop');
+        this.setData({
+          isPlaying: false,
+          manStop: true,
+        })
+      })
+      global_audio.bgAudio.onError(() => {
+        console.log('onError')
+        
+      })
+      
     },
     async initPageAudio(audio_item: any) {
       const audio_i = this.generateAudioItem(audio_item);
@@ -413,7 +473,7 @@ Component({
           isPlaying: true,
         })
         console.log(global_audio);
-        this.onEndAudio();
+        // this.onEndAudio();
 
       }, 300)
       this.onBgTimeUpdate();
@@ -539,6 +599,8 @@ Component({
     }
   },
 
+
+
   },
 
 
@@ -602,15 +664,20 @@ Component({
   },
   pageLifetimes: {
     show() {
-      console.log('in attached player comp show', global_audio.bgAudio);
+      console.log('in attached player comp show', global_audio.bgAudio?.duration);
       if (global_audio && global_audio.bgAudio) {
+        const { bgAudio: {manualStop, paused, currentTime }, curExhibit, duration } = global_audio;
         this.setData({
-          isShow: !global_audio.bgAudio.manualStop,
-          isPlaying: !global_audio.bgAudio.paused,
+          isShow: !manualStop,
+          isPlaying: !paused,
           moveplayx: getApp().globalData.play.x,
           moveplayy: getApp().globalData.play.y,
           continueListen: false,
-        })
+          curExhibit: curExhibit,
+          duration: getApp().globalData.audio.bgAudio?.duration,
+          currentTime: currentTime,
+        });
+        this.onBgTimeUpdate();
       } else if(this.data.isNewStyle) {
         this.getContinueListenContent();
       } else {

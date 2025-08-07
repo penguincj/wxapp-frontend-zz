@@ -11,23 +11,34 @@
 				>
 			</slider>
 		</view>
-    <view class="time-group">
-				<view class="time-current">
-					{{currentTimeText}}
-				</view>
+    <view class="first-line">
+      <view class="time-group">
+        <view class="time-current">
+          {{currentTimeText}}
+        </view>
         <view class="total-time">
           {{totalTimeText}}
         </view>
-			</view>
+      </view>
+      <view class="img-wrapper-inline" bindtap="handleClickBeisu">
+        <!-- <image class="img" src="/static/images/{{isKeepPlayingActive ? 'xunhuan-1': 'xunhuan-p'}}.png" mode="aspectFix" /> -->
+        <view class="o-beisu-txt">x{{curRate}}</view>
+      </view>
+    </view>
+    
 		<view class="menu-group">
-			<image 
+			<!-- <image 
         src="/static/images/back15.png" 
         class="back-icon" 
         bindtap="handleBackProgress"
-        mode="aspectFix" />
+        mode="aspectFix" /> -->
+      <view class="img-wrapper" bindtap="handleClickRepeatPlaying">
+        <image class="img" src="/static/images/{{isKeepPlayingActive ? 'xunhuan-1': 'xunhuan-p'}}.png" mode="aspectFix" />
+      </view>
+
       <view class="play-group">
         <image 
-          src="/static/images/play-before.png"
+          src="/static/images/play-before{{playingIndex ? '': '-disable'}}.png"
           class="prev-icon"
           bindtap="handlePlayPrev"
           mode="aspectFix" />
@@ -35,17 +46,20 @@
           src="/static/images/{{isPlay?'pause2':'play2'}}.png" class="play-icon"
           bindtap="handlePlayChange"
           mode="aspectFix" />
-        <image src="/static/images/play-before.png"
+        <image src="/static/images/play-before{{(playingIndex + 1) === audioList.length ? '-disable': ''}}.png"
           class="prev-icon reverse" 
           bindtap="handlePlayNext"
           mode="aspectFix" />
 
       </view>
-			<image
+      <view class="img-wrapper" bindtap="handleClickShowMenuList">
+        <image class="img-menu" src="/static/images/menu2.png" mode="aspectFix" />
+      </view>
+			<!-- <image
         src="/static/images/for15.png"
         class="back-icon" 
         bindtap="handleForwordProgress"
-        mode="aspectFix" />
+        mode="aspectFix" /> -->
 
 		</view>
 	</view>

@@ -2,10 +2,10 @@
   <view class="container">
     <view class="page-section-spacing">
       <block wx:for="{{list}}">
-        <view data-name="{{item.name}}" data-id="{{item.id}}" class="item-group item-group-{{index}} {{item.id === selectedId ? 'select': ''}}">
-          <image wx:if="{{(item.id === selectedId) && (index === 0)}}" src="/static/images/tab-bg0.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
-          <image wx:if="{{(item.id === selectedId) && (index === 1)}}" src="/static/images/tab-bg1.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
-          <image wx:if="{{(item.id === selectedId) && (index === 2)}}" src="/static/images/tab-bg2.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
+        <view data-name="{{item.name}}" data-id="{{item.id}}" class="item-group item-group-{{index}} {{item.id == selectedId ? 'select': ''}}">
+          <image wx:if="{{(item.id == selectedId) && (index === 0)}}" src="/static/images/tab-bg0.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
+          <image wx:if="{{(item.id == selectedId) && (index === 1)}}" src="/static/images/tab-bg1.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
+          <image wx:if="{{(item.id == selectedId) && (index === 2)}}" src="/static/images/tab-bg2.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
           <view class="item-txt item-txt-{{index}}">{{item.name}}</view>
           <view class="shiji" data-name="{{item.name}}" data-id="{{item.id}}" bindtap="selectItem"></view>
         </view>

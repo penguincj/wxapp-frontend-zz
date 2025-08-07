@@ -11,16 +11,72 @@
 }
 
 .player-comp {
-  width: 120rpx;
-  height: 120rpx;
+  width: 196rpx;
+  height: 92rpx;
   // background-color: transparent;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32rpx 0 16rpx;
+  background: #68635B;
+  border-radius: 72rpx;
+  box-sizing: border-box;
   // right: 40rpx;
   // bottom: 360rpx;
-  .img {
-    width: 120rpx;
-    height: 120rpx;
+  .img-group{
+    position: relative;
+    width: 72rpx;
+    height: 72rpx;
+    // padding-right: 110rpx;
+    // margin-left: 40rpx;
+    .progress-container {
+      width: 72rpx;
+      height: 72rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .progress-circle {
+      width: 72rpx;
+      height: 72rpx;
+      border-radius: 50%;
+      background: conic-gradient(#F0F0F0 var(--progress, 0%), #68635B 0%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .progress-circle::before {
+      content: '';
+      position: absolute;
+      width: 64rpx;
+      height: 64rpx;
+      background: #FFFFFF;
+      border-radius: 50%;
+    }
+    
+    .progress-text {
+      
+      font-size: 28rpx;
+      color: #333;
+    }
+    .img-playing {
+      position: relative;
+      z-index: 1;
+      width: 64rpx;
+      height: 64rpx;
+      border-radius: 50%;
+    }
   }
+  
+  .music-status {
+    width: 48rpx;
+    height: 48rpx;
+  }
+
 }
 
 
