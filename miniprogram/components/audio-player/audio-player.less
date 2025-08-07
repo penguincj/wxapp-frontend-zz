@@ -2,22 +2,31 @@
 .audio_player-comp {
   position: relative;
   width: 100%;
+  margin-top: 10rpx;
 
+  .first-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
   .slider_container {
     position: relative;
-    top: 6rpx;
+    top: 16rpx;
     left: 0;
-    width: 528rpx;
+    width: 380rpx;
     height: 55rpx;
     z-index: 100;
-    margin-left: 111rpx;
+    margin-left: 128rpx;
     font-family: MyDIN;
+    wx-slider {
+      margin: 10rpx 0 0 0;
+    }
     // padding-bottom: 55rpx;
   }
   /*按钮大小  */
   .audioOpen {
-    width: 70rpx;
-    height: 70rpx;
+    width: 40rpx;
+    height: 40rpx;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -25,8 +34,13 @@
     margin-left: 20rpx;
   }
 
+  // .first-line {
+  //   width: 750rpx;
+  //   display: inline-block;
+  // }
+  
   .time-group {
-    width: 100%;
+    width: 646rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -34,23 +48,58 @@
     box-sizing: border-box;
     height: 32rpx;
     margin-top: -44rpx;
+  
     .time-current {
-      font-size: 32rpx;
-      line-height: 32rpx;
+      font-size: 28rpx;
+      line-height: 28rpx;
       font-family: D-DIN;
       color: #9AA7B1;
     }
     .total-time {
-      font-size: 32rpx;
+      font-size: 28rpx;
       font-family: D-DIN;
       color: #9AA7B1;
     }
+  }
+  .img-wrapper-inline {
+    width: 80rpx;
+    height: 50rpx;
+    border-radius: 100rpx;
+    background: #F7F8F9;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+    margin-top: -44rpx;
+    margin-left: -16rpx;
+    .img {
+      margin-top: 6rpx;
+      width: 36rpx;
+      height: 36rpx;
+    }
+    .o-beisu-txt {
+      position: absolute;
+      top: 0rpx;
+      left: 0rpx;
+      width: 80rpx;
+      height: 50rpx;
+      line-height: 50rpx;
+      vertical-align: middle;
+      // width: 12rpx;
+      // height: 12rpx;
+      font-size: 24rpx;
+      color: #2C2F3B;
+      font-weight: 800;
+      // transform: scale(0.7);
+      text-align: center;
+
+    }
+    
   }
 
 
   .time_current {
     // margin-top: -80rpx;
-    font-size: 32rpx;
+    font-size: 28rpx;
     color: #848484;
     transform: translateX(-40rpx);
   }
@@ -58,8 +107,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 60rpx 40rpx 0 40rpx;
-
+    padding: 16rpx 40rpx 0 40rpx;
+   
     .back-icon {
       width: 44rpx;
       height: 44rpx;
@@ -81,6 +130,46 @@
         height: 128rpx;
       }
       
+    }
+  }
+
+  .img-wrapper {
+    width: 80rpx;
+    height: 50rpx;
+    border-radius: 100rpx;
+    background: #F7F8F9;
+    // background: red;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // margin-right: 40rpx;
+    .img {
+      width: 36rpx;
+      height: 36rpx;
+    }
+    .img-menu {
+      width: 28rpx;
+      height: 22rpx;
+    }
+    .o-beisu-txt {
+      position: absolute;
+      top: 0rpx;
+      left: 0rpx;
+      width: 80rpx;
+      height: 50rpx;
+      line-height: 50rpx;
+      vertical-align: middle;
+      // width: 12rpx;
+      // height: 12rpx;
+      font-size: 22rpx;
+      color: #2C2F3B;
+      font-weight: 800;
+      // transform: scale(0.7);
+      text-align: center;
+
     }
   }
   

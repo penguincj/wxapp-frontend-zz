@@ -1,152 +1,175 @@
 <!-- index.wxml -->
-<page-meta page-style="">
-<navigation-bar loading="{{false}}" styleType="dark" color="black" background="#FFF" style="text-align: center;"></navigation-bar>
+<page-meta class="page-meta-area" page-style="">
+<navigation-bar back="{{true}}" extClass="{{navIsTransparent ? 'transparent': ''}}" styleType="{{navIsTransparent ? 'light': 'dark'}}" color="black" background="#FFF"></navigation-bar>
 <view class="player-area">
 <player-comp
   id="player"
+  isShowPlayer="{{false}}"
   bindReadyPlay="handleReadyPlay"
   bindTimeUpdate="handleTimeUpdate"
   bindEndAudio="handleEndAudio"
+  bindOnPlayerPause="handleOnPlayerPause"
+  bindOnPlayerPlay="handleOnPlayerPlay"
+  bindOnPlayerStop="handleOnPlayerStop"
+  bindOnPlayerEnded="handleOnPlayerEnded"
   bindContinuePlay="handleContinuePlay"
   bindUpatePlayingIndex="handleUpatePlayingIndex"
   bindClickPlayerComp="handleClickPlayerComp"
 ></player-comp>
 </view>
-<view class="page-exhibit-detail">
-  <view class="top-swiper-area">
-    <swiper-unit list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit>
-  </view>
-  <view wx:if="{{topSwiperSelectIdx === 1}}" class="images-area">
-    <swiper-card5 
-      title="{{exhibitInfo.name}}"
-      list="{{exhibitInfo.more_image_urls}}"
-    ></swiper-card5>
-  </view>
-  <view wx:if="{{topSwiperSelectIdx === 2}}" class="geci-area">
-      <view class="mask-top"></view>
-      <view class="title">{{exhibitInfo.name}}</view>
-      <text decode="{{true}}" space="{{true}}" class="content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{exhibitInfo.audioitem.content}}</text>
-      <view class="mask-bottom"></view>
 
-  </view>
-  <view class="audio-player-area">
-    <audio-player
-      isPlay="{{isPlay}}"
-      duration="{{duration}}"
-      sliderIndex="{{sliderIndex}}"
-      currentTimeText="{{currentTimeText}}"
-      totalTimeText="{{totalTimeText}}"
-      bindPlayStateChange="handlePlayStateChange"
-      bindBackProgress="handleBackProgress"
-      bindForwordProgress="ForwordProgress"
-      bindPlayNext="handlePlayNext"
-      bindPlayPrev="handlePlayPrev"
-     
-    ></audio-player>
-  </view>
-  <view class="operate-area">
-    <view class="op-group">
-      <view class="o-item" bindtap="handleClickCollect">
-        <image src="/static/images/o-shoucang.png" class="o-icon {{isCollected ? 'not-display': ''}}" mode="aspectFix" />
-        <image src="/static/images/o-shoucang-yi.png" class="o-icon {{isCollected ? '': 'not-display'}}" mode="aspectFix" />
-        <view class="o-text">收藏</view>
-      </view>
-      <view class="o-item" bindtap="handleClickLike">
-        <image src="/static/images/o-dianzan.png" class="o-icon {{isLiked ? 'not-display': ''}}" mode="aspectFix" />
-        <image src="/static/images/o-dianzan-yi.png" class="o-icon {{isLiked ? '': 'not-display'}}" mode="aspectFix" />
-        <view class="o-text">点赞</view>
-      </view>
-      <view class="o-item" bindtap="handleOpenMapDialog">
-        <image src="/static/images/o-ditu.png" class="o-icon" mode="aspectFix" />
-        <view class="o-text">地图</view>
-      </view>
-      <view class="o-item" bindtap="handleClickOpenRate">
-        <image src="/static/images/o-beisu.png" class="o-icon" mode="aspectFix" />
-        <view class="o-beisu-txt">{{curRate}}</view>
-        <view class="o-text">{{curRate}}倍速</view>
-      </view>
-      <view class="o-item" bindtap="handleClickMenu">
-        <image src="/static/images/o-mulu.png" class="o-icon" mode="aspectFix" />
-        <view class="o-text">目录</view>
-      </view>
+  <view class="page-exhibit-detail">
+    <!-- <view class="top-swiper-area">
+      <swiper-unit list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit>
+    </view> -->
+    <scroll-view 
+      scroll-y="{{true}}" 
+      show-scrollbar="{{false}}" 
+      enhanced="{{true}}"
+      bounces="{{false}}"
+      bindscroll="handlePageScroll"
+      style="height: 100vh">
+    <view class="images-area">
+      <swiper-card5
+        list="{{exhibitInfo.more_image_urls}}"
+        isCollected="{{isCollected}}"
+        bindClickColIcon="handleClickCollect"
+      ></swiper-card5>
     </view>
-  </view>
-
-  <dialog-half
-    showDialog="{{showDialog}}"
-    bindCloseDialog="handleCloseDialog"
-  >
-    <view slot="content">
-      <view class="rate-group">
-        <view class="title">倍速{{curRate}}x</view>
-        
-        <view class="rate-slider">
-          <view class="fake-slider">
-            <view class="dark-bg" style="width:{{800*(curRate-0.75) + 70}}rpx"></view>
-            <view class="rate-txt-group">
-              <view class="rate-speed">慢</view>
-              <view class="rate-speed">快</view>
-            </view>
-            <view class="circle" style="transform: translateX({{800*(curRate-0.75)}}rpx)"><text class="rate-txt">{{curRate}}x</text></view>
-         </view>
-         <view class="real-slider">
-          <slider
-            block-color="#ffffff" 
-            block-size="18"
-            backgroundColor="rgba(44, 47, 59, 0.05)"
-            activeColor="rgba(44, 47, 59, 0.05)"
-            value="{{rateSlider}}"
-            min="{{rateMin}}"
-            max="{{rateMax}}"
-            bindchange="handleRateSliderChange"
-          >
-          </slider>
-        </view>
-        
-        </view>
-        <view class="rate-number">
-          <view class="rate-txt">0.75x</view>
-          <view class="rate-txt">1x</view>
-          <view class="rate-txt">1.25x</view>
-          <view class="rate-txt">1.5x</view>
-        </view>
-      </view>
+    <view class="geci-area">
+        <!-- <view class="mask-top"></view> -->
+        <view class="title">{{exhibitInfo.name}}</view>
+        <text decode="{{true}}" space="{{true}}" class="content">{{exhibitInfo.audioitem.content}}</text>
+        <!-- <view class="mask-bottom"></view> -->
     </view>
-  </dialog-half>
-  <view class="menu-area">
-    <dialog-half
-      showIcon="{{false}}"
-      showDialog="{{showMenuDialog}}"
-      bindCloseDialog="handleCloseMenuDialog"
-    >
-    <view slot="content">
-      <swiper-card6
-        title="讲解导语"
-        showType="jiangjiedaoyu" 
-        list="{{exhibitList}}"
-        playingExhibitId="{{exhibitId}}"
+    <view class="audio-player-area">
+      <audio-player
+        isPlay="{{isPlay}}"
+        duration="{{duration}}"
+        sliderIndex="{{sliderIndex}}"
+        currentTimeText="{{currentTimeText}}"
+        totalTimeText="{{totalTimeText}}"
+        curRate="{{curRate}}"
         playingIndex="{{playingIndex}}"
-        bindGetCurPlayingStatus="handleGetCurPlayingStatus"
-        bindChangeItem="handleClickExhibitItem"
-        ></swiper-card6>
+        audioList="{{audioList}}"
+        isKeepPlayingActive="{{isKeepPlayingActive}}"
+        bindPlayStateChange="handlePlayStateChange"
+        bindBackProgress="handleBackProgress"
+        bindForwordProgress="ForwordProgress"
+        bindPlayNext="handlePlayNext"
+        bindPlayPrev="handlePlayPrev"
+        bindClickRepeatPlaying="handleClickRepeatPlaying"
+        bindClickShowMenuList="handleClickMenu"
+        bindClickBeisu="handleClickOpenRate"
+        bindOnSliderChange="handleOnSliderChange"
+      
+      ></audio-player>
     </view>
-    </dialog-half>
-  </view>
-
-  <view class="map-area">
-    <dialog-half
-      fullHeight="{{false}}"
-      showIcon="{{true}}"
-      showDialog="{{showMapDialog}}"
-      bindCloseDialog="handleCloseMapDialog"
-    >
-    <view slot="content">
-      <view class="canvas-wrapper">
-        <local-map id="map" Exhpoints="{{mapPoints}}" currentPointIdx="{{currentPointIdx}}"></local-map>
+    <!-- <view class="operate-area">
+      <view class="op-group">
+        <view class="o-item" bindtap="handleClickCollect">
+          <image src="/static/images/o-shoucang.png" class="o-icon {{isCollected ? 'not-display': ''}}" mode="aspectFix" />
+          <image src="/static/images/o-shoucang-yi.png" class="o-icon {{isCollected ? '': 'not-display'}}" mode="aspectFix" />
+          <view class="o-text">收藏</view>
+        </view>
+        <view class="o-item" bindtap="handleClickLike">
+          <image src="/static/images/o-dianzan.png" class="o-icon {{isLiked ? 'not-display': ''}}" mode="aspectFix" />
+          <image src="/static/images/o-dianzan-yi.png" class="o-icon {{isLiked ? '': 'not-display'}}" mode="aspectFix" />
+          <view class="o-text">点赞</view>
+        </view>
+        <view class="o-item" bindtap="handleOpenMapDialog">
+          <image src="/static/images/o-ditu.png" class="o-icon" mode="aspectFix" />
+          <view class="o-text">地图</view>
+        </view>
+        <view class="o-item" bindtap="handleClickOpenRate">
+          <image src="/static/images/o-beisu.png" class="o-icon" mode="aspectFix" />
+          <view class="o-beisu-txt">{{curRate}}</view>
+          <view class="o-text">{{curRate}}倍速</view>
+        </view>
+        <view class="o-item" bindtap="handleClickMenu">
+          <image src="/static/images/o-mulu.png" class="o-icon" mode="aspectFix" />
+          <view class="o-text">目录</view>
+        </view>
       </view>
-    </view>
+    </view> -->
+
+    <dialog-half
+      showDialog="{{showDialog}}"
+      bindCloseDialog="handleCloseDialog"
+    >
+      <view slot="content">
+        <view class="rate-group">
+          <view class="title">倍速{{curRate}}x</view>
+          
+          <view class="rate-slider">
+            <view class="fake-slider">
+              <view class="dark-bg" style="width:{{800*(curRate-0.75) + 70}}rpx"></view>
+              <view class="rate-txt-group">
+                <view class="rate-speed">慢</view>
+                <view class="rate-speed">快</view>
+              </view>
+              <view class="circle" style="transform: translateX({{800*(curRate-0.75)}}rpx)"><text class="rate-txt">{{curRate}}x</text></view>
+          </view>
+          <view class="real-slider">
+            <slider
+              block-color="#ffffff" 
+              block-size="18"
+              backgroundColor="rgba(44, 47, 59, 0.05)"
+              activeColor="rgba(44, 47, 59, 0.05)"
+              value="{{rateSlider}}"
+              min="{{rateMin}}"
+              max="{{rateMax}}"
+              bindchange="handleRateSliderChange"
+            >
+            </slider>
+          </view>
+          
+          </view>
+          <view class="rate-number">
+            <view class="rate-txt">0.75x</view>
+            <view class="rate-txt">1x</view>
+            <view class="rate-txt">1.25x</view>
+            <view class="rate-txt">1.5x</view>
+          </view>
+        </view>
+      </view>
     </dialog-half>
-  </view>
-  
+    <view class="menu-area">
+      <dialog-half
+        showIcon="{{false}}"
+        showDialog="{{showMenuDialog}}"
+        bindCloseDialog="handleCloseMenuDialog"
+      >
+      <view slot="content">
+        <swiper-card6
+          title="讲解列表"
+          showType="jiangjiedaoyu"
+          audiolist="{{d_audiolist}}"
+          list="{{exhibitList}}"
+          playingExhibitId="{{exhibitId}}"
+          playingIndex="{{playingIndex}}"
+          bindGetCurPlayingStatus="handleGetCurPlayingStatus"
+          bindChangeItem="handleClickExhibitItem"
+          ></swiper-card6>
+      </view>
+      </dialog-half>
+    </view>
+
+    <!-- <view class="map-area">
+      <dialog-half
+        fullHeight="{{false}}"
+        showIcon="{{true}}"
+        showDialog="{{showMapDialog}}"
+        bindCloseDialog="handleCloseMapDialog"
+      >
+      <view slot="content">
+        <view class="canvas-wrapper">
+          <local-map id="map" Exhpoints="{{mapPoints}}" currentPointIdx="{{currentPointIdx}}"></local-map>
+        </view>
+      </view>
+      </dialog-half>
+    </view> -->
+  </scroll-view> 
 </view>
+
 </page-meta>  

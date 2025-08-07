@@ -1,4 +1,16 @@
+.page-meta-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #FFFFFF;
+}
 .page-exhibit-detail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   .top-swiper-area {
     .page-section-spacing {
       border-bottom: 0;
@@ -14,14 +26,18 @@
     }
   }
   .images-area {
+    // position: absolute;
+    // top: 0;
+    // left: 0;
     width: 100%;
+    height: 750rpx;
     // height: 824rpx;
   }
   .geci-area {
-    position: relative;
     width: 100%;
     // height: 824rpx;
-    padding: 40rpx 40rpx 50rpx 40rpx;
+    padding: 32rpx 40rpx 30rpx 40rpx;
+    padding-bottom: calc(230rpx + env(safe-area-inset-bottom));
     box-sizing: border-box;
     // background-color: antiquewhite;
     .title {
@@ -36,13 +52,13 @@
       line-height: 70rpx;
       letter-spacing: 2rpx;
       color: #45465E;
-      margin-top: 40rpx;
+      // margin-top: 40rpx;
       width: 100%;
-      height: 700rpx;
-      max-height: calc(100vh - 44px - 760rpx - env(safe-area-inset-top));
-      overflow: auto;
+      // height: 700rpx;
+      // max-height: calc(100vh - 44px - 760rpx - env(safe-area-inset-top));
+      // overflow: auto;
       display: block;
-      padding: 30rpx 0;
+      padding: 16rpx 0;
     }
     .mask-top {
       position: absolute;
@@ -64,10 +80,13 @@
   .audio-player-area {
     // background-color: aqua;
     // margin-top: 60rpx;
-    position: absolute;
-    bottom: 234rpx;
+    position: fixed;
+    bottom: 0;
     left: 0;
     width: 100%;
+    padding-bottom: env(safe-area-inset-bottom);
+    background-color: #FFFFFF;
+    box-shadow: 0px -2rpx 40rpx 0px rgba(0, 0, 0, 0.1);
   }
   .operate-area {
     position: absolute;

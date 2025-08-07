@@ -9,6 +9,10 @@
       bindReadyPlay="handleReadyPlay"
       bindTimeUpdate="handleTimeUpdate"
       bindEndAudio="handleEndAudio"
+      bindOnPlayerStop="handleOnPlayerStop"
+      bindOnPlayerEnded="handleOnPlayerEnded"
+      bindOnPlayerPause="handleOnPlayerPause"
+      bindOnPlayerPlay="handleOnPlayerPlay"
       bindGetCurPlayingStatus="handleGetCurPlayingStatus"
     ></player-comp>
 </view>
@@ -58,8 +62,12 @@
       <view class="img-group">
         <!-- <view class="img-bg" style=""></view>
         <view class="img-bg-white"></view> -->
-        <circle-progress id="{{curExhibit.id}}" curId="{{curExhibit.id}}" total="{{duration}}" progress="{{currentTime/duration}}"></circle-progress>
-        <image class="img-playing {{isPlay? 'img-animate': ''}}" src="{{curExhibit.image_url}}" mode="aspectFix" />
+        <view class="progress-container" catchtap="handleClickPlayerImg">
+          <view class="progress-circle" style="--progress: {{currentTime/duration * 100}}%;">
+            <image class="img-playing {{isPlay? 'img-animate': ''}}" src="{{curExhibit.image_url}}" mode="aspectFix" />
+          </view>
+        </view>
+        <!-- <circle-progress id="{{curExhibit.id}}" curId="{{curExhibit.id}}" total="{{duration}}" progress="{{currentTime/duration}}"></circle-progress> -->
       </view>
       <view class="info-group">
         <view class="line-one">
@@ -72,10 +80,10 @@
 
         </view>
         <view class="line-two">
-          <image bindtap="handlePlayPrev" class="img-icon" src="/static/images/play-before.png" mode="aspectFix" />
+          <image bindtap="handlePlayPrev" class="img-icon" src="/static/images/play-before{{playingIndex ? '': '-disable'}}.png" mode="aspectFix" />
           <image wx:if="{{!isPlay}}" bindtap="handleAudioPlay" class="img-icon play-icon" src="/static/images/play3.png" mode="aspectFix" />
           <image wx:else bindtap="handleAudioPause" class="img-icon pause-icon" src="/static/images/pause1.png" mode="aspectFill" />
-          <image bindtap="handlePlayNext" class="img-icon reverse" src="/static/images/play-before.png" mode="aspectFix" />
+          <image bindtap="handlePlayNext" class="img-icon reverse" src="/static/images/play-before{{(playingIndex + 1) === audiolist.length ? '-disable': ''}}.png" mode="aspectFix" />
           <view class="img-dingwei-group">
             <!-- <view class="img-wrapper" bindtap="handleOpenMapDialog">
               <image class="img" src="/static/images/play-huajuan.png" mode="aspectFix" />

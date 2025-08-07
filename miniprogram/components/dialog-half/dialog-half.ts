@@ -36,6 +36,7 @@ Component({
    */
   methods: {
     handleClose() {
+      console.log('handleClose')
       this.triggerEvent('CloseDialog');
     }
   },

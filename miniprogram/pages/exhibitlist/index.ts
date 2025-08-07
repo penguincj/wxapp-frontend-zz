@@ -1,4 +1,4 @@
-import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll, getTestAESData } from '../../api/api';
+import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll } from '../../api/api';
 import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt, getLoginStatus } from '../../utils/util';
 import { Exhpoints } from './points';
 
@@ -24,13 +24,13 @@ Page({
     showInput: true,
 
     // 一定用到的
-    isPlay: false,
+    isPlay: getApp().globalData.audio.bgAudio?.paused,
     duration: 0, // 当前audio时长
     totalTimeText: '00:00',
     currentTime: 0,
     currentTimeText: '00:00',
     sliderIndex: 0, // 当前播放进度
-    playingIndex: -1, // 当前播放index
+    playingIndex: getApp().globalData.audio.playingIndex, // 当前播放index
     curExhibit: {} as any, // 当前播放展览
     curUnitId: -1, // 当前单元id
     narrationId: -1, // 页面params语音包id
@@ -78,7 +78,7 @@ Page({
         isKeepPlayingActive: false
       })
       wx.showToast({
-        title: '已为您关闭连续播放～',
+        title: '已为您关闭连续播放',
         icon: 'none',
         duration: 2000
       })
@@ -89,7 +89,7 @@ Page({
         isKeepPlayingActive: true
       })
       wx.showToast({
-        title: '已为您开启连续播放～',
+        title: '已为您开启连续播放',
         icon: 'none',
         duration: 2000
       })
@@ -133,14 +133,15 @@ Page({
     }
 
   },
-  handleEndAudio() {
+  handleOnPlayerEnded() {
     console.log('------end !!!')
     if (getApp().globalData.audio.isKeepPlaying) {
       this.handlePlayNext();
     } else {
-      this.setData({
-        isPlay: false,
-      })
+      this.handleEndAudio();
+      // this.setData({
+      //   isPlay: false,
+      // })
     }
     
   },
@@ -173,20 +174,70 @@ Page({
     await player.handlePlayOtherAudioById(selectId);
   },
   async handleClickItemImage(event: any) {
-    console.log('handleClickItemImage')
-    this.setData({
-      isPlay: false,
-    });
+    // this.setData({
+    //   isPlay: false,
+    // });
     const { selectId } = event.detail;
-    const player = this.selectComponent("#player")
-    await player.handlePlayOtherAudioById(selectId);
+    if (selectId !== this.data.curExhibit.id) {
+      const player = this.selectComponent("#player")
+      await player.handlePlayOtherAudioById(selectId);
+    }
+
+    console.log('handleClickItemImage', selectId === this.data.curExhibit.id)
+
     const url_params = generateNewUrlParams({
+      narration_id: this.data.narrationId,
+      exhibition_id: this.data.exhibitionId,
       exhibit_id: selectId,
       unit_id: this.data.curUnitId,
+      museum_id: this.data.curExhibit.museum_id,
     })
     wx.navigateTo({
       url: '/pages/exhibitdetail/index' + url_params
     });
+  },
+  handleClickPlayerImg() {
+    const url_params = generateNewUrlParams({
+      narration_id: this.data.narrationId,
+      exhibition_id: this.data.exhibitionId,
+      exhibit_id: this.data.curExhibit.id,
+      unit_id: this.data.curUnitId,
+      museum_id: this.data.curExhibit.museum_id,
+    })
+    wx.navigateTo({
+      url: '/pages/exhibitdetail/index' + url_params
+    });
+  },
+  handleOnPlayerPause() {
+    console.log('handleOnPlayerPause');
+    this.setData({
+      isPlay: false,
+    })
+  },
+
+  handleOnPlayerPlay() {
+    console.log('handleOnPlayerPlay');
+    this.setData({
+      isPlay: true,
+    })
+  },
+  handleOnPlayerStop() {
+    console.log('handleOnPlayerStop');
+    this.setData({
+      isPlay: false,
+      currentTime: 0,
+      currentTimeText: '00:00',
+    })
+  },
+
+  handleEndAudio() {
+    console.log('handleEndAudio');
+    this.setData({
+      isPlay: false,
+      currentTime: getApp().globalData.audio.duration,
+      sliderIndex: getApp().globalData.audio.duration,
+      currentTimeText: getApp().globalData.audio.totalTimeText,
+    })
   },
 
   handleAudioPlay() {
@@ -227,8 +278,11 @@ Page({
   handleSwiperItemClick(event: any) {
     const { id } = event.detail;
     const url_params = generateNewUrlParams({
+      narration_id: this.data.narrationId,
+      exhibition_id: this.data.exhibitionId,
       exhibit_id: id,
       unit_id: this.data.curUnitId,
+      museum_id: this.data.curExhibit.museum_id,
     })
     wx.navigateTo({
       url: '/pages/exhibitdetail/index' + url_params
@@ -535,8 +589,14 @@ Page({
         continueScrollTop,
         audiolist,
       })
+      
       const player = this.selectComponent("#player");
-      player.initAudioList(f_exhibitlist, exhibit_info);
+      if (!getApp().globalData.audio.bgAudio) {
+        player.initAudioList(f_exhibitlist, exhibit_info);
+      } else {
+        
+      }
+     
       this.setData({
         loading: false,
       })
@@ -569,6 +629,8 @@ Page({
           pagetitle: units[1].exhibition_name
         })
 
+        console.log('isPlayingAudio.isAudioExist', isPlayingAudio)
+
         if (!isPlayingAudio.isAudioExist || lastExhibitionId !== _exhibitionid) {
           const unitid = UNITALLID;
           this.setData({
@@ -588,15 +650,18 @@ Page({
           const { isPlay, playingIndex, totalTimeText, duration } = isPlayingAudio;
           // const unit_id = lastUnitId === -1 ? res_unit.units[0].id : lastUnitId;
           const unit_id = lastUnitId === -1 ? UNITALLID : lastUnitId;
-          console.log('getApp().globalData.audio.curUnitId', getApp().globalData.audio.curUnitId)
+          const { bgAudio: {currentTime, paused}, currentTimeText } = getApp().globalData.audio;
+          console.log('getApp().globalData.audio.curUnitId', getApp().globalData.audio)
           this.setData({
-            isPlay,
+            isPlay: !paused,
             playingIndex,
             totalTimeText,
             duration,
             curUnitId: unit_id,
+            currentTime,
+            currentTimeText,
           })
-          console.log('this.data.curUnitId', playingIndex)
+          console.log('this.data.curUnitId', totalTimeText)
           this.getExhibitDataWithNoPlayer(unit_id, playingIndex);
           player.pageTimeUpateContinue();
         }
@@ -622,17 +687,8 @@ Page({
     console.log('id-----', keys)
   },
 
-
-  // todo
-  async getTestDataaa() {
-    const res = await getTestAESData();
-    console.log('---------test data', res)
-  },
-
-
   onShow() {
-    this.getTestDataaa();
-    console.log('onShow onShow')
+    console.log('onShow onShow', getApp().globalData.audio.bgAudio)
 
     const hei = getApp().globalData.system.statusBarHeight;
     const safeBotHei = getApp().globalData.system.bottomSafeHeight;
@@ -648,23 +704,35 @@ Page({
       isKeepPlayingActive: !!getApp().globalData.audio.isKeepPlaying,
       curExhibit: curExhibit,
     })
-    if (curExhibit && curExhibit.audioitem && curExhibit.audioitem.duration) {
+    // if (curExhibit && curExhibit.audioitem && curExhibit.audioitem.duration) {
+    //   this.setData({
+    //     duration: getApp().globalData.audio.bgAudio.duration,
+    //   })
+    // }
+    if (getApp().globalData.audio.bgAudio) {
+      const { bgAudio: {duration, paused}, totalTimeText, playingIndex } = getApp().globalData.audio
+      console.log('onShow getApp().globalData.audio.totalTimeText', getApp().globalData.audio.playingIndex)
       this.setData({
-        duration: curExhibit.audioitem.duration
+        duration: duration,
+        isPlay: !paused,
+        totalTimeText: totalTimeText,
+        playingIndex: playingIndex,
       })
     }
     // 查找后返回 start
     if (this.data.curUnitId !== getApp().globalData.audio.curUnitId && getApp().globalData.audio.curExhibit) {
+      console.log('onShow ', '查找后返回 start')
       this.setData({
         curUnitId,
       })
       this.initExhibitByIDData(curUnitId, getApp().globalData.audio.curExhibit.id)
       // this.playOtherUnit(curUnitId);
     }
-    // 查找后返回 end
-
-    const player = this.selectComponent("#player");
-    player.pageTimeUpateContinue();
+    // // 查找后返回 end
+    // if (getApp().globalData.audio.bgAudio) {
+    //   const player = this.selectComponent("#player");
+    //   player.pageTimeUpateContinue();
+    // }
     
     setTimeout(() => {
       const params = getCurrentPageParamStr();

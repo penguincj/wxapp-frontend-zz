@@ -396,6 +396,7 @@ export const clearAndFreshLoginStatus = async () => {
 }
 
 export const backToTargetPage = (_pagename: String) => {
+  console.log('backToTargetPage')
   const pages = getCurrentPages();
   if (pages.length) {
     const pageId = pages.findIndex((i: any) => i.route === _pagename);
@@ -408,7 +409,7 @@ export const backToTargetPage = (_pagename: String) => {
     } else {
       
       const params = getApp().globalData.audio.exhibitlistParams;
-      if (params === '') {
+      if (params === '' || (params.indexOf('narration_id') === -1) || (params.indexOf('exhibition_id') === -1) ) {
         const paramstr = transferObjToUrlParams({
           exhibition_id: getApp().globalData.audio.curExhibition,
           narration_id: getApp().globalData.audio.curNarration
@@ -416,9 +417,9 @@ export const backToTargetPage = (_pagename: String) => {
         console.log('-----params str paramstr', paramstr)
         getApp().globalData.audio.exhibitlistParams = paramstr;
       }
-      console.log('-----params', params)
+      // console.log('-----params', params)
       wx.navigateTo({
-        url: '/' + _pagename + params,
+        url: '/' + _pagename + getApp().globalData.audio.exhibitlistParams,
       })
     }
   } 
@@ -428,7 +429,7 @@ export const calTimeTxt = (_time: number) => {
   if (_time < 3600) {
     const min = Math.floor(_time / 60);
     const min_str = (min < 10) ? ('0' + min) : min;
-    const sec = (_time % 60);
+    const sec = (_time % 60) + 1;
     const sec_str = (sec < 10) ? ('0' + sec) : sec;
     return min_str + ':' + sec_str
   } else {

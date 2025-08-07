@@ -66,7 +66,7 @@ Component({
     selectId: 999,
     selectName: "",
     keyword: "",
-    isKeepPlayingActive: false,
+    isKeepPlayingActive: getApp().globalData.audio.isKeepPlaying,
   },
   lifetimes: {
     attached() {
@@ -105,7 +105,7 @@ Component({
           isKeepPlayingActive: false
         })
         wx.showToast({
-          title: '已为您关闭联播～',
+          title: '已为您关闭连续播放',
           icon: 'none',
           duration: 2000
         })
@@ -116,12 +116,13 @@ Component({
           isKeepPlayingActive: true
         })
         wx.showToast({
-          title: '已为您开启联播～',
+          title: '已为您开启连续播放',
           icon: 'none',
           duration: 2000
         })
         
       }
+      // this.triggerEvent('ClickRepeatChange')
     },
     confirmTap() {
       console.log('按下完成触发');

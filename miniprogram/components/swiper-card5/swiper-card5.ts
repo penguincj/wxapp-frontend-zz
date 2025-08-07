@@ -7,14 +7,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    title: {
-      type: String,
-      value: ''
-    },
     list: {
       type: Array,
       value: []
     },
+    isCollected: {
+      type: Boolean,
+      value: false,
+    }
   },
   /**
    * 组件的初始数据
@@ -36,6 +36,9 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    handleClickColIcon() {
+      this.triggerEvent('ClickColIcon');
+    },
     swiperChange: function(e: any){    
       this.setData({
         swiperCurrent: e.detail.current

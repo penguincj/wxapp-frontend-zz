@@ -11,7 +11,7 @@
       wx:if="{{showIcon}}"
       src="/static/images/shouqi.png" 
       class="{{fullHeight? 'full-height-close-icon': 'close-icon'}}" 
-      bindtap="handleClose"
+      catchtap="handleClose"
       mode="aspectFix" />
     <slot name="content"></slot>
   </view>

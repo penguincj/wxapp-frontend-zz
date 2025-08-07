@@ -6,12 +6,11 @@
           <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
           <view class="title-name">{{title}}</view>
         </view>
-        <image class="title-icon small-icon" src="/static/images/dianshi.png" mode="aspectFix" />
         <text class="title-num">{{list.length}}</text>
       </view>
       <view class="title-right">
-        <image wx:if="{{isKeepPlayingActive}}" class="title-icon-type2" src="/static/images/xunhuan-active.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
-        <image wx:else class="title-icon-type2" src="/static/images/xunhuan.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" />
+        <!-- <image class="title-icon-type2" src="/static/images/{{isKeepPlayingActive ? 'xunhuan-1': 'xunhuan-p'}}.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" /> -->
+        <!-- <image wx:else class="title-icon-type2" src="/static/images/xunhuan.png" mode="aspectFix" catchtap="handleClickRepeatPlaying" /> -->
         <cache-audio playingIndex="{{playingIndex}}" audiolist="{{audiolist}}"></cache-audio>
       </view>
     </view>

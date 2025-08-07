@@ -332,9 +332,9 @@ Page({
 
 
   async onShow() {
-    this.setData({
-      loading: true,
-    })
+    // this.setData({
+    //   loading: true,
+    // })
     const { userid, nickname } = await wx.getStorageSync('userinfo');
     this.setData({
       userid,
