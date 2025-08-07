@@ -45,18 +45,21 @@ export const componentProxy = (options: any) => {
       this.tracker = options.tracker; // 注入实例
       originalCreated?.call(this);
     };
+    console.log('Component')
+
     Object.keys(methods).forEach((methodName: any) => {
       const originalMethod = methods[methodName];
       methods[methodName] = function (...args: any) {
         const [event] = args;
-
+        console.log('event----', event)
         // 核心识别逻辑：捕获所有catchtap事件
         if (event &&
           event.type === 'tap' &&
           event.currentTarget.dataset.isCatchEvent) {
           // 异步上报避免阻塞主线程
           setTimeout(() => {
-            options.tracker.report('componentClick', {pagename: 'todo'});
+            const { eventId, eventParams } = event.currentTarget.dataset;
+            options.tracker.report( eventId, eventParams);
           }, 0);
         }
 

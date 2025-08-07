@@ -111,8 +111,11 @@ App<IAppOption>({
       
       tracker.init(this.globalData.logInfo);
       
-
-      tracker.report('view', {pagename: 'index99'});
+      tracker.flush();
+      tracker.log('view', {pagename: 'index1'});
+      // tracker.log('view', {pagename: 'index2'});
+      // tracker.log('view', {pagename: 'index3'});
+      // tracker.log('view', {pagename: 'index3'});
       // track.flush();
 
 

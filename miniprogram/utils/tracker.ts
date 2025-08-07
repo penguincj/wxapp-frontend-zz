@@ -52,7 +52,7 @@ class Tracker {
   
     // 批量上报（每5条或10秒）
     log(event: any, properties = {}) {
-      const MAX_CACHE_SIZE = 3; // 最大缓存事件数
+      const MAX_CACHE_SIZE = 20; // 最大缓存事件数
       const otherParams = this.generateOtherParams();
 
       const log = {
@@ -67,14 +67,18 @@ class Tracker {
         key: 'event_queue',
         success: (res) => {
           console.log('track log res', res)
-          const queue = res.data || [];
+          let queue = res.data || [];
           if (queue.length >= MAX_CACHE_SIZE) {
-            this.sendBatch(queue); // 超出限制时优先发送一半
+            this.sendBatch(queue); // 超出限制时优先发送
             wx.removeStorage({ 
               key: 'event_queue', 
-              success: (res) => {console.log(res)},
-              fail: (err) => {console.log(err)} 
+              success: (res) => {
+                console.log(res);
+                queue = [];
+              },
+              fail: (err) => {console.error(err)} 
             }); // 发送成功清空
+            
           }
           queue.push(log);
           wx.setStorage({ key: 'event_queue', data: queue });
@@ -103,6 +107,7 @@ class Tracker {
           },
           data: _logs
         })
+        console.log('batch !')
       } catch (err) {
         console.error('日志上报失败', err)
         // 失败重试逻辑
