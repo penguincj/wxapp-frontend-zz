@@ -428,8 +428,8 @@ Page({
     })
   },
   handleClickTreatureItem(event: any) {
-    const { idx } = event.currentTarget.dataset;
-    console.log('-----idx', idx)
+    const { idx, name } = event.currentTarget.dataset;
+    this.tracker.report('museum_detail_treature_click_e11', {id: idx, name});
     const url_params = generateNewUrlParams({treature_id: idx})
     wx.navigateTo({
       url: '/pages/treaturedetail/index' + url_params,

@@ -65,7 +65,12 @@
               <!-- 左列 -->
               <view class="column col1">
                 <block wx:for="{{leftList}}" wx:key="id">
-                  <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
+                  <view 
+                    class="item" 
+                    style="height: {{item.height}}rpx;" 
+                    data-idx="{{item.id}}"
+                    data-name="{{item.name}}"
+                    catchtap="handleClickTreatureItem">
                     <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
                     <view class="title">{{item.name}}</view>
                     <!-- <view class="content">{{item.description}}</view> -->
@@ -80,7 +85,12 @@
               <!-- 右列 -->
               <view class="column col2">
                 <block wx:for="{{rightList}}" wx:key="id">
-                  <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickTreatureItem">
+                  <view 
+                    class="item" 
+                    style="height: {{item.height}}rpx;" 
+                    data-idx="{{item.id}}"
+                    data-name="{{item.name}}"
+                    catchtap="handleClickTreatureItem">
                     <image src="{{item.more_image_urls[0]}}" class="img-pic" mode="widthFix" />
                     <view class="title">{{item.name}}</view>
                     <view class="desc-opendate">
@@ -113,7 +123,13 @@
               <!-- 左列 -->
               <view class="column col1">
                 <block wx:for="{{leftPhotoList}}" wx:key="id">
-                  <view class="item" style="height: {{item.height}}rpx;" data-url="{{item.url}}" catchtap="handlePhotoItem">
+                  <view 
+                    class="item" 
+                    style="height: {{item.height}}rpx;" 
+                    data-url="{{item.url}}" 
+                    data-is-catch-event="{{true}}"
+                    data-event-id="museum_detail_album_click_e12"
+                    catchtap="handlePhotoItem">
                     <image src="{{item.url}}" class="img-pic" mode="widthFix" />
                   </view>
                 </block>
@@ -121,7 +137,13 @@
               <!-- 右列 -->
               <view class="column col2">
                 <block wx:for="{{rightPhotoList}}" wx:key="id">
-                  <view class="item" style="height: {{item.height}}rpx;" data-url="{{item.url}}" catchtap="handlePhotoItem">
+                  <view 
+                    class="item" 
+                    style="height: {{item.height}}rpx;" 
+                    data-url="{{item.url}}" 
+                    data-is-catch-event="{{true}}"
+                    data-event-id="museum_detail_album_click_e12"
+                    catchtap="handlePhotoItem">
                     <image src="{{item.url}}" class="img-pic" mode="widthFix" />
                   </view>
                 </block>

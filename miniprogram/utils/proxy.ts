@@ -51,7 +51,7 @@ export const componentProxy = (options: any) => {
       const originalMethod = methods[methodName];
       methods[methodName] = function (...args: any) {
         const [event] = args;
-        console.log('event----', event)
+        // console.log('event----', event)
         // 核心识别逻辑：捕获所有catchtap事件
         if (event &&
           event.type === 'tap' &&
@@ -79,6 +79,13 @@ export const pageProxy = (options: any) => {
     config.tracker = options.tracker;
     config._start_time = 0;
     console.log('Page config', config, options)
+
+    const originalOnLoad = config.onLoad;
+    config.onLoad = function (...args: any) {
+      this.tracker = options.tracker;
+      this._start_time = 0;
+      return originalOnLoad?.apply(this, args);
+    };
 
     const { 
       onShow: originalOnShow, 
@@ -127,10 +134,10 @@ export const pageProxy = (options: any) => {
             event.type === 'tap' &&
             event.currentTarget.dataset.isCatchEvent) {
             console.log('-----overwrite Pages event')
-  
+            const { eventId, eventParams } = event.currentTarget.dataset;
             // 异步上报避免阻塞主线程
             setTimeout(() => {
-              config.tracker.report('componentClick', {pagename: 'todo'});
+              config.tracker.report(eventId, eventParams);
             }, 0);
   
           }

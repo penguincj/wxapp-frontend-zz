@@ -19,7 +19,12 @@
       wx:key="id" 
       style="--index:{{item.zIndex}};--rotate:{{item.rotate}};--opacity:{{item.opacity}};"
       >
-      <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem" >
+      <view 
+        class="swiper-item" 
+        data-idx="{{item.id}}" 
+        data-name="{{item.name}}"
+        data-short="{{item.short}}"
+        bindtap="handleClickItem" >
         <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
         <view class="mask"></view>
         <view class="exhibition-type">{{item.short ? '临时展':'常设展'}}</view>

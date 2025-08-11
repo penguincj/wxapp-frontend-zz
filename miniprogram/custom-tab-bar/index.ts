@@ -63,7 +63,7 @@ Component({
    */
   methods: {
     switchTab(e: any) {
-      const {idx} =e.currentTarget.dataset;
+      const {idx, name} =e.currentTarget.dataset;
       
       const item = itemConfig.find(i => i.id === idx);
       // this.setData({
@@ -72,6 +72,10 @@ Component({
       if (item && item.link) {
         wx.switchTab({
           url: item.link + this.data.urlParamsStr,
+          success(res) {
+            // @ts-ignore
+            // this.tracker.report('custom_bar_switch_e6', {id: idx, name,})
+          },
           fail(error) {
             console.log(error)
           }

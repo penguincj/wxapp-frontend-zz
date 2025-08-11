@@ -31,7 +31,8 @@ Page({
   handleClickItem(event: any) {
     const { id } = event.detail;
     console.log('handleClickItem');
-    
+    // @ts-ignore
+    this.tracker.report('exhibition_list_normal_click_e14', {id})
     const url_params = generateNewUrlParams({
       exhibition_id: id,
       city_id: this.data.curCityId,

@@ -79,13 +79,21 @@ Component({
   methods: {
     selectItem(e: any) {
       console.log('selectItem', e);
-      const { idx } = e.currentTarget.dataset;
+      const { idx, name } = e.currentTarget.dataset;
       this.setData({
         selectId: idx,
       });
       this.triggerEvent('ChangeItem', {
         selectId: idx,
       })
+      if (getApp().globalData.audio && getApp().globalData.audio.bgAudio) {
+        //@ts-ignore
+        this.tracker.report('list_play_e24', {
+          status: getApp().globalData.audio.bgAudio.paused ? 'paused': 'play',
+          id: idx,
+          name,
+        })
+      }
     },
     clickItemImg(e: any) {
       console.log('clickItemImg', e);
@@ -93,6 +101,8 @@ Component({
       this.setData({
         selectId: idx,
       });
+      // @ts-ignore
+      this.tracker.report('list_item_click_e25', {id: idx})
       this.triggerEvent('ClickItemImage', {
         selectId: idx,
       })

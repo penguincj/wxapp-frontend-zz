@@ -1,7 +1,13 @@
 <view wx:if="{{list.length}}" class="card-group-two">
   <view class="card-group">
     <block wx:for="{{list}}" wx:key="{{item.id}}">
-      <view class="item-vertical" data-idx="{{item.id}}" bindtap="handleClickItem">
+      <view 
+        class="item-vertical" 
+        data-idx="{{item.id}}" 
+        data-is-catch-event="{{true}}"
+        data-event-id="museum_detail_exhibition_click_e10"
+        data-event-params="{{ {id: item.id, name: item.name, short: item.short} }}"
+        bindtap="handleClickItem">
         <view class="card-item">
           <view class="item-group">
             <view class="item-bg" style="background-image: url({{item.home_image_url}})"></view>

@@ -80,6 +80,12 @@ Component({
       console.log('currentPage', currentPage);
 
       if(this.data.pageindex && eid) {
+        // @ts-ignore
+        this.tracker.report('index_comment_e5', {
+          exhibition_id: eid,
+          exhibition_name: this.data.comment.exhibition_name,
+          comment_id: idx,
+        })
         const url_params = generateNewUrlParams({
           exhibition_id: eid
         })
@@ -94,6 +100,11 @@ Component({
         const url_params = generateNewUrlParams({
           comment_id: idx,
           exhibition_id: this.data.exhibitionid
+        })
+        this.triggerEvent('exhibition_detail_a_comment_click_e20', {
+          exhibition_id: eid,
+          exhibition_name: this.data.comment.exhibition_name,
+          comment_id: idx,
         })
         wx.navigateTo({
           url: '/pages/commentdetail/index' + url_params,

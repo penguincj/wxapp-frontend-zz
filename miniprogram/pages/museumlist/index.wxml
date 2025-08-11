@@ -21,7 +21,13 @@
 			>
         <view class="scroll-content">
           <block wx:for="{{museumList}}" wx:key="cityid">
-            <view class="city-item" bindtap="handleClickMuseum" data-idx="{{item.id}}" style="background: url({{item.image_url}}) no-repeat center center / cover">
+            <view class="city-item" 
+              bindtap="handleClickMuseum" 
+              data-idx="{{item.id}}"
+              data-is-catch-event="{{true}}" 
+              data-event-id="museum_list_click_e7"
+              data-event-params="{{ {id: item.id, name: item.name} }}"
+              style="background: url({{item.image_url}}) no-repeat center center / cover">
               <!-- <image class="city-item-img" src="{{item.img}}" mode="aspectFill" /> -->
               <view class="city-item-mask" />
               <text class="city-item-name">{{item.name}}</text>

@@ -56,6 +56,8 @@ Page({
   },
 
   handleClickListType() {
+    // @ts-ignore
+    this.tracker.report('exhibit_list_change_type_e21', {type: this.data.isListType ? 1 : 0})
     this.setData({
       isListType: !this.data.isListType,
     })
@@ -66,6 +68,9 @@ Page({
       type: 'exhibition',
       exhibition_id: this.data.exhibitionId,
     });
+    // @ts-ignore
+    this.tracker.report('exhibit_list_search_e23')
+    
     wx.navigateTo({
       url: '/pages/searchpage/index' + url_params,
     })
@@ -95,6 +100,12 @@ Page({
       })
       
     }
+    wx.nextTick(()=> {
+      //@ts-ignore
+      this.tracker.report('exhibit_list_keep_play_click_e29', {
+        isKeepPlay: this.data.isKeepPlayingActive ? 1 : 0,
+      })
+    })
   },
 
   // player-comp
@@ -319,8 +330,9 @@ Page({
       curRate,
     })
     getApp().globalData.audio.curRate = curRate;
-
     this.handlePlayRate(value / 4)
+    // @ts-ignore
+    this.tracker.report('exhibit_list_rate_click_e28', {rate: curRate})
   },
   handlePlayRate(rate: number) {
     var player = this.selectComponent("#player");

@@ -55,6 +55,11 @@ Component({
         //   selectId: id,
         //   selectName: name,
         // });
+        //@ts-ignore
+        this.tracker.report('exhibit_unit_click_e27', {
+          id,
+          name,
+        })
         this.triggerEvent('ChangeUnit', {
           selectId: id,
           // selectName: name,
