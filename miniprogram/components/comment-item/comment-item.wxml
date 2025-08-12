@@ -22,7 +22,7 @@
     </view>
   <view class="{{comment.images.length > 1 ? 'muti-images': 'image-group'}}">
     <block wx:for="{{comment.images}}">
-      <image src="{{item}}" data-idx="{{index}}" data-imglist="{{comment.images}}" data-img="{{item}}" data-comment="{{comment}}" class="image-item" mode="{{comment.images.length > 1 ? 'aspectFill': 'widthFix'}}" catchtap="handleClickImg" />
+      <image src="{{item}}" data-idx="{{index}}" data-imglist="{{comment.images}}" data-img="{{item}}" data-comment="{{comment}}" class="image-item" mode="{{comment.images.length > 1 ? 'aspectFill': 'widthFix'}}" data-is-catch-event="true" catchtap="handleClickImg" />
     </block>
   </view>
   <view class="info-line">

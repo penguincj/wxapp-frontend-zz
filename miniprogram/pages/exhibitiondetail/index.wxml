@@ -96,7 +96,13 @@
                   <text class="fenge">|</text>
                   <text class="title-time">{{m1.getMin(item.duration)}}分钟</text>
                 </view>
-                <view class="btn-group" data-idx="{{item.id}}" bindtap="handleClickJiangjie">
+                <view 
+                  class="btn-group" 
+                  data-idx="{{item.id}}" 
+                  data-is-catch-event="{{true}}"
+                  data-event-id="exhibition_detail_play_click_e16"
+                  data-event-params="{{ {id: item.id, name: item.name, duration: item.duration} }}"
+                  bindtap="handleClickJiangjie">
                   <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
                   <view class="loc-name white">
                     <text>免费</text>
@@ -143,7 +149,11 @@
             </block>
             
           </view>
-          <view class="btn-link" catchtap="handleClickImgLink">
+          <view 
+            class="btn-link"
+            data-is-catch-event="{{true}}"
+            data-event-id="exhibition_detail_more_detail_click_e18"
+            catchtap="handleClickImgLink">
             <text>更多展品进入讲解查看</text>
             <image class="link-icon" src="/static/images/back-dark.png" mode="aspectFix" />
             

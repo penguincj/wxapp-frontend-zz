@@ -11,8 +11,15 @@
       >
       <block wx:for="{{list}}" wx:key="id">
         <swiper-item>
-          <view class="swiper-item {{currentIndex === index ? 'active' : ''}}" data-idx="{{item.id}}" data-link="{{item.url}}" bindtap="handleClickItem">
+          <view class="swiper-item {{currentIndex === index ? 'active' : ''}}" 
+            data-idx="{{item.id}}" 
+            data-link="{{item.url}}" 
+            data-is-catch-event="{{true}}" 
+            data-event-id="index_swiper_e1"
+            bindtap="handleClickItem"
+          >
             <image src="{{item.img}}" class="item-img" mode="aspectFill" />
+            <view wx:if="{{item.type === 'operation'}}" class="img-mask"></view>
             <view wx:if="{{item.title}}" class="title">{{item.title}}</view>
             <view wx:if="{{item.subtitle}}" class="sub-title">{{item.subtitle}}</view>
           </view>

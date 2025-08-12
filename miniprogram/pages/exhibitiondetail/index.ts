@@ -260,6 +260,8 @@ Page({
   },
   handleClickCommentIcon() {
     console.log('handleClickCommentIcon');
+    // @ts-ignore
+    this.tracker.report('exhibition_detail_add_comment_click_e19');
     const url_params = generateNewUrlParams({
       exhibition_id: this.data.curExhibitionId
     })

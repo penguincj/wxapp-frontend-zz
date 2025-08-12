@@ -43,7 +43,9 @@ Component({
    */
   methods: {
     handleClickItem(e: any) {
-      const { idx } = e.currentTarget.dataset;
+      const { idx, name } = e.currentTarget.dataset;
+      // @ts-ignore
+      this.tracker.report('index_museum_e4', {id: idx, name,});
       this.triggerEvent('ClickItem', {
         id: idx,
       })

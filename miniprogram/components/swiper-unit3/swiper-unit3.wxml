@@ -7,7 +7,14 @@
           <image wx:if="{{(item.id == selectedId) && (index === 1)}}" src="/static/images/tab-bg1.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
           <image wx:if="{{(item.id == selectedId) && (index === 2)}}" src="/static/images/tab-bg2.png" class="select-bg select-bg-{{index}}" mode="aspectFit" />
           <view class="item-txt item-txt-{{index}}">{{item.name}}</view>
-          <view class="shiji" data-name="{{item.name}}" data-id="{{item.id}}" bindtap="selectItem"></view>
+          <view 
+            class="shiji" 
+            data-name="{{item.name}}" 
+            data-id="{{item.id}}" 
+            data-is-catch-event="{{true}}"
+            data-event-id="museum_detail_tab_click_e9"
+            data-event-params="{{ {id: item.id, name: item.name} }}"
+            bindtap="selectItem"></view>
         </view>
       </block>
     </view>

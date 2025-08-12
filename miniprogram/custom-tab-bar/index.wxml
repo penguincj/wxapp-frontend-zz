@@ -1,6 +1,11 @@
 <view class="custom-tab-bar">
   <block wx:for="{{icons}}" wx:key="index">
-    <view class="custom-tab-bar-group" data-idx="{{item.id}}" bindtap="switchTab">
+    <view class="custom-tab-bar-group" 
+      data-idx="{{item.id}}" 
+      data-is-catch-event="{{true}}" 
+      data-event-id="custom_bar_switch_e6" 
+      data-event-params="{{ {id: item.id, name: item.name} }}"
+      bindtap="switchTab">
       <image class="custom-tab-bar-img" src="{{selected === item.id ? item.iconClicked : item.icon}}" mode="aspectFix" />
       <view class="custom-tab-bar-text {{selected === item.id ? 'custom-tab-bar-text-blod' : ''}}">{{item.name}}</view>
     </view>

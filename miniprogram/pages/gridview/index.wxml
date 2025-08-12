@@ -34,7 +34,14 @@
             <!-- 左列 -->
             <view class="column">
               <block wx:for="{{leftList}}" wx:key="id">
-                <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+                <view 
+                  class="item" 
+                  style="height: {{item.height}}rpx;" 
+                  data-idx="{{item.id}}" 
+                  data-is-catch-event="{{true}}"
+                  data-event-id="grid_view_exhibition_click_e15"
+                  data-event-params="{{ {id: item.id, name: item.name} }}"
+                  catchtap="handleClickItem">
                   <image src="{{item.image_url}}" class="img-pic" mode="widthFix" />
                   <view class="title">{{item.name}}</view>
                   <!-- <view class="content">{{item.description}}</view> -->
@@ -49,7 +56,14 @@
             <!-- 右列 -->
             <view class="column">
               <block wx:for="{{rightList}}" wx:key="id">
-                <view class="item" style="height: {{item.height}}rpx;" data-idx="{{item.id}}" catchtap="handleClickItem">
+                <view 
+                  class="item" 
+                  style="height: {{item.height}}rpx;" 
+                  data-idx="{{item.id}}" 
+                  data-is-catch-event="{{true}}"
+                  data-event-id="grid_view_exhibition_click_e15"
+                  data-event-params="{{ {id: item.id, name: item.name} }}"
+                  catchtap="handleClickItem">
                   <image src="{{item.image_url}}" class="img-pic" mode="widthFix" />
                   <view class="title">{{item.name}}</view>
                   <!-- <view class="content">{{item.description}}</view> -->

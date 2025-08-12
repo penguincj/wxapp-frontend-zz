@@ -129,7 +129,6 @@ export const getCurrentCity = async () => {
         lng = longitude;
       }
       const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
-      // const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=32.53279,120.467854`);
       if (city_res && city_res.result && city_res.result.address_component && city_res.result.address_component.city) {
         city = city_res.result.address_component.city;
       } else {
@@ -319,12 +318,14 @@ export const getLoginStatus = async () => {
       userid: id,
       avatar,
       nickname,
+      openid,
     })
     getApp().globalData.token = token;
     getApp().globalData.userinfo = {
       userid: id,
       avatar,
       nickname,
+      openid,
     }
     return {
       token,
@@ -332,6 +333,7 @@ export const getLoginStatus = async () => {
         userid: id,
         avatar,
         nickname,
+        openid,
       }
     }
   } catch (error) {
@@ -342,6 +344,7 @@ export const getLoginStatus = async () => {
         nickname: '',
         avatar: '',
         userid: -1,
+        openid: '',
       }
     };
   }
@@ -359,19 +362,21 @@ export const clearAndFreshLoginStatus = async () => {
     const { code } = await login_request();
     console.log('code------------', code);
     
-    const { token, user: {nickname, avatar, id, openid}} = await map_request(`https://gewugo.com/${base_api}/v1/sessions/`+code, {method: 'POST'});
-    console.log('login users', token, nickname, avatar);
+    const { token, user: {nickname, avatar, id, openid }} = await map_request(`https://gewugo.com/${base_api}/v1/sessions/`+code, {method: 'POST'});
+    console.log('login users', openid);
     wx.setStorageSync('token', token);
     wx.setStorageSync('userinfo', {
       userid: id,
       avatar,
       nickname,
+      openid,
     })
     getApp().globalData.token = token;
     getApp().globalData.userinfo = {
       userid: id,
       avatar,
       nickname,
+      openid,
     }
     return {
       token,
@@ -379,6 +384,7 @@ export const clearAndFreshLoginStatus = async () => {
         userid: id,
         avatar,
         nickname,
+        openid,
       }
     }
   } catch (error) {
@@ -389,6 +395,7 @@ export const clearAndFreshLoginStatus = async () => {
         nickname: '',
         avatar: '',
         userid: -1,
+        openid: '',
       }
     };
   }

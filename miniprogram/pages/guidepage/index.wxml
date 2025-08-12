@@ -41,7 +41,7 @@
         </block>
       </view>
       <view class="button-area" wx:if="{{appid && topSwiperSelectIdx === 1}}">
-        <view class="btn-group" bindtap="handleClickBuyTicket">
+        <view class="btn-group" data-is-catch-event="{{true}}" bindtap="handleClickBuyTicket">
           <image src="https://gewugo.com/api/v1/storage/image/but@2x(1)-1931426388.webp" class="loc-btn" mode="aspectFix" />
           <view class="loc-name white"></view>
           

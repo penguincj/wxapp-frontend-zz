@@ -7,7 +7,7 @@
 	</view>
   <view wx:if="{{len < 6}}" class="list-wrapper">
     <block wx:for="{{smalllist}}">
-      <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">
+      <view class="swiper-item" data-idx="{{item.id}}" data-name="{{item.museum_name}}" bindtap="handleClickItem">
         <image src="{{item.img}}" class="item-img" mode="aspectFill" />
         <view class="item-desc-group">
           <view class="line-one">
@@ -31,7 +31,7 @@
 				<swiper-item>
           <view class="item-vertical" >
             <block wx:for="{{fatheritem}}">
-              <view class="swiper-item" data-idx="{{item.id}}" bindtap="handleClickItem">
+              <view class="swiper-item" data-idx="{{item.id}}" data-name="{{item.museum_name}}" bindtap="handleClickItem">
                 <image src="{{item.img}}" class="item-img" mode="aspectFill" />
                 <view class="item-desc-group">
                   <view class="line-one">

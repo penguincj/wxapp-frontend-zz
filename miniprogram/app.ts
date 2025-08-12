@@ -1,9 +1,16 @@
 // app.ts
-import { clearAndFreshLoginStatus, getCurrentCity } from "./utils/util"
+import { clearAndFreshLoginStatus, getCurrentCity, getLocation } from "./utils/util"
+import Tracker from "./utils/tracker";
+import { componentProxy, pageProxy } from "./utils/proxy";
 
 var log = require('./utils/log');
+let tracker = Tracker;
+componentProxy({tracker});
+// console.log('-----overwrite Components')
+pageProxy({tracker});
 App<IAppOption>({
   globalData: {
+    scene_id: null, // 存储入口场景值
     audio: {
       bgAudio: null as any,
       audioList: [],
@@ -38,25 +45,75 @@ App<IAppOption>({
       nickname: '',
       avatar: '',
       userid: -1,
+      openid: '',
     },
     token: '',
+    logInfo: {
+      device_info: {},
+      platform_version: '',
+      sdk_version: '',
+      scene_id: -1,
+    }
   },
-  async onLaunch() {
+  async onLaunch(options) {
     // 展示本地存储能力
     try {
+      // let track = Tracker;
+      // track.log('view', {pagename: 'index'});
+      // track.log('view', {pagename: 'index2'});
+      // track.log('view', {pagename: 'index3'});
+      // track.log('view', {pagename: 'index4'});
+      // track.flush();
+      // console.log(track);
+
       // wx.clearStorage();
       // const logs = wx.getStorageSync('logs') || []
       // logs.unshift(Date.now())
       // wx.setStorageSync('logs', logs)
-      let sysInfo = wx.getWindowInfo();
-      log.info('system',sysInfo);
-      this.globalData.system.statusBarHeight = sysInfo.statusBarHeight;
-      this.globalData.system.bottomSafeHeight = sysInfo.safeArea.height;
-      clearAndFreshLoginStatus();
-
+      this.globalData.scene_id = options.scene;
+      this.globalData.logInfo.scene_id = options.scene;
+      const { userinfo } = await clearAndFreshLoginStatus();
+      await Promise.all([
+        wx.getWindowInfo(), 
+        wx.getDeviceInfo(), 
+        wx.getAppBaseInfo(), 
+        wx.getAccountInfoSync(), 
+        wx.getStorageSync('userinfo')
+      ]).then((values) => {
+        console.log('values-----------', values)
+        this.globalData.system.statusBarHeight = values[0].statusBarHeight;
+        this.globalData.system.bottomSafeHeight = values[0].safeArea.height;
+        const { brand, model, platform, system } = values[1];
+        const { SDKVersion , version} = values[2];
+        const { miniProgram } = values[3];
+        // @ts-expect-error
+        const { openid } = values[4];
+        this.globalData.logInfo.device_info = {
+          brand,
+          model,
+          platform,
+          system,
+          version: version,
+        }
+        this.globalData.logInfo.sdk_version = SDKVersion;
+        this.globalData.logInfo.platform_version = miniProgram.version;
+        this.globalData.logInfo.openid = openid || userinfo?.openid;
+        log.info('track logInfo', values[3]);
+      });
 
       const city = await getCurrentCity();
-      log.info('cityname', city);
+      // @ts-expect-error
+      const { latitude, longitude } = await getLocation();
+      this.globalData.logInfo.location_info = {
+        lat: latitude,
+        lng: longitude,
+        city_name: city,
+      }
+      tracker.init(this.globalData.logInfo);
+      
+      tracker.flush();
+
+
       if (!wx.cloud) {
         console.error('请使用 2.2.3 或以上的基础库以使用云能力 cloud')
       } else {
@@ -92,11 +149,6 @@ App<IAppOption>({
       log.error(error) 
     }
 
-    const getAICha = async () => {
-     
-      // 创建模型
-      
-    };
 
     const onErrorCallback = function(msg: any) {
       console.error('wx:onError:', msg)
@@ -123,6 +175,10 @@ App<IAppOption>({
     
    wx.onUnhandledRejection(onUnhandledRejectionCallback)
     
+  },
+  onShow(options) {
+    // 每次冷启动恢复时更新场景值
+    this.globalData.scene_id = options.scene;
   },
 
 })

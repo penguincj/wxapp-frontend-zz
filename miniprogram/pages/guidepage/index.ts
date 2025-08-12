@@ -131,6 +131,7 @@ Page({
 
   handleClickBuyTicket() {
     const appid = this.data.appid;
+    this.tracker.report('pageview', {pageindex: 'todo'})
     if (appid) {
       wx.navigateToMiniProgram({
         appId: appid,

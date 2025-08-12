@@ -37,12 +37,16 @@ Component({
   },
 
   methods: {
-    handleClickItem() {  
+    handleClickItem(e: any) {  
       const idx = this.data.swiperList[this.data.currentGuestIndex].id;
       console.log(idx);
       this.triggerEvent('ClickItem', {
         id: idx,
       })
+      console.log('eè', e)
+      const { name, short} = e.currentTarget.dataset;
+      // @ts-ignore
+      this.tracker.report('exhibition_list_card_click_e13', {id: idx, name, short})
     },
     towerSwiper(_list: any) {
       const len = _list.length;
@@ -103,7 +107,7 @@ Component({
       const valueTouch = Math.abs(e.changedTouches[0].pageX - this.data.towerStart) > 50 ? true : false
       if(!valueTouch) {
         console.log('! valuetouch');
-        this.handleClickItem();
+        this.handleClickItem(e);
         return
       }
       const direction = e.changedTouches[0].pageX - this.data.towerStart > 0 ? 'right' : 'left'

@@ -25,7 +25,7 @@
       <scroll-view wx:if="{{list && list.length}}" scroll-top="{{scrollTop}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="{{scrollStyle}}">
         <view class="list-group">
           <block wx:for="{{list}}">
-            <view wx:if="{{isListType}}" class="card-group" bindtap="selectItem" data-idx="{{item.id}}">
+            <view wx:if="{{isListType}}" class="card-group" bindtap="selectItem" data-idx="{{item.id}}" data-name="{{item.name}}">
               <view class="group-one">
                 <view class="img-group">
                   <view class="img-bg" style="background-image: url({{item.image_url}})"></view>
@@ -65,7 +65,7 @@
                 <image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
               </view>
             </view>
-            <view wx:else class="card-group-two" bindtap="selectItem" data-idx="{{item.id}}">
+            <view wx:else class="card-group-two" bindtap="selectItem" data-idx="{{item.id}}" data-name="{{item.name}}">
               <view class="group-one">
                 <view class="img-group">
                   <view class="img-bg" style="background-image: url({{item.image_url}})"></view>

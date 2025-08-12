@@ -17,6 +17,8 @@ Component({
   methods: {
     handleDownloadFile() {
       console.log('handleDownloadFile', this.data.audiolist.length);
+      // @ts-ignore
+      this.tracker.report('exhibit_list_download_e22');
       // const audiolist = ['https://gewugo.com/storage/file/CB26976399343756.mp3', 'https://gewugo.com/storage/file/HB26976402540987.mp3'];
       const file_arr = [];
       for (let i = 0; i < Math.min(this.data.audiolist.length, 10); i++) {

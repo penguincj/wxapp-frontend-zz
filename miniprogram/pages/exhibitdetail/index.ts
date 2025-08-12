@@ -149,6 +149,8 @@ Page({
     })
   },
   handleClickMenu() {
+    // @ts-ignore
+    this.tracker.report('exhibit_detail_menu_click_e31')
     this.setData({
       showMenuDialog: true,
     })
@@ -309,6 +311,10 @@ Page({
         duration: 2000
       })
     }
+    this.tracker.report('exhibit_detail_collect_e30', {
+      isCollected: Number(isCollected),
+      id: exhibitId,
+    })
   },
   async handleClickLike() {
     const isLiked = + !this.data.isLiked;

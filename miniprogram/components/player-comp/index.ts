@@ -167,6 +167,15 @@ Component({
       await this.handlePlayOtherAudio(audio);
     },
     async handlePlayOtherAudio(_audio) {
+      const { bgAudio: { currentTime, duration }, curExhibit: {id, name} } = global_audio;
+      // @ts-ignore
+      this.tracker.report('audio_listen_time_e26', {
+        id,
+        name,
+        currentTime,
+        duration,
+        percent: Number(((currentTime/duration) * 100).toFixed(2)),
+      })
       global_audio.curExhibit = _audio;
       await this.initPageAudio(_audio);
     },
