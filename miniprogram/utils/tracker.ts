@@ -29,6 +29,7 @@ class Tracker {
     // 立即尝试上报 todo
     report(event: any, properties = {}) {
       const otherParams = this.generateOtherParams();
+      console.log('publicParamspublicParamspublicParams', this.publicParams)
       const log = {
         ...this.publicParams,
         ...otherParams,

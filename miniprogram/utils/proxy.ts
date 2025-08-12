@@ -45,7 +45,6 @@ export const componentProxy = (options: any) => {
       this.tracker = options.tracker; // 注入实例
       originalCreated?.call(this);
     };
-    console.log('Component')
 
     Object.keys(methods).forEach((methodName: any) => {
       const originalMethod = methods[methodName];
@@ -74,7 +73,6 @@ export const componentProxy = (options: any) => {
 
 export const pageProxy = (options: any) => {
   const originalPage = Page;
-  console.log('-----overwrite Pages')
   Page = function (config: any) {
     config.tracker = options.tracker;
     config._start_time = 0;
@@ -97,8 +95,8 @@ export const pageProxy = (options: any) => {
     config.onShow = function (args: any) {
       console.log('onShow maidian------------');
       config._start_time = Date.now();
-      config.tracker.report('pageview');
       originalOnShow?.call(this);
+      config.tracker.report('pageview');
     };
     config.onHide = function (args: any) {
       console.log('onHide maidian------------');

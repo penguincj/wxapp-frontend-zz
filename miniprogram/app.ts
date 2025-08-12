@@ -72,7 +72,7 @@ App<IAppOption>({
       // wx.setStorageSync('logs', logs)
       this.globalData.scene_id = options.scene;
       this.globalData.logInfo.scene_id = options.scene;
-      clearAndFreshLoginStatus();
+      const { userinfo } = await clearAndFreshLoginStatus();
       await Promise.all([
         wx.getWindowInfo(), 
         wx.getDeviceInfo(), 
@@ -80,6 +80,7 @@ App<IAppOption>({
         wx.getAccountInfoSync(), 
         wx.getStorageSync('userinfo')
       ]).then((values) => {
+        console.log('values-----------', values)
         this.globalData.system.statusBarHeight = values[0].statusBarHeight;
         this.globalData.system.bottomSafeHeight = values[0].safeArea.height;
         const { brand, model, platform, system } = values[1];
@@ -96,7 +97,7 @@ App<IAppOption>({
         }
         this.globalData.logInfo.sdk_version = SDKVersion;
         this.globalData.logInfo.platform_version = miniProgram.version;
-        this.globalData.logInfo.openid = openid;
+        this.globalData.logInfo.openid = openid || userinfo?.openid;
         log.info('track logInfo', values[3]);
       });
 
@@ -108,25 +109,9 @@ App<IAppOption>({
         lng: longitude,
         city_name: city,
       }
-      
       tracker.init(this.globalData.logInfo);
       
       tracker.flush();
-      tracker.log('view', {pagename: 'index1'});
-      // tracker.log('view', {pagename: 'index2'});
-      // tracker.log('view', {pagename: 'index3'});
-      // tracker.log('view', {pagename: 'index3'});
-      // track.flush();
-
-
-      // let sysInfo = await wx.getWindowInfo();
-      // let deviceInfo = await wx.getDeviceInfo();
-
-      // log.info('system',sysInfo);
-      // this.globalData.system.statusBarHeight = sysInfo.statusBarHeight;
-      // this.globalData.system.bottomSafeHeight = sysInfo.safeArea.height;
-      // this.globalData.logInfo.device_info = deviceInfo;
-
 
 
       if (!wx.cloud) {

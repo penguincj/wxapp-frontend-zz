@@ -33,7 +33,6 @@ Page({
       wx.navigateTo({
         url: link
       })
-      console.log('-----111----', link)
     }
   },
 
@@ -259,7 +258,6 @@ Page({
     if (continueListen && continueObj && continueObj.exhibit_id) {
       const { exhibit_id, exhibition_id, museum_id, narration_id, unit_id} = continueObj;
 
-      console.log('continueListencontinueListencontinueListen', continueObj);
       const url_params = generateNewUrlParams({
         exhibition_id: Number(exhibition_id),
         narration_id: Number(narration_id),
@@ -277,13 +275,9 @@ Page({
   },
 
   handleUpatePlayingIndex() {
-    console.log('handleUpatePlayingIndex-------------------------')
-
   },
 
   handlePlayerCompIndexChange(e: any) {
-    console.log('exhibitName-------------------------', e)
-
     const { exhibitName, exhibitImg} = e.detail;
     this.setData({
       curExhibitName: exhibitName,
@@ -344,10 +338,16 @@ Page({
         curExhibitImg: cur_exhibit.image_url,
       })
     }
-
     this.freshPage();
+     // @ts-ignore
+    if (!this.tracker.publicParams?.openid) {
+      setTimeout(() => {
+        // @ts-ignore
+       this.tracker.report('pageview');
+     }, 2000)
+    }
+  
    
-    console.log('getApp().globalData.audio.curExhibit', getApp().globalData.audio.curExhibit)
   },
 
   onUnload() {
