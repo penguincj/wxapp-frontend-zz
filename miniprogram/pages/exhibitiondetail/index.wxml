@@ -15,6 +15,7 @@
     <view class="s-content">
       <view class="museum-info">
         <image src="{{exhibitionInfo.image_url}}" class="museum-img" mode="aspectFill" />
+        <view class="img-mask"></view>
         <view class="museum-texts">
           <view class="title">
             <text class="title-name">{{exhibitionInfo.name}}</text>
