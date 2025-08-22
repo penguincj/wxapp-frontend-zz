@@ -1,0 +1,36 @@
+<!-- index.wxml -->
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar 
+    back="{{true}}" 
+    extClass="transparent" 
+    styleType="dark" 
+    color="black" 
+    background="#FFF"
+  ></navigation-bar>
+
+  <view class="page-narration-again">
+    <image src="/static/images/bubble-bg.webp" class="bg-image" mode="widthFix"></image>
+    
+    <!-- 主标题区域 -->
+    <view class="title-section">
+      <view class="main-title completed-title">
+        欢迎来二刷！ 
+      </view>
+      <view class="subtitle completed-subtitle">
+        继续听之前为你定制的讲解：
+      </view>
+    </view>
+    
+    <view class="result-section" wx:if="{{isCompleted}}">
+      <card-list list="{{narrationList}}"></card-list>
+      <view class="btn-group">
+        <view class="btn-item">
+          <view class="btn-text">重新选择</view>
+        </view>
+        <view class="btn-item btn2">
+          <view class="btn-text">继续听</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-meta>
