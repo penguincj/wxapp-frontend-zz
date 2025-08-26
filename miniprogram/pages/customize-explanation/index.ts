@@ -1,5 +1,5 @@
-import { getNarrowList } from "../../api/api";
-import { calTimeTxt } from "../../utils/util";
+import { postUserListen, getNarrationByID } from "../../api/api";
+import { calTimeTxt, transferObjToUrlParams } from "../../utils/util";
 
 interface Bubble {
   id: number;
@@ -48,8 +48,8 @@ Page({
         subtitle: '为你订制的讲解是',
       }
     },
-    isCompleted: true, // 页面是否完成请求
-    narrationList: [],
+    isCompleted: false, // 页面是否完成请求
+    narrationList: [] as any,
     exhibition_id: 0,
   },
 
@@ -82,18 +82,109 @@ Page({
 
   onLoad(options) {
     console.log('定制讲解页面加载', options);
+    
+    // 解析页面参数
     if(options.exhibition_id) {
       this.setData({
         exhibition_id: Number(options.exhibition_id),
       })
-      this.getNarrationList();
+      // this.getNarrationList();
     }
+    if(options.narration_id) {
+      this.setData({
+        narration_id: Number(options.narration_id),
+      })
+      this.getNarrationDetail(Number(options.narration_id));
+    }
+    
+    // 解析labels参数并替换bubbleTexts
+    if(options.labels) {
+      this.parseLabelsAndUpdateBubbles(options.labels);
+    }
+    
     this.initPage();
+  },
+
+  async getNarrationDetail(_id: any) {
+    try {
+      const res: any = await getNarrationByID(_id);
+      if(res.code === 0) {
+        const nar = res.narration;
+        const duration_fmt = calTimeTxt(nar.duration);;
+        const narration = {
+          id: nar.id,
+          count: 999,
+          name: nar.name,
+          duration_fmt,
+          image_url: nar.url,
+        }
+        const new_narr = [narration];
+        this.setData({
+          narrationList: new_narr
+        })
+      }
+    } catch (err) {
+      console.log('获取讲解详情失败', err);
+    }
+  },
+
+  /**
+   * 解析labels参数并更新气泡文本
+   */
+  parseLabelsAndUpdateBubbles(labelsStr: string) {
+    try {
+      // 解析labels字符串，按逗号分隔
+      const labels = labelsStr.split('-').map(label => label.trim()).filter(label => label.length > 0);
+      
+      if (labels.length > 0) {
+        // 用解析出的标签替换bubbleTexts
+        (this as any).bubbleTexts = labels;
+        console.log('解析到的标签:', labels);
+        console.log('更新后的bubbleTexts:', (this as any).bubbleTexts);
+      }
+    } catch (error) {
+      console.error('解析labels参数失败:', error);
+    }
+  },
+
+  handleSelectAgain() {
+    wx.navigateBack({
+      delta: 1,
+    })
+  },
+
+  async handleListen() {
+    const { userid } = await wx.getStorageSync('userinfo');
+    const narrationid = this.data.narrationList[0].id;
+    postUserListen(userid, this.data.exhibition_id, narrationid);
+    setTimeout(() => {
+      if(this.data.narrationList.length > 0) {
+        const narration = this.data.narrationList[0];
+        this.goToExhibitListPage(narration.id, this.data.exhibition_id)
+      }
+    }, 1000)
+    
+  },
+
+  goToExhibitListPage(_narrationid: any, _exhibitionid: any) {
+    const url_params = transferObjToUrlParams({
+        narration_id: _narrationid,
+        exhibition_id: _exhibitionid
+      })
+      getApp().globalData.audio.curNarration = _narrationid;
+      wx.navigateTo({
+        url: '/pages/exhibitlist/index' + url_params,
+      })
+  },
+
+  handleClickCard(event: any) {
+    const { id } = event.detail;
+    this.goToExhibitListPage(id, this.data.exhibition_id)
   },
 
   onShow() {
     // 页面显示时的逻辑
-    this.getNarrationList();
+    // this.getNarrationList();
   },
 
   onHide() {
@@ -110,44 +201,20 @@ Page({
   initPage() {
     this.generateRandomBubbles();
     
-    // 模拟页面完成请求
+    // 5秒后将isCompleted设置为true
     setTimeout(() => {
       this.setData({ 
         loading: false,
         isCompleted: true // 标记页面完成
       });
-    }, 1000);
-  },
-
-  async getNarrationList() {
-    try {
-      const res: any = await getNarrowList(this.data.exhibition_id);
-      if(res.code === 0) {
-        const narrations = res.narrations.map((item: any) => {
-          const duration_fmt = calTimeTxt(item.duration);;
-          return {
-            id: item.id,
-            count: 999,
-            name: item.name,
-            duration_fmt,
-            image_url: item.url,
-          }
-        })
-        const new_narr = narrations.concat([narrations[0]]);
-        this.setData({
-          narrationList: new_narr
-        })
-      }
-    } catch (err) {
-      console.log('获取讲解列表失败', err);
-    }
+    }, 8000);
   },
 
   /**
    * 生成随机气泡
    */
   generateRandomBubbles() {
-    const { BUBBLE_COUNT_MIN, BUBBLE_COUNT_MAX } = this.bubbleConfig;
+    const { BUBBLE_COUNT_MIN, BUBBLE_COUNT_MAX } = (this as any).bubbleConfig;
     const bubbleCount = this.getRandomInt(BUBBLE_COUNT_MIN, BUBBLE_COUNT_MAX);
     const bubbles: Bubble[] = [];
     
@@ -168,11 +235,11 @@ Page({
       MIN_SCALE, MAX_SCALE, MIN_BLUR, MAX_BLUR, 
       MIN_ANIMATION_DURATION, MAX_ANIMATION_DURATION,
       MIN_OPACITY, MAX_OPACITY, HORIZONTAL_START, VERTICAL_RANGE
-    } = this.bubbleConfig;
+    } = (this as any).bubbleConfig;
 
     return {
       id,
-      text: this.getRandomElement(this.bubbleTexts),
+      text: this.getRandomElement((this as any).bubbleTexts),
       scale: this.getRandomFloat(MIN_SCALE, MAX_SCALE),
       blurAmount: forceClear ? 0 : this.getRandomFloat(MIN_BLUR, MAX_BLUR),
       top: this.getRandomFloat(0, VERTICAL_RANGE),
@@ -188,7 +255,7 @@ Page({
    */
   findNonOverlappingPosition(newBubble: Bubble, existingBubbles: Bubble[]): Bubble {
     let attempts = 0;
-    const { MAX_ATTEMPTS } = this.bubbleConfig;
+    const { MAX_ATTEMPTS } = (this as any).bubbleConfig;
     
     while (attempts < MAX_ATTEMPTS) {
       if (!this.hasCollision(newBubble, existingBubbles)) {
@@ -198,7 +265,7 @@ Page({
       // 重新生成位置
       newBubble = {
         ...newBubble,
-        top: this.getRandomFloat(0, this.bubbleConfig.VERTICAL_RANGE)
+        top: this.getRandomFloat(0, (this as any).bubbleConfig.VERTICAL_RANGE)
       };
       attempts++;
     }
@@ -211,7 +278,7 @@ Page({
    * 检测气泡碰撞
    */
   hasCollision(newBubble: Bubble, existingBubbles: Bubble[]): boolean {
-    const { BASE_WIDTH, BASE_HEIGHT, CHAR_WIDTH, VERTICAL_MARGIN } = this.bubbleConfig;
+    const { BASE_WIDTH, BASE_HEIGHT, CHAR_WIDTH, VERTICAL_MARGIN } = (this as any).bubbleConfig;
     
     const newWidth = Math.max(BASE_WIDTH, newBubble.text.length * CHAR_WIDTH) * newBubble.scale;
     const newHeight = BASE_HEIGHT * newBubble.scale;
@@ -234,7 +301,7 @@ Page({
    * 调整气泡位置避免重叠
    */
   adjustBubblePosition(bubble: Bubble, existingBubbles: Bubble[]): Bubble {
-    const { BASE_WIDTH, BASE_HEIGHT, CHAR_WIDTH, VERTICAL_MARGIN, VERTICAL_RANGE, HORIZONTAL_START } = this.bubbleConfig;
+    const { BASE_WIDTH, BASE_HEIGHT, CHAR_WIDTH, VERTICAL_MARGIN, VERTICAL_RANGE, HORIZONTAL_START } = (this as any).bubbleConfig;
     
     const bubbleWidth = Math.max(BASE_WIDTH, bubble.text.length * CHAR_WIDTH) * bubble.scale;
     const bubbleHeight = BASE_HEIGHT * bubble.scale;

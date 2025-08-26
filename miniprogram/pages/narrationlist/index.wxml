@@ -19,17 +19,23 @@
       </view>
       <view class="tag-group">
         <view class="group-item">
-          <block wx:for="{{tagArrOne}}" wx:key="id">
-            <block wx:for="{{item.label_list}}" wx:for-item="label" wx:key="id">
-              <view class="tag-item {{label.isSelected ? 'selected': ''}}" data-idx="{{label.id}}" bindtap="handleClickLabel">{{label.label_name}}</view>
+          <block wx:for="{{tagArrOne}}" wx:for-item="group" wx:key="dimension">
+            <block wx:for="{{group.label_list}}" wx:for-item="label" wx:key="id">
+              <view class="tag-item {{label.isSelected ? 'selected': ''}}" 
+                    data-dimension="{{group.dimension}}" 
+                    data-tag-id="{{label.id}}" 
+                    bindtap="onSelectSingleTag">{{label.label_name}}</view>
             </block>
           </block>
         </view>
         <view class="group-txt">以下可多选：</view>
         <view class="group-item">
-          <block wx:for="{{tagArrMuti}}" wx:key="id">
-            <block wx:for="{{item.label_list}}" wx:for-item="label" wx:key="id">
-              <view class="tag-item {{label.isSelected ? 'selected': ''}}" data-idx="{{label.id}}" bindtap="handleClickLabel">{{label.label_name}}</view>
+          <block wx:for="{{tagArrMuti}}" wx:for-item="group" wx:key="dimension">
+            <block wx:for="{{group.label_list}}" wx:for-item="label" wx:key="id">
+              <view class="tag-item {{label.isSelected ? 'selected': ''}}" 
+                    data-dimension="{{group.dimension}}" 
+                    data-tag-id="{{label.id}}" 
+                    bindtap="onSelectMultiTag">{{label.label_name}}</view>
             </block>
           </block>
         </view>

@@ -11,15 +11,15 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/narration-again/index",
-          "pathName": "pages/narration-again/index",
-          "query": "exhibition_id=35",
+          "name": "pages/customize-explanation/index",
+          "pathName": "pages/customize-explanation/index",
+          "query": "exhibition_id=35&narration_id=1&labels=60分钟-男生-镇馆之宝-小众精品-女生喜欢-瓷器-唐宋元",
           "scene": null,
           "launchMode": "default"
         },
         {
-          "name": "pages/customize-explanation/index",
-          "pathName": "pages/customize-explanation/index",
+          "name": "pages/narration-again/index",
+          "pathName": "pages/narration-again/index",
           "query": "exhibition_id=35",
           "launchMode": "default",
           "scene": null

@@ -38,6 +38,9 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    
+    handleClickCard(event: any) {
+      const { idx } = event.currentTarget.dataset;
+      this.triggerEvent('ClickCard', { id: idx });
+    }
   },
 })

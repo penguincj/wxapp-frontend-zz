@@ -6,7 +6,7 @@
     </view>
   </view>
   <view class="card-area" wx:for="{{list}}" wx:key="id">
-    <view class="card-group" data-idx="{{item.id}}" catchtap="handleClickPlay">
+    <view class="card-group" data-idx="{{item.id}}" catchtap="handleClickCard">
       <view class="group-one">
         <image class="card-img" data-idx="{{item.id}}" src="{{item.image_url}}" mode="aspectFill" />
         <view class="card-info">

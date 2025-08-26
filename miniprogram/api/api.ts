@@ -128,6 +128,10 @@ export const getNarrowList = (_exhibitionid: any) => {
     return request(`/${base_api}/v1/narrations?exhibitionID=${_exhibitionid}`);
 }
 
+export const getNarrationByID = (_narrationid: any) => {
+    return request(`/${base_api}/v1/narrations/${_narrationid}`);
+}
+
 export const modifyNameAndAva = (_id: any, options: any) => {
     return request(`/${base_api}/v1/users/${_id}/profile`, options)
 }
@@ -290,4 +294,41 @@ export const getIndexData = (_lat: any, _lng: any) => {
 // 首页二期 续听接口
 export const getContinueListen = () => {
     return request(`/${base_api}/v1/continueListen`)
+}
+
+// 展览标签 
+export const getExhibitionLabelGroup = (_labelgroupid: any) => {
+    return request(`/${base_api}/v1/labelGroups/${_labelgroupid}`);
+}
+
+// 展览标签 
+export const getExhibitionLabelGroupAll = () => {
+    return request(`/${base_api}/v1/labelGroups`);
+}
+
+// 展览标签资源匹配
+export const postNarrationLabelMatch = (_exhibitionid: any,  _labels: any[]) => {
+    return request(`/${base_api}/v1/exhibitions/${_exhibitionid}/labelMatch`, {
+        method: 'POST',
+        data: {
+            labels: _labels
+        }
+    })
+}
+
+// 用户听语音历史
+export const postUserListen = (_userid: any,  _exhibitionid: any, _narrationid: any) => {
+    return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/narrations/${_narrationid}/listen`, {
+        method: 'POST'
+    })
+}
+
+// 获取用户听的语音历史列表
+export const getUserNarrationList = (_userid: any) => {
+    return request(`/${base_api}/v1/users/${_userid}/narrations/history`)
+}
+
+// 获取用户听的最近的语音
+export const getUserLastNarration = (_userid: any, _exhibitionid: any) => {
+    return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/narrations/latest`)
 }

@@ -21,13 +21,13 @@
       </view>
     </view>
     
-    <view class="result-section" wx:if="{{isCompleted}}">
+    <view class="result-section">
       <card-list list="{{narrationList}}"></card-list>
       <view class="btn-group">
-        <view class="btn-item">
+        <view class="btn-item" bindtap="handleSelectAgain">
           <view class="btn-text">重新选择</view>
         </view>
-        <view class="btn-item btn2">
+        <view class="btn-item btn2" bindtap="handleListen">
           <view class="btn-text">继续听</view>
         </view>
       </view>

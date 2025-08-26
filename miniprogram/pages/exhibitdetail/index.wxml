@@ -39,6 +39,7 @@
     <view class="geci-area">
         <!-- <view class="mask-top"></view> -->
         <view class="title">{{exhibitInfo.name}}</view>
+        <view class="tag">个性化定制</view>
         <text decode="{{true}}" space="{{true}}" class="content">{{exhibitInfo.audioitem.content}}</text>
         <!-- <view class="mask-bottom"></view> -->
     </view>

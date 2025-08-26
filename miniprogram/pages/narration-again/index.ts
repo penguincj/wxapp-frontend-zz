@@ -1,11 +1,10 @@
-import { getNarrowList } from "../../api/api";
-import { calTimeTxt } from "../../utils/util";
+import { getUserLastNarration } from "../../api/api";
+import { calTimeTxt, getLoginStatus, transferObjToUrlParams } from "../../utils/util";
 
 Page({
   data: {
     loading: true,
-    isCompleted: true, // 页面是否完成请求
-    narrationList: [],
+    narrationList: [] as any,
     exhibition_id: 0,
   },
 
@@ -15,14 +14,13 @@ Page({
       this.setData({
         exhibition_id: Number(options.exhibition_id),
       })
-      this.getNarrationList();
+      // this.getUserLastNarration();
     }
-    this.initPage();
   },
 
   onShow() {
     // 页面显示时的逻辑
-    this.getNarrationList();
+    this.getUserLastNarration();
   },
 
   onHide() {
@@ -33,40 +31,63 @@ Page({
     // 页面卸载时的逻辑
   },
 
-  /**
-   * 初始化页面
-   */
-  initPage() {
-    // 模拟页面完成请求
-    setTimeout(() => {
-      this.setData({ 
-        loading: false,
-        isCompleted: true // 标记页面完成
-      });
-    }, 1000);
+  handleSelectAgain() {
+    wx.navigateTo({
+      url: '/pages/narrationlist/index?exhibition_id=' + this.data.exhibition_id,
+    })
   },
 
-  async getNarrationList() {
+  handleListen() {
+    const narrationid = this.data.narrationList[0].id;
+    const url_params = transferObjToUrlParams({
+      exhibition_id: this.data.exhibition_id,
+      narration_id: narrationid,
+    })
+    getApp().globalData.audio.curNarration = narrationid
+    wx.navigateTo({
+      url: '/pages/exhibitlist/index' + url_params,
+    })
+  },
+
+  async getUserLastNarration() {
     try {
-      const res: any = await getNarrowList(this.data.exhibition_id);
-      if(res.code === 0) {
-        const narrations = res.narrations.map((item: any) => {
-          const duration_fmt = calTimeTxt(item.duration);;
-          return {
-            id: item.id,
-            count: 999,
-            name: item.name,
-            duration_fmt,
-            image_url: item.url,
-          }
-        })
-        const new_narr = narrations.concat([narrations[0]]);
+      let userinfo = wx.getStorageSync('userinfo');
+      console.log('原始userinfo:', userinfo);
+      console.log('userinfo类型:', typeof userinfo);
+      
+      // 如果userinfo为空或者userid不存在，尝试重新获取登录状态
+      if (!userinfo || !userinfo.userid) {
+        console.log('userinfo为空或userid不存在，尝试重新获取登录状态');
+        const loginResult = await getLoginStatus();
+        userinfo = loginResult.userinfo;
+        console.log('重新获取的userinfo:', userinfo);
+      }
+      
+      const userid = userinfo?.userid;
+      console.log('最终userid:', userid);
+      
+      if (!userid) {
+        console.log('userid仍然为空，无法继续');
+        return;
+      }
+      const res: any = await getUserLastNarration(userid, this.data.exhibition_id);
+      if(res && res.code === 0 && res.data.narration) {
+        const narration = res.data.narration;
+        const duration_fmt = calTimeTxt(narration.duration);;
+        const new_narration = {
+          id: narration.id,
+          count: 999, //todo
+          name: narration.name,
+          duration_fmt,
+          image_url: narration.url,
+        }
         this.setData({
-          narrationList: new_narr
+          narrationList: [new_narration],
         })
       }
     } catch (err) {
-      console.log('获取讲解列表失败', err);
+      console.log('获取用户最近讲解失败', err);
     }
-  }
+  },
+
 });
