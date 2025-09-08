@@ -1,4 +1,4 @@
-import { getCommentsByExhibitionID, postReplyToParent, getUserLastNarration, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters } from "../../api/api";
+import { getCommentsByExhibitionID, postReplyToParent, getUserLastNarration, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters, getPackageList } from "../../api/api";
 import { throttle, generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
 const listConfig = [
   {
@@ -38,6 +38,8 @@ Page({
     topSwiperSelectIdx: 'reco_exhi',
     replyParentId: 0,
     showReplayBar: false,
+    packageCount: 0,
+    jiangjieButtonText: '选讲解',
   },
   // scroll(e: any) {
   //   const { scrollTop } = e.detail;
@@ -142,14 +144,22 @@ Page({
   },
  
   async handleClickJiangjie() {
-    const res : any= await getUserLastNarration(this.data.userid, this.data.curExhibitionId);
-    if(res && res.code === 0) {
-      if (res.data && res.data.narration && res.data.narration.id) {
-        this.goToNarrationAgainPage();
-      } else {
-        this.goToNarrationListPage();
-      }
+    // 如果套餐数量为1，执行console逻辑
+    if (this.data.packageCount === 1) {
+      console.log('套餐数量为1，执行播放逻辑');
+    } else {
+       this.goToNarrationListPage();
     }
+    
+    // // 套餐数量大于1，维持现有逻辑
+    // const res : any= await getUserLastNarration(this.data.userid, this.data.curExhibitionId);
+    // if(res && res.code === 0) {
+    //   if (res.data && res.data.narration && res.data.narration.id) {
+    //     this.goToNarrationAgainPage();
+    //   } else {
+    //     this.goToNarrationListPage();
+    //   }
+    // }
   },
   handleClickPlayIcon() {
     if (this.data.narrationList && this.data.narrationList.length) {
@@ -190,13 +200,28 @@ Page({
     try {
       const res: any = await getExhibitionById(_exhibitionid);
       const res_narr: any = await getNarrowList(_exhibitionid);
+      
+      // 获取套餐列表
+      const packageRes: any = await getPackageList(_exhibitionid);
+      let packageCount = 0;
+      let buttonText = '选讲解';
+      
+      if (packageRes && packageRes.code === 0 && packageRes.data && packageRes.data.packages) {
+        packageCount = packageRes.data.packages.length;
+        if (packageCount === 1) {
+          buttonText = '播放';
+        }
+      }
+      
       if (res && res.exhibition) {
         this.setData({
           exhibitionInfo: res.exhibition,
           narrationList: res_narr.narrations,
           loading: false,
           isClickWantVisit: Boolean(res.exhibition.want_visit),
-          isClickVisited: Boolean(res.exhibition.visited)
+          isClickVisited: Boolean(res.exhibition.visited),
+          packageCount: packageCount,
+          jiangjieButtonText: buttonText
         })
       }
       this.getComments(this.data.curExhibitionId, this.data.currentLabel);

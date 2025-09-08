@@ -104,7 +104,7 @@
                 bindtap="handleClickJiangjie">
                 <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
                 <view class="loc-name white">
-                  <text>选讲解</text>
+                  <text>{{jiangjieButtonText}}</text>
                   <image class="bofang" src="/static/images/ed-t.png" mode="aspectFix" />
                 </view>
               </view>

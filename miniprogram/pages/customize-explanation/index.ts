@@ -1,4 +1,4 @@
-import { postUserListen, getNarrationByID } from "../../api/api";
+import { postUserListen, getPackageByID } from "../../api/api";
 import { calTimeTxt, transferObjToUrlParams } from "../../utils/util";
 
 interface Bubble {
@@ -49,7 +49,7 @@ Page({
       }
     },
     isCompleted: false, // 页面是否完成请求
-    narrationList: [] as any,
+    packageList: [] as any,
     exhibition_id: 0,
   },
 
@@ -90,11 +90,11 @@ Page({
       })
       // this.getNarrationList();
     }
-    if(options.narration_id) {
+    if(options.package_id) {
       this.setData({
-        narration_id: Number(options.narration_id),
+        package_id: Number(options.package_id),
       })
-      this.getNarrationDetail(Number(options.narration_id));
+      this.getPackageDetail(Number(options.package_id));
     }
     
     // 解析labels参数并替换bubbleTexts
@@ -105,22 +105,21 @@ Page({
     this.initPage();
   },
 
-  async getNarrationDetail(_id: any) {
+  async getPackageDetail(_id: any) {
     try {
-      const res: any = await getNarrationByID(_id);
+      const res: any = await getPackageByID(_id);
       if(res.code === 0) {
-        const nar = res.narration;
-        const duration_fmt = calTimeTxt(nar.duration);;
-        const narration = {
-          id: nar.id,
+        const res_package = res.data;
+        const item = {
+          id: res_package.id,
           count: 999,
-          name: nar.name,
-          duration_fmt,
-          image_url: nar.url,
+          name: res_package.name,
+          duration_fmt: res_package.duration,
+          image_url: res_package.image_url,
         }
-        const new_narr = [narration];
+        const new_narr = [item];
         this.setData({
-          narrationList: new_narr
+          packageList: new_narr
         })
       }
     } catch (err) {
@@ -155,11 +154,11 @@ Page({
 
   async handleListen() {
     const { userid } = await wx.getStorageSync('userinfo');
-    const narrationid = this.data.narrationList[0].id;
+    const narrationid = this.data.packageList[0].id;
     postUserListen(userid, this.data.exhibition_id, narrationid);
     setTimeout(() => {
-      if(this.data.narrationList.length > 0) {
-        const narration = this.data.narrationList[0];
+      if(this.data.packageList.length > 0) {
+        const narration = this.data.packageList[0];
         this.goToExhibitListPage(narration.id, this.data.exhibition_id)
       }
     }, 1000)

@@ -35,12 +35,12 @@
       </block>
     </view>
     <view class="result-section" wx:if="{{isCompleted}}">
-      <card-list list="{{narrationList}}" bindClickCard="handleClickCard"></card-list>
+      <card-list list="{{packageList}}" bindClickCard="handleClickCard"></card-list>
       <view class="btn-group">
-        <view class="btn-item {{narrationList.length > 1 ? 'btn1' : ''}}">
+        <view class="btn-item {{packageList.length > 1 ? 'btn1' : ''}}">
           <view class="btn-text" bindtap="handleSelectAgain">再选选</view>
         </view>
-        <view class="btn-item btn2" wx:if="{{narrationList.length === 1}}" bindtap="handleListen">
+        <view class="btn-item btn2" wx:if="{{packageList.length === 1}}" bindtap="handleListen">
           <view class="btn-text">听讲解</view>
         </view>
       </view>

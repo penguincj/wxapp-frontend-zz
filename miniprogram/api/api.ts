@@ -132,6 +132,10 @@ export const getNarrationByID = (_narrationid: any) => {
     return request(`/${base_api}/v1/narrations/${_narrationid}`);
 }
 
+export const getRecoPackageList = (_exhibitionid: any) => {
+    return request(`/${base_api}/v1/packages?exhibition_id=${_exhibitionid}&is_recommend=${Number(1)}`);
+}
+
 export const modifyNameAndAva = (_id: any, options: any) => {
     return request(`/${base_api}/v1/users/${_id}/profile`, options)
 }
@@ -306,12 +310,15 @@ export const getExhibitionLabelGroupAll = () => {
     return request(`/${base_api}/v1/labelGroups`);
 }
 
-// 展览标签资源匹配
-export const postNarrationLabelMatch = (_exhibitionid: any,  _labels: any[]) => {
-    return request(`/${base_api}/v1/exhibitions/${_exhibitionid}/labelMatch`, {
+// 智能套餐推荐
+export const postPackageRecommend = (_exhibitionid: any, _duration: string, _voiceLabel: string, _styleTags: string[]) => {
+    return request(`/${base_api}/v1/exhibitions/${_exhibitionid}/packages/recommend`, {
         method: 'POST',
         data: {
-            labels: _labels
+            exhibition_id: _exhibitionid,
+            duration: _duration,
+            voice_label: _voiceLabel,
+            style_tags: _styleTags
         }
     })
 }
@@ -331,4 +338,18 @@ export const getUserNarrationList = (_userid: any) => {
 // 获取用户听的最近的语音
 export const getUserLastNarration = (_userid: any, _exhibitionid: any) => {
     return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/narrations/latest`)
+}
+
+// 获取套餐列表
+export const getPackageList = (_exhibitionid: any, _category?: any, _page = 1, _limit = 10) => {
+    let url = `/${base_api}/v1/packages?exhibition_id=${_exhibitionid}&page=${_page}&limit=${_limit}`;
+    if (_category) {
+        url += `&category=${_category}`;
+    }
+    return request(url);
+}
+
+// 获取讲解详情
+export const getPackageByID = (_packageid: any) => {
+    return request(`/${base_api}/v1/packages/${_packageid}`);
 }
