@@ -3,11 +3,13 @@
   <navigation-bar styleType="light" title="分享展览海报" back color="white" background="#000"></navigation-bar>
   <view class="poster-page">
     <view class="container">
-      <canvas 
-        type="2d" 
-        id="posterCanvas" 
-        style="width: 600rpx; height: {{canvasHeight}}rpx;"
-      ></canvas>
+      <view class="canvas-wrapper">
+        <canvas 
+          type="2d" 
+          id="posterCanvas" 
+          style="width: 600rpx; height: {{canvasHeight}}rpx; "
+        ></canvas>
+      </view>
       <view class="opreate-btns">
         <view class="change-btns">
           <view wx:if="{{share_texts && share_texts.length}}" class="change-pic" bindtap="handleChangeText">
