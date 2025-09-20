@@ -54,6 +54,7 @@ Page({
     packageId: -1,
     showShareTextDialog: false,
     shareTextList: [] as any,
+    lastExhibitId: -1,
     // playProgress: 0,
   },
 
@@ -71,8 +72,22 @@ Page({
       shareTextList: [],
     })
   },
-  handleClickAIPopup() {
-    
+  handleClickAIPopup(e: any) {
+    const { popup_type } = e.detail;
+    let params = {};
+    if (popup_type === 'exhibitlist') {
+      params = { exhibit_id: this.data.curExhibit.exhibit_id }
+    } else if (popup_type === 'package') {
+      params = { package_id: this.data.packageId }
+    }
+    const url_params = generateNewUrlParams({
+      from_page: popup_type,
+      poster_idx: 0,
+      ...params,
+    })
+    wx.navigateTo({
+      url: '/pages/share-poster/index' + url_params,
+    })
   },
 
   handleClickPannelSearch() {
@@ -554,6 +569,7 @@ Page({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[_playingIndex],
         audiolist,
+        lastExhibitId: f_exhibitlist[f_exhibitlist.length - 1].id,
       })
       
       
@@ -643,6 +659,7 @@ Page({
       this.setData({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[0],
+        lastExhibitId: f_exhibitlist[f_exhibitlist.length - 1].id,
       })
       const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
       this.setData({
@@ -680,6 +697,7 @@ console.log('init exhibit_info', res, exhibit_info)
         curExhibit: exhibit_info,
         continueScrollTop,
         audiolist,
+        lastExhibitId: f_exhibitlist[f_exhibitlist.length - 1].id,
       })
       
       const player = this.selectComponent("#player");

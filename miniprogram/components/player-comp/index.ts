@@ -35,6 +35,10 @@ Component({
       type: Array,
       value: [],
     },
+    lastExhibitId: {
+      type: Number,
+      value: -1,
+    },
   },
   data: {
     // audioList: audioList,
@@ -81,6 +85,8 @@ Component({
     manStop: false,
     countdown: 10,
     countdownTimer: null as any, // 倒计时定时器
+    popup_type: 'exhibitlist',
+    popup_text: '',
   },
   observers: {
     'showShareTextDialog': function(newVal) {
@@ -124,7 +130,7 @@ Component({
       this.triggerEvent('CountdownEnd', {});
     },
     handleClickPopup() {
-      this.triggerEvent('ClickAIPopup', {});
+      this.triggerEvent('ClickAIPopup', { popup_type: this.data.popup_type });
     },
     // sendListenAction(_packageid: any, _packageexhibitid: any) {
     //   try {
@@ -345,6 +351,7 @@ Component({
     },
     onBgTimeUpdate() {
       let id_flag = false;
+      const isLastExhibit = global_audio.curExhibit.id === this.data.lastExhibitId;
       console.log('global_audio.curExhibit', global_audio.curExhibit.share_texts)
       global_audio.bgAudio.onTimeUpdate(throttle(() => {
        
@@ -376,14 +383,44 @@ Component({
     
           }
         }
-        // if (!id_flag && (time < dur -5) && (time > dur - 15) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
-        if (!id_flag && (time < dur -5) && (time > dur - 100) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
-          // todo
-          id_flag = true;
-          this.triggerEvent('ShareTextTimeUp', {
-            share_texts: global_audio.curExhibit.share_texts,
-          })
+        if (isLastExhibit) {
+          // if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+            // todo
+            this.setData({
+              popup_type: 'exhibitlist',
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+            })
+            this.triggerEvent('ShareTextTimeUp', {
+              share_texts: global_audio.curExhibit.share_texts,
+            })
+          }
+          if (!id_flag && (time < dur -5) && (time > dur - 15)) {
+            // todo
+            id_flag = true;
+            this.setData({
+              popup_type: 'package',
+              popup_text: `讲解尾声，一定有很多值得带走的记忆～查看我的专属观展记录`,
+            })
+            this.triggerEvent('ShareTextTimeUp', {
+              share_texts: [''],
+            })
+          }
+        } else {
+          if (!id_flag && (time < dur -5) && (time > dur - 15) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          // if (!id_flag && (time < dur -5) && (time > dur - 100) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+            // todo
+            id_flag = true;
+             this.setData({
+              popup_type: 'exhibitlist',
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+            })
+            this.triggerEvent('ShareTextTimeUp', {
+              share_texts: global_audio.curExhibit.share_texts,
+            })
+          }
         }
+        
         
         this.setData({
           currentTime: time,

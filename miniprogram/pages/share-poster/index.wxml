@@ -10,15 +10,15 @@
           style="width: 600rpx; height: {{canvasHeight}}rpx; "
         ></canvas>
       </view>
-      <view class="opreate-btns">
+      <view class="opreate-btns {{!(share_texts.length>1) && !(share_images.length>1) ? 'btns-center' : ''}}">
         <view class="change-btns">
-          <view wx:if="{{share_texts && share_texts.length}}" class="change-pic" bindtap="handleChangeText">
+          <view wx:if="{{share_texts && share_texts.length > 1}}" class="change-pic" bindtap="handleChangeText">
             <image src="https://gewugo.com/api/v1/storage/image/icon_refresh_stroke@1x-2447100900.webp" class="icon-change" mode="aspectFill" />
             <view class="txt-change">换文案</view>
           </view>
-          <view wx:if="{{share_images && share_images.length}}" class="change-pic" bindtap="handleChangePic">
+          <view wx:if="{{share_images && share_images.length > 1}}" class="change-pic" bindtap="handleChangePic">
             <image src="https://gewugo.com/api/v1/storage/image/icon_refresh_stroke@1x-2447100900.webp" class="icon-change" mode="aspectFill" />
-            <view class="txt-change">换图片</view>
+            <view class="txt-change">{{(from_page === 'package' || (from_page === 'exhibitlist')) ? '换图片' : '选图片'}}</view>
           </view>
         </view>
         

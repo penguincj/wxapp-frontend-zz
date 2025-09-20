@@ -98,6 +98,8 @@ Page({
          
            const image_urls = [exhibit.image_url, ...exhibit.more_image_urls];
            this.setData({
+            title: exhibit.name,
+            subTitle: '',
             share_texts: exhibit.share_texts,
             share_images: image_urls,
             text_idx: 0,
@@ -542,9 +544,7 @@ Page({
       });
       this.initData(Number(options.package_id), Number(options.poster_idx), 'package')
 
-    } else if (options.museum_id) {
-      console.log('onLoad museum_id', options.museum_id)
-
+    } else if (options.from_page && options.from_page === 'exhibitlist') {
       this.setData({
         exhibit_id: Number(options.exhibit_id),
       });

@@ -8,6 +8,7 @@
       isMoveable="{{false}}"
       narrationId="{{narrationId}}"
       showShareTextDialog="{{showShareTextDialog}}"
+      lastExhibitId="{{lastExhibitId}}"
       bindReadyPlay="handleReadyPlay"
       bindTimeUpdate="handleTimeUpdate"
       bindEndAudio="handleEndAudio"
