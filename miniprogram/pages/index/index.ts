@@ -255,12 +255,13 @@ Page({
 
   handleClickPlayerComp(e: any) {
     const { continueListen, continueObj } = e.detail;
+    console.log('continueListen', e.detail)
     if (continueListen && continueObj && continueObj.exhibit_id) {
-      const { exhibit_id, exhibition_id, museum_id, narration_id, unit_id} = continueObj;
+      const { exhibit_id, exhibition_id, museum_id, narration_id, unit_id, package_id} = continueObj;
 
       const url_params = generateNewUrlParams({
         exhibition_id: Number(exhibition_id),
-        narration_id: Number(narration_id),
+        package_id: Number(package_id),
         exhibit_id: Number(exhibit_id), // todo 只有首页需要这个参数，为了杀小程序后续播时进入列表页就播放
       })
       getApp().globalData.audio.curUnitId = Number(unit_id);

@@ -8,7 +8,7 @@
   </view> -->
   <view class="page-narration-list">
     <view class="narration-list-group">
-      <card-list title="很多岛民这么选：" list="{{narrationList}}"></card-list>
+      <card-list title="很多岛民这么选：" list="{{narrationList}}" bindClickCard="handleClickCard"></card-list>
     </view>
     <view class="narration-choose-group">
       <view class="title-line">

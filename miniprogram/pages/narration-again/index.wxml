@@ -22,7 +22,7 @@
     </view>
     
     <view class="result-section">
-      <card-list list="{{narrationList}}"></card-list>
+      <card-list list="{{packageList}}"></card-list>
       <view class="btn-group">
         <view class="btn-item" bindtap="handleSelectAgain">
           <view class="btn-text">重新选择</view>

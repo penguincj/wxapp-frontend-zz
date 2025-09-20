@@ -1,5 +1,5 @@
-import { getExhibitById, getExhibitList, likeExhibit, collectExhibit } from '../../api/api';
-import { getCurrentPageParamStr, backToTargetPage, getCurrentPageParam, transferObjToUrlParams } from '../../utils/util';
+import { getExhibitById, getExhibitList, getPackageExhibitById, getPackageExhibitList, likeExhibit, collectExhibit } from '../../api/api';
+import { getCurrentPageParamStr, backToTargetPage, getCurrentPageParam, transferObjToUrlParams, calTimeTxt } from '../../utils/util';
 import { Exhpoints } from './points';
 
 
@@ -49,6 +49,7 @@ Page({
     isCollected: 0,
     isLiked: 0,
     narrationId: -1,
+    packageId: -1,
     unitId: -1,
     userid: -1,
     exhibitId: -1,
@@ -334,18 +335,43 @@ Page({
 
   // 业务逻辑
 
-  formatExhibitData(_exhibit: any, _narrationid: any) {
-      const audioitem = _exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
+  // formatExhibitData(_exhibit: any, _narrationid: any) {
+  //     const audioitem = _exhibit.audio_infos.find((i:any) => i.narration_id == _narrationid);
+  //     return {
+  //       ..._exhibit,
+  //       audioitem,
+  //       more_image_urls: [_exhibit.image_url, ..._exhibit.more_image_urls],
+  //     }
+  // },
+  formatExhibitDataV2(_exhibit: any) {
+    console.log('formatExhibitDataV2', _exhibit)
+      const duration_fmt = calTimeTxt(_exhibit.audio_duration);
+
       return {
-        ..._exhibit,
-        audioitem,
-        more_image_urls: [_exhibit.image_url, ..._exhibit.more_image_urls],
+        ..._exhibit.exhibit,
+        id: _exhibit.id,
+        exhibit_id: _exhibit.exhibit.id,
+        audioitem: {
+          audio_url: _exhibit.audio_url,
+          content: _exhibit.content,
+          duration: _exhibit.audio_duration,
+          listen_count: _exhibit.listen_count,
+          audio_id: _exhibit.id,
+          locked: _exhibit.locked,
+          duration_fmt, 
+        },
+        more_image_urls: [_exhibit.exhibit.image_url, ..._exhibit.exhibit.more_image_urls],
       }
   },
 
-  formatExhibitList(_exhibitlist: any, _narrationid: any) {
+  // formatExhibitList(_exhibitlist: any, _narrationid: any) {
+  //   return _exhibitlist.map((exhibit: any) => {
+  //     return this.formatExhibitData(exhibit, _narrationid)
+  //   })
+  // },
+  formatExhibitListV2(_exhibitlist: any) {
     return _exhibitlist.map((exhibit: any) => {
-      return this.formatExhibitData(exhibit, _narrationid)
+      return this.formatExhibitDataV2(exhibit)
     })
   },
 
@@ -356,13 +382,17 @@ Page({
     
     try {
       console.log('unit----id', getApp().globalData.audio.curUnitId)
-      const res: any = await getExhibitById(_exhibitid);
-      const exhibit_info = this.formatExhibitData(res.exhibit, this.data.narrationId);
+      // const res: any = await getExhibitById(_exhibitid);
+      const res: any = await getPackageExhibitById(this.data.packageId, _exhibitid);
+      // const exhibit_info = this.formatExhibitData(res.exhibit, this.data.narrationId);
+      const exhibit_info = this.formatExhibitDataV2(res.data);
       // const unit_id = exhibit_info.unit_id;
       const unit_id = getApp().globalData.audio.curUnitId;
-      const res_exhibitlist: any = await getExhibitList(unit_id, exhibit_info.exhibition_id);
+      // const res_exhibitlist: any = await getExhibitList(unit_id, exhibit_info.exhibition_id);
+      const res_exhibitlist: any = await getPackageExhibitList(unit_id, this.data.packageId);
 
-      const exhibit_list = this.formatExhibitList(res_exhibitlist.exhibits, this.data.narrationId);
+      // const exhibit_list = this.formatExhibitList(res_exhibitlist.exhibits, this.data.narrationId);
+      const exhibit_list = this.formatExhibitListV2(res_exhibitlist.exhibits);
       const d_audiolist = exhibit_list.map((i: any) => i.audioitem.audio_url);
       const player = this.selectComponent("#player");
       if (getApp().globalData.audio && getApp().globalData.audio.bgAudio) {
@@ -560,11 +590,11 @@ Page({
       isKeepPlayingActive: getApp().globalData.audio.isKeepPlaying,
     })
     setTimeout(() => {      
-      const { exhibition_id, museum_id, narration_id } = getCurrentPageParam();
+      const { exhibition_id, museum_id, package_id } = getCurrentPageParam();
       const paramstr = transferObjToUrlParams({
         museum_id,
         exhibition_id,
-        narration_id
+        package_id
       })
       console.log('params str', paramstr)
       getApp().globalData.audio.exhibitlistParams = paramstr;
@@ -579,6 +609,7 @@ Page({
     if (options) {
       this.setData({
         narrationId: Number(options.narration_id),
+        packageId: Number(options.package_id),
         unitId: Number(options.unit_id),
         exhibitId: Number(options.exhibit_id),
       }, () => {

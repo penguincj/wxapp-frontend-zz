@@ -5,7 +5,9 @@
   <player-comp
       id="player"
       isShowPlayer="{{false}}"
+      isMoveable="{{false}}"
       narrationId="{{narrationId}}"
+      showShareTextDialog="{{showShareTextDialog}}"
       bindReadyPlay="handleReadyPlay"
       bindTimeUpdate="handleTimeUpdate"
       bindEndAudio="handleEndAudio"
@@ -14,6 +16,9 @@
       bindOnPlayerPause="handleOnPlayerPause"
       bindOnPlayerPlay="handleOnPlayerPlay"
       bindGetCurPlayingStatus="handleGetCurPlayingStatus"
+      bindShareTextTimeUp="handleShareTextTimeUp"
+      bindCountdownEnd="handleCountdownEnd"
+      bindClickAIPopup="handleClickAIPopup"
     ></player-comp>
 </view>
 

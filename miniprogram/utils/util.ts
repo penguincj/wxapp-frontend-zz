@@ -419,7 +419,8 @@ export const backToTargetPage = (_pagename: String) => {
       if (params === '' || (params.indexOf('narration_id') === -1) || (params.indexOf('exhibition_id') === -1) ) {
         const paramstr = transferObjToUrlParams({
           exhibition_id: getApp().globalData.audio.curExhibition,
-          narration_id: getApp().globalData.audio.curNarration
+          package_id: getApp().globalData.audio.curPackageId,
+          // narration_id: getApp().globalData.audio.curNarration
         })
         console.log('-----params str paramstr', paramstr)
         getApp().globalData.audio.exhibitlistParams = paramstr;

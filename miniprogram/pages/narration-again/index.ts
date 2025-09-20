@@ -1,10 +1,10 @@
-import { getUserLastNarration } from "../../api/api";
+import { getUserLastPackage } from "../../api/api";
 import { calTimeTxt, getLoginStatus, transferObjToUrlParams } from "../../utils/util";
 
 Page({
   data: {
     loading: true,
-    narrationList: [] as any,
+    packageList: [] as any,
     exhibition_id: 0,
   },
 
@@ -38,12 +38,14 @@ Page({
   },
 
   handleListen() {
-    const narrationid = this.data.narrationList[0].id;
+    const id = this.data.packageList[0].id;
     const url_params = transferObjToUrlParams({
       exhibition_id: this.data.exhibition_id,
-      narration_id: narrationid,
+      // narration_id: id,
+      package_id: id,
     })
-    getApp().globalData.audio.curNarration = narrationid
+    // getApp().globalData.audio.curNarration = id
+    getApp().globalData.audio.curPackageId = id;
     wx.navigateTo({
       url: '/pages/exhibitlist/index' + url_params,
     })
@@ -70,19 +72,18 @@ Page({
         console.log('userid仍然为空，无法继续');
         return;
       }
-      const res: any = await getUserLastNarration(userid, this.data.exhibition_id);
-      if(res && res.code === 0 && res.data.narration) {
-        const narration = res.data.narration;
-        const duration_fmt = calTimeTxt(narration.duration);;
+      const res: any = await getUserLastPackage(userid, this.data.exhibition_id);
+      if(res && res.data && res.data.package) {
+        const p_res = res.data.package;
         const new_narration = {
-          id: narration.id,
+          id: p_res.id,
           count: 999, //todo
-          name: narration.name,
-          duration_fmt,
-          image_url: narration.url,
+          name: p_res.name,
+          duration_fmt: p_res.duration,
+          image_url: p_res.image_url,
         }
         this.setData({
-          narrationList: [new_narration],
+          packageList: [new_narration],
         })
       }
     } catch (err) {

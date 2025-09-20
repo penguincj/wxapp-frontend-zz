@@ -1,0 +1,31 @@
+<!-- index.wxml -->
+<page-meta page-style=" background: black;">
+  <navigation-bar styleType="light" title="选择海报图片" back color="white" background="#000"></navigation-bar>
+  <scroll-view scroll-y="true" show-scrollbar="{{false}}" enhanced="{{true}}" style="height: calc(100vh - 164rpx)">
+    <view class="share-image-list-page">
+      <view class="water-container">
+        <!-- 瀑布流容器 -->
+        <view class="waterfall">
+          <!-- 左列 -->
+          <view class="column">
+            <block wx:for="{{leftList}}" wx:key="*this">
+              <view class="item" data-idx="{{item.index}}" bindtap="handleClickImg">
+                <image src="{{item.url}}" class="img-pic" mode="widthFix" />
+              </view>
+            </block>
+          </view>
+          <!-- 右列 -->
+          <view class="column">
+            <block wx:for="{{rightList}}" wx:key="*this">
+              <view class="item" data-idx="{{item.index}}" bindtap="handleClickImg">
+                <image src="{{item.url}}" class="img-pic" mode="widthFix" />
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+      <view class="no-more" wx:if="{{!hasMore && !loading}}">没有更多图片了</view>
+
+    </view>
+  </scroll-view>
+</page-meta>

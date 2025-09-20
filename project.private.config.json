@@ -11,11 +11,39 @@
     "miniprogram": {
       "list": [
         {
+          "name": "share-poster--package",
+          "pathName": "pages/share-poster/index",
+          "query": "package_id=26&from_page=package&poster_idx=0",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "share-image-list---package",
+          "pathName": "pages/share-image-list/index",
+          "query": "package_id=26&from_page=package",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/share-image-list/index",
+          "pathName": "pages/share-image-list/index",
+          "query": "exhibit_id=223&from_page=exhibitlist",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/exhibitlist/index",
+          "pathName": "pages/exhibitlist/index",
+          "query": "exhibition_id=35&package_id=26",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/customize-explanation/index",
           "pathName": "pages/customize-explanation/index",
           "query": "exhibition_id=35&narration_id=1&labels=60分钟-男生-镇馆之宝-小众精品-女生喜欢-瓷器-唐宋元",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/narration-again/index",

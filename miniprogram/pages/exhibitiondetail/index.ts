@@ -1,4 +1,4 @@
-import { getCommentsByExhibitionID, postReplyToParent, getUserLastNarration, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters, getPackageList } from "../../api/api";
+import { getCommentsByExhibitionID, postReplyToParent, getUserLastPackage, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters, getPackageList } from "../../api/api";
 import { throttle, generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
 const listConfig = [
   {
@@ -40,6 +40,7 @@ Page({
     showReplayBar: false,
     packageCount: 0,
     jiangjieButtonText: '选讲解',
+    packageList: [] as any,
   },
   // scroll(e: any) {
   //   const { scrollTop } = e.detail;
@@ -145,30 +146,29 @@ Page({
  
   async handleClickJiangjie() {
     // 如果套餐数量为1，执行console逻辑
-    if (this.data.packageCount === 1) {
-      console.log('套餐数量为1，执行播放逻辑');
+    if (this.data.packageCount >= 1) {
+      const res : any= await getUserLastPackage(this.data.userid, this.data.curExhibitionId);
+      if (res.data && res.data.package && res.data.package.id) {
+        this.goToNarrationAgainPage();
+      } else {
+        this.goToNarrationListPage();
+      }
     } else {
-       this.goToNarrationListPage();
+      console.log('套餐数量为1，执行播放逻辑');
     }
     
-    // // 套餐数量大于1，维持现有逻辑
-    // const res : any= await getUserLastNarration(this.data.userid, this.data.curExhibitionId);
-    // if(res && res.code === 0) {
-    //   if (res.data && res.data.narration && res.data.narration.id) {
-    //     this.goToNarrationAgainPage();
-    //   } else {
-    //     this.goToNarrationListPage();
-    //   }
-    // }
+    
   },
   handleClickPlayIcon() {
     if (this.data.narrationList && this.data.narrationList.length) {
       const nid = this.data.narrationList[0].id;
       const url_params = generateNewUrlParams({
-        narration_id: nid,
+        // narration_id: nid,
+        package_id: this.data.packageList[0].id,
         exhibition_id: this.data.curExhibitionId
       })
-      getApp().globalData.audio.curNarration = nid
+      // getApp().globalData.audio.curNarration = nid;
+      getApp().globalData.audio.curPackageId = this.data.packageList[0].id;
       wx.navigateTo({
         url: '/pages/exhibitlist/index' + url_params,
       })
@@ -217,6 +217,7 @@ Page({
         this.setData({
           exhibitionInfo: res.exhibition,
           narrationList: res_narr.narrations,
+          packageList: packageRes.data.packages,
           loading: false,
           isClickWantVisit: Boolean(res.exhibition.want_visit),
           isClickVisited: Boolean(res.exhibition.visited),

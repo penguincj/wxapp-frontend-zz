@@ -2,7 +2,7 @@
 // 获取应用实例
 // const app = getApp<IAppOption>()
 import { getRecoPackageList, getExhibitionLabelGroupAll, postPackageRecommend } from "../../api/api";
-import { calTimeTxt, getCurrentPageParam,getCurrentPageParamStr, transferObjToUrlParams, backToTargetPage } from "../../utils/util";
+import { calTimeTxt, generateNewUrlParams, getCurrentPageParam,getCurrentPageParamStr, transferObjToUrlParams, backToTargetPage } from "../../utils/util";
 
 Page({
   data: { 
@@ -18,6 +18,23 @@ Page({
     recommendScore: 0, // 推荐分数
     durationOptions: ["60分钟", "90分钟", "120分钟", "150分钟"], // 时长选项
     voiceLabelOptions: ["温柔女声", "磁性男声", "活泼女声", "沉稳男声"], // 声音标签选项
+  },
+
+  handleClickCard(e: any) {
+    console.log('e', e);
+    const { id } = e.detail;
+    this.goToExhibitlistPage(id);
+  },
+
+  goToExhibitlistPage(_packageid: number) {
+    const url_params = generateNewUrlParams({
+      exhibition_id: Number(this.data.curExhibitionId),
+      package_id: Number(_packageid),
+    })
+    // getApp().globalData.audio.curPackageId = _packageid;
+    wx.navigateTo({
+      url: '/pages/exhibitlist/index' + url_params,
+    })
   },
 
   async initPage(_exhibitionid: any) {

@@ -100,8 +100,8 @@ export const getExhibitionListAll = (_querystr: any) => {
 }
 
 
-export const getUnitList = (_exhibitionid: any) => {
-    return request(`/${base_api}/v1/units?exhibitionID=${_exhibitionid}`);
+export const getUnitList = (_packageid: any) => {
+    return request(`/${base_api}/v1/units?packageID=${_packageid}`);
 }
 
 export const getExhibitList = (_unitid: any, _exhibitionid = -1) => {
@@ -111,9 +111,9 @@ export const getExhibitList = (_unitid: any, _exhibitionid = -1) => {
     }
     return request_aes(`/${base_api}/v1/exhibits?unitID=${_unitid}`);
 }
-export const getAllExhibitList = (_exhibitionid: any) => {
-    return request_aes(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
-}
+// export const getAllExhibitList = (_exhibitionid: any) => {
+//     return request_aes(`/${base_api}/v1/exhibits?exhibitionID=${_exhibitionid}`);
+// }
 
 export const queryExhibitListAll = (_userid: any, _querystr: any) => {
     // return request(`/${base_api}/v1/queries` + _querystr);
@@ -164,12 +164,18 @@ export const sendViewExhibitionAction = (_userid: any, _exhibitionid: any, optio
     return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/view`, options)
 }
 
-export const sendListenAudioAction = (_audioid: any, options: any) => {
-    return request(`/${base_api}/v1/audios/${_audioid}/listen`, options)
+export const sendListenAudioAction = (_packageid: any, _packageexhibitid: any, options = {} as any) => {
+    return request(`/${base_api}/v1/packages/${_packageid}/exhibits/${_packageexhibitid}/listen`, {
+        method: 'POST',
+        ...options
+    })
 }
 
-export const sendListenedAudioAction = (_audioid: any, options: any) => {
-    return request(`/${base_api}/v1/audios/${_audioid}/listen?listened=1`, options)
+export const sendListenedAudioAction = (_packageid: any, _packageexhibitid: any, options ={} as any) => {
+    return request(`/${base_api}/v1/packages/${_packageid}/exhibits/${_packageexhibitid}/listen?listened=1`, {
+        method: 'POST',
+        ...options
+    })
 }
 
 export const sendFeedback = (_userid: any, options: any) => {
@@ -323,9 +329,9 @@ export const postPackageRecommend = (_exhibitionid: any, _duration: string, _voi
     })
 }
 
-// 用户听语音历史
-export const postUserListen = (_userid: any,  _exhibitionid: any, _narrationid: any) => {
-    return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/narrations/${_narrationid}/listen`, {
+// 记录用户套餐听取行为
+export const postUserListen = (_userid: any, _exhibitionid: any, _packageid: any) => {
+    return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/packages/${_packageid}/listen`, {
         method: 'POST'
     })
 }
@@ -336,8 +342,8 @@ export const getUserNarrationList = (_userid: any) => {
 }
 
 // 获取用户听的最近的语音
-export const getUserLastNarration = (_userid: any, _exhibitionid: any) => {
-    return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/narrations/latest`)
+export const getUserLastPackage = (_userid: any, _exhibitionid: any) => {
+    return request(`/${base_api}/v1/users/${_userid}/exhibitions/${_exhibitionid}/packages/latest`)
 }
 
 // 获取套餐列表
@@ -352,4 +358,16 @@ export const getPackageList = (_exhibitionid: any, _category?: any, _page = 1, _
 // 获取讲解详情
 export const getPackageByID = (_packageid: any) => {
     return request(`/${base_api}/v1/packages/${_packageid}`);
+}
+
+export const getPackageExhibitList = (_unitid: any, _packageid = -1) => {
+    console.log('_unitid', _unitid)
+    if (Number(_unitid) === 999999) {
+        return request_aes(`/${base_api}/v1/packages/${_packageid}/encrypted`);
+    }
+    return request_aes(`/${base_api}/v1/packages/${_packageid}/encrypted?unit_id=${_unitid}`);
+}
+
+export const getPackageExhibitById = (_packageid: any, _exhibitid: any) => {
+    return request_aes(`/${base_api}/v1/packages/${_packageid}/exhibits/by-exhibit/${_exhibitid}/content`);
 }

@@ -22,7 +22,19 @@ Component({
     exhibitImg: {
       type: String,
       value: '',
-    }
+    },
+    isMoveable: {
+      type: Boolean,
+      value: true,
+    },
+    showShareTextDialog: {
+      type: Boolean,
+      value: false,
+    },
+    shareTextList: {
+      type: Array,
+      value: [],
+    },
   },
   data: {
     // audioList: audioList,
@@ -67,15 +79,60 @@ Component({
     duration: getApp().globalData.audio.bgAudio?.duration,
     currentTime: getApp().globalData.audio.bgAudio?.currentTime,
     manStop: false,
+    countdown: 10,
+    countdownTimer: null as any, // 倒计时定时器
+  },
+  observers: {
+    'showShareTextDialog': function(newVal) {
+      if (newVal) {
+        this.startCountdown();
+      } else {
+        this.stopCountdown();
+      }
+    }
   },
   methods: {
-    sendListenAction(_audioid: any) {
-      try {
-        sendListenAudioAction(_audioid, {method: 'POST'})
-      } catch (error) {
-        console.log(error);
+    // 开始倒计时
+    startCountdown() {
+      this.setData({
+        countdown: 10
+      });
+      
+      this.data.countdownTimer = setInterval(() => {
+        const currentCountdown = this.data.countdown - 1;
+        this.setData({
+          countdown: currentCountdown
+        });
+        
+        if (currentCountdown <= 0) {
+          this.handleClickClosePopup();
+        }
+      }, 1000);
+    },
+    
+    // 停止并清除倒计时
+    stopCountdown() {
+      if (this.data.countdownTimer) {
+        clearInterval(this.data.countdownTimer);
+        this.setData({
+          countdownTimer: null
+        });
       }
     },
+    handleClickClosePopup() {
+      this.stopCountdown();
+      this.triggerEvent('CountdownEnd', {});
+    },
+    handleClickPopup() {
+      this.triggerEvent('ClickAIPopup', {});
+    },
+    // sendListenAction(_packageid: any, _packageexhibitid: any) {
+    //   try {
+    //     sendListenAudioAction(_packageid, _packageexhibitid)
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     handleAudioPause() {
       global_audio.bgAudio.pause();
       this.setData({
@@ -287,7 +344,8 @@ Component({
       }
     },
     onBgTimeUpdate() {
-
+      let id_flag = false;
+      console.log('global_audio.curExhibit', global_audio.curExhibit.share_texts)
       global_audio.bgAudio.onTimeUpdate(throttle(() => {
        
         const time = Number(parseFloat(global_audio.bgAudio.currentTime).toFixed(2));
@@ -305,7 +363,9 @@ Component({
           // todo
           const curAudio: any = global_audio.curExhibit;
           if (curAudio && curAudio.audioitem && curAudio.audioitem.audio_id) {
-            sendListenedAudioAction(curAudio.audioitem.audio_id, { method: 'POST' })
+            // TODO: 需要传入正确的 packageid 和 packageexhibitid 参数
+            sendListenedAudioAction(global_audio.curPackageId, global_audio.curExhibit.id)
+            console.log('需要更新为新的套餐展品收听接口参数')
             // this.setData({
             //   listenedExhibitList: {
             //     ...this.data.listenedExhibitList,
@@ -316,6 +376,15 @@ Component({
     
           }
         }
+        // if (!id_flag && (time < dur -5) && (time > dur - 15) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+        if (!id_flag && (time < dur -5) && (time > dur - 100) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          // todo
+          id_flag = true;
+          this.triggerEvent('ShareTextTimeUp', {
+            share_texts: global_audio.curExhibit.share_texts,
+          })
+        }
+        
         this.setData({
           currentTime: time,
           isPlaying: !global_audio.bgAudio.paused,
@@ -453,6 +522,7 @@ Component({
           duration = audio_item.audioitem.duration;
           // duration = Number(duration_fmt.split(':')[0]) * 60 + Number(duration_fmt.split(':')[1]);
         }
+        console.log('global_audio.audioList', global_audio.audioList);
         const playingIdx = global_audio.audioList.findIndex(i => i.id === global_audio.curExhibit.id);
         global_audio.playingIndex = playingIdx;
 
@@ -490,8 +560,10 @@ Component({
         isShow: true,
       })
       try {
-        sendListenAudioAction(audio_id, {method: 'POST'});
-        console.log('sendListenAudioAction', title, coverImgUrl)
+        // TODO: 需要传入正确的 packageid 和 packageexhibitid 参数
+        console.log('global_audio----', global_audio.curPackageId);
+        sendListenAudioAction(global_audio.curPackageId, global_audio.curExhibit.id);
+        console.log('需要更新为新的套餐展品收听接口参数', title, coverImgUrl)
       } catch (error) {
         console.error(error)
       }
@@ -514,7 +586,7 @@ Component({
         console.log('initAudioList', _audioList, _curExhibit);
         global_audio.audioList = _audioList;
         global_audio.curExhibit = _curExhibit;
-
+        global_audio.playingIndex = _audioList.findIndex(i => i.id === _curExhibit.exhibit_id);
         // const stored_audio = await wx.getStorageSync('audios');
         // global_audio.stored_audio = stored_audio;
         // this.setData({
@@ -670,6 +742,10 @@ Component({
       }
 
     },
+    detached() {
+      // 组件销毁时清理倒计时定时器
+      this.stopCountdown();
+    }
   },
   pageLifetimes: {
     show() {

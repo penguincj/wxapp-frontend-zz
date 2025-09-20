@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<page-meta page-style="overflow: scroll; background: black;">
+  <navigation-bar styleType="light" title="分享展览海报" back color="white" background="#000"></navigation-bar>
+  <view class="poster-page">
+    <view class="container">
+      <canvas 
+        type="2d" 
+        id="posterCanvas" 
+        style="width: 600rpx; height: {{canvasHeight}}rpx;"
+      ></canvas>
+      <view class="opreate-btns">
+        <view class="change-pic" bindtap="handleChangePic">
+          <image src="https://gewugo.com/api/v1/storage/image/icon_refresh_stroke@1x-2447100900.webp" class="icon-change" mode="aspectFill" />
+          <view class="txt-change">换一张</view>
+        </view>
+        <view class="btn-group" bindtap="savePosterToAlbum" >
+          <image src="https://gewugo.com/api/v1/storage/image/Vector@1x-9531450659.webp" class="icon-down" mode="aspectFill" />
+          <view class="txt-change">保存到相册</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-meta>

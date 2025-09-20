@@ -154,31 +154,33 @@ Page({
 
   async handleListen() {
     const { userid } = await wx.getStorageSync('userinfo');
-    const narrationid = this.data.packageList[0].id;
-    postUserListen(userid, this.data.exhibition_id, narrationid);
+    const packageid = this.data.packageList[0].id;
+    postUserListen(userid, this.data.exhibition_id, packageid);
     setTimeout(() => {
       if(this.data.packageList.length > 0) {
         const narration = this.data.packageList[0];
-        this.goToExhibitListPage(narration.id, this.data.exhibition_id)
+        this.goToExhibitListPage(this.data.exhibition_id)
       }
     }, 1000)
     
   },
 
-  goToExhibitListPage(_narrationid: any, _exhibitionid: any) {
+  goToExhibitListPage(_exhibitionid: any) {
     const url_params = transferObjToUrlParams({
-        narration_id: _narrationid,
-        exhibition_id: _exhibitionid
+        // narration_id: _narrationid,
+        exhibition_id: _exhibitionid,
+        package_id: this.data.packageList[0].id,
       })
-      getApp().globalData.audio.curNarration = _narrationid;
+      // getApp().globalData.audio.curNarration = _narrationid;
+      // getApp().globalData.audio.curPackageId = this.data.packageList[0].id;
       wx.navigateTo({
         url: '/pages/exhibitlist/index' + url_params,
       })
   },
 
   handleClickCard(event: any) {
-    const { id } = event.detail;
-    this.goToExhibitListPage(id, this.data.exhibition_id)
+    // const { id } = event.detail;
+    this.goToExhibitListPage(this.data.exhibition_id)
   },
 
   onShow() {

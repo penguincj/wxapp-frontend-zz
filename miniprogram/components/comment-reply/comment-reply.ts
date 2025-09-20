@@ -1,7 +1,7 @@
 // @ts-nocheck
 // import { audioList } from './mock';
 import { throttle, getCurrentPageParamStr } from '../../utils/util';
-import { sendListenAudioAction, delCommentLike, postCommentLike, delReplyToParent } from '../../api/api';
+import { delCommentLike, postCommentLike, delReplyToParent } from '../../api/api';
 
 const global_audio = getApp().globalData.audio;
 Component({
