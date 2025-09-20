@@ -30,11 +30,28 @@ Page({
     share_texts: [],
     share_images: [],
     canvasHeight: 1200, // 动态canvas高度
+    from_page: '', // 来源页面
   },
 
 
   handleChangePic() {
-    wx.navigateBack();
+    const { from_page, bg_idx, share_images } = this.data;
+    
+    // 如果来源是package或exhibitlist，循环切换图片
+    if ((from_page === 'package' || from_page === 'exhibitlist') && share_images && share_images.length > 0) {
+      const nextIdx = (bg_idx + 1) % share_images.length;
+      const image = share_images[nextIdx];
+      this.setData({
+        bgUrl: image,
+        bg_idx: nextIdx,
+      })
+      console.log('handleChangePic', image, 'nextIdx:', nextIdx)
+      // 重新绘制海报
+      this.initCanvas();
+    } else {
+      // 其他情况（如exhibit）返回上一页
+      wx.navigateBack();
+    }
   },
 
   async getPosterList(_exhibitionid: any, _postidx: any) {
@@ -123,8 +140,25 @@ Page({
     }
   },
 
-  changeText(_idx: any) {
+
+  handleChangeText(_idx: any) {
     const { text_idx, share_texts } = this.data;
+    if (share_texts && share_texts.length) {
+      // 循环取下一个值
+      const nextIdx = (text_idx + 1) % share_texts.length;
+      const text = share_texts[nextIdx];
+      this.setData({
+        share_text: text,
+        text_idx: nextIdx,
+      })
+      console.log('changeText', text, 'nextIdx:', nextIdx)
+      // 重新绘制海报
+      this.initCanvas();
+    }
+  },
+
+  changeText(_idx: any) {
+    const { share_texts } = this.data;
     if (share_texts && share_texts.length) {
       const text = share_texts[_idx];
       this.setData({
@@ -262,7 +296,6 @@ Page({
         // 绘制当前行
         ctx.fillText(line, x, y + (lineCount * lineHeight));
         lineCount++;
-        console.log('lineCount drawWrappedText', lineCount)
         if (calLineCount) {
           this.setData({
             lineCount: lineCount,
@@ -350,9 +383,9 @@ Page({
         totalTextHeight += shareTextHeight;
       }
       
-      // 4. 计算总的内容高度
-      const totalContentHeight = textStartY + totalTextHeight + 24 + 40; // 文字背景padding + 底部间距
-      const actualCanvasHeight = Math.max(totalContentHeight, 1200); // 最小高度1200
+      // 4. 简化canvas高度计算：图片高度 + 文字背景高度
+      const textBgHeight = totalTextHeight > 0 ? totalTextHeight + 40 : 0; // 文字背景高度（含上下padding）
+      const actualCanvasHeight = imgHeight + textBgHeight; // 图片高度 + 文字背景高度
       
       // 设置canvas实际高度
       canvas.height = actualCanvasHeight * pixelRatio;
@@ -363,7 +396,6 @@ Page({
         canvasHeight: actualCanvasHeight * 2 // 1px = 2rpx
       });
       
-      console.log('canvas dimensions:', canvasWidth, actualCanvasHeight, totalContentHeight);
       
       // 5. 绘制黑色背景
       ctx.fillStyle = '#000000';
