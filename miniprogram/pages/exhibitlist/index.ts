@@ -54,7 +54,7 @@ Page({
     packageId: -1,
     showShareTextDialog: false,
     shareTextList: [] as any,
-    lastExhibitId: -1,
+    exhibitIdList: [] as number[],
     // playProgress: 0,
   },
 
@@ -94,6 +94,7 @@ Page({
     const url_params = generateNewUrlParams({
       type: 'exhibition',
       exhibition_id: this.data.exhibitionId,
+      package_id: this.data.packageId,
     });
     // @ts-ignore
     this.tracker.report('exhibit_list_search_e23')
@@ -407,6 +408,7 @@ Page({
       const url_params = transferObjToUrlParams({
         keyword: keyword,
         exhibitionID: this.data.exhibitionId,
+        package_id: this.data.packageId,
       })
       const res:any = await queryExhibitListAll(userid, url_params)
       if( res && res.exhibits) {
@@ -564,12 +566,13 @@ Page({
       const res_exhibitlist: any = await getPackageExhibitList(_unitid, this.data.packageId);
       const f_exhibitlist = this.formatExhibitDataV2(res_exhibitlist.exhibits);
       const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
+      const exhibitIdList = f_exhibitlist.map((i: any) => i.id);
 
       this.setData({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[_playingIndex],
         audiolist,
-        lastExhibitId: f_exhibitlist[f_exhibitlist.length - 1].id,
+        exhibitIdList: exhibitIdList,
       })
       
       
@@ -659,7 +662,7 @@ Page({
       this.setData({
         exhibitList: f_exhibitlist,
         curExhibit: f_exhibitlist[0],
-        lastExhibitId: f_exhibitlist[f_exhibitlist.length - 1].id,
+        exhibitIdList: f_exhibitlist.map((i: any) => i.id),
       })
       const audiolist = f_exhibitlist.map((i: any) => i.audioitem.audio_url);
       this.setData({
@@ -697,7 +700,7 @@ console.log('init exhibit_info', res, exhibit_info)
         curExhibit: exhibit_info,
         continueScrollTop,
         audiolist,
-        lastExhibitId: f_exhibitlist[f_exhibitlist.length - 1].id,
+        exhibitIdList: f_exhibitlist.map((i: any) => i.id),
       })
       
       const player = this.selectComponent("#player");

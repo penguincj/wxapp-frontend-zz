@@ -1,4 +1,3 @@
-
 Component({
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -14,7 +13,11 @@ Component({
     isCollected: {
       type: Boolean,
       value: false,
-    }
+    },
+    shareType: {
+      type: String,
+      value: '',
+    },
   },
   /**
    * 组件的初始数据
@@ -54,6 +57,10 @@ Component({
       this.setData({
         autoplay: !this.data.autoplay
       })
+    },
+
+    handleClickShare() {
+      this.triggerEvent('ClickShare')
     },
   
     intervalChange(e: any) {

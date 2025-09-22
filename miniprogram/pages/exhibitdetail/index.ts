@@ -84,6 +84,15 @@ Page({
       totalTimeText,
     })
   },
+  handleClickShare() {
+    const url_params = transferObjToUrlParams({
+      exhibit_id: this.data.exhibitId,
+      from_page: 'exhibitlist'
+    })
+    wx.navigateTo({
+      url: '/pages/share-image-list/index' + url_params,
+    })
+  },
   handleUpatePlayingIndex(event: any) {
     const { playingIndex } = event.detail;
     this.setData({
@@ -419,6 +428,7 @@ Page({
         isLiked: exhibit_info.liked,
         loading: false,
       })
+      console.log('exhibitInfo',exhibit_info)
       
     } catch (error) {
       console.error(error); 

@@ -35,10 +35,10 @@ Component({
       type: Array,
       value: [],
     },
-    lastExhibitId: {
-      type: Number,
-      value: -1,
-    },
+    exhibitIdList: {
+      type: Array,
+      value: [],
+    }
   },
   data: {
     // audioList: audioList,
@@ -351,8 +351,11 @@ Component({
     },
     onBgTimeUpdate() {
       let id_flag = false;
-      const isLastExhibit = global_audio.curExhibit.id === this.data.lastExhibitId;
-      console.log('global_audio.curExhibit', global_audio.curExhibit.share_texts)
+      // const isLastExhibit = global_audio.curExhibit.id === this.data.lastExhibitId;
+      const cur_exhibit_idx = this.data.exhibitIdList.findIndex(i => i === global_audio.curExhibit.id);
+      const need_popup_idx = Math.floor(this.data.exhibitIdList.length * 0.85);
+      const isNeedPopup = cur_exhibit_idx >= need_popup_idx;
+      console.log('isNeedPopup.isNeedPopup', isNeedPopup, cur_exhibit_idx, need_popup_idx)
       global_audio.bgAudio.onTimeUpdate(throttle(() => {
        
         const time = Number(parseFloat(global_audio.bgAudio.currentTime).toFixed(2));
@@ -383,7 +386,7 @@ Component({
     
           }
         }
-        if (isLastExhibit) {
+        if (isNeedPopup) {
           // if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
           if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
             // todo

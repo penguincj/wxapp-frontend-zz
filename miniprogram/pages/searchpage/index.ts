@@ -11,6 +11,7 @@ Page({
     type: '',
     exhibitionId: -1,
     emptyMessage: '', // 结果是空时展示的文案
+    packageId: -1,
   },
 
   handInput(event: any) {
@@ -55,6 +56,7 @@ Page({
       const url_params = transferObjToUrlParams({
         keyword: keyword,
         exhibitionID: this.data.exhibitionId,
+        package_id: this.data.packageId,
       })
       const res:any = await queryExhibitListAll(userid, url_params)
       if( res && res.exhibits) {
@@ -115,6 +117,11 @@ Page({
     if (options && options.exhibition_id) {
       this.setData({
         exhibitionId: Number(options.exhibition_id)
+      })
+    }
+    if (options && options.package_id) {
+      this.setData({
+        packageId: Number(options.package_id)
       })
     }
   },
