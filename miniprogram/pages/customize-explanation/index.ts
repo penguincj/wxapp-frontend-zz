@@ -180,7 +180,14 @@ Page({
 
   handleClickCard(event: any) {
     // const { id } = event.detail;
-    this.goToExhibitListPage(this.data.exhibition_id)
+    // @ts-ignore
+    this.tracker.report('customize_click_card_e38', {
+      exhibition_id: this.data.exhibition_id,
+      package_id: this.data.packageList[0].id,
+    })
+    setTimeout(() => {
+      this.goToExhibitListPage(this.data.exhibition_id)
+    }, 30)
   },
 
   onShow() {

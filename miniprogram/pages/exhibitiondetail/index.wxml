@@ -79,7 +79,7 @@
         </view>
         
       </view>
-      <view class="jiangjie-area" wx:if="{{narrationList && narrationList.length}}">
+      <view class="jiangjie-area" wx:if="{{packageList && packageList.length}}">
         <!-- <view class="title-line">
           <view class="title">
             <view class="title-name">导览讲解</view>
@@ -99,7 +99,7 @@
               <view 
                 class="btn-group" 
                 data-is-catch-event="{{true}}"
-                data-event-id="exhibition_detail_play_click_e16"
+                data-event-id="exhibition_detail_choose_click_e32"
                 data-event-params="{{ {exhibition_id: exhibitionInfo.id, exhibition_name: exhibitionInfo.name} }}"
                 bindtap="handleClickJiangjie">
                 <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
@@ -111,10 +111,10 @@
 
             </view>
             <view class="card-content-line-two">
-              <view class="type">985历史硕博团队+智能体打造</view>
+              <view class="type">985历史硕博团队+AI打造</view>
               <view class="sec-area">
                 <view class="time">
-                  {{exhibitionInfo.listen_count}}人听过
+                  {{exhibitionInfo.listen_count < 999 ? '999+' : exhibitionInfo.listen_count}}人听过
                 </view>
               </view>
             </view>

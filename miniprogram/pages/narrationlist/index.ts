@@ -23,6 +23,11 @@ Page({
   handleClickCard(e: any) {
     console.log('e', e);
     const { id } = e.detail;
+    // @ts-ignore
+    this.tracker.report('package_choose_click_e33', {
+      package_id: id,
+    })
+
     this.goToExhibitlistPage(id);
   },
 
@@ -49,7 +54,7 @@ Page({
             name: item.name,
             image_url: item.image_url,
             duration_fmt: item.duration,
-            count: 999,
+            count: item.listen_count < 999 ? '999+' : item.listen_count,
           }
         })
         this.setData({
@@ -77,7 +82,11 @@ Page({
     try {
       // 格式化选中的标签数据
       const formattedLabels = this.formatSelectedLabels();
-      
+      // @ts-ignore
+      this.tracker.report('package_choose_submit_labels_e35', {
+        exhibition_id: this.data.curExhibitionId,
+        labels: JSON.stringify(formattedLabels),
+      })
       // 提取风格标签
       const styleTags: string[] = [];
       formattedLabels.forEach((item: any) => {
@@ -109,10 +118,10 @@ Page({
         const package_id = packageData.id;
         this.goToGeneratePage(package_id, labels);
         
-        wx.showToast({
-          title: `智能推荐成功(分数:${res_tag.score})`,
-          icon: 'success'
-        });
+        // wx.showToast({
+        //   title: `智能推荐成功(分数:${res_tag.score})`,
+        //   icon: 'success'
+        // });
       } else {
         // 如果推荐失败，使用默认逻辑
         // const narration_id = 9;

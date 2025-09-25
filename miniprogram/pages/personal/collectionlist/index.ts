@@ -15,7 +15,7 @@ Page({
       const res: any = await collectionList(userid)
       console.log(res);
       if (res && res.code === 0) {
-        const list = res.exhibits.map((i: any) => {
+        const list = res.exhibits.filter((i: any) => i.package_id !== null).map((i: any) => {
           let audioitem = {};
           if (i.audio_infos && i.audio_infos.length) {
             audioitem = i.audio_infos[0]
@@ -52,20 +52,19 @@ Page({
   },
   handleClickItem(e: any) {
     console.log('e----', e)
-    const { selectId, museumid, cityid, infos } = e.detail;
+    const { selectId, museumid, infos } = e.detail;
     const targetUrl = '/pages/exhibitdetail/index';
-    if(infos && infos.narration_id && infos.unit_id) {
+    if(infos && infos.package_id && infos.unit_id) {
       const paramstr = transferObjToUrlParams({
-        museum_id: museumid,
         exhibition_id: infos.exhibition_id,
-        narration_id: infos.narration_id
+        package_id: infos.package_id
       })
       console.log('params str', paramstr)
       getApp().globalData.audio.exhibitlistParams = paramstr;
       const params = generateNewUrlParams({
         museum_id: museumid,
         exhibition_id: infos.exhibition_id,
-        narration_id: infos.narration_id,
+        package_id: infos.package_id,
         exhibit_id: selectId,
         unit_id: infos.unit_id,
       })
@@ -78,10 +77,10 @@ Page({
     
   },
   async handleDeleteItem(event: any) {
-    const { id } = event.detail;
+    const { id, package_id = -1 } = event.detail;
     const {userid} = await wx.getStorageSync('userinfo');
     try {
-      const res: any = await collectExhibit(userid, id, { method: 'DELETE'});
+      const res: any = await collectExhibit(userid, id, package_id, { method: 'DELETE'});
       if ( res && res.code === 0) {
         this.initPage()
       }

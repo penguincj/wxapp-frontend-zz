@@ -176,7 +176,7 @@ Page({
    
   },
   handleClickImgLink() {
-    this.handleClickPlayIcon();
+    this.handleClickJiangjie();
   },
   handleClickIntro() {
     this.setData({

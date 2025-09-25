@@ -24,7 +24,7 @@
                   <view class="movable_delete_btn" id="operation{{index}}">
                     <view class="item-one" open-type="share">分享
                       </view>
-                    <view class="item-two" data-id="{{item.id}}" bindtap="handleDeleteItem">
+                    <view class="item-two" data-id="{{item.id}}" data-package_id="{{item.package_id}}" bindtap="handleDeleteItem">
                       移除
                     </view>
                   </view>

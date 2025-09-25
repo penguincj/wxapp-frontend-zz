@@ -47,6 +47,24 @@
         align-items: center;
         justify-content: flex-start;
         gap: 24rpx 30rpx;
+        .group-wrapper {
+          .group-name {
+            font-size: 26rpx;
+            color: #2C2F3B;
+            margin-left: 16rpx;
+            display: block;
+            margin-top: 0rpx;
+            margin-bottom: 14rpx;
+          }
+          .group-item-select {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 24rpx 30rpx;
+            margin-top: 2rpx;
+          }
+        }
       }
       
       .group-title {
@@ -60,21 +78,21 @@
       .tag-item {
         border-radius: 36rpx;
         height: 56rpx;
-        line-height: 52rpx;
         font-size: 26rpx;
         color: #64676C;
         background: #FFFFFF;
         padding: 0 20rpx;
-        display: inline-block;
-        border: 1rpx solid #D3D9E0;
-        vertical-align: middle;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 2rpx solid #D3D9E0;
         box-sizing: border-box;
-        
+        // background-color: green;
       }
       .selected {
         font-size: 26rpx;
         color: #2C2F3B;
-        border: 1rpx solid #2C2F3B;
+        border: 2rpx solid #2C2F3B;
         background: #F7F8F9;
       }
 

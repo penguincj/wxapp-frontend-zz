@@ -221,7 +221,6 @@ Component({
 
     },
     async handlePlayOtherAudioById(_id) {
-
       const audio = global_audio.audioList.find(i => i.id === _id);
       await this.handlePlayOtherAudio(audio);
     },
@@ -395,6 +394,8 @@ Component({
               popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
             })
             this.triggerEvent('ShareTextTimeUp', {
+              popup_type: 'exhibitlist',
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
               share_texts: global_audio.curExhibit.share_texts,
             })
           }
@@ -406,6 +407,8 @@ Component({
               popup_text: `讲解尾声，一定有很多值得带走的记忆～查看我的专属观展记录`,
             })
             this.triggerEvent('ShareTextTimeUp', {
+              popup_type: 'package',
+              popup_text: `讲解尾声，一定有很多值得带走的记忆～查看我的专属观展记录`,
               share_texts: [''],
             })
           }
@@ -419,6 +422,8 @@ Component({
               popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
             })
             this.triggerEvent('ShareTextTimeUp', {
+              popup_type: 'exhibitlist',
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
               share_texts: global_audio.curExhibit.share_texts,
             })
           }

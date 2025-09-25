@@ -302,14 +302,14 @@ Page({
   },
   async handleClickCollect() {
     const isCollected = + !this.data.isCollected;
-    const {userid, exhibitId } = this.data;
+    const {userid, exhibitId, packageId } = this.data;
     let options = { method: 'POST'};
     let txt = '已添加至收藏列表'; // todo
     if (!isCollected) {
       txt = '已取消收藏'
       options = { method: 'DELETE'};
     }
-    const res: any = await collectExhibit(userid, exhibitId, options);
+    const res: any = await collectExhibit(userid, exhibitId, packageId, options);
     console.log('res---', res);
     if (res && res.code === 0) {
       this.setData({
@@ -355,11 +355,16 @@ Page({
   formatExhibitDataV2(_exhibit: any) {
     console.log('formatExhibitDataV2', _exhibit)
       const duration_fmt = calTimeTxt(_exhibit.audio_duration);
+      const more_image_urls = [
+        _exhibit.exhibit.image_url, 
+        ...(_exhibit.exhibit.more_image_urls || [])
+      ];
+
 
       return {
         ..._exhibit.exhibit,
-        id: _exhibit.id,
-        exhibit_id: _exhibit.exhibit.id,
+        id: _exhibit.exhibit_id,
+        exhibit_id: _exhibit.id,
         audioitem: {
           audio_url: _exhibit.audio_url,
           content: _exhibit.content,
@@ -369,7 +374,7 @@ Page({
           locked: _exhibit.locked,
           duration_fmt, 
         },
-        more_image_urls: [_exhibit.exhibit.image_url, ..._exhibit.exhibit.more_image_urls],
+        more_image_urls,
       }
   },
 

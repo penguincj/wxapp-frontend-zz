@@ -7,7 +7,13 @@
 ></player-comp>
 </view>
 <view class="collection-list-page">
-  <scroll-card wx:if="{{!error && collectionList.length}}" cardStyle="{{styleHeight}}" list="{{collectionList}}" bindDeleteItem="handleDeleteItem" bindClickItem="handleClickItem"></scroll-card>
+  <scroll-card 
+    wx:if="{{!error && collectionList.length}}" 
+    cardStyle="{{styleHeight}}" 
+    list="{{collectionList}}" 
+    bindDeleteItem="handleDeleteItem" 
+    bindClickItem="handleClickItem">
+  </scroll-card>
   <view wx:if="{{!error && collectionList.length === 0}}" class="empty-content">
     <image src="/static/images/kong.png" class="empty-img" mode="aspectFill" />
     <view class="empty-text">暂无内容</view>

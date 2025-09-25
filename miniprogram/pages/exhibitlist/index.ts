@@ -85,6 +85,12 @@ Page({
       poster_idx: 0,
       ...params,
     })
+    // @ts-ignore
+    this.tracker.report('exhibit_list_share_text_click_e40', {
+      popup_type,
+      popup_text: e.detail.popup_text,
+      ...params,
+    })
     wx.navigateTo({
       url: '/pages/share-poster/index' + url_params,
     })
@@ -467,8 +473,14 @@ Page({
   },
 
   handleShareTextTimeUp(event: any) {
-    const { share_texts } = event.detail;
+    const { share_texts, popup_type, popup_text } = event.detail;
     if (share_texts && share_texts.length > 0) {
+      // @ts-ignore
+      this.tracker.report('exhibit_list_share_text_time_up_e39', {
+        exhibition_id: this.data.exhibitionId,
+        popup_type,
+        popup_text,
+      })
       this.setData({
         showShareTextDialog: true,
         shareTextList: share_texts,

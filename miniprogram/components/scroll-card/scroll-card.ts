@@ -68,10 +68,11 @@ Component({
       });
     },
     handleDeleteItem(e: any) {
-      const { id } = e.currentTarget.dataset;
+      const { id, package_id = -1 } = e.currentTarget.dataset;
 
       this.triggerEvent('DeleteItem', {
-        id: id
+        id: id,
+        package_id,
       })
     },
 

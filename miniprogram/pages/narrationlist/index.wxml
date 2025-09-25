@@ -20,15 +20,20 @@
       <view class="tag-group">
         <view class="group-item">
           <block wx:for="{{tagArrOne}}" wx:for-item="group" wx:key="dimension">
-            <block wx:for="{{group.label_list}}" wx:for-item="label" wx:key="id">
-              <view class="tag-item {{label.isSelected ? 'selected': ''}}" 
-                    data-dimension="{{group.dimension}}" 
-                    data-tag-id="{{label.id}}" 
-                    bindtap="onSelectSingleTag">{{label.label_name}}</view>
-            </block>
+            <view class="group-wrapper">
+              <view class="group-name">{{group.dimension === 'duration' ? '时长' : '音色'}}（单选）：</view>
+              <view class="group-item-select">
+                <block wx:for="{{group.label_list}}" wx:for-item="label" wx:key="id">
+                  <view class="tag-item {{label.isSelected ? 'selected': ''}}" 
+                        data-dimension="{{group.dimension}}" 
+                        data-tag-id="{{label.id}}" 
+                        bindtap="onSelectSingleTag">{{label.label_name}}</view>
+                </block>
+              </view>
+            </view>
           </block>
         </view>
-        <view class="group-txt">以下可多选：</view>
+        <view class="group-txt">标签（以下可多选）：</view>
         <view class="group-item">
           <block wx:for="{{tagArrMuti}}" wx:for-item="group" wx:key="dimension">
             <block wx:for="{{group.label_list}}" wx:for-item="label" wx:key="id">
@@ -43,10 +48,10 @@
     </view>
     <view 
       class="btn-group" 
-      data-idx="todo" 
+      data-exhibition_id="{{curExhibitionId}}" 
       data-is-catch-event="{{true}}"
-      data-event-id="exhibition_detail_play_click_etodo"
-      data-event-params="{{ {id: 1} }}"
+      data-event-id="package_choose_submit_e34"
+      data-event-params="{{ {exhibition_id: curExhibitionId} }}"
       bindtap="handleClickChoose">
       <image src="/static/images/btn-selected.png" class="loc-btn" mode="aspectFix" />
       <view class="loc-name white">

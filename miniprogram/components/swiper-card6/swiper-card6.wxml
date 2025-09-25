@@ -25,7 +25,7 @@
       <scroll-view wx:if="{{list && list.length}}" scroll-top="{{scrollTop}}" class="scroll-view_H" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="{{scrollStyle}}">
         <view class="list-group">
           <block wx:for="{{list}}">
-            <view wx:if="{{isListType}}" class="card-group" bindtap="selectItem" data-idx="{{item.id}}" data-name="{{item.name}}">
+            <view wx:if="{{isListType}}" class="card-group tanchuang" bindtap="selectItem" data-idx="{{item.id}}" data-name="{{item.name}}">
               <view class="group-one">
                 <view class="img-group">
                   <view class="img-bg" style="background-image: url({{item.image_url}})"></view>
@@ -58,9 +58,9 @@
                   </view>
                 </view>
               </view>
-              <view class="card-icon" wx:if="{{!isSearch}}" data-playindex="{{playingExhibitId}}">
+              <view class="card-icon" wx:if="{{!isSearch}}"  data-playindex="{{playingExhibitId}}" data-exhibitid="{{item.exhibit_id}}">
                 <!-- <image wx:if="{{(playingIndex === index) && (playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" /> -->
-                <image wx:if="{{(playingExhibitId === item.exhibit_id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
+                <image wx:if="{{(playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
                 <image wx:elif="{{!item.audioitem.locked}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
                 <image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
               </view>

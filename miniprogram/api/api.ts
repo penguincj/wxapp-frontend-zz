@@ -144,8 +144,8 @@ export const likeExhibit = (user_id: any, exhibit_id: any, options: any) => {
     return request(`/${base_api}/v1/users/${user_id}/exhibits/${exhibit_id}/like`, options);
 }
 
-export const collectExhibit = (user_id: any, exhibit_id: any, options: any) => {
-    return request(`/${base_api}/v1/users/${user_id}/exhibits/${exhibit_id}/collection`, options);
+export const collectExhibit = (user_id: any, exhibit_id: any, package_id: any, options: any) => {
+    return request(`/${base_api}/v1/users/${user_id}/exhibits/${exhibit_id}/collection?package_id=${package_id}`, options);
 }
 
 export const viewHistoryList = (user_id: any) => {
