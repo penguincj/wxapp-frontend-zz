@@ -153,7 +153,6 @@ Page({
   },
 
   async handleListen() {
-    debugger
     const { userid } = await wx.getStorageSync('userinfo');
     const packageid = this.data.packageList[0].id;
     postUserListen(userid, this.data.exhibition_id, packageid);
