@@ -153,6 +153,7 @@ Page({
   },
 
   async handleListen() {
+    debugger
     const { userid } = await wx.getStorageSync('userinfo');
     const packageid = this.data.packageList[0].id;
     postUserListen(userid, this.data.exhibition_id, packageid);
@@ -185,9 +186,7 @@ Page({
       exhibition_id: this.data.exhibition_id,
       package_id: this.data.packageList[0].id,
     })
-    setTimeout(() => {
-      this.goToExhibitListPage(this.data.exhibition_id)
-    }, 30)
+    this.handleListen();
   },
 
   onShow() {

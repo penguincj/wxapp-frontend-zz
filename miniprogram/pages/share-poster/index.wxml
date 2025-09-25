@@ -4,13 +4,18 @@
   <view class="poster-page">
     <view class="container">
       <view class="canvas-wrapper">
+        <view class="loading-overlay" wx:if="{{!isCanvasReady}}">
+          <image src="/static/images/loading.png" class="loading-icon" mode="aspectFit" />
+          <view class="loading-text">海报生成中...</view>
+        </view>
         <canvas 
           type="2d" 
           id="posterCanvas" 
+          class="poster-canvas {{isCanvasReady ? '' : 'canvas-hidden'}}"
           style="width: 600rpx; height: {{canvasHeight}}rpx; "
         ></canvas>
       </view>
-      <view class="opreate-btns {{!(share_texts.length>1) && !(share_images.length>1) ? 'btns-center' : ''}}">
+      <view wx:if="{{isCanvasReady}}" class="opreate-btns {{!(share_texts.length>1) && !(share_images.length>1) ? 'btns-center' : ''}}">
         <view class="change-btns">
           <view 
             wx:if="{{share_texts && share_texts.length > 1}}" 

@@ -31,6 +31,7 @@ Page({
     share_images: [],
     canvasHeight: 1200, // 动态canvas高度
     from_page: '', // 来源页面
+    isCanvasReady: false,
   },
 
 
@@ -208,11 +209,20 @@ Page({
 
   async initCanvas() {
     try {
+      this.setData({
+        isCanvasReady: false,
+      });
       // 1. 创建 canvas 节点
       const query = wx.createSelectorQuery();
       query.select('#posterCanvas')
         .fields({ node: true, size: true })
         .exec(async (res) => {
+          if (!res || !res[0] || !res[0].node) {
+            this.setData({
+              isCanvasReady: true,
+            });
+            return;
+          }
           const canvas = res[0].node;
           const ctx = canvas.getContext('2d');
           
@@ -230,6 +240,9 @@ Page({
         });
     } catch (error) {
       console.error('初始化画布失败:', error);
+      this.setData({
+        isCanvasReady: true,
+      });
     }
   },
 
@@ -398,7 +411,8 @@ Page({
       
       // 更新data中的canvasHeight（转换为rpx单位）
       this.setData({
-        canvasHeight: actualCanvasHeight * pxToRpx
+        canvasHeight: actualCanvasHeight * pxToRpx,
+        isCanvasReady: true,
       });
       
       
@@ -467,6 +481,9 @@ Page({
       
     } catch (error) {
       console.error('绘制海报失败:', error);
+      this.setData({
+        isCanvasReady: true,
+      });
       wx.showToast({
         title: '生成海报失败',
         icon: 'none'

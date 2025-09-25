@@ -1,7 +1,7 @@
 // index.ts
 // 获取应用实例
 // const app = getApp<IAppOption>()
-import { getRecoPackageList, getExhibitionLabelGroupAll, postPackageRecommend } from "../../api/api";
+import { getRecoPackageList, getExhibitionLabelGroupAll, postPackageRecommend, postUserListen } from "../../api/api";
 import { calTimeTxt, generateNewUrlParams, getCurrentPageParam,getCurrentPageParamStr, transferObjToUrlParams, backToTargetPage } from "../../utils/util";
 
 Page({
@@ -20,14 +20,15 @@ Page({
     voiceLabelOptions: ["温柔女声", "磁性男声", "活泼女声", "沉稳男声"], // 声音标签选项
   },
 
-  handleClickCard(e: any) {
+  async handleClickCard(e: any) {
     console.log('e', e);
     const { id } = e.detail;
     // @ts-ignore
     this.tracker.report('package_choose_click_e33', {
       package_id: id,
     })
-
+    const { userid } = await wx.getStorageSync('userinfo');
+    postUserListen(userid, this.data.curExhibitionId, id);
     this.goToExhibitlistPage(id);
   },
 
@@ -92,13 +93,17 @@ Page({
       formattedLabels.forEach((item: any) => {
         styleTags.push(...item.labels);
       });
+
+      const dur_arr = formattedLabels.find((i: any) => i.dimension === 'duration')?.labels;
+      const voice_arr = formattedLabels.find((i: any) => i.dimension === 'voice_label')?.labels;
+      const tags_arr = formattedLabels.find((i: any) => i.dimension === 'style_tags')?.labels;
       
       // 调用智能套餐推荐接口
       const res_tag: any = await postPackageRecommend(
         this.data.curExhibitionId, 
-        this.data.selectedDuration,
-        this.data.selectedVoiceLabel,
-        styleTags
+        dur_arr && dur_arr.length ? dur_arr[0] : '', 
+        voice_arr && voice_arr.length ? voice_arr[0] : '', 
+        tags_arr
       );
       
       if (res_tag && res_tag.code === 0) {

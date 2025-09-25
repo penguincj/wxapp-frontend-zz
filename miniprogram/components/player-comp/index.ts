@@ -632,7 +632,7 @@ Component({
       })
       try {
         // TODO: 需要传入正确的 packageid 和 packageexhibitid 参数
-        console.log('global_audio----', global_audio.curPackageId);
+        console.log('global_audio----', global_audio);
         sendListenAudioAction(global_audio.curPackageId, global_audio.curExhibit.id);
         console.log('需要更新为新的套餐展品收听接口参数', title, coverImgUrl)
       } catch (error) {
