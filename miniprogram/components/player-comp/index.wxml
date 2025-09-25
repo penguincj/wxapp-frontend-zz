@@ -6,7 +6,7 @@
         <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix" bindtap="handleClickAiRobot" />
         <view class="popup-robot" wx:if="{{showShareTextDialog}}">
           <view class="content-wrapper" bindtap="handleClickPopup">
-            <image src="/static/images/popup-angel.webp" class="popup-angel" mode="aspectFit" />
+            <image src="/static/images/popup-angel.png" class="popup-angel" mode="aspectFit" />
             <view class="content">
               <view class="content-txt">
                 {{popup_text}}
@@ -16,7 +16,7 @@
               </view>
             </view>
           </view>
-          <image src="/static/images/popup-close.webp" bindtap="handleClickClosePopup" class="popup-close" mode="aspectFill" />
+          <image src="/static/images/popup-close.png" bindtap="handleClickClosePopup" class="popup-close" mode="aspectFill" />
         </view>
       </view>
   </movable-view>
@@ -45,4 +45,3 @@
   </view>
   <image catchtap="handleClickClosePlayer" src="/static/images/close-index.png" mode="aspectFill" class="close-img" />
 </view>
-

@@ -346,7 +346,10 @@ Page({
 
   async drawPoster(canvas, ctx) {
     const { bgUrl, title, subTitle, share_text } = this.data;
-    const pixelRatio = wx.getSystemInfoSync().pixelRatio;
+    const systemInfo = wx.getSystemInfoSync();
+    const pixelRatio = systemInfo.pixelRatio;
+    const windowWidth = systemInfo.windowWidth;
+    const pxToRpx = windowWidth ? 750 / windowWidth : 2;
     const canvasWidth = canvas.width / pixelRatio; // 使用canvas实际宽度
     
     try {
@@ -395,7 +398,7 @@ Page({
       
       // 更新data中的canvasHeight（转换为rpx单位）
       this.setData({
-        canvasHeight: actualCanvasHeight * 2 // 1px = 2rpx
+        canvasHeight: actualCanvasHeight * pxToRpx
       });
       
       
