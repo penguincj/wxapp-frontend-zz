@@ -11,11 +11,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/share-poster/index",
+          "pathName": "pages/share-poster/index",
+          "query": "exhibition_id=445&package_id=59&exhibit_id=303&from_page=exhibitlist&poster_idx=0",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "share-poster--package",
           "pathName": "pages/share-poster/index",
           "query": "package_id=26&from_page=package&poster_idx=0",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "share-image-list---package",

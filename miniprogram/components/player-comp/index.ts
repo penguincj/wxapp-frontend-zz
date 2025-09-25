@@ -100,9 +100,12 @@ Component({
   methods: {
     // 开始倒计时
     startCountdown() {
-      // 获取当前音频的duration，计算倒计时时间 = duration - 10
+      // 获取当前音频的duration和已播放时长
       const currentDuration = global_audio.bgAudio?.duration || this.data.duration || 0;
-      const countdownTime = Math.max(Math.floor(currentDuration - 10), 5); // 使用Math.floor确保为整数，最少5秒倒计时
+      const currentTime = global_audio.bgAudio?.currentTime || this.data.currentTime || 0;
+      
+      // 倒计时 = 音频总时长 - 5 - 当前已播放时长
+      const countdownTime = Math.max(Math.floor(currentDuration - 5 - currentTime), 1); // 最少1秒倒计时
       
       this.setData({
         countdown: countdownTime
@@ -134,7 +137,14 @@ Component({
       this.triggerEvent('CountdownEnd', {});
     },
     handleClickPopup() {
-      this.triggerEvent('ClickAIPopup', { popup_type: this.data.popup_type });
+      // 停止并清除倒计时
+      this.stopCountdown();
+      
+      this.triggerEvent('ClickAIPopup', {
+        popup_type: this.data.popup_type,
+        popup_text: this.data.popup_text,
+        share_text: [''],
+      })
     },
     // sendListenAction(_packageid: any, _packageexhibitid: any) {
     //   try {
@@ -403,7 +413,7 @@ Component({
           //     share_texts: global_audio.curExhibit.share_texts,
           //   })
           // }
-          if (!id_flag && (time > 5)) {
+          if (!id_flag && (time > 3)) {
             // todo
             id_flag = true;
             this.setData({
@@ -417,7 +427,7 @@ Component({
             })
           }
         } else {
-          if (!id_flag && (time > 5) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          if (!id_flag && (time > 3) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
           // if (!id_flag && (time < dur -5) && (time > dur - 100) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
             // todo
             id_flag = true;
