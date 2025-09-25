@@ -100,8 +100,12 @@ Component({
   methods: {
     // 开始倒计时
     startCountdown() {
+      // 获取当前音频的duration，计算倒计时时间 = duration - 10
+      const currentDuration = global_audio.bgAudio?.duration || this.data.duration || 0;
+      const countdownTime = Math.max(Math.floor(currentDuration - 10), 5); // 使用Math.floor确保为整数，最少5秒倒计时
+      
       this.setData({
-        countdown: 10
+        countdown: countdownTime
       });
       
       this.data.countdownTimer = setInterval(() => {
@@ -387,19 +391,19 @@ Component({
         }
         if (isNeedPopup) {
           // if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
-          if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
-            // todo
-            this.setData({
-              popup_type: 'exhibitlist',
-              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
-            })
-            this.triggerEvent('ShareTextTimeUp', {
-              popup_type: 'exhibitlist',
-              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
-              share_texts: global_audio.curExhibit.share_texts,
-            })
-          }
-          if (!id_flag && (time < dur -5) && (time > dur - 15)) {
+          // if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          //   // todo
+          //   this.setData({
+          //     popup_type: 'exhibitlist',
+          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+          //   })
+          //   this.triggerEvent('ShareTextTimeUp', {
+          //     popup_type: 'exhibitlist',
+          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+          //     share_texts: global_audio.curExhibit.share_texts,
+          //   })
+          // }
+          if (!id_flag && (time > 5)) {
             // todo
             id_flag = true;
             this.setData({
@@ -413,7 +417,7 @@ Component({
             })
           }
         } else {
-          if (!id_flag && (time < dur -5) && (time > dur - 15) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          if (!id_flag && (time > 5) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
           // if (!id_flag && (time < dur -5) && (time > dur - 100) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
             // todo
             id_flag = true;
