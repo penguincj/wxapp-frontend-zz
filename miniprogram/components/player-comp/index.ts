@@ -127,8 +127,17 @@ Component({
     stopCountdown() {
       if (this.data.countdownTimer) {
         clearInterval(this.data.countdownTimer);
-        this.setData({
-          countdownTimer: null
+      }
+      this.setData({
+        countdownTimer: null,
+        countdown: 0,
+      });
+    },
+    resetSharePopup() {
+      this.stopCountdown();
+      if (this.data.showShareTextDialog) {
+        this.triggerEvent('CountdownEnd', {
+          reason: 'switchAudio',
         });
       }
     },
@@ -243,7 +252,10 @@ Component({
       await this.handlePlayOtherAudio(audio);
     },
     async handlePlayOtherAudio(_audio) {
-      const { bgAudio: { currentTime, duration }, curExhibit: {id, name} } = global_audio;
+      const { bgAudio: { currentTime, duration }, curExhibit: {id, name} = {} } = global_audio;
+      if (id && id !== _audio?.id) {
+        this.resetSharePopup();
+      }
       // @ts-ignore
       this.tracker.report('audio_listen_time_e26', {
         id,
