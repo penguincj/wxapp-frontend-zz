@@ -355,6 +355,11 @@ export const getPackageList = (_exhibitionid: any, _category?: any, _page = 1, _
     return request(url);
 }
 
+// 获取套餐详情
+export const getPackageById = (_packageid: any) => {
+    return request(`/${base_api}/v1/packages/${_packageid}`)
+}
+
 // 获取讲解详情
 export const getPackageByID = (_packageid: any) => {
     return request(`/${base_api}/v1/packages/${_packageid}`);

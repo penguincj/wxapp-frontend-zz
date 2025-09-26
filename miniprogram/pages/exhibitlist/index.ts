@@ -1,4 +1,4 @@
-import { getUnitList, getExhibitById, getExhibitList, queryExhibitListAll, getPackageExhibitList, getPackageExhibitById, sendListenedAudioAction } from '../../api/api';
+import { getUnitList, getPackageById, getExhibitById, getExhibitList, queryExhibitListAll, getPackageExhibitList, getPackageExhibitById, sendListenedAudioAction } from '../../api/api';
 import { generateNewUrlParams, getCurrentPageParamStr, getCurrentPageParam, transferObjToUrlParams, calTimeTxt, getLoginStatus } from '../../utils/util';
 import { Exhpoints } from './points';
 
@@ -55,6 +55,7 @@ Page({
     showShareTextDialog: false,
     shareTextList: [] as any,
     exhibitIdList: [] as number[],
+    packageInfo: {} as any,
     // playProgress: 0,
   },
 
@@ -474,6 +475,7 @@ Page({
 
   handleShareTextTimeUp(event: any) {
     const { share_texts, popup_type, popup_text } = event.detail;
+    const { default_share_images, default_share_texts, share_images, share_texts: package_share_texts } = this.data.packageInfo;
     if (share_texts && share_texts.length > 0) {
       // @ts-ignore
       this.tracker.report('exhibit_list_share_text_time_up_e39', {
@@ -481,10 +483,21 @@ Page({
         popup_type,
         popup_text,
       })
-      this.setData({
-        showShareTextDialog: true,
-        shareTextList: share_texts,
-      })
+      if (popup_type === 'package' 
+        && ((default_share_images && default_share_images.length && default_share_texts && default_share_texts.length)
+            || (share_images && share_images.length && package_share_texts && package_share_texts.length))) {
+
+        this.setData({
+          showShareTextDialog: true,
+          shareTextList: share_texts,
+        })
+      } else if (popup_type === 'exhibitlist') {
+        this.setData({
+          showShareTextDialog: true,
+          shareTextList: share_texts,
+        })
+      }
+      
     }
   },
 
@@ -737,10 +750,16 @@ console.log('init exhibit_info', res, exhibit_info)
   async initPage(_packageid: any, _exhibitionid: any, _exhibitid=0) {
     try {
       const res_unit : any = await getUnitList(_packageid);
+      const res_package: any = await getPackageById(_packageid);
       const player = this.selectComponent("#player");
       const isPlayingAudio = player.checkIsAudioPlaying();
       const lastExhibitionId = this.data.lastExhibitionId;
       
+      if (res_package && res_package.code === 0) {
+        this.setData({
+          packageInfo: res_package.data
+        })
+      }
 
       if (res_unit && res_unit.units && res_unit.units.length) {
         const units = [
