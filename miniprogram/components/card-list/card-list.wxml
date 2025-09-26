@@ -12,13 +12,16 @@
         <view class="card-info">
           <view class="card-title">{{item.name}}</view>
           <view class="card-desc">
-            <view class="desc-item">
+            <view class="desc-item" wx:if="{{item.count}}">
               <image class="item-icon" src="/static/images/erji.png" mode="aspectFix" />
                 {{item.count}}
               </view>
             <view class="desc-item">
               <image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
               {{item.duration_fmt}}
+            </view>
+            <view class="desc-item desc-tag" wx:if="{{item.desc_tag}}">
+              {{item.desc_tag}}
             </view>
           </view>
         </view>

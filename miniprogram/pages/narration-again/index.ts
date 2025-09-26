@@ -77,7 +77,8 @@ Page({
         const p_res = res.data.package;
         const new_narration = {
           id: p_res.id,
-          count: 999, //todo
+          // count: 999, //todo
+          desc_tag: '个性订制',
           name: p_res.name,
           duration_fmt: p_res.duration,
           image_url: p_res.image_url,

@@ -71,13 +71,13 @@
                   <view class="img-bg" style="background-image: url({{item.image_url}})"></view>
 
                   <image class="card-img" data-idx="{{item.exhibit_id}}" catchtap="clickItemImg" src="{{item.image_url}}" mode="aspectFit " />
-                  <view wx:if="{{item.listened || ((listenedExhibitList[item.exhibit_id]) && (!(playingIndex === index) || !(playingExhibitId === item.exhibit_id)))}}" class="have-listened">
+                  <view wx:if="{{item.listened || ((listenedExhibitList[item.id]) && (!(playingIndex === index) || !(playingExhibitId === item.id)))}}" class="have-listened">
                     <image src="/static/images/listened.png"  mode="aspectFit" class="listen-img" />
                     <view class="listen-txt">听过</view>
                   </view>
                   <view class="card-icon">
-                    <image wx:if="{{(playingIndex === index) && (playingExhibitId === item.exhibit_id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
-                    <image wx:elif="{{item.audioitem.locked === 0}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
+                    <image wx:if="{{(playingExhibitId === item.id)}}" class="play-icon" src="/static/images/bofangtiao.png" mode="aspectFix" />
+                    <image wx:elif="{{!item.audioitem.locked}}" class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
                     <image wx:else class="play-icon" src="/static/images/lock.png" mode="aspectFix" />
                   </view>
                 </view>

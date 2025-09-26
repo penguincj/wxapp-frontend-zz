@@ -67,7 +67,7 @@ Page({
     }
     const url_params = generateNewUrlParams({
       from_page: this.data.from_page,
-      poster_idx: 0,
+      poster_idx: idx,
       ...params,
     })
     wx.navigateTo({

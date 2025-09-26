@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <page-meta page-style="overflow: hidden;">
-  <navigation-bar homeButton="{{true}}" title="语音选择" color="black" background="#FFF" styleType="dark" style="text-align: center;" />
+  <navigation-bar homeButton="{{true}}" title="选择讲解" color="black" background="#FFF" styleType="dark" style="text-align: center;" />
   <!-- <view class="player-area">
     <player-comp
       bindClickPlayerComp="handleClickPlayerComp"

@@ -417,11 +417,11 @@ Component({
           //   // todo
           //   this.setData({
           //     popup_type: 'exhibitlist',
-          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
           //   })
           //   this.triggerEvent('ShareTextTimeUp', {
           //     popup_type: 'exhibitlist',
-          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
           //     share_texts: global_audio.curExhibit.share_texts,
           //   })
           // }
@@ -430,11 +430,11 @@ Component({
             id_flag = true;
             this.setData({
               popup_type: 'package',
-              popup_text: `讲解尾声，一定有很多值得带走的记忆～查看我的专属观展记录`,
+              popup_text: `展览尾声，点击查看专属观展记录。分享值得带走的记忆～`,
             })
             this.triggerEvent('ShareTextTimeUp', {
               popup_type: 'package',
-              popup_text: `讲解尾声，一定有很多值得带走的记忆～查看我的专属观展记录`,
+              popup_text: `展览尾声，点击查看专属观展记录。分享值得带走的记忆～`,
               share_texts: [''],
             })
           }
@@ -445,11 +445,11 @@ Component({
             id_flag = true;
              this.setData({
               popup_type: 'exhibitlist',
-              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
             })
             this.triggerEvent('ShareTextTimeUp', {
               popup_type: 'exhibitlist',
-              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的创作由来`,
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
               share_texts: global_audio.curExhibit.share_texts,
             })
           }

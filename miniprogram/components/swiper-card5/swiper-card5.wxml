@@ -19,9 +19,9 @@
       <button wx:if="{{shareType==='image'}}" bindtap="handleClickShare" class="share-btn">
         <image src="/static/images/share2.png" class="share-img" mode="aspectFill" />
       </button>  
-      <button wx:else open-type="share" class="share-btn">
+      <!-- <button wx:else open-type="share" class="share-btn">
         <image src="/static/images/share2.png" class="share-img" mode="aspectFill" />
-      </button>  
+      </button>   -->
     </view>
   </view>
   <view class="dots-group">

@@ -1,5 +1,5 @@
 import { postUserListen, getPackageByID } from "../../api/api";
-import { calTimeTxt, transferObjToUrlParams } from "../../utils/util";
+import { calTimeDurationTxt, transferObjToUrlParams } from "../../utils/util";
 
 interface Bubble {
   id: number;
@@ -112,9 +112,10 @@ Page({
         const res_package = res.data;
         const item = {
           id: res_package.id,
-          count: 999,
+          // count: 999,
+          desc_tag: '个性订制',
           name: res_package.name,
-          duration_fmt: res_package.duration,
+          duration_fmt: calTimeDurationTxt(res_package.total_audio_duration),
           image_url: res_package.image_url,
         }
         const new_narr = [item];
