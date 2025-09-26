@@ -146,15 +146,16 @@ Page({
  
   async handleClickJiangjie() {
     // 如果套餐数量为1，执行console逻辑
-    if (this.data.packageCount >= 1) {
+    // debugger
+    if (this.data.packageCount > 1) {
       const res : any= await getUserLastPackage(this.data.userid, this.data.curExhibitionId);
       if (res.data && res.data.package && res.data.package.id) {
         this.goToNarrationAgainPage();
       } else {
         this.goToNarrationListPage();
       }
-    } else {
-      console.log('套餐数量为1，执行播放逻辑');
+    } else if(this.data.packageCount === 1) {
+      this.handleClickPlayIcon();
     }
     
     
