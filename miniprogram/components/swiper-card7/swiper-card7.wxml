@@ -25,7 +25,7 @@
         data-name="{{item.name}}"
         data-short="{{item.short}}"
         bindtap="handleClickItem" >
-        <image src="{{item.image_url}}" class="item-img" mode="aspectFill" />
+        <view class="item-bg" style="background-image: url({{item.home_image_url}})"></view>
         <view class="mask"></view>
         <view class="exhibition-type">{{item.short ? '临时展':'常设展'}}</view>
         <view class="item-desc-group">
