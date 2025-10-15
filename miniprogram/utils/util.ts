@@ -529,3 +529,38 @@ export const generateCityList = (_citylist: any) => {
   })
   return list;
 }
+
+export const getMiniProgramVersion = () => {
+  console.log(wx.getAccountInfoSync())
+  try {
+    const { miniProgram } = wx.getAccountInfoSync();
+    const { version } = getApp().globalData;
+    return miniProgram.envVersion === 'release' ? miniProgram.version : version;
+  } catch (e) {}
+  return 'unknown';
+}
+
+// 比较小程序版本号（格式类似 "4.0.11"）。
+// 返回值：1 表示 v1 > v2；-1 表示 v1 < v2；0 表示相等。
+export const compareVersion = (v1: string, v2: string): number => {
+  // 兼容空值
+  if (!v1 && !v2) return 0;
+  if (!v1) return -1;
+  if (!v2) return 1;
+
+  const a = v1.trim().split('.');
+  const b = v2.trim().split('.');
+  const len = Math.max(a.length, b.length);
+
+  for (let i = 0; i < len; i++) {
+    const ai = parseInt(a[i] ?? '0', 10) || 0;
+    const bi = parseInt(b[i] ?? '0', 10) || 0;
+    if (ai > bi) return 1;
+    if (ai < bi) return -1;
+  }
+  return 0;
+}
+
+// 便捷方法：判断 v1 是否比 v2 新
+export const isVersionGreater = (v1: string, v2: string): boolean => compareVersion(v1, v2) > 0;
+

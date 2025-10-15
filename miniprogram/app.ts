@@ -1,7 +1,8 @@
 // app.ts
-import { clearAndFreshLoginStatus, getCurrentCity, getLocation } from "./utils/util"
+import { clearAndFreshLoginStatus, getCurrentCity, getLocation, getMiniProgramVersion } from "./utils/util"
 import Tracker from "./utils/tracker";
 import { componentProxy, pageProxy } from "./utils/proxy";
+import { getVersionList } from "./api/api";
 
 var log = require('./utils/log');
 let tracker = Tracker;
@@ -54,7 +55,10 @@ App<IAppOption>({
       platform_version: '',
       sdk_version: '',
       scene_id: -1,
-    }
+    },
+    version: '4.0.7',
+    version_list: [],
+    curVersionSwitch: 0,
   },
   async onLaunch(options) {
     // 展示本地存储能力
@@ -150,6 +154,18 @@ App<IAppOption>({
       log.error(error) 
     }
 
+    const version = getMiniProgramVersion();
+    const version_list: any = await getVersionList();
+    if(version_list && version_list.code === 0) {
+      this.globalData.version_list = version_list.data || [];
+      // 检查是否有新的版本
+      const newVersion = this.globalData.version_list.find((item: any) => (item.miniapp_version === version));
+      if (newVersion) {
+        this.globalData.curVersionSwitch = newVersion.switch;
+        console.log('newVersion.switch', newVersion.switch)
+      }
+    }
+    
 
     const onErrorCallback = function(msg: any) {
       console.error('wx:onError:', msg)

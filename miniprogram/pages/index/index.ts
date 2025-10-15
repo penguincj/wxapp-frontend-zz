@@ -1,4 +1,4 @@
-import { getHotComments, getCityList, getIndexData, getIndexCityData, getCityRecoExhibitionList } from "../../api/api";
+import { getHotComments, getVersionList, getCityList, getIndexData, getIndexCityData, getCityRecoExhibitionList } from "../../api/api";
 import { generateDateFormat, calTimeTxt, backToTargetPage, generateCityList, getLocation, throttle, generateNewUrlParams } from "../../utils/util";
 
 let interval = null as any;
@@ -25,6 +25,7 @@ Page({
     curExhibitImg: '',
     comment_loading: false,
     bannerCurrentIndex: 0,
+    curVersionSwitch: getApp().globalData.curVersionSwitch,
   },
 
   handleBannerClickItem(e: any) {
@@ -60,10 +61,12 @@ Page({
     interval = setInterval(function () {
       //  需要执行的代码
       const cur_exhibit = getApp().globalData.audio.curExhibit;
+      const cur_version_switch = getApp().globalData.curVersionSwitch;
       if (cur_exhibit && cur_exhibit.name && cur_exhibit.name !== that.data.curExhibitName) {
         that.setData({
           curExhibitName: cur_exhibit.name,
           curExhibitImg: cur_exhibit.image_url,
+          curVersionSwitch: cur_version_switch,
         })
       }
   }, 2000); // 2000为毫秒级参数，表示2秒
@@ -316,7 +319,27 @@ Page({
       console.log(error)
     }
     
+    this.getVersionConfig();
+    
     // this.getCityListAsync();
+  },
+
+  async getVersionConfig () {
+    const res: any = await getVersionList();
+    const version = getApp().globalData.version;
+    if (res && res.code === 0) {
+      const { data = [] } = res;
+      if (data.length) {
+        const newVersion = data.find((i: any) => i.miniapp_version === version);
+        if (newVersion) {
+          getApp().globalData.curVersionSwitch = newVersion.switch;
+          this.setData({
+            curVersionSwitch: newVersion.switch,
+          })
+          console.log('newVersion.switch', newVersion.switch)
+        }
+      }
+    }
   },
 
 

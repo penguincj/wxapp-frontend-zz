@@ -5,6 +5,10 @@ export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);
 }
 
+export const getVersionList = () => {
+    return request(`/${base_api}/v1/version-control`);
+}
+
 export const getCityListFilter = () => {
     return request(`/${base_api}/v1/cities?type=has_narration`);
 }
