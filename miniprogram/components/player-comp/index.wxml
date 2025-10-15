@@ -1,6 +1,24 @@
+
 <movable-area style="width: 750rpx;height: {{screenHeight - 130}}px">
-  <movable-view animation="{{false}}" class="move-area" x="{{movex}}" y="{{movey}}" direction="all" bindchange="handleChange">
-    <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix" bindtap="handleClickAiRobot" />
+  <movable-view animation="{{false}}" class="move-area" x="{{isMoveable ? movex : 0}}" y="{{isMoveable ? movey : 630}}" direction="{{ isMoveable ? 'all' : 'none'}}" bindchange="handleChange">
+      <image wx:if="{{isMoveable}}" src="/static/images/airobot.png" class="ai-robot" mode="aspectFix" bindtap="handleClickAiRobot" />
+      <view class="stable-area-content {{showShareTextDialog ? 'stable-width' : ''}}" wx:if="{{!isMoveable}}">
+        <image src="/static/images/airobot.png" class="ai-robot" mode="aspectFix" bindtap="handleClickAiRobot" />
+        <view class="popup-robot" wx:if="{{showShareTextDialog}}">
+          <view class="content-wrapper" bindtap="handleClickPopup">
+            <image src="/static/images/popup-angel.png" class="popup-angel" mode="aspectFit" />
+            <view class="content">
+              <view class="content-txt">
+                {{popup_text}}
+              </view>
+              <view class="countdown">
+                {{countdown}}s
+              </view>
+            </view>
+          </view>
+          <image src="/static/images/popup-close.png" bindtap="handleClickClosePopup" class="popup-close" mode="aspectFill" />
+        </view>
+      </view>
   </movable-view>
   <movable-view wx:if="{{!isNewStyle && isShowPlayer}}" animation="{{false}}" class="move-area" x="{{moveplayx}}" y="{{moveplayy}}" direction="all" bindchange="handlePlayIconChange">
   <!-- <movable-view wx:if="{{true}}" animation="{{false}}" class="move-area" x="{{moveplayx}}" y="{{moveplayy}}" direction="all" bindchange="handlePlayIconChange"> -->

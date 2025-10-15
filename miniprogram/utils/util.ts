@@ -419,7 +419,8 @@ export const backToTargetPage = (_pagename: String) => {
       if (params === '' || (params.indexOf('narration_id') === -1) || (params.indexOf('exhibition_id') === -1) ) {
         const paramstr = transferObjToUrlParams({
           exhibition_id: getApp().globalData.audio.curExhibition,
-          narration_id: getApp().globalData.audio.curNarration
+          package_id: getApp().globalData.audio.curPackageId,
+          // narration_id: getApp().globalData.audio.curNarration
         })
         console.log('-----params str paramstr', paramstr)
         getApp().globalData.audio.exhibitlistParams = paramstr;
@@ -452,6 +453,33 @@ export const calTimeTxt = (_time: number) => {
     return hour_str + ':' + minute_str + ':' + second_str;
   }
 }
+
+export const calTimeDurationTxt = (_time: number) => {
+  // 处理小于1秒的情况
+  if (_time < 1) {
+    return '1秒';
+  }
+  
+  const hours = Math.floor(_time / 3600);
+  const minutes = Math.floor((_time % 3600) / 60);
+  const seconds = Math.floor(_time % 60);
+  
+  if (hours > 0) {
+    // 有小时的情况
+    if (minutes > 0) {
+      return `${hours}小时${minutes}分钟`;
+    } else {
+      return `${hours}小时`;
+    }
+  } else if (minutes > 0) {
+    // 只有分钟的情况
+    return `${minutes}分钟`;
+  } else {
+    // 只有秒的情况
+    return `${seconds}秒`;
+  }
+}
+
 
 export const generateDateFormat = (_time: any) => {
   const date = new Date(_time);

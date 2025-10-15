@@ -1,0 +1,50 @@
+<!--index.wxml-->
+<page-meta page-style="overflow: scroll; background: black;">
+  <navigation-bar styleType="light" title="分享展览海报" back color="white" background="#000"></navigation-bar>
+  <view class="poster-page">
+    <view class="container">
+      <view class="canvas-wrapper">
+        <view class="loading-overlay" wx:if="{{!isCanvasReady}}">
+          <image src="/static/images/loading.png" class="loading-icon" mode="aspectFit" />
+          <view class="loading-text">海报生成中...</view>
+        </view>
+        <canvas 
+          type="2d" 
+          id="posterCanvas" 
+          class="poster-canvas {{isCanvasReady ? '' : 'canvas-hidden'}}"
+          style="width: 600rpx; height: {{canvasHeight}}rpx; "
+        ></canvas>
+      </view>
+      <view wx:if="{{isCanvasReady}}" class="opreate-btns {{!(share_texts.length>1) && !(share_images.length>1) ? 'btns-center' : ''}}">
+        <view class="change-btns">
+          <view 
+            wx:if="{{share_texts && share_texts.length > 1}}" 
+            class="change-pic" 
+            data-is-catch-event="{{true}}"
+            data-event-id="share_poster_change_txt_click_e41"
+            bindtap="handleChangeText">
+            <image src="https://gewugo.com/api/v1/storage/image/icon_refresh_stroke@1x-2447100900.webp" class="icon-change" mode="aspectFill" />
+            <view class="txt-change">换文案</view>
+          </view>
+          <view 
+            wx:if="{{share_images && share_images.length > 1}}" 
+            class="change-pic" 
+            data-is-catch-event="{{true}}"
+            data-event-id="share_poster_change_pic_click_e42"
+            bindtap="handleChangePic">
+            <image src="https://gewugo.com/api/v1/storage/image/icon_refresh_stroke@1x-2447100900.webp" class="icon-change" mode="aspectFill" />
+            <view class="txt-change">{{(from_page === 'package' || (from_page === 'exhibitlist')) ? '换图片' : '选图片'}}</view>
+          </view>
+        </view>
+        
+        <view class="btn-group" 
+          data-is-catch-event="{{true}}"
+          data-event-id="share_poster_save_pic_click_e43"
+          bindtap="savePosterToAlbum" >
+          <image src="https://gewugo.com/api/v1/storage/image/Vector@1x-9531450659.webp" class="icon-down" mode="aspectFill" />
+          <view class="txt-change">保存到相册</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-meta>

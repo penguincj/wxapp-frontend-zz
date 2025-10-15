@@ -23,7 +23,12 @@
     "pages/bglist/index",
     "pages/treaturedetail/index",
     "pages/searchpage/index",
-    "pages/agent/index"
+    "pages/narrationlist/index",
+    "pages/narration-again/index",
+    "pages/agent/index",
+    "pages/customize-explanation/index",
+    "pages/share-poster/index", 
+    "pages/share-image-list/index"
   ],
   "subpackages": [
     {

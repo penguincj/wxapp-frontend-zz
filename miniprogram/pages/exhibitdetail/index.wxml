@@ -29,16 +29,20 @@
       bounces="{{false}}"
       bindscroll="handlePageScroll"
       style="height: 100vh">
-    <view class="images-area">
+    <view class="images-area" data-dd="{{exhibitInfo.share_texts}}">
+      
       <swiper-card5
         list="{{exhibitInfo.more_image_urls}}"
+        shareType="{{exhibitInfo.share_texts && exhibitInfo.share_texts.length ? 'image' : ''}}"
         isCollected="{{isCollected}}"
         bindClickColIcon="handleClickCollect"
+        bindClickShare="handleClickShare"
       ></swiper-card5>
     </view>
     <view class="geci-area">
         <!-- <view class="mask-top"></view> -->
         <view class="title">{{exhibitInfo.name}}</view>
+        <view class="tag">个性化定制</view>
         <text decode="{{true}}" space="{{true}}" class="content">{{exhibitInfo.audioitem.content}}</text>
         <!-- <view class="mask-bottom"></view> -->
     </view>

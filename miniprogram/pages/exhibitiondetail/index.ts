@@ -1,4 +1,4 @@
-import { getCommentsByExhibitionID, postReplyToParent, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters } from "../../api/api";
+import { getCommentsByExhibitionID, postReplyToParent, getUserLastPackage, postWantVisit, delWantVisit, postVisited, delVisited, getExhibitionById, getNarrowList, sendViewExhibitionAction, getPosters, getPackageList } from "../../api/api";
 import { throttle, generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
 const listConfig = [
   {
@@ -38,6 +38,9 @@ Page({
     topSwiperSelectIdx: 'reco_exhi',
     replyParentId: 0,
     showReplayBar: false,
+    packageCount: 0,
+    jiangjieButtonText: '选讲解',
+    packageList: [] as any,
   },
   // scroll(e: any) {
   //   const { scrollTop } = e.detail;
@@ -54,7 +57,6 @@ Page({
   // swiper-unit组件
   handleChangePannelId(event: any) {
     const { selectId } = event.detail;
-    console.log('handleChangePannelId', selectId);
     // this.setData({
     //   topSwiperSelectIdx: selectId,
     // });
@@ -123,26 +125,51 @@ Page({
       url: '/pages/bglist/index' + url_params,
     })
   },
-  handleClickJiangjie(event: any) {
-    console.log('handleClickJiangjie', event.currentTarget.dataset);
-    const { idx } = event.currentTarget.dataset;
+
+  goToNarrationListPage() {
     const url_params = generateNewUrlParams({
-      narration_id: idx,
       exhibition_id: this.data.curExhibitionId
     })
-    getApp().globalData.audio.curNarration = idx
     wx.navigateTo({
-      url: '/pages/exhibitlist/index' + url_params,
+      url: '/pages/narrationlist/index' + url_params,
     })
+  },
+
+  goToNarrationAgainPage() {
+    const url_params = generateNewUrlParams({
+      exhibition_id: this.data.curExhibitionId
+    })
+    wx.navigateTo({
+      url: '/pages/narration-again/index' + url_params,
+    })
+  },
+ 
+  async handleClickJiangjie() {
+    // 如果套餐数量为1，执行console逻辑
+    // debugger
+    if (this.data.packageCount > 1) {
+      const res : any= await getUserLastPackage(this.data.userid, this.data.curExhibitionId);
+      if (res.data && res.data.package && res.data.package.id) {
+        this.goToNarrationAgainPage();
+      } else {
+        this.goToNarrationListPage();
+      }
+    } else if(this.data.packageCount === 1) {
+      this.handleClickPlayIcon();
+    }
+    
+    
   },
   handleClickPlayIcon() {
     if (this.data.narrationList && this.data.narrationList.length) {
       const nid = this.data.narrationList[0].id;
       const url_params = generateNewUrlParams({
-        narration_id: nid,
+        // narration_id: nid,
+        package_id: this.data.packageList[0].id,
         exhibition_id: this.data.curExhibitionId
       })
-      getApp().globalData.audio.curNarration = nid
+      // getApp().globalData.audio.curNarration = nid;
+      getApp().globalData.audio.curPackageId = this.data.packageList[0].id;
       wx.navigateTo({
         url: '/pages/exhibitlist/index' + url_params,
       })
@@ -150,7 +177,7 @@ Page({
    
   },
   handleClickImgLink() {
-    this.handleClickPlayIcon();
+    this.handleClickJiangjie();
   },
   handleClickIntro() {
     this.setData({
@@ -174,13 +201,29 @@ Page({
     try {
       const res: any = await getExhibitionById(_exhibitionid);
       const res_narr: any = await getNarrowList(_exhibitionid);
+      
+      // 获取套餐列表
+      const packageRes: any = await getPackageList(_exhibitionid);
+      let packageCount = 0;
+      let buttonText = '选讲解';
+      
+      if (packageRes && packageRes.code === 0 && packageRes.data && packageRes.data.packages) {
+        packageCount = packageRes.data.packages.length;
+        if (packageCount === 1) {
+          buttonText = '播放';
+        }
+      }
+      
       if (res && res.exhibition) {
         this.setData({
           exhibitionInfo: res.exhibition,
           narrationList: res_narr.narrations,
+          packageList: packageRes.data.packages,
           loading: false,
           isClickWantVisit: Boolean(res.exhibition.want_visit),
-          isClickVisited: Boolean(res.exhibition.visited)
+          isClickVisited: Boolean(res.exhibition.visited),
+          packageCount: packageCount,
+          jiangjieButtonText: buttonText
         })
       }
       this.getComments(this.data.curExhibitionId, this.data.currentLabel);
@@ -215,7 +258,6 @@ Page({
   async getComments(exhibition_id: any, labelname = "") {
     try {
       const res: any = await getCommentsByExhibitionID(exhibition_id, labelname);
-      console.log(res);
       if(res && res.code === 0) {
         const { comment_area, data_area, label_area} = res.data;
         const star_distribution = data_area.star_distribution.reverse();
@@ -235,7 +277,6 @@ Page({
         })
         const listconfig_new = [...this.data.listConfig];
         listConfig[1].name = data_area.comment_count ? ('评价（' + data_area.comment_count + '）'): '评价';
-        console.log('comments', comments)
         this.setData({
           comment_area: comments,
           data_area: {
@@ -259,7 +300,6 @@ Page({
     
   },
   handleClickCommentIcon() {
-    console.log('handleClickCommentIcon');
     // @ts-ignore
     this.tracker.report('exhibition_detail_add_comment_click_e19');
     const url_params = generateNewUrlParams({
@@ -271,7 +311,6 @@ Page({
   },
   handleShowFullImage(e: any) {
     const {imglist, img, showBigImg, idx} = e.detail;
-    console.log('item', idx)
     this.setData({
       bigImg: img,
       showBigImg,
@@ -293,7 +332,6 @@ Page({
       showReplayBar: false,
     })
     const scrollTop = e[0].scrollTop;
-    // console.log('scrollTop', scrollTop)
     const isSticky = scrollTop > 200; // 假设100px时触发吸顶
     
     // 只有当值变化时才更新数据，减少不必要的setData
@@ -326,7 +364,6 @@ Page({
   },
   handleClickParentReply(e: any) {
     const { parentid , showReplayBar} = e.detail;
-    console.log('parent_id11', showReplayBar);
     this.setData({
       showReplayBar,
     })
@@ -342,7 +379,6 @@ Page({
       userid,
       nickname,
     })
-    console.log('show');
     const info = wx.getMenuButtonBoundingClientRect();
     const windowInfo = wx.getWindowInfo();
     if (info && info.bottom) {
@@ -357,14 +393,12 @@ Page({
       setTimeout(() => {
         sendViewExhibitionAction(getApp().globalData.userinfo.userid, this.data.curExhibitionId, { method: 'POST' });
       }, 2000)
-      console.log('show this.data.currentLabel', this.data.currentLabel)
       this.getComments(this.data.curExhibitionId, this.data.currentLabel);
 
     } catch (error) {
 
     }
 
-    console.log('windowInfo', windowInfo);
   },
   onLoad(options) {
     console.log('onLoad', options);
@@ -377,23 +411,10 @@ Page({
     this.throttledScroll = throttle(this.handleScroll1, 50);
   },
   onPageScroll(e: any) {
-    // throttle((() => {
-    //   if (e.scrollTop > 100) {
-    //     // 执行吸顶逻辑
-    //     console.log('111111111', e)
-    //   }
-    // }), 10)
-    // if (e.scrollTop > 100) {
-    //   // 执行吸顶逻辑
-    //   console.log('111111111', e.scrollTop)
-    // }
-
     this.throttledScroll(e);
-    
   },
   onShareAppMessage() {
     const defaultUrl = 'https://gewugo.com/api/v1/storage/image/share-3639793484.jpg';
-    console.log(this.data.exhibitionInfo.image_url);
     const str = getCurrentPageParamStr();
     const imageUrl = (this.data.exhibitionInfo && this.data.exhibitionInfo.image_url) ? this.data.exhibitionInfo.image_url : defaultUrl;
     const title = (this.data.exhibitionInfo.name) ? `博物岛屿|${this.data.exhibitionInfo.name}` : '让您的博物馆之旅不虚此行';

@@ -22,6 +22,22 @@ Component({
     exhibitImg: {
       type: String,
       value: '',
+    },
+    isMoveable: {
+      type: Boolean,
+      value: true,
+    },
+    showShareTextDialog: {
+      type: Boolean,
+      value: false,
+    },
+    shareTextList: {
+      type: Array,
+      value: [],
+    },
+    exhibitIdList: {
+      type: Array,
+      value: [],
     }
   },
   data: {
@@ -67,15 +83,85 @@ Component({
     duration: getApp().globalData.audio.bgAudio?.duration,
     currentTime: getApp().globalData.audio.bgAudio?.currentTime,
     manStop: false,
+    countdown: 10,
+    countdownTimer: null as any, // 倒计时定时器
+    popup_type: 'exhibitlist',
+    popup_text: '',
+  },
+  observers: {
+    'showShareTextDialog': function(newVal) {
+      if (newVal) {
+        this.startCountdown();
+      } else {
+        this.stopCountdown();
+      }
+    }
   },
   methods: {
-    sendListenAction(_audioid: any) {
-      try {
-        sendListenAudioAction(_audioid, {method: 'POST'})
-      } catch (error) {
-        console.log(error);
+    // 开始倒计时
+    startCountdown() {
+      // 获取当前音频的duration和已播放时长
+      const currentDuration = global_audio.bgAudio?.duration || this.data.duration || 0;
+      const currentTime = global_audio.bgAudio?.currentTime || this.data.currentTime || 0;
+      
+      // 倒计时 = 音频总时长 - 5 - 当前已播放时长
+      const countdownTime = Math.max(Math.floor(currentDuration - 5 - currentTime), 1); // 最少1秒倒计时
+      
+      this.setData({
+        countdown: countdownTime
+      });
+      
+      this.data.countdownTimer = setInterval(() => {
+        const currentCountdown = this.data.countdown - 1;
+        this.setData({
+          countdown: currentCountdown
+        });
+        
+        if (currentCountdown <= 0) {
+          this.handleClickClosePopup();
+        }
+      }, 1000);
+    },
+    
+    // 停止并清除倒计时
+    stopCountdown() {
+      if (this.data.countdownTimer) {
+        clearInterval(this.data.countdownTimer);
+      }
+      this.setData({
+        countdownTimer: null,
+        countdown: 0,
+      });
+    },
+    resetSharePopup() {
+      this.stopCountdown();
+      if (this.data.showShareTextDialog) {
+        this.triggerEvent('CountdownEnd', {
+          reason: 'switchAudio',
+        });
       }
     },
+    handleClickClosePopup() {
+      this.stopCountdown();
+      this.triggerEvent('CountdownEnd', {});
+    },
+    handleClickPopup() {
+      // 停止并清除倒计时
+      this.stopCountdown();
+      
+      this.triggerEvent('ClickAIPopup', {
+        popup_type: this.data.popup_type,
+        popup_text: this.data.popup_text,
+        share_text: [''],
+      })
+    },
+    // sendListenAction(_packageid: any, _packageexhibitid: any) {
+    //   try {
+    //     sendListenAudioAction(_packageid, _packageexhibitid)
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     handleAudioPause() {
       global_audio.bgAudio.pause();
       this.setData({
@@ -158,7 +244,6 @@ Component({
 
     },
     async handlePlayOtherAudioById(_id) {
-
       const audio = global_audio.audioList.find(i => i.id === _id);
       await this.handlePlayOtherAudio(audio);
     },
@@ -167,7 +252,10 @@ Component({
       await this.handlePlayOtherAudio(audio);
     },
     async handlePlayOtherAudio(_audio) {
-      const { bgAudio: { currentTime, duration }, curExhibit: {id, name} } = global_audio;
+      const { bgAudio: { currentTime, duration }, curExhibit: {id, name} = {} } = global_audio;
+      if (id && id !== _audio?.id) {
+        this.resetSharePopup();
+      }
       // @ts-ignore
       this.tracker.report('audio_listen_time_e26', {
         id,
@@ -287,7 +375,12 @@ Component({
       }
     },
     onBgTimeUpdate() {
-
+      let id_flag = false;
+      // const isLastExhibit = global_audio.curExhibit.id === this.data.lastExhibitId;
+      const cur_exhibit_idx = this.data.exhibitIdList.findIndex(i => i === global_audio.curExhibit.id);
+      const need_popup_idx = Math.floor(this.data.exhibitIdList.length * 0.85);
+      const isNeedPopup = cur_exhibit_idx >= need_popup_idx;
+      console.log('isNeedPopup.isNeedPopup', isNeedPopup, cur_exhibit_idx, need_popup_idx)
       global_audio.bgAudio.onTimeUpdate(throttle(() => {
        
         const time = Number(parseFloat(global_audio.bgAudio.currentTime).toFixed(2));
@@ -305,7 +398,9 @@ Component({
           // todo
           const curAudio: any = global_audio.curExhibit;
           if (curAudio && curAudio.audioitem && curAudio.audioitem.audio_id) {
-            sendListenedAudioAction(curAudio.audioitem.audio_id, { method: 'POST' })
+            // TODO: 需要传入正确的 packageid 和 packageexhibitid 参数
+            sendListenedAudioAction(global_audio.curPackageId, global_audio.curExhibit.id)
+            console.log('需要更新为新的套餐展品收听接口参数')
             // this.setData({
             //   listenedExhibitList: {
             //     ...this.data.listenedExhibitList,
@@ -316,6 +411,51 @@ Component({
     
           }
         }
+        if (isNeedPopup) {
+          // if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          // if (!id_flag && (time < dur -25) && (time > dur - 35) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          //   // todo
+          //   this.setData({
+          //     popup_type: 'exhibitlist',
+          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
+          //   })
+          //   this.triggerEvent('ShareTextTimeUp', {
+          //     popup_type: 'exhibitlist',
+          //     popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
+          //     share_texts: global_audio.curExhibit.share_texts,
+          //   })
+          // }
+          if (!id_flag && (time > 3)) {
+            // todo
+            id_flag = true;
+            this.setData({
+              popup_type: 'package',
+              popup_text: `展览尾声，点击查看专属观展记录。分享值得带走的记忆～`,
+            })
+            this.triggerEvent('ShareTextTimeUp', {
+              popup_type: 'package',
+              popup_text: `展览尾声，点击查看专属观展记录。分享值得带走的记忆～`,
+              share_texts: [''],
+            })
+          }
+        } else {
+          if (!id_flag && (time > 3) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+          // if (!id_flag && (time < dur -5) && (time > dur - 100) && (global_audio.curExhibit.share_texts && global_audio.curExhibit.share_texts.length > 0)) {
+            // todo
+            id_flag = true;
+             this.setData({
+              popup_type: 'exhibitlist',
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
+            })
+            this.triggerEvent('ShareTextTimeUp', {
+              popup_type: 'exhibitlist',
+              popup_text: `进入分享页，分享《${global_audio.curExhibit.name}》的故事`,
+              share_texts: global_audio.curExhibit.share_texts,
+            })
+          }
+        }
+        
+        
         this.setData({
           currentTime: time,
           isPlaying: !global_audio.bgAudio.paused,
@@ -453,6 +593,7 @@ Component({
           duration = audio_item.audioitem.duration;
           // duration = Number(duration_fmt.split(':')[0]) * 60 + Number(duration_fmt.split(':')[1]);
         }
+        console.log('global_audio.audioList', global_audio.audioList);
         const playingIdx = global_audio.audioList.findIndex(i => i.id === global_audio.curExhibit.id);
         global_audio.playingIndex = playingIdx;
 
@@ -490,8 +631,10 @@ Component({
         isShow: true,
       })
       try {
-        sendListenAudioAction(audio_id, {method: 'POST'});
-        console.log('sendListenAudioAction', title, coverImgUrl)
+        // TODO: 需要传入正确的 packageid 和 packageexhibitid 参数
+        console.log('global_audio----', global_audio);
+        sendListenAudioAction(global_audio.curPackageId, global_audio.curExhibit.id);
+        console.log('需要更新为新的套餐展品收听接口参数', title, coverImgUrl)
       } catch (error) {
         console.error(error)
       }
@@ -514,7 +657,7 @@ Component({
         console.log('initAudioList', _audioList, _curExhibit);
         global_audio.audioList = _audioList;
         global_audio.curExhibit = _curExhibit;
-
+        global_audio.playingIndex = _audioList.findIndex(i => i.id === _curExhibit.exhibit_id);
         // const stored_audio = await wx.getStorageSync('audios');
         // global_audio.stored_audio = stored_audio;
         // this.setData({
@@ -670,6 +813,10 @@ Component({
       }
 
     },
+    detached() {
+      // 组件销毁时清理倒计时定时器
+      this.stopCountdown();
+    }
   },
   pageLifetimes: {
     show() {
