@@ -2,7 +2,7 @@
 var log = require('../utils/log')
 var aesjs = require('aes-js');
 
-import { base_api } from "../api/api"
+import { base_api, getCityByLoc } from "../api/api"
 
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
@@ -128,9 +128,10 @@ export const getCurrentCity = async () => {
         lat = latitude;
         lng = longitude;
       }
-      const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
-      if (city_res && city_res.result && city_res.result.address_component && city_res.result.address_component.city) {
-        city = city_res.result.address_component.city;
+      // const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
+      const city_res = await getCityByLoc(lat, lng);
+      if (city_res && city_res.code === 0) {
+        city = city_res.city_name;
       } else {
         city = defaultCity
       }

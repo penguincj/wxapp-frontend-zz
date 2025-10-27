@@ -1,5 +1,5 @@
 // app.ts
-import { clearAndFreshLoginStatus, getCurrentCity, getLocation, getMiniProgramVersion } from "./utils/util"
+import { clearAndFreshLoginStatus, getLocation, getMiniProgramVersion } from "./utils/util"
 import Tracker from "./utils/tracker";
 import { componentProxy, pageProxy } from "./utils/proxy";
 import { getVersionList } from "./api/api";
@@ -56,7 +56,7 @@ App<IAppOption>({
       sdk_version: '',
       scene_id: -1,
     },
-    version: '4.0.7',
+    version: '4.0.8',
     version_list: [],
     curVersionSwitch: 0,
   },
@@ -106,13 +106,11 @@ App<IAppOption>({
         log.info('track logInfo', values[3]);
       });
 
-      const city = await getCurrentCity();
       // @ts-expect-error
       const { latitude, longitude } = await getLocation();
       this.globalData.logInfo.location_info = {
         lat: latitude,
         lng: longitude,
-        city_name: city,
       }
       tracker.init(this.globalData.logInfo);
       

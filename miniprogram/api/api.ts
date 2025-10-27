@@ -1,5 +1,5 @@
 import { request, request_aes } from "../utils/util"
-export const base_api = true ? 'api' : 'test-api'
+export const base_api = false ? 'api' : 'test-api'
 
 export const getCityList = () => {
     return request(`/${base_api}/v1/cities`);
@@ -379,4 +379,8 @@ export const getPackageExhibitList = (_unitid: any, _packageid = -1) => {
 
 export const getPackageExhibitById = (_packageid: any, _exhibitid: any) => {
     return request_aes(`/${base_api}/v1/packages/${_packageid}/exhibits/by-exhibit/${_exhibitid}/content`);
+}
+
+export const getCityByLoc = (_lat: any, _lng: any) => {
+    return request(`/${base_api}/v1/city-by-location?location=${_lng},${_lat}`);
 }
