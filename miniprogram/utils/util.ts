@@ -2,7 +2,7 @@
 var log = require('../utils/log')
 var aesjs = require('aes-js');
 
-import { base_api } from "../api/api"
+import { base_api, getCityByLoc } from "../api/api"
 
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
@@ -128,9 +128,10 @@ export const getCurrentCity = async () => {
         lat = latitude;
         lng = longitude;
       }
-      const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
-      if (city_res && city_res.result && city_res.result.address_component && city_res.result.address_component.city) {
-        city = city_res.result.address_component.city;
+      // const city_res = await map_request(`https://apis.map.qq.com/ws/geocoder/v1/?key=${tx_key}&location=${lat},${lng}`);
+      const city_res = await getCityByLoc(lat, lng);
+      if (city_res && city_res.code === 0) {
+        city = city_res.city_name;
       } else {
         city = defaultCity
       }
@@ -529,3 +530,38 @@ export const generateCityList = (_citylist: any) => {
   })
   return list;
 }
+
+export const getMiniProgramVersion = () => {
+  console.log(wx.getAccountInfoSync())
+  try {
+    const { miniProgram } = wx.getAccountInfoSync();
+    const { version } = getApp().globalData;
+    return miniProgram.envVersion === 'release' ? miniProgram.version : version;
+  } catch (e) {}
+  return 'unknown';
+}
+
+// 比较小程序版本号（格式类似 "4.0.11"）。
+// 返回值：1 表示 v1 > v2；-1 表示 v1 < v2；0 表示相等。
+export const compareVersion = (v1: string, v2: string): number => {
+  // 兼容空值
+  if (!v1 && !v2) return 0;
+  if (!v1) return -1;
+  if (!v2) return 1;
+
+  const a = v1.trim().split('.');
+  const b = v2.trim().split('.');
+  const len = Math.max(a.length, b.length);
+
+  for (let i = 0; i < len; i++) {
+    const ai = parseInt(a[i] ?? '0', 10) || 0;
+    const bi = parseInt(b[i] ?? '0', 10) || 0;
+    if (ai > bi) return 1;
+    if (ai < bi) return -1;
+  }
+  return 0;
+}
+
+// 便捷方法：判断 v1 是否比 v2 新
+export const isVersionGreater = (v1: string, v2: string): boolean => compareVersion(v1, v2) > 0;
+

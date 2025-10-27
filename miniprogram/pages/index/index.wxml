@@ -35,8 +35,14 @@
             <exhibition-scroll list="{{showExhibitionList}}" totalLen="{{exhibitionList.length}}" bindClickItem="handleExClickItem" bindClickMore="handleClickMoreExh"></exhibition-scroll>
           </view>
         </view>
+        
         <view class="daily-listen-area">
+          <view wx:if="{{curVersionSwitch}}" class="default-version-png">
+            
+          </view>
+          <view wx:else>
           <daily-listen title="每日一听" exhibition="{{dailyListen}}" bindPlayDailyListen="handlePlayDailyListen"></daily-listen>
+          </view>
         </view>
         <view class="museum-list-area">
           <swiper-card3 title="热门博物馆" len="{{museumList.length}}" list="{{museumArrayList}}" smalllist="{{museumList}}" bindClickItem="handleMuseumClickItem"></swiper-card3>

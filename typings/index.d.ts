@@ -25,6 +25,9 @@ interface IAppOption {
       y: number,
     },
     logInfo: any,
+    version: string,
+    version_list: any[],
+    curVersionSwitch: number,
   },
  
 

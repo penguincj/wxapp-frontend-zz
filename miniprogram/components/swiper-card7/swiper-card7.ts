@@ -103,10 +103,8 @@ Component({
     },
     // towerSwiper计算滚动
     towerEnd(e: any) {
-      console.log(e);
       const valueTouch = Math.abs(e.changedTouches[0].pageX - this.data.towerStart) > 50 ? true : false
       if(!valueTouch) {
-        console.log('! valuetouch');
         this.handleClickItem(e);
         return
       }

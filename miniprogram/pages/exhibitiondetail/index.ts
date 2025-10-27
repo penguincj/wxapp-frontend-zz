@@ -161,8 +161,7 @@ Page({
     
   },
   handleClickPlayIcon() {
-    if (this.data.narrationList && this.data.narrationList.length) {
-      const nid = this.data.narrationList[0].id;
+    if (this.data.packageList && this.data.packageList.length) {
       const url_params = generateNewUrlParams({
         // narration_id: nid,
         package_id: this.data.packageList[0].id,

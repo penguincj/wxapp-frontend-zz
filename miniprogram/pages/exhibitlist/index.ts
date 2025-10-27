@@ -56,6 +56,7 @@ Page({
     shareTextList: [] as any,
     exhibitIdList: [] as number[],
     packageInfo: {} as any,
+    curVersionSwitch: getApp().globalData.curVersionSwitch,
     // playProgress: 0,
   },
 
