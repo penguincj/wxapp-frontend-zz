@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index",  
+    "pages/index/index",
+    "pages/ai-camera/index",
     "pages/citylist/index",
     "pages/exhibitlist/index",
     "pages/exhibitdetail/index",
@@ -96,8 +97,8 @@
       },
       {
         "current": 2,
-        "pagePath": "pages/exhibitionlist/index",
-        "text": "讲解",
+        "pagePath": "pages/ai-camera/index",
+        "text": "拍照识文物",
         "iconPath": "/static/images/ijiangjie.png",
         "selectedIconPath": "/static/images/ijiangjie-c.png"
       },

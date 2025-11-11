@@ -16,10 +16,10 @@ const itemConfig = [
   },
   {
     id: 2,
-    name: '讲解',
+    name: '拍照识文物',
     icon: '/static/images/ijiangjie.png',
     iconClicked: '/static/images/ijiangjie-c.png',
-    link: '/pages/exhibitionlist/index',
+    link: '/pages/ai-camera/index',
   },
   {
     id: 3,
