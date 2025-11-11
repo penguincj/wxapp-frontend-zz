@@ -1,176 +1,229 @@
-.container {
-  padding: 20rpx;
+.ai-camera-page {
   min-height: 100vh;
-  background-color: #f5f5f5;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 40rpx;
-}
-
-.title {
-  display: block;
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #07C160;
-  margin-bottom: 20rpx;
-}
-
-.description {
-  display: block;
-  font-size: 28rpx;
-  color: #666;
-}
-
-.camera-btn {
-  width: 100%;
-  padding: 30rpx;
-  background-color: #07C160;
-  color: white;
-  border-radius: 12rpx;
-  font-size: 32rpx;
-  font-weight: 500;
-  margin-bottom: 40rpx;
-}
-
-.camera-btn:active {
-  background-color: #06AE56;
-}
-
-.preview-section {
-  margin-top: 40rpx;
-}
-
-.preview-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
-  display: block;
-}
-
-.preview-container {
+  background: #000;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20rpx;
+  flex-direction: column;
+  color: #fff;
 }
 
-.preview-item {
-  width: 200rpx;
-  height: 200rpx;
-  border-radius: 16rpx;
-  overflow: hidden;
+.flash-button {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding-right: 32rpx;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 24rpx;
+}
+
+.flash-icon {
+  font-size: 32rpx;
+}
+
+.flash-label {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.preview-area {
   position: relative;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  flex: 1;
+  overflow: hidden;
 }
 
 .preview-image {
   width: 100%;
   height: 100%;
-}
-
-.delete-btn {
-  position: absolute;
-  top: 10rpx;
-  right: 10rpx;
-  width: 40rpx;
-  height: 40rpx;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24rpx;
-}
-
-.tip {
-  background-color: #f0f7ff;
-  border-left: 8rpx solid #07C160;
-  padding: 24rpx;
-  margin-top: 40rpx;
-  border-radius: 8rpx;
-}
-
-.tip-title {
-  font-weight: bold;
-  margin-bottom: 10rpx;
+  object-fit: cover;
   display: block;
-  font-size: 28rpx;
 }
 
-.tip-content {
-  font-size: 24rpx;
-  color: #666;
-  line-height: 1.5;
+.preview-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.65) 100%);
 }
 
-.overlay {
-  position: fixed;
+.focus-frame {
+  position: absolute;
+  width: 520rpx;
+  height: 520rpx;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 40rpx;
+}
+
+.frame-corner {
+  position: absolute;
+  width: 90rpx;
+  height: 90rpx;
+  border: 10rpx solid rgba(255, 255, 255, 0.9);
+}
+
+.corner-tl {
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  border-bottom: none;
+  border-right: none;
+}
+
+.corner-tr {
+  top: 0;
+  right: 0;
+  border-bottom: none;
+  border-left: none;
+}
+
+.corner-br {
+  bottom: 0;
+  right: 0;
+  border-top: none;
+  border-left: none;
+}
+
+.corner-bl {
+  bottom: 0;
+  left: 0;
+  border-top: none;
+  border-right: none;
+}
+
+.zoom-indicator {
+  position: absolute;
+  top: calc(18% + 520rpx + 40rpx);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 4rpx solid rgba(255, 255, 255, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  font-size: 32rpx;
+  color: #fff;
 }
 
-.overlay-content {
-  background-color: white;
-  border-radius: 24rpx;
-  padding: 40rpx;
+.overlay-tips {
+  position: absolute;
+  bottom: 260rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 26rpx;
+  letter-spacing: 4rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.result-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 330rpx;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 28rpx;
+  padding: 28rpx 36rpx;
   width: 80%;
-  max-width: 600rpx;
+  max-width: 620rpx;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.result-panel.recognizing {
   text-align: center;
 }
 
-.overlay-header {
+.result-panel.error {
+  background: rgba(255, 60, 60, 0.85);
+}
+
+.result-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+
+.result-desc {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bottom-panel {
+  background: #000;
+  // padding: 20rpx 48rpx calc(env(safe-area-inset-bottom) + 40rpx);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 400rpx;
+}
+
+.ai-hint {
+  text-align: center;
+  color: #3d9dff;
+  font-size: 28rpx;
+  // margin-bottom: 416rpx;
+}
+
+.control-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20rpx;
+  justify-content: space-between;
 }
 
-.overlay-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.close-btn {
-  font-size: 36rpx;
-  color: #999;
-}
-
-.overlay-text {
-  margin-bottom: 40rpx;
-  color: #666;
-  font-size: 28rpx;
-  display: block;
-}
-
-.overlay-buttons {
+.album-thumb,
+.switch-camera {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 2rpx solid rgba(255, 255, 255, 0.4);
   display: flex;
-  gap: 20rpx;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.overlay-btn {
-  flex: 1;
-  padding: 20rpx;
-  border-radius: 12rpx;
-  font-size: 28rpx;
+.album-thumb image {
+  width: 100%;
+  height: 100%;
 }
 
-.overlay-btn.confirm {
-  background-color: #07C160;
-  color: white;
+.switch-camera image {
+  width: 60rpx;
+  height: 60rpx;
 }
 
-.overlay-btn.cancel {
-  background-color: #f0f0f0;
-  color: #333;
+.album-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 26rpx;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.shutter {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  border: 12rpx solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shutter-inner {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  background: #fff;
+  transition: background 0.3s;
+}
+
+.shutter-inner.loading {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.shutter-disabled {
+  opacity: 0.6;
 }

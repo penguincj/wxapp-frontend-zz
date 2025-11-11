@@ -1,49 +1,59 @@
-<view class="container">
-  <view class="header">
-    <text class="title">微信小程序相机调用</text>
-    <text class="description">演示如何使用wx.chooseMedia调用相机并添加蒙层效果</text>
-  </view>
-  
-  <button class="camera-btn" bindtap="showConfirmOverlay">打开相机拍照</button>
-  
-  <view class="preview-section" wx:if="{{photos.length > 0}}">
-    <text class="preview-title">已拍摄的照片</text>
-    <view class="preview-container">
-      <view class="preview-item" wx:for="{{photos}}" wx:key="index" data-index="{{index}}">
-        <image class="preview-image" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-src="{{item}}"></image>
-        <view class="delete-btn" bindtap="deletePhoto" data-index="{{index}}">×</view>
+<page-meta page-style="background: #000000;">
+  <navigation-bar
+    title="AI拍摄文物"
+    back="{{false}}"
+    color="white"
+    background="#000000"
+    styleType="light"
+  >
+    <view slot="right" class="flash-button" bindtap="handleToggleFlash">
+      <text class="flash-icon">⚡</text>
+      <text class="flash-label">{{flashModeLabel}}</text>
+    </view>
+  </navigation-bar>
+
+  <view class="ai-camera-page">
+    <view class="preview-area">
+      <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image>
+      <view class="preview-mask"></view>
+      <view class="focus-frame">
+        <view class="frame-corner corner-tl"></view>
+        <view class="frame-corner corner-tr"></view>
+        <view class="frame-corner corner-br"></view>
+        <view class="frame-corner corner-bl"></view>
+      </view>
+      <view class="zoom-indicator">x {{zoomLevel}}</view>
+      <view class="overlay-tips">对准文物，轻触快门即可识别</view>
+      <view wx:if="{{isRecognizing}}" class="result-panel recognizing">
+        <text>识别中，请稍候...</text>
+      </view>
+      <view wx:elif="{{recognitionResult}}" class="result-panel">
+        <view class="result-title">{{recognitionResult.title}}</view>
+        <view class="result-desc">{{recognitionResult.desc}}</view>
+      </view>
+      <view wx:if="{{recognitionError}}" class="result-panel error">
+        <text>{{recognitionError}}</text>
+      </view>
+    </view>
+
+    <view class="bottom-panel">
+      <view class="ai-hint" bindtap="handleHintTap">拍文物AI识别内容</view>
+      <view class="control-row">
+        <view class="album-thumb" bindtap="handleOpenAlbum">
+          <image wx:if="{{lastPhoto}}" src="{{lastPhoto}}" mode="aspectFill"></image>
+          <view wx:else class="album-placeholder">
+            <text>相册</text>
+          </view>
+        </view>
+        <view class="shutter {{isRecognizing ? 'shutter-disabled' : ''}}" bindtap="handleTakePhoto">
+          <view class="shutter-inner {{isRecognizing ? 'loading' : ''}}"></view>
+        </view>
+        <view class="switch-camera" bindtap="handleSwitchCamera">
+          <image src="/static/images/refresh.png" mode="aspectFit"></image>
+        </view>
       </view>
     </view>
   </view>
-  
-  <view class="tip">
-    <text class="tip-title">技术说明：</text>
-    <text class="tip-content">在微信小程序中，直接使用wx.chooseMedia API无法添加自定义蒙层，因为该API会调用系统原生相机界面。但可以在调用相机前显示自定义蒙层，并在拍照完成后再次显示结果蒙层，实现类似效果。</text>
-  </view>
-</view>
 
-<!-- 调用相机前的确认蒙层 -->
-<view class="overlay" wx:if="{{showConfirmOverlay}}">
-  <view class="overlay-content">
-    <view class="overlay-header">
-      <text class="overlay-title">拍照确认</text>
-      <view class="close-btn" bindtap="hideConfirmOverlay">×</view>
-    </view>
-    <text class="overlay-text">您即将调用相机进行拍照，请确保您已授权相机权限。</text>
-    <view class="overlay-buttons">
-      <button class="overlay-btn cancel" bindtap="hideConfirmOverlay">取消</button>
-      <button class="overlay-btn confirm" bindtap="takePhoto">确认拍照</button>
-    </view>
-  </view>
-</view>
-
-<!-- 拍照完成后的结果蒙层 -->
-<view class="overlay" wx:if="{{showResultOverlay}}">
-  <view class="overlay-content">
-    <text class="overlay-title">拍照完成</text>
-    <text class="overlay-text">照片已成功拍摄并添加到预览区域。</text>
-    <view class="overlay-buttons">
-      <button class="overlay-btn confirm" bindtap="hideResultOverlay">确定</button>
-    </view>
-  </view>
-</view>
+  <custom-tab-bar></custom-tab-bar>
+</page-meta>
