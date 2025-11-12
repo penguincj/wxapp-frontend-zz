@@ -281,6 +281,13 @@ Page({
     });
   },
 
+  handleCancelFeedback() {
+    this.setData({
+      showFeedbackForm: false,
+      showResultPage: true,
+    });
+  },
+
   handleFeedbackInput(e: WechatMiniprogram.TextareaInput) {
     this.setData({
       feedbackText: e.detail.value,
