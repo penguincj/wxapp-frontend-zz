@@ -1,5 +1,5 @@
 import { base_api, appendExhibitImage } from '../../api/api';
-import { base_url, getLoginStatus } from '../../utils/util';
+import { base_url, getLoginStatus, calTimeDurationTxt } from '../../utils/util';
 
 
 Page({
@@ -25,6 +25,7 @@ Page({
     feedbackImages: [] as string[],
     exhibitImageId: null as number | null,
     submittingFeedback: false,
+    dailyListenExhibit: null as any,
   },
 
   onShow() {
@@ -91,6 +92,7 @@ Page({
           feedbackText: '',
           feedbackImages: [],
           submittingFeedback: false,
+          dailyListenExhibit: null,
         });
         this.processImage(filePath);
       },
@@ -128,7 +130,16 @@ Page({
         'AI识别完成';
       const exhibit = payload.exhibit || {};
       const search_res = payload || {};
-      const audio = payload.audio || {};
+      const hasPackageAudio = !!search_res.package_audio_url;
+      const audioInfo = hasPackageAudio
+        ? {
+            title: search_res.package_audio_title || exhibit.name || title,
+            duration: search_res.package_audio_duration || '00:00',
+            cover: search_res.package_audio_cover || exhibit.image_url,
+            audio_url: search_res.package_audio_url,
+            id: search_res.package_audio_id || exhibit.id || 0,
+          }
+        : null;
       const exhibit_image_id =
         payload.exhibit_image_id ||
         null;
@@ -151,16 +162,20 @@ Page({
               image_url: exhibit.image_url,
               description: exhibit.description || desc,
               content: search_res.package_audio_content,
-              audio: search_res.package_audio_url
-                ? {
-                    title: exhibit.name,
-                    duration: search_res.package_audio_duration || '00:00',
-                    cover: exhibit.image_url,
-                  }
-                : undefined,
+              audio: audioInfo || undefined,
             }
           : null,
         exhibitImageId: exhibit_image_id,
+        dailyListenExhibit: audioInfo
+          ? {
+              id: audioInfo.id,
+              name: audioInfo.title,
+              image_url: audioInfo.cover,
+              // exhibition_name: exhibit.name || title,
+              duration_fmt: calTimeDurationTxt(audioInfo.duration),
+              audio_url: audioInfo.audio_url,
+            }
+          : null,
       });
     } catch (error: any) {
       const errMsg = error?.message || error?.errMsg || '识别失败，请稍后重试';
@@ -176,6 +191,7 @@ Page({
         feedbackText: '',
         feedbackImages: [],
         submittingFeedback: false,
+        dailyListenExhibit: null,
       });
       if (!error?.errMsg?.includes('cancel')) {
         wx.showToast({
@@ -391,6 +407,10 @@ Page({
         submittingFeedback: false,
       });
     }
+  },
+
+  handlePlayDailyListen() {
+    // reserved for analytics or extra logic
   },
 
   handleShareAppMessage() {

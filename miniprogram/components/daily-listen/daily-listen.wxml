@@ -1,5 +1,5 @@
 <view class="daily-listen-comp">
-  <view class="title-line">
+  <view class="title-line" wx:if="{{title}}">
     <view class="title">
       <image class="title-img" src="/static/images/dashline1.png" mode="aspectFix" />
       <view class="title-name">{{title}}</view>
