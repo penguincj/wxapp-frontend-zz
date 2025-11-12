@@ -6,53 +6,18 @@
     background="#000000"
     styleType="light"
   >
-    <view slot="right" class="flash-button" bindtap="handleToggleFlash">
+    <!-- <view slot="right" class="flash-button" bindtap="handleToggleFlash">
       <text class="flash-icon">⚡</text>
       <text class="flash-label">{{flashModeLabel}}</text>
-    </view>
+    </view> -->
   </navigation-bar>
 
   <view class="ai-camera-page">
     <view class="preview-area">
       <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image>
-      <view class="preview-mask"></view>
-      <view class="focus-frame">
-        <view class="frame-corner corner-tl"></view>
-        <view class="frame-corner corner-tr"></view>
-        <view class="frame-corner corner-br"></view>
-        <view class="frame-corner corner-bl"></view>
-      </view>
-      <view class="zoom-indicator">x {{zoomLevel}}</view>
-      <view class="overlay-tips">对准文物，轻触快门即可识别</view>
-      <view wx:if="{{isRecognizing}}" class="result-panel recognizing">
-        <text>识别中，请稍候...</text>
-      </view>
-      <view wx:elif="{{recognitionResult}}" class="result-panel">
-        <view class="result-title">{{recognitionResult.title}}</view>
-        <view class="result-desc">{{recognitionResult.desc}}</view>
-      </view>
-      <view wx:if="{{recognitionError}}" class="result-panel error">
-        <text>{{recognitionError}}</text>
-      </view>
+      
     </view>
 
-    <view class="bottom-panel">
-      <view class="ai-hint" bindtap="handleHintTap">拍文物AI识别内容</view>
-      <view class="control-row">
-        <view class="album-thumb" bindtap="handleOpenAlbum">
-          <image wx:if="{{lastPhoto}}" src="{{lastPhoto}}" mode="aspectFill"></image>
-          <view wx:else class="album-placeholder">
-            <text>相册</text>
-          </view>
-        </view>
-        <view class="shutter {{isRecognizing ? 'shutter-disabled' : ''}}" bindtap="handleTakePhoto">
-          <view class="shutter-inner {{isRecognizing ? 'loading' : ''}}"></view>
-        </view>
-        <view class="switch-camera" bindtap="handleSwitchCamera">
-          <image src="/static/images/refresh.png" mode="aspectFit"></image>
-        </view>
-      </view>
-    </view>
   </view>
 
   <custom-tab-bar></custom-tab-bar>

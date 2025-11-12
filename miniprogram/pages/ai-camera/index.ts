@@ -1,48 +1,28 @@
 import { base_api } from '../../api/api';
 import { base_url, getLoginStatus } from '../../utils/util';
 
-const flashModes: Array<'off' | 'on' | 'auto'> = ['off', 'on', 'auto'];
 
 Page({
   data: {
-    devicePosition: 'back' as 'back' | 'front',
-    flashMode: 'off' as 'off' | 'on' | 'auto',
-    flashModeLabel: '闪光灯关',
-    previewImage: '/static/images/default-image-bg.jpeg',
-    lastPhoto: '',
-    recognitionResult: null as null | { title: string; desc: string },
-    recognitionError: '',
+    previewImage: '',
     isRecognizing: false,
-    zoomLevel: 1,
+    firstLoad: true,
   },
 
   onShow() {
+    if (this.data.firstLoad) {
+      this.handleTakePhoto();
+      this.setData({
+        firstLoad: false,
+      })
+    }
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
         selected: 2,
       });
+      // this.handleTakePhoto();
+
     }
-  },
-
-  handleToggleFlash() {
-    const currentIndex = flashModes.indexOf(this.data.flashMode);
-    const nextMode = flashModes[(currentIndex + 1) % flashModes.length];
-    const flashLabelMap: Record<'off' | 'on' | 'auto', string> = {
-      off: '闪光灯关',
-      on: '闪光灯开',
-      auto: '闪光灯自动',
-    };
-    this.setData({
-      flashMode: nextMode,
-      flashModeLabel: flashLabelMap[nextMode],
-    });
-  },
-
-  handleSwitchCamera() {
-    const devicePosition = this.data.devicePosition === 'back' ? 'front' : 'back';
-    this.setData({
-      devicePosition,
-    });
   },
 
   handleTakePhoto() {
@@ -59,9 +39,6 @@ Page({
     this.chooseMedia(['album', 'camera']);
   },
 
-  handleHintTap() {
-    this.handleOpenAlbum();
-  },
 
   chooseMedia(sourceType: Array<'album' | 'camera'>) {
     wx.chooseMedia({
@@ -69,7 +46,7 @@ Page({
       mediaType: ['image', 'video'],
       sourceType,
       maxDuration: 30,
-      camera: this.data.devicePosition,
+      camera: 'back',
       success: (res) => {
         const file = res.tempFiles?.[0];
         if (!file) {
@@ -149,20 +126,44 @@ Page({
     }
   },
 
+  parseUploadResponse(rawData: any) {
+    if (typeof rawData === 'object') {
+      return rawData;
+    }
+    if (typeof rawData !== 'string') {
+      return {};
+    }
+    try {
+      return JSON.parse(rawData);
+    } catch (error) {
+      try {
+        const decoded = decodeURIComponent(escape(rawData));
+        return JSON.parse(decoded);
+      } catch (decodeError) {
+        console.warn('无法解析上传返回数据', rawData, decodeError);
+        return {
+          message: rawData,
+        };
+      }
+    }
+  },
+
   async uploadImage(filePath: string) {
     const { token } = await getLoginStatus();
     return new Promise<any>((resolve, reject) => {
       wx.uploadFile({
-        url: `${base_url}/${base_api}/imageSearch`,
-        filePath,
-        name: 'file',
+        url: `${base_url}/${base_api}/v1/imageSearch`,
         header: {
           'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',  
           Authorization: token ? `Bearer ${token}` : '',
         },
+        filePath,
+        name: 'file',
         success: (res) => {
           try {
-            const data = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+            const data = this.parseUploadResponse(res.data);
+            // debugger
             resolve(data);
           } catch (error) {
             reject(error);
