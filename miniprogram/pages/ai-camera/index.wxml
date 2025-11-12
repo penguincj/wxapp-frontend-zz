@@ -84,7 +84,14 @@
           </view>
           <view class="feedback-btnlist">
             <view class="feedback-cancel-btn" bindtap="handleCancelFeedback">取消</view>
-            <view class="feedback-submit-btn" bindtap="handleSubmitFeedback">生成鉴定反馈</view>
+            <view
+            class="feedback-submit-btn"
+            bindtap="handleSubmitFeedback"
+            loading="{{submittingFeedback}}"
+            disabled="{{submittingFeedback}}"
+          >
+            生成鉴定反馈
+          </view>
 
           </view>
         </scroll-view>

@@ -186,6 +186,13 @@ export const sendFeedback = (_userid: any, options: any) => {
     return request(`/${base_api}/v1/users/${_userid}/complain`, options)
 }
 
+export const appendExhibitImage = (imageId: number, data: { appended_text: string; appended_images: string[] }) => {
+    return request(`/${base_api}/v1/exhibitImages/${imageId}/append`, {
+        method: 'POST',
+        data,
+    })
+}
+
 // 社区
 
 // 社区-查询评分及评价列表

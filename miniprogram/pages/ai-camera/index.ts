@@ -1,4 +1,4 @@
-import { base_api } from '../../api/api';
+import { base_api, appendExhibitImage } from '../../api/api';
 import { base_url, getLoginStatus } from '../../utils/util';
 
 
@@ -23,6 +23,8 @@ Page({
     showFeedbackForm: false,
     feedbackText: '',
     feedbackImages: [] as string[],
+    exhibitImageId: null as number | null,
+    submittingFeedback: false,
   },
 
   onShow() {
@@ -88,6 +90,7 @@ Page({
           showFeedbackForm: false,
           feedbackText: '',
           feedbackImages: [],
+          submittingFeedback: false,
         });
         this.processImage(filePath);
       },
@@ -126,6 +129,9 @@ Page({
       const exhibit = payload.exhibit || {};
       const search_res = payload || {};
       const audio = payload.audio || {};
+      const exhibit_image_id =
+        payload.exhibit_image_id ||
+        null;
       this.setData({
         recognitionResult: {
           title,
@@ -145,15 +151,16 @@ Page({
               image_url: exhibit.image_url,
               description: exhibit.description || desc,
               content: search_res.package_audio_content,
-              audio: audio.title
+              audio: search_res.package_audio_url
                 ? {
-                    title: audio.title,
-                    duration: audio.duration || '00:00',
-                    cover: audio.cover || exhibit.image_url,
+                    title: exhibit.name,
+                    duration: search_res.package_audio_duration || '00:00',
+                    cover: exhibit.image_url,
                   }
                 : undefined,
             }
           : null,
+        exhibitImageId: exhibit_image_id,
       });
     } catch (error: any) {
       const errMsg = error?.message || error?.errMsg || '识别失败，请稍后重试';
@@ -164,9 +171,11 @@ Page({
         showExhibitOverlay: false,
         showResultPage: false,
         exhibitDetail: null,
+        exhibitImageId: null,
         showFeedbackForm: false,
         feedbackText: '',
         feedbackImages: [],
+        submittingFeedback: false,
       });
       if (!error?.errMsg?.includes('cancel')) {
         wx.showToast({
@@ -278,7 +287,8 @@ Page({
   },
 
   handleRemoveFeedbackImage(e: WechatMiniprogram.BaseEvent) {
-    const { index } = e.currentTarget.dataset;
+    const { index } = e.currentTarget.dataset || {};
+    if (index === undefined) return;
     const next = [...this.data.feedbackImages];
     next.splice(index, 1);
     this.setData({
@@ -286,23 +296,101 @@ Page({
     });
   },
 
-  handleSubmitFeedback() {
-    if (!this.data.feedbackText.trim()) {
+  async uploadFeedbackImage(filePath: string) {
+    const { token } = await getLoginStatus();
+    return new Promise<string>((resolve, reject) => {
+      wx.uploadFile({
+        url: `${base_url}/${base_api}/v1/storage/image`,
+        header: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: token ? `Bearer ${token}` : '',
+        },
+        filePath,
+        name: 'file',
+        success: (res) => {
+          try {
+            const data = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+            if ((data.code === 0 && data.url) || data.url) {
+              resolve(data.url);
+            } else {
+              reject(new Error((data && data.message) || '上传失败'));
+            }
+          } catch (error) {
+            reject(error);
+          }
+        },
+        fail: reject,
+      });
+    });
+  },
+
+  async uploadFeedbackImages() {
+    const images = this.data.feedbackImages || [];
+    const result: string[] = [];
+    for (const item of images) {
+      if (!item) continue;
+      if (/^(https?:)?\/\//.test(item) || item.startsWith('/storage/')) {
+        result.push(item);
+      } else {
+        const uploaded = await this.uploadFeedbackImage(item);
+        result.push(uploaded);
+      }
+    }
+    return result;
+  },
+
+  async handleSubmitFeedback() {
+    if (this.data.submittingFeedback) {
+      return;
+    }
+    if (!this.data.exhibitImageId) {
       wx.showToast({
-        title: '请先填写文案',
+        title: '缺少图像ID',
         icon: 'none',
       });
       return;
     }
-    wx.showToast({
-      title: '提交成功',
-      icon: 'success',
-    });
+    if (!this.data.feedbackText.trim() && this.data.feedbackImages.length === 0) {
+      wx.showToast({
+        title: '请填写内容或上传图片',
+        icon: 'none',
+      });
+      return;
+    }
     this.setData({
-      showFeedbackForm: false,
-      feedbackText: '',
-      feedbackImages: [],
+      submittingFeedback: true,
     });
+    try {
+      const appended_images = await this.uploadFeedbackImages();
+      const appended_text = this.data.feedbackText.trim();
+      const response: any = await appendExhibitImage(this.data.exhibitImageId, {
+        appended_text,
+        appended_images,
+      });
+      if (!response || response.code !== 0) {
+        throw new Error((response && response.message) || '提交失败');
+      }
+      wx.showToast({
+        title: '提交成功',
+        icon: 'success',
+      });
+      this.setData({
+        showFeedbackForm: false,
+        showResultPage: true,
+        feedbackText: '',
+        feedbackImages: [],
+      });
+    } catch (error) {
+      console.error('handleSubmitFeedback error', error);
+      wx.showToast({
+        title: '提交失败，请稍后重试',
+        icon: 'none',
+      });
+    } finally {
+      this.setData({
+        submittingFeedback: false,
+      });
+    }
   },
 
   handleShareAppMessage() {
