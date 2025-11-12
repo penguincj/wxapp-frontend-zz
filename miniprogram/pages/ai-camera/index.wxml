@@ -15,6 +15,80 @@
   <view class="ai-camera-page">
     <view class="preview-area">
       <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image>
+      <view wx:if="{{showExhibitOverlay && exhibitResult}}" class="exhibit-overlay">
+        <view class="exhibit-card">
+          <image class="exhibit-card-image" src="{{exhibitResult.image}}" mode="aspectFill"></image>
+          <view class="exhibit-card-name">{{exhibitResult.name}}</view>
+        </view>
+        <view class="exhibit-action-row">
+          <view class="exhibit-btn" bindtap="handleRetakeExhibit">
+            <text class="exhibit-btn-icon">&#8635;</text>
+          </view>
+          <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
+            <text class="exhibit-btn-icon">&#10003;</text>
+          </view>
+          <view class="exhibit-btn" bindtap="handleCloseExhibitOverlay">
+            <text class="exhibit-btn-icon">&#10005;</text>
+          </view>
+        </view>
+      </view>
+      <view class="search-result" wx:if="{{showResultPage && exhibitDetail}}">
+        <scroll-view scroll-y="{{true}}" class="search-result-scroll">
+          <view class="result-hero">
+            <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFill"></image>
+            <view class="result-title">{{exhibitDetail.name}}</view>
+          </view>
+          <view class="result-section">
+            <view class="section-title">文物名片</view>
+            <view class="section-desc">{{exhibitDetail.content}}</view>
+          </view>
+          <view class="audio-card" wx:if="{{exhibitDetail.audio}}">
+            <image class="audio-cover" src="{{exhibitDetail.audio.cover}}" mode="aspectFill"></image>
+            <view class="audio-info">
+              <view class="audio-title">{{exhibitDetail.audio.title}}</view>
+              <view class="audio-meta">⏱ {{exhibitDetail.audio.duration}}</view>
+            </view>
+            <button class="audio-play-btn" type="default" size="mini">听讲解</button>
+          </view>
+          <view class="result-footer">
+            <text>识别内容不准确？点击查看</text>
+            <text class="footer-link" bindtap="handleOpenMore">更多内容</text>
+          </view>
+        </scroll-view>
+      </view>
+      <view class="fankui-area" wx:if="{{showFeedbackForm}}">
+        <scroll-view scroll-y="{{true}}" class="fankui-scroll">
+          <view class="fankui-title">记录「考古」，分享给更多岛民</view>
+          <image class="fankui-preview" src="{{exhibitDetail.image_url || previewImage}}" mode="aspectFill"></image>
+          <view class="fankui-textbox">
+            <textarea
+              class="fankui-textarea"
+              placeholder="写点鉴定依据吧～我们会更快的丰富藏宝库..."
+              placeholder-class="fankui-placeholder"
+              value="{{feedbackText}}"
+              bindinput="handleFeedbackInput"
+              maxlength="500"
+            ></textarea>
+            <view class="fankui-upload-list">
+              <block wx:for="{{feedbackImages}}" wx:key="*this">
+                <view class="upload-thumb">
+                  <image src="{{item}}" mode="aspectFill"></image>
+                  <view class="upload-remove" bindtap="handleRemoveFeedbackImage" data-index="{{index}}">×</view>
+                </view>
+              </block>
+              <view class="upload-add" bindtap="handleAddFeedbackImage">
+                <text class="upload-add-plus">+</text>
+                <text class="upload-add-label">拍摄展签</text>
+              </view>
+            </view>
+          </view>
+          <view class="feedback-btnlist">
+            <view class="feedback-cancel-btn" bindtap="handleCancelFeedback">取消</view>
+            <view class="feedback-submit-btn" bindtap="handleSubmitFeedback">生成鉴定反馈</view>
+
+          </view>
+        </scroll-view>
+      </view>
       
     </view>
 

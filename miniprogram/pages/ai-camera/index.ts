@@ -7,6 +7,22 @@ Page({
     previewImage: '',
     isRecognizing: false,
     firstLoad: true,
+    exhibitResult: null as null | { name: string; image: string },
+    showExhibitOverlay: false,
+    recognitionResult: null as null | { title: string; desc: string },
+    recognitionError: '',
+    lastPhoto: '',
+    showResultPage: false,
+    exhibitDetail: null as null | {
+      name: string;
+      image_url: string;
+      description: string;
+      content: string;
+      audio?: { title: string; duration: string; cover: string };
+    },
+    showFeedbackForm: false,
+    feedbackText: '',
+    feedbackImages: [] as string[],
   },
 
   onShow() {
@@ -65,6 +81,13 @@ Page({
           lastPhoto: filePath,
           recognitionResult: null,
           recognitionError: '',
+          exhibitResult: null,
+          showExhibitOverlay: false,
+          showResultPage: false,
+          exhibitDetail: null,
+          showFeedbackForm: false,
+          feedbackText: '',
+          feedbackImages: [],
         });
         this.processImage(filePath);
       },
@@ -100,18 +123,50 @@ Page({
         payload.result ||
         payload.message ||
         'AI识别完成';
+      const exhibit = payload.exhibit || {};
+      const search_res = payload || {};
+      const audio = payload.audio || {};
       this.setData({
         recognitionResult: {
           title,
           desc,
         },
         recognitionError: '',
+        exhibitResult: exhibit.image_url
+          ? {
+              name: exhibit.name || title,
+              image: exhibit.image_url,
+            }
+          : null,
+        showExhibitOverlay: !!exhibit.image_url,
+        exhibitDetail: exhibit.image_url
+          ? {
+              name: exhibit.name || title,
+              image_url: exhibit.image_url,
+              description: exhibit.description || desc,
+              content: search_res.package_audio_content,
+              audio: audio.title
+                ? {
+                    title: audio.title,
+                    duration: audio.duration || '00:00',
+                    cover: audio.cover || exhibit.image_url,
+                  }
+                : undefined,
+            }
+          : null,
       });
     } catch (error: any) {
       const errMsg = error?.message || error?.errMsg || '识别失败，请稍后重试';
       this.setData({
         recognitionError: errMsg,
         recognitionResult: null,
+        exhibitResult: null,
+        showExhibitOverlay: false,
+        showResultPage: false,
+        exhibitDetail: null,
+        showFeedbackForm: false,
+        feedbackText: '',
+        feedbackImages: [],
       });
       if (!error?.errMsg?.includes('cancel')) {
         wx.showToast({
@@ -171,6 +226,82 @@ Page({
         },
         fail: reject,
       });
+    });
+  },
+
+  handleRetakeExhibit() {
+    this.setData({
+      showExhibitOverlay: false,
+    });
+    this.handleTakePhoto();
+  },
+
+  handleConfirmExhibit() {
+    this.setData({
+      showExhibitOverlay: false,
+      showResultPage: true,
+    });
+  },
+
+  handleCloseExhibitOverlay() {
+    this.setData({
+      showExhibitOverlay: false,
+    });
+  },
+
+  handleOpenMore() {
+    this.setData({
+      showFeedbackForm: true,
+      showResultPage: false,
+    });
+  },
+
+  handleFeedbackInput(e: WechatMiniprogram.TextareaInput) {
+    this.setData({
+      feedbackText: e.detail.value,
+    });
+  },
+
+  handleAddFeedbackImage() {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const file = res.tempFiles?.[0];
+        if (!file) return;
+        this.setData({
+          feedbackImages: [...this.data.feedbackImages, file.tempFilePath],
+        });
+      },
+    });
+  },
+
+  handleRemoveFeedbackImage(e: WechatMiniprogram.BaseEvent) {
+    const { index } = e.currentTarget.dataset;
+    const next = [...this.data.feedbackImages];
+    next.splice(index, 1);
+    this.setData({
+      feedbackImages: next,
+    });
+  },
+
+  handleSubmitFeedback() {
+    if (!this.data.feedbackText.trim()) {
+      wx.showToast({
+        title: '请先填写文案',
+        icon: 'none',
+      });
+      return;
+    }
+    wx.showToast({
+      title: '提交成功',
+      icon: 'success',
+    });
+    this.setData({
+      showFeedbackForm: false,
+      feedbackText: '',
+      feedbackImages: [],
     });
   },
 
