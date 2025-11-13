@@ -12,7 +12,7 @@
         <view class="card-info">
           <view class="card-title">{{exhibition.name}}</view>
           <view class="card-desc">
-            <view class="exhibition-name">{{exhibition.exhibition_name}}</view>
+            <view wx:if="{{exhibition.exhibition_name}}" class="exhibition-name">{{exhibition.exhibition_name}}</view>
             <view class="desc-item">
               <image class="item-icon" src="/static/images/time-xiao.png" mode="aspectFix" />
               {{exhibition.duration_fmt}}
