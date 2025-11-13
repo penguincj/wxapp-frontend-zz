@@ -1,5 +1,5 @@
 import { base_api, appendExhibitImage } from '../../api/api';
-import { base_url, getLoginStatus, calTimeDurationTxt } from '../../utils/util';
+import { base_url, getLoginStatus, getLocation, calTimeDurationTxt } from '../../utils/util';
 
 
 Page({
@@ -161,7 +161,7 @@ Page({
               name: exhibit.name || title,
               image_url: exhibit.image_url,
               description: exhibit.description || desc,
-              content: search_res.package_audio_content,
+              content: search_res.is_llm ? exhibit.description : search_res.package_audio_content,
               audio: audioInfo || undefined,
             }
           : null,
@@ -228,11 +228,26 @@ Page({
     }
   },
 
+  async getLatestLatLng() {
+    try {
+      return await getLocation();
+    } catch (error) {
+      const latitude = wx.getStorageSync('latitude');
+      const longitude = wx.getStorageSync('longitude');
+      return {
+        latitude,
+        longitude,
+      };
+    }
+  },
+
   async uploadImage(filePath: string) {
     const { token } = await getLoginStatus();
+    // @ts-expect-error
+    const { latitude, longitude } = await this.getLatestLatLng();
     return new Promise<any>((resolve, reject) => {
       wx.uploadFile({
-        url: `${base_url}/${base_api}/v1/imageSearch`,
+        url: `${base_url}/${base_api}/v1/imageSearchAuto`,
         header: {
           'Content-Type': 'multipart/form-data',
           'Accept': 'application/json',  
@@ -240,6 +255,10 @@ Page({
         },
         filePath,
         name: 'file',
+        formData: {
+          ...(latitude !== undefined && latitude !== null ? { lat: `${latitude}` } : {}),
+          ...(longitude !== undefined && longitude !== null ? { lng: `${longitude}` } : {}),
+        },
         success: (res) => {
           try {
             const data = this.parseUploadResponse(res.data);
