@@ -97,6 +97,7 @@ Page({
         this.processImage(filePath);
       },
       fail: (error) => {
+        wx.navigateBack();
         if (error?.errMsg?.includes('cancel')) {
           return;
         }

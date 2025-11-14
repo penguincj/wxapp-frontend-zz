@@ -19,7 +19,7 @@ const itemConfig = [
     name: '拍照识文物',
     icon: '/static/images/ijiangjie.png',
     iconClicked: '/static/images/ijiangjie-c.png',
-    link: '/pages/ai-camera/index',
+    link: '/pages/take-photo/index',
   },
   {
     id: 3,

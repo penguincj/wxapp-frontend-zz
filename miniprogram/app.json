@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/ai-camera/index",
+    "pages/take-photo/index",
     "pages/citylist/index",
     "pages/exhibitlist/index",
     "pages/exhibitdetail/index",
@@ -97,7 +98,7 @@
       },
       {
         "current": 2,
-        "pagePath": "pages/ai-camera/index",
+        "pagePath": "pages/take-photo/index",
         "text": "拍照识文物",
         "iconPath": "/static/images/ijiangjie.png",
         "selectedIconPath": "/static/images/ijiangjie-c.png"

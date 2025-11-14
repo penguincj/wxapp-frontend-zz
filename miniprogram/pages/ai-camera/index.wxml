@@ -1,7 +1,7 @@
 <page-meta page-style="background: #000000;">
   <navigation-bar
     title="AI拍摄文物"
-    back="{{false}}"
+    back="{{true}}"
     color="white"
     background="#000000"
     styleType="light"
