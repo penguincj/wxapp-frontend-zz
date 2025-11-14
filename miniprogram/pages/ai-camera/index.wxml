@@ -17,6 +17,7 @@
       <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image>
       <view wx:if="{{isRecognizing}}" class="recognizing-overlay">
         <view class="recognize-visual">
+          <image class="recognize-bg" src="{{previewImage}}" mode="aspectFill"></image>
           <view class="recognize-frame">
             <view class="recognize-corner top-left"></view>
             <view class="recognize-corner top-right"></view>
@@ -34,13 +35,13 @@
         </view>
         <view class="exhibit-action-row">
           <view class="exhibit-btn" bindtap="handleRetakeExhibit">
-            <text class="exhibit-btn-icon">&#8635;</text>
+            <image class="exhibit-btn-icon" src="/static/images/ca-rotate.png" />
           </view>
           <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
-            <text class="exhibit-btn-icon">&#10003;</text>
+            <image class="exhibit-btn-icon-big" src="/static/images/ca-yes.png" />
           </view>
           <view class="exhibit-btn" bindtap="handleCloseExhibitOverlay">
-            <text class="exhibit-btn-icon">&#10005;</text>
+            <image class="exhibit-btn-icon" src="/static/images/ca-close.png" />
           </view>
         </view>
       </view>
