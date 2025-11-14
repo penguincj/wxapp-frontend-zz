@@ -23,6 +23,11 @@
       <text class="scan-hint-text">正在加速翻找岛屿藏宝库，请稍后~</text>
       <text class="scan-percent">90%</text>
     </view>
+    <view class="take-photo-tips">
+      <text>· 请勿使用闪光灯</text>
+      <text>· 请对准中间位置</text>
+      <text>· 保持手持稳定</text>
+    </view>
     <button class="take-photo-btn" bindtap="handleClickTakePhoto">开始识别</button>
   </view>
 
