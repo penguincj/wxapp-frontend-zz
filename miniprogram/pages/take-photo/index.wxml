@@ -14,7 +14,7 @@
 
   <view class="take-photo-page">
     <view class="scan-visual">
-      <view class="scan-frame">
+      <view class="scan-frame" style="background-image: url('../../static/images/daoyujiangjie.png')">
         <view class="corner top-left"></view>
         <view class="corner top-right"></view>
         <view class="corner bottom-left"></view>
@@ -23,7 +23,7 @@
       <text class="scan-hint-text">正在加速翻找岛屿藏宝库，请稍后~</text>
       <text class="scan-percent">90%</text>
     </view>
-    <button bindtap="handleClickTakePhoto">开始识别</button>
+    <button class="take-photo-btn" bindtap="handleClickTakePhoto">开始识别</button>
   </view>
 
   <custom-tab-bar></custom-tab-bar>
