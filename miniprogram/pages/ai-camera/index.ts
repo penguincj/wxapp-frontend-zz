@@ -60,13 +60,14 @@ Page({
 
 
   chooseMedia(sourceType: Array<'album' | 'camera'>) {
+    const that = this;
     wx.chooseMedia({
       count: 1,
       mediaType: ['image', 'video'],
       sourceType,
       maxDuration: 30,
       camera: 'back',
-      success: (res) => {
+      success: async (res) => {
         const file = res.tempFiles?.[0];
         if (!file) {
           return;
@@ -136,7 +137,7 @@ Page({
         ? {
             title: search_res.package_audio_title || exhibit.name || title,
             duration: search_res.package_audio_duration || '00:00',
-            cover: search_res.package_audio_cover || exhibit.image_url,
+            cover: exhibit.image_url || search_res.uploaded_image_url,
             audio_url: search_res.package_audio_url,
             id: search_res.package_audio_id || exhibit.id || 0,
           }
@@ -150,17 +151,17 @@ Page({
           desc,
         },
         recognitionError: '',
-        exhibitResult: exhibit.image_url
+        exhibitResult: search_res.uploaded_image_url
           ? {
               name: exhibit.name || title,
-              image: exhibit.image_url,
+              image: exhibit.image_url || search_res.uploaded_image_url,
             }
           : null,
-        showExhibitOverlay: !!exhibit.image_url,
-        exhibitDetail: exhibit.image_url
+        showExhibitOverlay: !!(exhibit.image_url || search_res.uploaded_image_url),
+        exhibitDetail: exhibit.name
           ? {
               name: exhibit.name || title,
-              image_url: exhibit.image_url,
+              image_url: exhibit.image_url || search_res.uploaded_image_url,
               description: exhibit.description || desc,
               content: search_res.is_llm ? exhibit.description : search_res.package_audio_content,
               audio: audioInfo || undefined,
@@ -179,6 +180,7 @@ Page({
           : null,
       });
     } catch (error: any) {
+      console.log(error)
       const errMsg = error?.message || error?.errMsg || '识别失败，请稍后重试';
       this.setData({
         recognitionError: errMsg,
@@ -263,7 +265,7 @@ Page({
         success: (res) => {
           try {
             const data = this.parseUploadResponse(res.data);
-            // debugger
+            debugger
             resolve(data);
           } catch (error) {
             reject(error);
@@ -343,7 +345,7 @@ Page({
     const { token } = await getLoginStatus();
     return new Promise<string>((resolve, reject) => {
       wx.uploadFile({
-        url: `${base_url}/${base_api}/v1/storage/image`,
+        url: `${base_url}/${base_api}/v1/images/simple`,
         header: {
           'Content-Type': 'multipart/form-data',
           Authorization: token ? `Bearer ${token}` : '',
