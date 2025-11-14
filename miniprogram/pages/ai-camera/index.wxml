@@ -15,6 +15,18 @@
   <view class="ai-camera-page">
     <view class="preview-area">
       <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image>
+      <view wx:if="{{isRecognizing}}" class="recognizing-overlay">
+        <view class="recognize-visual">
+          <view class="recognize-frame">
+            <view class="recognize-corner top-left"></view>
+            <view class="recognize-corner top-right"></view>
+            <view class="recognize-corner bottom-left"></view>
+            <view class="recognize-corner bottom-right"></view>
+            <view class="recognize-scan-line"></view>
+          </view>
+          <text class="recognize-hint">AI 正在识别这件宝物，请稍候…</text>
+        </view>
+      </view>
       <view wx:if="{{showExhibitOverlay && exhibitResult}}" class="exhibit-overlay">
         <view class="exhibit-card">
           <image class="exhibit-card-image" src="{{exhibitResult.image}}" mode="aspectFill"></image>
