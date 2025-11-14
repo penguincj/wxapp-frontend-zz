@@ -68,11 +68,19 @@
 
 .scan-hint-text {
     position: absolute;
-    bottom: 60rpx;
+    left: 50%;
+    top: 80rpx;
+    transform: translate(-50%, -100rpx);
     font-size: 28rpx;
-    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     text-align: center;
-    padding: 0 20rpx;
+    padding: 14rpx 40rpx;
+    border-radius: 999rpx;
+    color: rgba(5, 8, 11, 0.45);
+    box-shadow: 0 18rpx 40rpx rgba(0, 0, 0, 0.55);
+    animation: hintScan 3.2s linear infinite alternate;
+    letter-spacing: 2rpx;
+    width: 100%;
 }
 
 .scan-percent {
@@ -80,7 +88,23 @@
     bottom: 20rpx;
     font-size: 48rpx;
     color: #fff;
-    font-weight: 500;
+    font-weight: 600;
+    text-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.6);
+}
+
+@keyframes hintScan {
+    0% {
+        transform: translate(-50%, -160rpx);
+        opacity: 0.7;
+    }
+    // 45% {
+    //     transform: translate(-50%, -10rpx);
+    //     opacity: 1;
+    // }
+    100% {
+        transform: translate(-50%, 360rpx);
+        opacity: 0.8;
+    }
 }
 
 .take-photo-tips {

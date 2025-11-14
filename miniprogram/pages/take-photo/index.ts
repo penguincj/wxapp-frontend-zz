@@ -4,8 +4,10 @@ import { base_url, getLoginStatus, getLocation, calTimeDurationTxt } from '../..
 
 Page({
   data: {
-    
+    scanPercent: 1,
   },
+
+  scanTimer: null as ReturnType<typeof setInterval> | null,
 
   onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
@@ -15,12 +17,43 @@ Page({
       // this.handleTakePhoto();
 
     }
+    this.startScanProgress();
+  },
+
+  onHide() {
+    this.stopScanProgress();
+  },
+
+  onUnload() {
+    this.stopScanProgress();
   },
 
   handleClickTakePhoto() {
+    this.stopScanProgress();
     wx.navigateTo({
       url: '/pages/ai-camera/index'
     })
+  },
+
+  startScanProgress() {
+    this.stopScanProgress();
+    let percent = 1;
+    this.setData({
+      scanPercent: percent,
+    });
+    this.scanTimer = setInterval(() => {
+      percent = percent >= 100 ? 1 : percent + 1;
+      this.setData({
+        scanPercent: percent,
+      });
+    }, 40);
+  },
+
+  stopScanProgress() {
+    if (this.scanTimer) {
+      clearInterval(this.scanTimer);
+      this.scanTimer = null;
+    }
   },
 
 
