@@ -26,6 +26,7 @@ Page({
     exhibitImageId: null as number | null,
     submittingFeedback: false,
     dailyListenExhibit: null as any,
+    showFeedbackSuccessOverlay: false,
   },
 
   onShow() {
@@ -426,6 +427,7 @@ Page({
         showResultPage: true,
         feedbackText: '',
         feedbackImages: [],
+        showFeedbackSuccessOverlay: true,
       });
     } catch (error) {
       console.error('handleSubmitFeedback error', error);
@@ -442,6 +444,13 @@ Page({
 
   handlePlayDailyListen() {
     // reserved for analytics or extra logic
+  },
+
+  handleFeedbackSuccessReturn() {
+    this.setData({
+      showFeedbackSuccessOverlay: false,
+    });
+    wx.navigateBack();
   },
 
   handleShareAppMessage() {

@@ -109,6 +109,22 @@
           </view>
         </scroll-view>
       </view>
+      <view wx:if="{{showFeedbackSuccessOverlay}}" class="feedback-success-overlay">
+        <view class="feedback-success-card">
+          <image
+            class="feedback-success-image"
+            src="/static/images/airobot.png"
+            mode="aspectFit"
+          ></image>
+          <text class="feedback-success-title">已将鉴定请求发送给博物岛屿平台，努力丰富宝藏库中，谢谢理解～</text>
+          <view
+            class="feedback-success-button"
+            bindtap="handleFeedbackSuccessReturn"
+          >
+            返回
+          </view>
+        </view>
+      </view>
       
     </view>
 
