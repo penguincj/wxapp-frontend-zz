@@ -117,6 +117,7 @@ Page({
     });
     try {
       const response = await this.uploadImage(filePath);
+      
       const { code, data, result, message } = response || {};
       if (code !== undefined && code !== 0 && !data && !result) {
         throw new Error(message || '识别失败');
@@ -294,6 +295,7 @@ Page({
     this.setData({
       showExhibitOverlay: false,
     });
+    wx.navigateBack();
   },
 
   handleOpenMore() {

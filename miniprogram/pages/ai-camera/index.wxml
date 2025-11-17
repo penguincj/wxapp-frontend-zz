@@ -32,6 +32,7 @@
         <view class="exhibit-card">
           <image class="exhibit-card-image" src="{{exhibitResult.image}}" mode="aspectFill"></image>
           <view class="exhibit-card-name">{{exhibitResult.name}}</view>
+          <view class="exhibit-card-detail">{{exhibitResult.name === '当前不是文物' ?'当前不是文物，您可以返回重新拍摄': 'AI识别到这是'+exhibitResult.name+'，请确认是不是该文物' }}</view>
         </view>
         <view class="exhibit-action-row">
           <view class="exhibit-btn" bindtap="handleRetakeExhibit">
