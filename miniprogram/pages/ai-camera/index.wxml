@@ -17,7 +17,7 @@
       <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image>
       <view wx:if="{{isRecognizing}}" class="recognizing-overlay">
         <view class="recognize-visual">
-          <image class="recognize-bg" src="{{previewImage}}" mode="aspectFill"></image>
+          <image class="recognize-bg" src="{{previewImage}}" mode="aspectFit"></image>
           <view class="recognize-frame">
             <view class="recognize-corner top-left"></view>
             <view class="recognize-corner top-right"></view>
@@ -28,42 +28,33 @@
           <text class="recognize-hint">AI 正在识别这件宝物，请稍候…</text>
         </view>
       </view>
-      <view wx:if="{{showExhibitOverlay && exhibitResult}}" class="exhibit-overlay">
-        <view class="is-llm-test">{{search_res.is_llm? '大模型返回': '图片库返回'}}</view>
-        <view class="exhibit-card">
-          <image class="exhibit-card-image" src="{{exhibitResult.image}}" mode="aspectFill"></image>
-          <view class="exhibit-card-name">{{exhibitResult.name}}</view>
-          <view class="exhibit-card-detail">{{exhibitResult.name === '当前不是文物' ?'当前不是文物，您可以返回重新拍摄': 'AI识别到这是'+exhibitResult.name+'，请确认是不是该文物' }}</view>
-        </view>
-        <view class="exhibit-action-row">
-          <view class="exhibit-btn" bindtap="handleRetakeExhibit">
-            <image class="exhibit-btn-icon" src="/static/images/ca-rotate.png" />
-          </view>
-          <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
-            <image class="exhibit-btn-icon-big" src="/static/images/ca-yes.png" />
-          </view>
-          <view class="exhibit-btn" bindtap="handleCloseExhibitOverlay">
-            <image class="exhibit-btn-icon" src="/static/images/ca-close.png" />
-          </view>
-        </view>
-      </view>
+     
       <view class="search-result" wx:if="{{showResultPage && exhibitDetail}}">
         <scroll-view scroll-y="{{true}}" class="search-result-scroll">
           <view class="result-hero">
-            <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFill"></image>
+            <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
             <view class="result-title">{{exhibitDetail.name}}</view>
+            <view class="audio-section" wx:if="{{dailyListenExhibit}}">
+              <listen-simple
+                title=""
+                exhibition="{{dailyListenExhibit}}"
+                bindPlayDailyListen="handlePlayDailyListen"
+              ></listen-simple>
+            </view>
+          </view>
+          <view class="exhibit-action-row">
+            <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
+              <image class="exhibit-btn-icon" src="/static/images/ca-yes.png" />
+            </view>
+            <view class="exhibit-btn" bindtap="handleCloseExhibitOverlay">
+              <image class="exhibit-btn-icon" src="/static/images/ca-close.png" />
+            </view>
           </view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
             <view class="section-title">文物名片</view>
             <view class="content-group">
               <view class="section-desc">{{exhibitDetail.content}}</view>
-              <view class="audio-section" wx:if="{{dailyListenExhibit}}">
-                <listen-simple
-                  title=""
-                  exhibition="{{dailyListenExhibit}}"
-                  bindPlayDailyListen="handlePlayDailyListen"
-                ></listen-simple>
-              </view>
+             
             </view>
             
           </view>
@@ -78,7 +69,7 @@
       <view class="fankui-area" wx:if="{{showFeedbackForm}}">
         <scroll-view scroll-y="{{true}}" class="fankui-scroll">
           <view class="fankui-title">记录「考古」，分享给更多岛民</view>
-          <image class="fankui-preview" src="{{exhibitDetail.image_url || previewImage}}" mode="aspectFill"></image>
+          <image class="fankui-preview" src="{{exhibitDetail.image_url || previewImage}}" mode="aspectFit"></image>
           <view class="fankui-textbox">
             <textarea
               class="fankui-textarea"

@@ -1,8 +1,15 @@
 <view class="listen-simple-comp">
   
   <view class="card-area">
-    <view class="card-group" data-idx="{{exhibition.id}}" catchtap="handleClickPlay">
+    <!-- <view class="card-group" data-idx="{{exhibition.id}}" catchtap="handleClickPlay">
       <view class="card-txt">听讲解</view>
+      <view class="card-icon">
+        <image wx:if="{{isPlay}}" class="play-icon" src="/static/images/pause2.png" mode="aspectFix" catchtap="handleClickPause" />
+        <image wx:else class="play-icon" src="/static/images/play1.png" mode="aspectFix" />
+      </view>
+    </view> -->
+    <view class="card-group-v2" data-idx="{{exhibition.id}}" catchtap="handleClickPlay">
+      <!-- <view class="card-txt">听讲解</view> -->
       <view class="card-icon">
         <image wx:if="{{isPlay}}" class="play-icon" src="/static/images/pause2.png" mode="aspectFix" catchtap="handleClickPause" />
         <image wx:else class="play-icon" src="/static/images/play1.png" mode="aspectFix" />

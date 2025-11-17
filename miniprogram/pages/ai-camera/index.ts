@@ -8,7 +8,6 @@ Page({
     isRecognizing: false,
     firstLoad: true,
     exhibitResult: null as null | { name: string; image: string },
-    showExhibitOverlay: false,
     recognitionResult: null as null | { title: string; desc: string },
     recognitionError: '',
     lastPhoto: '',
@@ -53,6 +52,18 @@ Page({
     this.chooseMedia(['camera','album']);
   },
 
+  handleConfirmExhibit() {
+    wx.showToast({
+      title: '感谢反馈',
+      icon: 'none',
+      duration: 2000,
+    })
+  },
+
+  handleCloseExhibitOverlay() {
+    this.handleOpenMore();
+  },
+
   handleOpenAlbum() {
     if (this.data.isRecognizing) {
       return;
@@ -87,7 +98,6 @@ Page({
           recognitionResult: null,
           recognitionError: '',
           exhibitResult: null,
-          showExhibitOverlay: false,
           showResultPage: false,
           exhibitDetail: null,
           showFeedbackForm: false,
@@ -168,7 +178,7 @@ Page({
               image: search_res.uploaded_image_url,
             }
           : null,
-        showExhibitOverlay: !!(search_res.uploaded_image_url),
+        showResultPage: true,
         exhibitDetail: exhibit.name
           ? {
               name: exhibit.name || title,
@@ -197,7 +207,6 @@ Page({
         recognitionError: errMsg,
         recognitionResult: null,
         exhibitResult: null,
-        showExhibitOverlay: false,
         showResultPage: false,
         exhibitDetail: null,
         exhibitImageId: null,
@@ -284,27 +293,6 @@ Page({
         fail: reject,
       });
     });
-  },
-
-  handleRetakeExhibit() {
-    this.setData({
-      showExhibitOverlay: false,
-    });
-    this.handleTakePhoto();
-  },
-
-  handleConfirmExhibit() {
-    this.setData({
-      showExhibitOverlay: false,
-      showResultPage: true,
-    });
-  },
-
-  handleCloseExhibitOverlay() {
-    this.setData({
-      showExhibitOverlay: false,
-    });
-    wx.navigateBack();
   },
 
   handleOpenMore() {
