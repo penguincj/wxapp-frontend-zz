@@ -3,5 +3,6 @@
     "navigation-bar": "/components/navigation-bar/navigation-bar",
     "listen-simple": "/components/listen-simple/listen-simple"
   },
-  "disableScroll": true
+  "disableScroll": true,
+  "backgroundColor": "#242424"
 }

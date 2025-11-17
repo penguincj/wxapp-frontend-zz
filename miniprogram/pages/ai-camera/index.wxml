@@ -1,9 +1,9 @@
-<page-meta page-style="background: #000000;">
+<page-meta page-style="background: #242424;">
   <navigation-bar
     title="AI拍摄文物"
     back="{{true}}"
     color="white"
-    background="#000000"
+    background="#242424"
     styleType="light"
   >
     <!-- <view slot="right" class="flash-button" bindtap="handleToggleFlash">
@@ -41,11 +41,12 @@
             <view class="section-title">
               <text>文物名片</text>
               <view class="audio-section" wx:if="{{dailyListenExhibit}}">
-                <listen-simple
-                  title=""
-                  exhibition="{{dailyListenExhibit}}"
-                  bindPlayDailyListen="handlePlayDailyListen"
-                ></listen-simple>
+            <listen-simple
+              title=""
+              exhibition="{{dailyListenExhibit}}"
+              bindPlayDailyListen="handlePlayDailyListen"
+              id="dailyListenPlayer"
+            ></listen-simple>
               </view>
             </view>
             <view class="content-group">

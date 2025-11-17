@@ -45,6 +45,14 @@ Page({
     }
   },
 
+  onHide() {
+    this.stopDailyListenPlayback();
+  },
+
+  onUnload() {
+    this.stopDailyListenPlayback();
+  },
+
   handleTakePhoto() {
     if (this.data.isRecognizing) {
       return;
@@ -440,6 +448,13 @@ Page({
 
   handlePlayDailyListen() {
     // reserved for analytics or extra logic
+  },
+
+  stopDailyListenPlayback() {
+    const player = this.selectComponent('#dailyListenPlayer') as any;
+    if (player && typeof player.handleClickPause === 'function') {
+      player.handleClickPause();
+    }
   },
 
   handleFeedbackSuccessReturn() {
