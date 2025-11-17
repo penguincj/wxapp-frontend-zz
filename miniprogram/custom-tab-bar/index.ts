@@ -1,4 +1,5 @@
 import { getCurrentPageUrl, getCurrentPageParam, getCurrentPageParamStr } from "../utils/util";
+let specialMessageShown = false;
 const itemConfig = [
   {
     id: 0,
@@ -57,6 +58,7 @@ Component({
     selected: 0,
     urlParams: {},
     urlParamsStr: '',
+    showSpecialMessage: false,
   },
   /**
    * 组件的方法列表
@@ -88,7 +90,27 @@ Component({
 
   lifetimes: {
     attached() {
-      
+      if (!specialMessageShown) {
+        specialMessageShown = true;
+        this.setData({
+          showSpecialMessage: true,
+        });
+        const comp = this as any;
+        const timer = setTimeout(() => {
+          this.setData({
+            showSpecialMessage: false,
+          });
+          comp.specialMessageTimer = null;
+        }, 8000);
+        comp.specialMessageTimer = timer;
+      }
+    },
+    detached() {
+      const comp = this as any;
+      if (comp.specialMessageTimer) {
+        clearTimeout(comp.specialMessageTimer);
+        comp.specialMessageTimer = null;
+      }
     },
   },
   pageLifetimes: {
