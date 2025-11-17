@@ -73,6 +73,7 @@
         <custom-tab-bar currentkey="{{3}}"></custom-tab-bar>
       </view>
     </scroll-view>
+    <view class="debug-trigger-area" bindtap="handleProfileDebugTap"></view>
   </view>
   
 </page-meta>

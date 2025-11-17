@@ -1,5 +1,7 @@
 import { getCurrentPageParamStr, backToTargetPage } from "../../utils/util"
 const defaultAvatar = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const DEBUG_PAGE_URL = '/pages/we-debug/index';
+const DEBUG_TAP_INTERVAL = 600;
 
 Page({
   data: {
@@ -13,6 +15,10 @@ Page({
     canIUseNicknameComp: wx.canIUse('input.type.nickname'),
     radioSelected: false,
 
+  },
+  debugTapState: {
+    count: 0,
+    lastTap: 0,
   },
 
   // 事件处理函数
@@ -142,6 +148,24 @@ Page({
       },
     }
     return shareObj;
+  },
+
+  handleProfileDebugTap() {
+    const now = Date.now();
+    const sinceLast = now - (this.debugTapState.lastTap || 0);
+    if (sinceLast > DEBUG_TAP_INTERVAL) {
+      this.debugTapState.count = 1;
+    } else {
+      this.debugTapState.count += 1;
+    }
+    this.debugTapState.lastTap = now;
+
+    if (this.debugTapState.count >= 3) {
+      this.debugTapState.count = 0;
+      wx.navigateTo({
+        url: DEBUG_PAGE_URL,
+      });
+    }
   },
   
 

@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/ai-camera/index",
+    "pages/we-debug/index",
     "pages/take-photo/index",
     "pages/citylist/index",
     "pages/exhibitlist/index",
