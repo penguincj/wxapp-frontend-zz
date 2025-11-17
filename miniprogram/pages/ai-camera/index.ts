@@ -54,9 +54,9 @@ Page({
 
   handleConfirmExhibit() {
     wx.showToast({
-      title: '感谢反馈',
+      title: '太棒了，你离鉴藏家又更进一步！',
       icon: 'none',
-      duration: 2000,
+      duration: 3000,
     })
   },
 

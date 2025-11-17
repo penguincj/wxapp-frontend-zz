@@ -14,7 +14,7 @@
 
   <view class="ai-camera-page">
     <view class="preview-area">
-      <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image>
+      <!-- <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image> -->
       <view wx:if="{{isRecognizing}}" class="recognizing-overlay">
         <view class="recognize-visual">
           <image class="recognize-bg" src="{{previewImage}}" mode="aspectFit"></image>
@@ -30,28 +30,24 @@
       </view>
      
       <view class="search-result" wx:if="{{showResultPage && exhibitDetail}}">
-        <scroll-view scroll-y="{{true}}" class="search-result-scroll">
+        <view class="search-result-scroll">
           <view class="result-hero">
             <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
             <view class="result-title">{{exhibitDetail.name}}</view>
-            <view class="audio-section" wx:if="{{dailyListenExhibit}}">
-              <listen-simple
-                title=""
-                exhibition="{{dailyListenExhibit}}"
-                bindPlayDailyListen="handlePlayDailyListen"
-              ></listen-simple>
-            </view>
+            
           </view>
-          <view class="exhibit-action-row">
-            <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
-              <image class="exhibit-btn-icon" src="/static/images/ca-yes.png" />
-            </view>
-            <view class="exhibit-btn" bindtap="handleCloseExhibitOverlay">
-              <image class="exhibit-btn-icon" src="/static/images/ca-close.png" />
-            </view>
-          </view>
+         
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
-            <view class="section-title">文物名片</view>
+            <view class="section-title">
+              <text>文物名片</text>
+              <view class="audio-section" wx:if="{{dailyListenExhibit}}">
+                <listen-simple
+                  title=""
+                  exhibition="{{dailyListenExhibit}}"
+                  bindPlayDailyListen="handlePlayDailyListen"
+                ></listen-simple>
+              </view>
+            </view>
             <view class="content-group">
               <view class="section-desc">{{exhibitDetail.content}}</view>
              
@@ -64,7 +60,18 @@
             <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text>
             <text>反馈</text>
           </view>
-        </scroll-view>
+           
+        </view>
+        <view class="exhibit-action-row">
+          <view class="action-buttons">
+            <view class="exhibit-btn primary" bindtap="handleCloseExhibitOverlay">
+              <text>不准确</text>
+            </view>
+            <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
+              <text>结果正确</text>
+            </view>
+          </view>
+        </view>
       </view>
       <view class="fankui-area" wx:if="{{showFeedbackForm}}">
         <scroll-view scroll-y="{{true}}" class="fankui-scroll">
