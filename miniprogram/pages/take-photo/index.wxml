@@ -14,7 +14,7 @@
 
   <view class="take-photo-page">
     <view class="scan-visual">
-      <view class="scan-frame" style="background-image: url('../../static/images/daoyujiangjie.png')">
+      <view class="scan-frame" style="background-image: url('/static/images/daoyujiangjie.png')">
         <view class="corner top-left"></view>
         <view class="corner top-right"></view>
         <view class="corner bottom-left"></view>

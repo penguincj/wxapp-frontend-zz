@@ -398,9 +398,9 @@ Page({
       });
       return;
     }
-    if (!this.data.feedbackText.trim() && this.data.feedbackImages.length === 0) {
+    if (!this.data.feedbackImages.length) {
       wx.showToast({
-        title: '请填写内容或上传图片',
+        title: '请先拍摄展品标签',
         icon: 'none',
       });
       return;
