@@ -1,3 +1,4 @@
+import { debugPrint } from 'XrFrame/kanata/lib/frontend';
 import { base_api, appendExhibitImage } from '../../api/api';
 import { base_url, getLoginStatus, getLocation, calTimeDurationTxt } from '../../utils/util';
 
@@ -5,6 +6,7 @@ import { base_url, getLoginStatus, getLocation, calTimeDurationTxt } from '../..
 Page({
   data: {
     scanPercent: 1,
+    scanFrameImage: '/static/images/daoyujiangjie.png',
   },
 
   scanTimer: null as ReturnType<typeof setInterval> | null,
@@ -14,6 +16,7 @@ Page({
       this.getTabBar().setData({
         selected: 2,
       });
+      debugger
       // this.handleTakePhoto();
 
     }
@@ -31,8 +34,44 @@ Page({
   handleClickTakePhoto() {
     this.stopScanProgress();
     wx.navigateTo({
-      url: '/pages/ai-camera/index'
+      url: '/pages/ai-camera/index?opeation=camera'
     })
+      // wx.chooseMedia({
+      //   count: 1,
+      //   mediaType: ['image'],
+      //   sourceType: ['camera'],
+      //   camera: 'back',
+      //   success: async (res) => {
+      //     const file = res.tempFiles?.[0];
+      //     if (!file) {
+      //       return;
+      //     }
+      //     if (file.fileType && file.fileType !== 'image') {
+      //       wx.showToast({
+      //         title: '请选取图片',
+      //         icon: 'none',
+      //       });
+      //       return;
+      //     }
+      //     const filePath = file.tempFilePath;
+         
+      //   },
+      //   fail: (error) => {
+      //     if (error.errMsg.includes('auth deny')) {
+      //       // 用户拒绝了相机权限
+      //       wx.showToast({
+      //         title: '需要相机权限',
+      //         icon: 'none'
+      //       })
+      //     }
+         
+      //     console.error('chooseMedia error', error);
+      //     wx.showToast({
+      //       title: '无法打开相机/相册',
+      //       icon: 'none',
+      //     });
+      //   },
+      // });
   },
 
   startScanProgress() {

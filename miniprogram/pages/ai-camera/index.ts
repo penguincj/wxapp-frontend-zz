@@ -27,6 +27,7 @@ Page({
     submittingFeedback: false,
     dailyListenExhibit: null as any,
     showFeedbackSuccessOverlay: false,
+    search_res: {} as any,
   },
 
   onShow() {
@@ -49,7 +50,7 @@ Page({
     if (this.data.isRecognizing) {
       return;
     }
-    this.chooseMedia(['camera', 'album']);
+    this.chooseMedia(['camera','album']);
   },
 
   handleOpenAlbum() {
@@ -64,9 +65,8 @@ Page({
     const that = this;
     wx.chooseMedia({
       count: 1,
-      mediaType: ['image', 'video'],
+      mediaType: ['image'],
       sourceType,
-      maxDuration: 30,
       camera: 'back',
       success: async (res) => {
         const file = res.tempFiles?.[0];
@@ -99,6 +99,13 @@ Page({
         this.processImage(filePath);
       },
       fail: (error) => {
+        if (error.errMsg.includes('auth deny')) {
+          // 用户拒绝了相机权限
+          wx.showToast({
+            title: '需要相机权限',
+            icon: 'none'
+          })
+        }
         wx.navigateBack();
         if (error?.errMsg?.includes('cancel')) {
           return;
@@ -116,6 +123,7 @@ Page({
     this.setData({
       isRecognizing: true,
     });
+    debugger
     try {
       const response = await this.uploadImage(filePath);
       
@@ -139,7 +147,7 @@ Page({
         ? {
             title: search_res.package_audio_title || exhibit.name || title,
             duration: search_res.package_audio_duration || '00:00',
-            cover: exhibit.image_url || search_res.uploaded_image_url,
+            cover: search_res.uploaded_image_url,
             audio_url: search_res.package_audio_url,
             id: search_res.package_audio_id || exhibit.id || 0,
           }
@@ -148,6 +156,7 @@ Page({
         payload.exhibit_image_id ||
         null;
       this.setData({
+        search_res,
         recognitionResult: {
           title,
           desc,
@@ -156,14 +165,14 @@ Page({
         exhibitResult: search_res.uploaded_image_url
           ? {
               name: exhibit.name || title,
-              image: exhibit.image_url || search_res.uploaded_image_url,
+              image: search_res.uploaded_image_url,
             }
           : null,
-        showExhibitOverlay: !!(exhibit.image_url || search_res.uploaded_image_url),
+        showExhibitOverlay: !!(search_res.uploaded_image_url),
         exhibitDetail: exhibit.name
           ? {
               name: exhibit.name || title,
-              image_url: exhibit.image_url || search_res.uploaded_image_url,
+              image_url: search_res.uploaded_image_url,
               description: exhibit.description || desc,
               content: search_res.is_llm ? exhibit.description : search_res.package_audio_content,
               audio: audioInfo || undefined,
@@ -267,7 +276,6 @@ Page({
         success: (res) => {
           try {
             const data = this.parseUploadResponse(res.data);
-            debugger
             resolve(data);
           } catch (error) {
             reject(error);

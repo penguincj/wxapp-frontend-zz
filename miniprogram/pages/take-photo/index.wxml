@@ -1,7 +1,7 @@
 <page-meta page-style="background: #000000;">
   <navigation-bar
     title="AI拍摄文物"
-    back="{{false}}"
+    back="{{true}}"
     color="white"
     background="#000000"
     styleType="light"
@@ -14,7 +14,7 @@
 
   <view class="take-photo-page">
     <view class="scan-visual">
-      <view class="scan-frame">
+      <view class="scan-frame" style="background-image:url({{scanFrameImage}})">
         <view class="corner top-left"></view>
         <view class="corner top-right"></view>
         <view class="corner bottom-left"></view>
@@ -28,8 +28,8 @@
       <text>· 请对准中间位置</text>
       <text>· 保持手持稳定</text>
     </view>
-    <button class="take-photo-btn" bindtap="handleClickTakePhoto">开始识别</button>
+    <button class="take-photo-btn" bindtap="handleClickTakePhoto">跳转到新页面打开相机</button>
+    <button class="take-photo-btn" bindtap="handleClickTakePhoto">相册选择</button>
   </view>
 
-  <custom-tab-bar></custom-tab-bar>
 </page-meta>

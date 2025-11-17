@@ -20,7 +20,7 @@ const itemConfig = [
     name: '拍照识文物',
     icon: '/static/images/ijiangjie.png',
     iconClicked: '/static/images/ijiangjie-c.png',
-    link: '/pages/take-photo/index',
+    link: '/pages/ai-camera/index',
   },
   {
     id: 3,
@@ -72,6 +72,18 @@ Component({
       //   selectid: idx,
       // });
       if (item && item.link) {
+        if (item.id === 2) {
+          wx.navigateTo({
+            url: item.link + this.data.urlParamsStr,
+            success(res) {
+              // @ts-ignore
+              // this.tracker.report('custom_bar_switch_e6', {id: idx, name,})
+            },
+            fail(error) {
+              console.log(error)
+            }
+          })
+        }
         wx.switchTab({
           url: item.link + this.data.urlParamsStr,
           success(res) {

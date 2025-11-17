@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "daily-listen": "/components/daily-listen/daily-listen"
+    "listen-simple": "/components/listen-simple/listen-simple"
   },
   "disableScroll": true
 }

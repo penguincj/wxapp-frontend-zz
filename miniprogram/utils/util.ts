@@ -103,6 +103,26 @@ export const getLocation = async () => {
         resolve({latitude, longitude});
       },
       fail(res) {
+        wx.getSetting({
+          success(res) {
+            if (!res.authSetting['scope.userLocation']) {
+              wx.authorize({
+                scope: 'scope.userLocation',
+                success() { 
+                  /* 授权成功处理 */ 
+                },
+                fail() { 
+                  /* 引导打开设置页 */
+                  wx.showToast({
+                    title: '请开启位置权限',
+                    icon: 'none',
+                    duration: 2000
+                   })
+                 }
+              })
+            }
+          }
+        })
         reject(res);
         console.log('location error', res)
       }

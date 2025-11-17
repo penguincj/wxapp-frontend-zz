@@ -53,20 +53,21 @@
 }
 
 .recognize-frame {
-  width: 360rpx;
-  height: 360rpx;
+  width: 320rpx;
+  height: 320rpx;
   position: relative;
-  border-radius: 32rpx;
-  border: 2rpx solid rgba(255, 255, 255, 0.25);
-  overflow: hidden;
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: 80rpx;
 }
 
 .recognize-corner {
   position: absolute;
-  width: 70rpx;
-  height: 70rpx;
+  width: 60rpx;
+  height: 60rpx;
   border: 4rpx solid rgba(255, 255, 255, 0.85);
-  border-radius: 16rpx;
+  border-radius: 12rpx;
 }
 
 .recognize-corner.top-left {
@@ -315,7 +316,7 @@
   // background: rgba(255, 255, 255, 0.06);
   border-radius: 32rpx;
   padding: 32rpx 0;
-  margin-bottom: 30rpx;
+  margin-bottom: 10rpx;
 }
 
 .section-title {
@@ -330,9 +331,15 @@
   margin-bottom: -20rpx;
 }
 
-.section-desc {
+.content-group {
   background: #2d2c2c;
   padding: 32rpx;
+  position: relative;
+  padding-bottom: 120rpx;
+}
+.section-desc {
+  // background: #2d2c2c;
+  // padding: 32rpx;
 
   // background: red;
   font-size: 26rpx;
@@ -341,11 +348,18 @@
   border-bottom-left-radius: 20rpx;
   border-bottom-right-radius: 20rpx;
   border-top-right-radius: 20rpx;
+  max-height: calc(100vh - 1200rpx);
+  overflow: scroll;
   
 }
 
 .audio-section {
-  margin-bottom: 24rpx;
+  margin-top: 20rpx;
+  margin-bottom: 0rpx;
+  text-align: right;
+  position: absolute;
+  height: 100rpx;
+  right: 30rpx;
 }
 
 .result-footer {

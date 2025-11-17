@@ -29,6 +29,7 @@
         </view>
       </view>
       <view wx:if="{{showExhibitOverlay && exhibitResult}}" class="exhibit-overlay">
+        <view class="is-llm-test">{{search_res.is_llm? '大模型返回': '图片库返回'}}</view>
         <view class="exhibit-card">
           <image class="exhibit-card-image" src="{{exhibitResult.image}}" mode="aspectFill"></image>
           <view class="exhibit-card-name">{{exhibitResult.name}}</view>
@@ -54,18 +55,23 @@
           </view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
             <view class="section-title">文物名片</view>
-            <view class="section-desc">{{exhibitDetail.content}}</view>
+            <view class="content-group">
+              <view class="section-desc">{{exhibitDetail.content}}</view>
+              <view class="audio-section" wx:if="{{dailyListenExhibit}}">
+                <listen-simple
+                  title=""
+                  exhibition="{{dailyListenExhibit}}"
+                  bindPlayDailyListen="handlePlayDailyListen"
+                ></listen-simple>
+              </view>
+            </view>
+            
           </view>
-          <view class="audio-section" wx:if="{{dailyListenExhibit}}">
-            <daily-listen
-              title=""
-              exhibition="{{dailyListenExhibit}}"
-              bindPlayDailyListen="handlePlayDailyListen"
-            ></daily-listen>
-          </view>
+          
           <view class="result-footer">
-            <text>识别内容不准确？点击查看</text>
-            <text class="footer-link" bindtap="handleOpenMore">更多内容</text>
+            <text>识别内容不准确？欢迎</text>
+            <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text>
+            <text>反馈</text>
           </view>
         </scroll-view>
       </view>
