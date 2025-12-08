@@ -180,7 +180,7 @@ Page({
       res= await getIndexData(_lat, _lng);
     }
     if (res && res.code === 0) {
-      const { banner_list=[], city_list=[], current_city_id, daily_listen, exhibition_list=[], is_new, museum_list=[] } = res.data;
+      const { banner_list=[], city_list=[], current_city_id, daily_listen, exhibition_list=[], is_new, museum_list=[], enable_photo_recognition } = res.data;
       const museumList = museum_list.map((i: any, index: any) => ({...i, museum_name: (index+1) + '.' + i.museum_name}));
       const museumArrayList = this.generateMuseumArr(museumList);
       const exhibitionList = this.generateFlags(exhibition_list);
@@ -193,6 +193,12 @@ Page({
       }
       const bannerCurrentIndex = (is_new || banner_list.length < 3) ? 0 : 2;
       const duration_fmt = calTimeTxt(daily_listen.duration);
+      const enablePhotoRecognition = !!enable_photo_recognition;
+      getApp().globalData.enablePhotoRecognition = enablePhotoRecognition;
+      if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+        const tab = this.getTabBar();
+        tab?.updateIconList?.(enablePhotoRecognition);
+      }
       
       this.setData({
         bannerList: banner_list,

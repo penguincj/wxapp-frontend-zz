@@ -59,6 +59,8 @@ App<IAppOption>({
     version: '4.0.8',
     version_list: [],
     curVersionSwitch: 0,
+    // 默认不展示拍照识文物，待首页接口拉取后再决定
+    enablePhotoRecognition: false,
   },
   async onLaunch(options) {
     // 展示本地存储能力

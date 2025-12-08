@@ -1,5 +1,16 @@
 import { getCurrentPageUrl, getCurrentPageParam, getCurrentPageParamStr } from "../utils/util";
 let specialMessageShown = false;
+const getEnablePhotoRecognition = () => {
+  const app = getApp<IAppOption>();
+  // 默认不展示，待首页接口决定
+  return app?.globalData?.enablePhotoRecognition === true;
+};
+const buildIcons = (enablePhotoRecognition: boolean) => {
+  if (enablePhotoRecognition) {
+    return itemConfig;
+  }
+  return itemConfig.filter(i => i.id !== 2);
+};
 const itemConfig = [
   {
     id: 0,
@@ -54,7 +65,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    icons: itemConfig,
+    icons: buildIcons(getEnablePhotoRecognition()),
     selected: 0,
     urlParams: {},
     urlParamsStr: '',
@@ -64,10 +75,36 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    startSpecialMessage() {
+      if (specialMessageShown) return;
+      specialMessageShown = true;
+      this.setData({
+        showSpecialMessage: true,
+      });
+      const comp = this as any;
+      const timer = setTimeout(() => {
+        this.setData({
+          showSpecialMessage: false,
+        });
+        comp.specialMessageTimer = null;
+      }, 8000);
+      comp.specialMessageTimer = timer;
+    },
+    updateIconList(enablePhotoRecognition: boolean) {
+      const icons = buildIcons(enablePhotoRecognition);
+      if (enablePhotoRecognition) {
+        this.startSpecialMessage();
+      }
+      this.setData({
+        icons,
+        showSpecialMessage: enablePhotoRecognition ? this.data.showSpecialMessage : false,
+      });
+    },
     switchTab(e: any) {
       const {idx, name} =e.currentTarget.dataset;
       
       const item = itemConfig.find(i => i.id === idx);
+      if (!item) return;
       // this.setData({
       //   selectid: idx,
       // });
@@ -102,20 +139,8 @@ Component({
 
   lifetimes: {
     attached() {
-      if (!specialMessageShown) {
-        specialMessageShown = true;
-        this.setData({
-          showSpecialMessage: true,
-        });
-        const comp = this as any;
-        const timer = setTimeout(() => {
-          this.setData({
-            showSpecialMessage: false,
-          });
-          comp.specialMessageTimer = null;
-        }, 8000);
-        comp.specialMessageTimer = timer;
-      }
+      const enablePhotoRecognition = getEnablePhotoRecognition();
+      this.updateIconList(enablePhotoRecognition);
     },
     detached() {
       const comp = this as any;
@@ -133,6 +158,7 @@ Component({
         this.setData({
           urlParamsStr: param_str,
         })
+        this.updateIconList(getEnablePhotoRecognition());
         // console.log('current url', url, param, param_str);
     }
   }
