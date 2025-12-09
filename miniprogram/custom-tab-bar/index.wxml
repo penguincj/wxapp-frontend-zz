@@ -1,5 +1,5 @@
 <view class="custom-tab-bar">
-  <view class="bg-special-center"></view>
+  <view wx:if="{{enablePhotoRecognition}}" class="bg-special-center"></view>
   <view wx:if="{{showSpecialMessage}}" class="bg-special-message">岛屿支持拍摄AI识别文物啦～</view>
   <view class="tab-bar-content">
   <block wx:for="{{icons}}" wx:key="index">
