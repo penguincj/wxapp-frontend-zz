@@ -120,6 +120,7 @@ Component({
       this.triggerEvent('ClickCommentIcon')
     },
     handleClickParentReply(e: any) {
+      debugger
       try {
         const { parentid, username } = e.detail;
         console.log('parent_id', parentid);

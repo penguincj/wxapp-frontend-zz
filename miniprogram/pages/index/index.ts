@@ -26,6 +26,7 @@ Page({
     comment_loading: false,
     bannerCurrentIndex: 0,
     curVersionSwitch: getApp().globalData.curVersionSwitch,
+    lastLocationAuthorized: null as null | boolean,
   },
 
   handleBannerClickItem(e: any) {
@@ -34,6 +35,17 @@ Page({
       wx.navigateTo({
         url: link
       })
+    }
+  },
+
+  async updateLocationAuthState() {
+    try {
+      const setting = await wx.getSetting();
+      const authorized = !!setting.authSetting['scope.userLocation'];
+      this.setData({ lastLocationAuthorized: authorized });
+      return authorized;
+    } catch (error) {
+      return this.data.lastLocationAuthorized;
     }
   },
 
@@ -176,8 +188,11 @@ Page({
     let res: any;
     if (_cityid) {
       res = await getIndexCityData(_lat, _lng, _cityid);
+      console.log('getIndexCityData', _lat, _lng)
     } else {
       res= await getIndexData(_lat, _lng);
+      console.log('getIndexData', _lat, _lng)
+
     }
     if (res && res.code === 0) {
       const { banner_list=[], city_list=[], current_city_id, daily_listen, exhibition_list=[], is_new, museum_list=[], enable_photo_recognition } = res.data;
@@ -351,10 +366,17 @@ Page({
 
   onLoad(options) {
     console.log(options);
+    this.updateLocationAuthState();
     this.initPage();
   },
 
   onShow() {
+    const prevAuth = this.data.lastLocationAuthorized;
+    this.updateLocationAuthState().then((authorized) => {
+      if (prevAuth === false && authorized) {
+        this.initPage();
+      }
+    });
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({

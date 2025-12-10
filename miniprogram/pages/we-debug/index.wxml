@@ -21,5 +21,15 @@
         ></switch>
       </view>
     </view>
+
+    <view class="debug-block">
+      <view class="debug-item">
+        <view class="text-group">
+          <text class="title">清空本地缓存</text>
+          <text class="hint">清理 localStorage 中的所有数据</text>
+        </view>
+        <button class="action-btn" size="mini" bindtap="handleClearStorage">清空</button>
+      </view>
+    </view>
   </view>
 </page-meta>

@@ -97,6 +97,7 @@ Component({
       }
       this.setData({
         icons,
+        enablePhotoRecognition,
         showSpecialMessage: enablePhotoRecognition ? this.data.showSpecialMessage : false,
       });
     },

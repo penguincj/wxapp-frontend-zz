@@ -22,4 +22,25 @@ Page({
       data: isEnabled,
     });
   },
+
+  handleClearStorage() {
+    wx.clearStorage({
+      success: () => {
+        this.setData({
+          betaModeEnabled: false,
+        });
+        wx.showToast({
+          title: '已清空',
+          icon: 'success',
+          duration: 1200,
+        });
+      },
+      fail: () => {
+        wx.showToast({
+          title: '清空失败',
+          icon: 'none',
+        });
+      }
+    })
+  },
 });

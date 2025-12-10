@@ -2,23 +2,22 @@
   <view wx:if="{{enablePhotoRecognition}}" class="bg-special-center"></view>
   <view wx:if="{{showSpecialMessage}}" class="bg-special-message">岛屿支持拍摄AI识别文物啦～</view>
   <view class="tab-bar-content">
-  <block wx:for="{{icons}}" wx:key="index">
-    <view class="custom-tab-bar-group" 
-      data-idx="{{item.id}}" 
-      data-is-catch-event="{{true}}" 
-      data-event-id="custom_bar_switch_e6" 
-      data-event-params="{{ {id: item.id, name: item.name} }}"
-      bindtap="switchTab">
-      <view wx:if="{{item.id === 2}}" class="tab-bar-item-group item-topper">
-        <image class="custom-tab-bar-img special-img" src="{{selected === item.id ? item.iconClicked : item.icon}}" mode="aspectFix" />
-        <view class="custom-tab-bar-text special-text {{selected === item.id ? 'custom-tab-bar-text-blod' : ''}}">{{item.name}}</view>
+    <block wx:for="{{icons}}" wx:key="index">
+      <view class="custom-tab-bar-group" 
+        data-idx="{{item.id}}" 
+        data-is-catch-event="{{true}}" 
+        data-event-id="custom_bar_switch_e6" 
+        data-event-params="{{ {id: item.id, name: item.name} }}"
+        bindtap="switchTab">
+        <view wx:if="{{item.id === 2}}" class="tab-bar-item-group item-topper">
+          <image class="custom-tab-bar-img special-img" src="{{selected === item.id ? item.iconClicked : item.icon}}" mode="aspectFix" />
+          <view class="custom-tab-bar-text special-text {{selected === item.id ? 'custom-tab-bar-text-blod' : ''}}">{{item.name}}</view>
+        </view>
+        <view class="tab-bar-item-group" wx:else>
+          <image class="custom-tab-bar-img" src="{{selected === item.id ? item.iconClicked : item.icon}}" mode="aspectFix" />
+          <view class="custom-tab-bar-text {{selected === item.id ? 'custom-tab-bar-text-blod' : ''}}">{{item.name}}</view>
+        </view>
       </view>
-      <view class="tab-bar-item-group" wx:else>
-        <image class="custom-tab-bar-img" src="{{selected === item.id ? item.iconClicked : item.icon}}" mode="aspectFix" />
-        <view class="custom-tab-bar-text {{selected === item.id ? 'custom-tab-bar-text-blod' : ''}}">{{item.name}}</view>
-      </view>
-
-    </view>
-  </block>
+    </block>
   </view>
 </view>

@@ -25,6 +25,7 @@ const formatNumber = (n: number) => {
 }
 
 export const base_url = 'https://gewugo.com'
+let locationPermissionModalShown = false;
 
 /**
  * 函数截流 一
@@ -92,41 +93,73 @@ export const generateNewUrlParams = (_obj) => {
 // 获取当前地理位置信息并写入本地storage
 export const getLocation = async () => {
   return new Promise((resolve, reject) => {
-    wx.getLocation({
-      type: 'wsg84',
-      success(res) {
-        const latitude = res.latitude;
-        const longitude = res.longitude;
-        wx.setStorageSync('latitude', res.latitude);
-        wx.setStorageSync('longitude', res.longitude);
-        log.info('lat, lng', res.latitude, res.longitude)
-        resolve({latitude, longitude});
-      },
-      fail(res) {
-        wx.getSetting({
-          success(res) {
-            if (!res.authSetting['scope.userLocation']) {
-              wx.authorize({
-                scope: 'scope.userLocation',
-                success() { 
-                  /* 授权成功处理 */ 
-                },
-                fail() { 
-                  /* 引导打开设置页 */
-                  wx.showToast({
-                    title: '请开启位置权限',
-                    icon: 'none',
-                    duration: 2000
-                   })
-                 }
-              })
-            }
+    const handleSuccess = (res: any) => {
+      const { latitude, longitude } = res;
+      wx.setStorageSync('latitude', latitude);
+      wx.setStorageSync('longitude', longitude);
+      log.info('lat, lng', latitude, longitude)
+      resolve({ latitude, longitude });
+    };
+
+    const fetchLocation = () => {
+      wx.getLocation({
+        type: 'wsg84',
+        success: handleSuccess,
+        fail: handleFail,
+      });
+    };
+
+    const openSettingAndRetry = (err: any) => {
+      if (locationPermissionModalShown) return;
+      locationPermissionModalShown = true;
+      wx.showModal({
+        title: '需要位置权限',
+        content: '开启位置权限后即可获取附近信息',
+        confirmText: '去设置',
+        success(modalRes) {
+          if (modalRes.confirm) {
+            wx.openSetting({
+              success(settingRes) {
+                if (settingRes.authSetting['scope.userLocation']) {
+                  fetchLocation();
+                } else {
+                  reject(err);
+                }
+              },
+              fail() {
+                reject(err);
+              }
+            })
+          } else {
+            reject(err);
           }
-        })
-        reject(res);
-        console.log('location error', res)
-      }
-    })
+        },
+        fail() {
+          reject(err);
+        },
+        complete() {
+          locationPermissionModalShown = false;
+        }
+      })
+    };
+
+    const handleFail = (err: any) => {
+      wx.getSetting({
+        success(res) {
+          if (!res.authSetting['scope.userLocation']) {
+            openSettingAndRetry(err);
+          } else {
+            reject(err);
+          }
+        },
+        fail() {
+          reject(err);
+        }
+      })
+      console.log('location error', err)
+    };
+
+    fetchLocation();
   })
 }
 
@@ -584,4 +617,3 @@ export const compareVersion = (v1: string, v2: string): number => {
 
 // 便捷方法：判断 v1 是否比 v2 新
 export const isVersionGreater = (v1: string, v2: string): boolean => compareVersion(v1, v2) > 0;
-
