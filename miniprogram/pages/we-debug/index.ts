@@ -46,12 +46,8 @@ Page({
 
   syncPhotoRecognition(enable: boolean) {
     const app = getApp<IAppOption>();
-    if (!app.globalData.debug) {
-      app.globalData.debug = { enablePhotoRecognition: false };
-    }
-    app.globalData.debug.enablePhotoRecognition = enable;
-    const serverIndex = !!app.globalData.enablePhotoRecognitionFromServer;
-    const finalEnable = enable || serverIndex;
+    const serverEnabled = !!app.globalData.enablePhotoRecognitionFromServer;
+    const finalEnable = enable || serverEnabled;
     app.globalData.enablePhotoRecognition = finalEnable;
     if (typeof this.getTabBar === 'function') {
       const tabBar = this.getTabBar();

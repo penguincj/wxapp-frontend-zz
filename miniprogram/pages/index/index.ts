@@ -1,6 +1,8 @@
 import { getHotComments, getVersionList, getCityList, getIndexData, getIndexCityData, getCityRecoExhibitionList } from "../../api/api";
 import { generateDateFormat, calTimeTxt, backToTargetPage, generateCityList, getLocation, throttle, generateNewUrlParams } from "../../utils/util";
 
+const BETA_MODE_STORAGE_KEY = 'BetaModeEnabled';
+
 let interval = null as any;
 
 Page({
@@ -209,8 +211,8 @@ Page({
       const bannerCurrentIndex = (is_new || banner_list.length < 3) ? 0 : 2;
       const duration_fmt = calTimeTxt(daily_listen.duration);
       const serverEnablePhotoRecognition = !!enable_photo_recognition;
-      const debugEnablePhotoRecognition = !!getApp().globalData.debug?.enablePhotoRecognition;
-      const enablePhotoRecognition = serverEnablePhotoRecognition || debugEnablePhotoRecognition;
+      const storageEnablePhotoRecognition = !!wx.getStorageSync(BETA_MODE_STORAGE_KEY);
+      const enablePhotoRecognition = serverEnablePhotoRecognition || storageEnablePhotoRecognition;
       const app = getApp<IAppOption>();
       app.globalData.enablePhotoRecognition = enablePhotoRecognition;
       app.globalData.enablePhotoRecognitionFromServer = serverEnablePhotoRecognition;
