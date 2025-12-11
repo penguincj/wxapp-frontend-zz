@@ -7,9 +7,11 @@ Page({
 
   onLoad() {
     const storedValue = wx.getStorageSync(BETA_MODE_STORAGE_KEY);
+    const enabled = typeof storedValue === 'boolean' ? storedValue : false;
     this.setData({
-      betaModeEnabled: typeof storedValue === 'boolean' ? storedValue : false,
+      betaModeEnabled: enabled,
     });
+    this.syncPhotoRecognition(enabled);
   },
 
   handleBetaSwitchChange(event: any) {
@@ -21,6 +23,7 @@ Page({
       key: BETA_MODE_STORAGE_KEY,
       data: isEnabled,
     });
+    this.syncPhotoRecognition(isEnabled);
   },
 
   handleClearStorage() {
@@ -39,5 +42,20 @@ Page({
         });
       }
     })
+  },
+
+  syncPhotoRecognition(enable: boolean) {
+    const app = getApp<IAppOption>();
+    if (!app.globalData.debug) {
+      app.globalData.debug = { enablePhotoRecognition: false };
+    }
+    app.globalData.debug.enablePhotoRecognition = enable;
+    const serverIndex = !!app.globalData.enablePhotoRecognitionFromServer;
+    const finalEnable = enable || serverIndex;
+    app.globalData.enablePhotoRecognition = finalEnable;
+    if (typeof this.getTabBar === 'function') {
+      const tabBar = this.getTabBar();
+      tabBar?.updateIconList?.(finalEnable);
+    }
   },
 });

@@ -12,13 +12,7 @@ Page({
     recognitionError: '',
     lastPhoto: '',
     showResultPage: false,
-    exhibitDetail: null as null | {
-      name: string;
-      image_url: string;
-      description: string;
-      content: string;
-      audio?: { title: string; duration: string; cover: string };
-    },
+    exhibitDetail: {} as any,
     showFeedbackForm: false,
     feedbackText: '',
     feedbackImages: [] as string[],
@@ -69,7 +63,12 @@ Page({
   },
 
   handleCloseExhibitOverlay() {
-    this.handleOpenMore();
+    wx.showToast({
+      title: '感谢您的反馈建议～',
+      icon: 'none',
+      duration: 3000,
+    })
+    // this.handleOpenMore();
   },
 
   handleOpenAlbum() {
@@ -141,70 +140,62 @@ Page({
     this.setData({
       isRecognizing: true,
     });
-    debugger
     try {
       const response = await this.uploadImage(filePath);
       
-      const { code, data, result, message } = response || {};
-      if (code !== undefined && code !== 0 && !data && !result) {
+      const { code, artifact, message } = response || {};
+      if (code !== undefined && code !== 0 && !artifact) {
         throw new Error(message || '识别失败');
       }
-      const payload = data || result || response || {};
-      const title = payload.name || payload.title || payload.label || '识别结果';
+      const payload = artifact || {};
+      const title = payload.name || '识别结果';
       const desc =
         payload.description ||
-        payload.desc ||
-        payload.text ||
-        payload.result ||
-        payload.message ||
         'AI识别完成';
-      const exhibit = payload.exhibit || {};
-      const search_res = payload || {};
-      const hasPackageAudio = !!search_res.package_audio_url;
+      const hasPackageAudio = !!payload.package_audio_url;
       const audioInfo = hasPackageAudio
         ? {
-            title: search_res.package_audio_title || exhibit.name || title,
-            duration: search_res.package_audio_duration || '00:00',
-            cover: search_res.uploaded_image_url,
-            audio_url: search_res.package_audio_url,
-            id: search_res.package_audio_id || exhibit.id || 0,
+            // title: search_res.package_audio_title || exhibit.name || title,
+            // duration: search_res.package_audio_duration || '00:00',
+            // cover: search_res.uploaded_image_url,
+            // audio_url: search_res.package_audio_url,
+            // id: search_res.package_audio_id || exhibit.id || 0,
           }
         : null;
       const exhibit_image_id =
-        payload.exhibit_image_id ||
+        payload.image_id ||
         null;
       this.setData({
-        search_res,
         recognitionResult: {
           title,
           desc,
         },
         recognitionError: '',
-        exhibitResult: search_res.uploaded_image_url
+        exhibitResult: payload.uploaded_image_url
           ? {
-              name: exhibit.name || title,
-              image: search_res.uploaded_image_url,
+              name: payload.name || title,
+              image: payload.uploaded_image_url,
             }
           : null,
         showResultPage: true,
-        exhibitDetail: exhibit.name
+        exhibitDetail: title
           ? {
-              name: exhibit.name || title,
-              image_url: search_res.uploaded_image_url,
-              description: exhibit.description || desc,
-              content: search_res.is_llm ? exhibit.description : search_res.package_audio_content,
+              name: title,
+              image_url: this.data.previewImage,
+              description: desc,
+              content: desc,
               audio: audioInfo || undefined,
             }
           : null,
         exhibitImageId: exhibit_image_id,
         dailyListenExhibit: audioInfo
           ? {
-              id: audioInfo.id,
-              name: audioInfo.title,
-              image_url: audioInfo.cover,
-              // exhibition_name: exhibit.name || title,
-              duration_fmt: calTimeDurationTxt(audioInfo.duration),
-              audio_url: audioInfo.audio_url,
+              // id: audioInfo.id,
+              // name: audioInfo.title,
+              // image_url: audioInfo.cover,
+              // // exhibition_name: exhibit.name || title,
+              // duration_fmt: calTimeDurationTxt(audioInfo.duration),
+              // audio_url: audioInfo.audio_url,
             }
           : null,
       });
@@ -278,7 +269,7 @@ Page({
     const { latitude, longitude } = await this.getLatestLatLng();
     return new Promise<any>((resolve, reject) => {
       wx.uploadFile({
-        url: `${base_url}/${base_api}/v1/imageSearchAuto`,
+        url: `${base_url}/${base_api}/v1/imageSearch`,
         header: {
           'Content-Type': 'multipart/form-data',
           'Accept': 'application/json',  

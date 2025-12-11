@@ -208,8 +208,12 @@ Page({
       }
       const bannerCurrentIndex = (is_new || banner_list.length < 3) ? 0 : 2;
       const duration_fmt = calTimeTxt(daily_listen.duration);
-      const enablePhotoRecognition = !!enable_photo_recognition;
-      getApp().globalData.enablePhotoRecognition = enablePhotoRecognition;
+      const serverEnablePhotoRecognition = !!enable_photo_recognition;
+      const debugEnablePhotoRecognition = !!getApp().globalData.debug?.enablePhotoRecognition;
+      const enablePhotoRecognition = serverEnablePhotoRecognition || debugEnablePhotoRecognition;
+      const app = getApp<IAppOption>();
+      app.globalData.enablePhotoRecognition = enablePhotoRecognition;
+      app.globalData.enablePhotoRecognitionFromServer = serverEnablePhotoRecognition;
       if (typeof this.getTabBar === 'function' && this.getTabBar()) {
         const tab = this.getTabBar();
         tab?.updateIconList?.(enablePhotoRecognition);

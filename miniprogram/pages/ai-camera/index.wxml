@@ -65,7 +65,7 @@
           
           <view class="result-footer">
             <text>识别内容不准确？欢迎</text>
-            <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text>
+            <!-- <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text> -->
             <text>反馈</text>
           </view>
            

@@ -29,6 +29,10 @@ interface IAppOption {
     version_list: any[],
     curVersionSwitch: number,
     enablePhotoRecognition: boolean,
+    enablePhotoRecognitionFromServer: boolean,
+    debug: {
+      enablePhotoRecognition: boolean
+    }
   },
  
 
