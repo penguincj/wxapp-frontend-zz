@@ -26,9 +26,6 @@ Page({
   handleClearStorage() {
     wx.clearStorage({
       success: () => {
-        this.setData({
-          betaModeEnabled: false,
-        });
         wx.showToast({
           title: '已清空',
           icon: 'success',

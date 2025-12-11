@@ -86,6 +86,7 @@ Page({
   },
   handleClickShare() {
     const url_params = transferObjToUrlParams({
+      package_id: this.data.packageId,
       exhibit_id: this.data.exhibitId,
       from_page: 'exhibitlist'
     })

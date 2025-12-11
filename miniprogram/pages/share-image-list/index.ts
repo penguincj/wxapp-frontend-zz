@@ -1,5 +1,5 @@
 
-import { getExhibitById, getPackageByID } from "../../api/api";
+import { getExhibitById, getPackageByID, getPackageExhibitById } from "../../api/api";
 import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr, generateDateFormat } from "../../utils/util";
 
 Page({
@@ -15,12 +15,12 @@ Page({
     exhibit_id: -1,
   },
 
-  async getPosterFromExhibit(_id: any) {
+  async getPosterFromExhibit(_id: any, _packid: any) {
     try {
-      const res : any = await getExhibitById(_id);
+      const res : any = await getPackageExhibitById(_packid ,_id);
   
       if ( res && res.code === 0) {
-        const exhibit = res.exhibit;
+        const exhibit = res.data.exhibit;
         if (exhibit.share_texts && exhibit.share_texts.length) {
           this.setData({
             share_texts: exhibit.share_texts
@@ -109,7 +109,7 @@ Page({
         exhibit_id: Number(options.exhibit_id),
         from_page: 'exhibitlist',
       })
-      this.getPosterFromExhibit(Number(options.exhibit_id))
+      this.getPosterFromExhibit(Number(options.exhibit_id), Number(options.package_id))
 
     } else if (options.from_page && options.from_page === 'package') {
       this.setData({

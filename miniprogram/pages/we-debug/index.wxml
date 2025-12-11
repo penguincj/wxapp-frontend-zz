@@ -11,8 +11,8 @@
     <view class="debug-block">
       <view class="debug-item">
         <view class="text-group">
-          <text class="title">打开内测模式</text>
-          <text class="hint">开启后可以访问尚未开放的调试内容</text>
+          <text class="title">打开识图功能</text>
+          <text class="hint">开启后可以访问尚未开放的区域识图</text>
         </view>
         <switch
           class="debug-switch"
