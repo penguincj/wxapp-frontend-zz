@@ -1,5 +1,6 @@
 import { base_api, appendExhibitImage } from '../../api/api';
 import { base_url, getLoginStatus, getLocation, calTimeDurationTxt } from '../../utils/util';
+const BETA_MODE_STORAGE_KEY = 'BetaModeEnabled';
 
 
 Page({
@@ -21,6 +22,7 @@ Page({
     dailyListenExhibit: null as any,
     showFeedbackSuccessOverlay: false,
     search_res: {} as any,
+    showMatchScore: false,
   },
 
   onShow() {
@@ -34,9 +36,8 @@ Page({
       this.getTabBar().setData({
         selected: 2,
       });
-      // this.handleTakePhoto();
-
     }
+    this.updateMatchScoreVisibility();
   },
 
   onHide() {
@@ -52,6 +53,13 @@ Page({
       return;
     }
     this.chooseMedia(['camera','album']);
+  },
+
+  updateMatchScoreVisibility() {
+    const enabled = !!wx.getStorageSync(BETA_MODE_STORAGE_KEY);
+    this.setData({
+      showMatchScore: enabled,
+    });
   },
 
   handleConfirmExhibit() {
@@ -195,6 +203,7 @@ Page({
               description: desc,
               content: detailContent,
               audio: audioInfo || undefined,
+              score: artifact.score,
             }
           : null,
         exhibitImageId: exhibit_image_id,

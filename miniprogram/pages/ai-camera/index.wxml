@@ -36,7 +36,7 @@
             <view class="result-title">{{exhibitDetail.name}}</view>
             
           </view>
-         
+          <view wx:if="{{showMatchScore}}" class="match-score">匹配分数：{{exhibitDetail.score}}</view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
             <view class="title-group">
               <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
