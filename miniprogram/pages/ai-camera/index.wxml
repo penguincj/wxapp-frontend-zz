@@ -53,7 +53,7 @@
               <image
                 class="section-title-border"
                 src="/static/images/border.png"
-                mode="aspectFit"
+                mode="scaleToFill"
               ></image>
             </view>
             <view class="content-group">

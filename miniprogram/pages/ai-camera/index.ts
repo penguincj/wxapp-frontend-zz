@@ -152,6 +152,16 @@ Page({
       const desc =
         payload.description ||
         'AI识别完成';
+      const detailContentParts: string[] = [];
+      if (payload.dynasty) {
+        detailContentParts.push('时期：'+payload.dynasty);
+      }
+      if (payload.museum) {
+        detailContentParts.push('收藏在'+payload.museum+'。');
+      }
+      const detailContent = detailContentParts.length
+        ? `${detailContentParts.join('，')}\n描述：${desc}`
+        : desc;
       const hasPackageAudio = !!payload.package_audio_url;
       const audioInfo = hasPackageAudio
         ? {
@@ -181,9 +191,9 @@ Page({
         exhibitDetail: title
           ? {
               name: title,
-              image_url: this.data.previewImage,
+              image_url: payload.uploaded_image_url || this.data.previewImage,
               description: desc,
-              content: desc,
+              content: detailContent,
               audio: audioInfo || undefined,
             }
           : null,
