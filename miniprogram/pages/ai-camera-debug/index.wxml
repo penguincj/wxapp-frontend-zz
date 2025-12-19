@@ -95,20 +95,16 @@
             </block>
           </view>
           
-          <view class="result-footer">
+          <!-- <view class="result-footer">
             <text>识别内容不准确？欢迎</text>
-            <!-- <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text> -->
             <text>反馈</text>
-          </view>
+          </view> -->
            
        </view>
         <view class="exhibit-action-row">
           <view class="action-buttons">
-            <view class="exhibit-btn primary" bindtap="handleCloseExhibitOverlay">
-              <text>不准确</text>
-            </view>
-            <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
-              <text>结果正确</text>
+            <view class="exhibit-btn primary" bindtap="handleConfirmExhibitFeedback">
+              <text>反馈上报</text>
             </view>
           </view>
         </view>
