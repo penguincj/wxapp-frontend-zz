@@ -14,6 +14,12 @@ Page({
     this.syncPhotoRecognition(enabled);
   },
 
+  handleEnterPageAICameraDebug(event: any) {
+    wx.navigateTo({
+      url: '/pages/ai-camera-debug/index'
+    })
+  },
+
   handleBetaSwitchChange(event: any) {
     const isEnabled = event.detail.value;
     this.setData({

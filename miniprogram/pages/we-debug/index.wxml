@@ -25,6 +25,16 @@
     <view class="debug-block">
       <view class="debug-item">
         <view class="text-group">
+          <text class="title">进入识图反馈页面</text>
+          <text class="hint">进入识图反馈页面，内测使用</text>
+        </view>
+        <button class="action-btn" size="mini" bindtap="handleEnterPageAICameraDebug">跳转</button>
+      </view>
+    </view>
+
+    <view class="debug-block">
+      <view class="debug-item">
+        <view class="text-group">
           <text class="title">清空本地缓存</text>
           <text class="hint">清理 localStorage 中的所有数据</text>
         </view>
