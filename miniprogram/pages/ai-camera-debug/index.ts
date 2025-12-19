@@ -24,6 +24,12 @@ Page({
     search_res: {} as any,
     showMatchScore: false,
     artifactList: [] as any[],
+    userImageUrl: '',
+    feedbackModalVisible: false,
+    feedbackModalContent: '',
+    feedbackModalIsMatch: 1,
+    feedbackModalMatchedId: null as number | null,
+    feedbackModalSubmitting: false,
   },
 
   onShow() {
@@ -80,6 +86,114 @@ Page({
     // this.handleOpenMore();
   },
 
+  handleConfirmExhibitFeedback() {
+    const firstMatchId = this.data.artifactList?.[0]?.image_id || null;
+    this.setData({
+      feedbackModalVisible: true,
+      feedbackModalContent: '',
+      feedbackModalIsMatch: 1,
+      feedbackModalMatchedId: firstMatchId,
+    });
+  },
+
+  handleCancelFeedbackModal() {
+    this.setData({
+      feedbackModalVisible: false,
+    });
+  },
+
+  handleFeedbackModalInput(e: WechatMiniprogram.TextareaInput) {
+    this.setData({
+      feedbackModalContent: e.detail.value,
+    });
+  },
+
+  handleFeedbackModalToggleMatch(e: WechatMiniprogram.BaseEvent) {
+    const value = Number(e.currentTarget.dataset?.value ?? 0);
+    this.setData({
+      feedbackModalIsMatch: value,
+      feedbackModalMatchedId: value === 1 ? this.data.artifactList?.[0]?.image_id || null : null,
+    });
+  },
+
+  handleFeedbackModalSelectArtifact(e: WechatMiniprogram.BaseEvent) {
+    const id = e.currentTarget.dataset?.id;
+    if (id === undefined) {
+      return;
+    }
+    this.setData({
+      feedbackModalMatchedId: Number(id),
+    });
+  },
+
+  async handleSubmitFeedbackReport() {
+    if (this.data.feedbackModalSubmitting) {
+      return;
+    }
+    if (!this.data.userImageUrl) {
+      wx.showToast({
+        title: '缺少用户照片信息，无法上报',
+        icon: 'none',
+      });
+      return;
+    }
+    const payload: Record<string, any> = {
+      user_image_url: this.data.userImageUrl,
+    };
+    if (typeof this.data.feedbackModalIsMatch === 'number') {
+      payload.is_match = this.data.feedbackModalIsMatch;
+    }
+    if (this.data.feedbackModalIsMatch === 1 && this.data.feedbackModalMatchedId) {
+      payload.matched_image_id = this.data.feedbackModalMatchedId;
+    }
+    const trimmed = this.data.feedbackModalContent.trim();
+    if (trimmed) {
+      payload.content = trimmed;
+    }
+    this.setData({
+      feedbackModalSubmitting: true,
+    });
+    try {
+      const { token } = await getLoginStatus();
+      await new Promise<void>((resolve, reject) => {
+        wx.request({
+          url: `${base_url}/${base_api}/v1/artifactFeedback`,
+          method: 'POST',
+          header: {
+            'Content-Type': 'application/json',
+            Authorization: token ? `Bearer ${token}` : '',
+          },
+          data: payload,
+          success: (res) => {
+            if (res.data?.code === 0) {
+              resolve();
+            } else {
+              reject(new Error(res.data?.message || '上报失败'));
+            }
+          },
+          fail: reject,
+        });
+      });
+      wx.showToast({
+        title: '上报成功',
+        icon: 'success',
+      });
+      this.setData({
+        feedbackModalVisible: false,
+      });
+    } catch (error: any) {
+      console.error('handleSubmitFeedbackReport error', error);
+      wx.showToast({
+        title: (error && error.message) || '上报失败，请稍后重试',
+        icon: 'none',
+      });
+    } finally {
+      this.setData({
+        feedbackModalSubmitting: false,
+      });
+    }
+  },
+
   handleOpenAlbum() {
     if (this.data.isRecognizing) {
       return;
@@ -122,6 +236,7 @@ Page({
           submittingFeedback: false,
           dailyListenExhibit: null,
           artifactList: [],
+          userImageUrl: '',
         });
         this.processImage(filePath);
       },
@@ -209,13 +324,14 @@ Page({
               content: detailContent,
               audio: audioInfo || undefined,
               score: payload.score,
-              cutout_image_url: data.cutout_image_url,
-              user_image_url: data.user_image_url,
+              cutout_image_url: data?.cutout_image_url || '',
+              user_image_url: data?.user_image_url || this.data.previewImage,
             }
           : null,
         exhibitImageId: exhibit_image_id,
         dailyListenExhibit: null,
         artifactList: normalizedArtifacts,
+        userImageUrl: data?.user_image_url || this.data.previewImage || '',
       });
     } catch (error: any) {
       console.log(error)
@@ -233,6 +349,7 @@ Page({
         submittingFeedback: false,
         dailyListenExhibit: null,
         artifactList: [],
+        userImageUrl: '',
       });
       if (!error?.errMsg?.includes('cancel')) {
         wx.showToast({

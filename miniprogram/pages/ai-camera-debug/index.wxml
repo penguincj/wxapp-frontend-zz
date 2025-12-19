@@ -13,7 +13,7 @@
   </navigation-bar>
 
   <view class="ai-camera-page">
-    <view class="preview-area">
+      <view class="preview-area">
       <!-- <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image> -->
       <view wx:if="{{isRecognizing}}" class="recognizing-overlay">
         <view class="recognize-visual">
@@ -50,7 +50,7 @@
             <view class="result-title">{{exhibitDetail.name}}</view>
             
           </view>
-          <view class="match-score">匹配分数：{{exhibitDetail.score}}</view>
+          <view wx:if="{{showMatchScore}}" class="match-score">匹配分数：{{exhibitDetail.score}}</view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
             <!-- <view class="title-group">
               <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
@@ -84,7 +84,7 @@
                 <view class="artifact-card-info">
                   <view class="artifact-card-title-row">
                     <text class="artifact-card-title">{{item.name}}</text>
-                    <text class="match-score">匹配分数：{{item.score}}</text>
+                    <text wx:if="{{showMatchScore && item.score}}" class="match-score">匹配分数：{{item.score}}</text>
                   </view>
                   <view class="artifact-card-meta">
                     {{item.dynasty}}{{item.dynasty && item.museum ? ' · ' : ''}}{{item.museum}}
@@ -103,6 +103,9 @@
        </view>
         <view class="exhibit-action-row">
           <view class="action-buttons">
+            <!-- <view class="exhibit-btn primary" bindtap="handleCloseExhibitOverlay">
+              <text>不准确</text>
+            </view> -->
             <view class="exhibit-btn primary" bindtap="handleConfirmExhibitFeedback">
               <text>反馈上报</text>
             </view>
@@ -165,7 +168,70 @@
           </view>
         </view>
       </view>
-      
+      <view class="feedback-modal-overlay" wx:if="{{feedbackModalVisible}}">
+        <view class="feedback-modal">
+          <view class="feedback-modal-header">
+            <text class="feedback-modal-title">结果上报</text>
+            <text class="feedback-modal-close" bindtap="handleCancelFeedbackModal">×</text>
+          </view>
+          <view class="feedback-modal-section">
+            <text class="feedback-modal-label">是否匹配</text>
+            <view class="feedback-match-toggle">
+              <view
+                class="feedback-match-option {{feedbackModalIsMatch === 1 ? 'selected' : ''}}"
+                data-value="1"
+                bindtap="handleFeedbackModalToggleMatch"
+              >
+                <text>匹配</text>
+              </view>
+              <view
+                class="feedback-match-option {{feedbackModalIsMatch === 0 ? 'selected' : ''}}"
+                data-value="0"
+                bindtap="handleFeedbackModalToggleMatch"
+              >
+                <text>不匹配</text>
+              </view>
+            </view>
+          </view>
+          <view class="feedback-modal-section" wx:if="{{feedbackModalIsMatch === 1 && artifactList.length}}">
+            <text class="feedback-modal-label">选择匹配的文物</text>
+            <view class="feedback-match-list">
+              <block wx:for="{{artifactList}}" wx:key="artifact_id">
+                <view
+                  class="feedback-match-item {{feedbackModalMatchedId === item.image_id ? 'selected' : ''}}"
+                  data-id="{{item.image_id}}"
+                  bindtap="handleFeedbackModalSelectArtifact"
+                >
+                  <text class="feedback-match-item-name">{{item.name}}</text>
+                  <text class="feedback-match-item-meta">{{item.dynasty}}{{item.dynasty && item.museum ? ' · ' : ''}}{{item.museum}}</text>
+                  <text wx:if="{{showMatchScore && item.score}}" class="feedback-match-item-score">匹配分数：{{item.score}}</text>
+                </view>
+              </block>
+            </view>
+          </view>
+          <view class="feedback-modal-section">
+            <text class="feedback-modal-label">补充描述</text>
+            <textarea
+              class="feedback-modal-textarea"
+              placeholder="补充你对识别结果的说明（选填）"
+              value="{{feedbackModalContent}}"
+              bindinput="handleFeedbackModalInput"
+              maxlength="500"
+            ></textarea>
+          </view>
+          <view class="feedback-modal-actions">
+            <view class="feedback-modal-cancel" bindtap="handleCancelFeedbackModal">取消</view>
+            <view
+              class="feedback-modal-submit"
+              bindtap="handleSubmitFeedbackReport"
+              loading="{{feedbackModalSubmitting}}"
+              disabled="{{feedbackModalSubmitting}}"
+            >
+              提交上报
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
 
   </view>
