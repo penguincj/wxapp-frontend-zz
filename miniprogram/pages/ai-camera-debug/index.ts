@@ -23,6 +23,7 @@ Page({
     showFeedbackSuccessOverlay: false,
     search_res: {} as any,
     showMatchScore: false,
+    artifactList: [] as any[],
   },
 
   onShow() {
@@ -120,6 +121,7 @@ Page({
           feedbackImages: [],
           submittingFeedback: false,
           dailyListenExhibit: null,
+          artifactList: [],
         });
         this.processImage(filePath);
       },
@@ -151,11 +153,22 @@ Page({
     try {
       const response = await this.uploadImage(filePath);
       
-      const { code, artifact, message } = response || {};
-      if (code !== undefined && code !== 0 && !artifact) {
+      const { code, data, artifact, message } = response || {};
+      if (code !== undefined && code !== 0) {
         throw new Error(message || '识别失败');
       }
-      const payload = artifact || {};
+      const artifactsFromData = Array.isArray(data?.artifacts) ? data.artifacts : [];
+      const fallbackArtifacts = artifact ? [artifact] : [];
+      const rawArtifacts = artifactsFromData.length ? artifactsFromData : fallbackArtifacts;
+      const normalizedArtifacts = (rawArtifacts || []).filter(Boolean).map((item: any) => ({
+        ...item,
+        image_url: item.image_url || item.uploaded_image_url || this.data.previewImage,
+        description: item.description || '',
+      }));
+      if (!normalizedArtifacts.length) {
+        throw new Error(message || '识别失败');
+      }
+      const payload = normalizedArtifacts[0];
       const title = payload.name || '识别结果';
       const desc =
         payload.description ||
@@ -174,31 +187,35 @@ Page({
       const exhibit_image_id =
         payload.image_id ||
         null;
+      const exhibitImageUrl = payload.uploaded_image_url || payload.image_url;
       this.setData({
         recognitionResult: {
           title,
           desc,
         },
         recognitionError: '',
-        exhibitResult: payload.uploaded_image_url
+        exhibitResult: exhibitImageUrl
           ? {
               name: payload.name || title,
-              image: payload.uploaded_image_url,
+              image: exhibitImageUrl,
             }
           : null,
-        showResultPage: true,
+        showResultPage: Boolean(normalizedArtifacts.length),
         exhibitDetail: title
           ? {
               name: title,
-              image_url: payload.uploaded_image_url || this.data.previewImage,
+              image_url: exhibitImageUrl || this.data.previewImage,
               description: desc,
               content: detailContent,
               audio: audioInfo || undefined,
-              score: artifact.score,
+              score: payload.score,
+              cutout_image_url: data.cutout_image_url,
+              user_image_url: data.user_image_url,
             }
           : null,
         exhibitImageId: exhibit_image_id,
         dailyListenExhibit: null,
+        artifactList: normalizedArtifacts,
       });
     } catch (error: any) {
       console.log(error)
@@ -215,6 +232,7 @@ Page({
         feedbackImages: [],
         submittingFeedback: false,
         dailyListenExhibit: null,
+        artifactList: [],
       });
       if (!error?.errMsg?.includes('cancel')) {
         wx.showToast({

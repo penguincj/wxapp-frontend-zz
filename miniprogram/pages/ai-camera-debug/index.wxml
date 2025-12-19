@@ -29,16 +29,30 @@
         </view>
       </view>
      
-      <view class="search-result" wx:if="{{showResultPage && exhibitDetail}}">
+      <view class="search-result" wx:if="{{showResultPage && artifactList.length}}">
         <view class="search-result-scroll">
-          <view class="result-hero">
-            <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
+          <view class="result-hero" wx:if="{{exhibitDetail}}">
+            <view class="img-group">
+              <view class="img-match-item">
+                <view class="img-title">原图</view>
+                <image class="result-image user-photo" src="{{exhibitDetail.user_image_url}}" mode="aspectFit"></image>
+              </view>
+              <view class="img-match-item">
+                <view class="img-title">抠图</view>
+                <image class="result-image cut-photo" src="{{exhibitDetail.cutout_image_url}}" mode="aspectFit"></image>
+              </view>
+              <view class="img-match-item">
+                <view class="img-title">匹配图</view>
+              <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
+              </view>
+            </view>
+            
             <view class="result-title">{{exhibitDetail.name}}</view>
             
           </view>
-          <view wx:if="{{showMatchScore}}" class="match-score">匹配分数：{{exhibitDetail.score}}</view>
+          <view class="match-score">匹配分数：{{exhibitDetail.score}}</view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
-            <view class="title-group">
+            <!-- <view class="title-group">
               <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
                 <text>文物名片</text>
                 <view class="audio-section" wx:if="{{dailyListenExhibit}}">
@@ -55,12 +69,30 @@
                 src="/static/images/border.png"
                 mode="scaleToFill"
               ></image>
-            </view>
+            </view> -->
             <view class="content-group">
               <view class="section-desc">{{exhibitDetail.content}}</view>
              
             </view>
             
+          </view>
+          <view class="more-results" wx:if="{{artifactList.length > 1}}">
+            <view class="more-results-title">更多匹配结果</view>
+            <block wx:for="{{artifactList}}" wx:key="artifact_id" wx:for-index="index">
+              <view wx:if="{{index !== 0}}" class="artifact-card">
+                <image class="artifact-card-image" src="{{item.image_url}}" mode="aspectFit"></image>
+                <view class="artifact-card-info">
+                  <view class="artifact-card-title-row">
+                    <text class="artifact-card-title">{{item.name}}</text>
+                    <text class="match-score">匹配分数：{{item.score}}</text>
+                  </view>
+                  <view class="artifact-card-meta">
+                    {{item.dynasty}}{{item.dynasty && item.museum ? ' · ' : ''}}{{item.museum}}
+                  </view>
+                  <view class="artifact-card-desc">{{item.description}}</view>
+                </view>
+              </view>
+            </block>
           </view>
           
           <view class="result-footer">
@@ -69,7 +101,7 @@
             <text>反馈</text>
           </view>
            
-        </view>
+       </view>
         <view class="exhibit-action-row">
           <view class="action-buttons">
             <view class="exhibit-btn primary" bindtap="handleCloseExhibitOverlay">
