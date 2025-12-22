@@ -17,7 +17,7 @@
       <!-- <image class="preview-image" src="{{previewImage}}" mode="aspectFill"></image> -->
       <view wx:if="{{isRecognizing}}" class="recognizing-overlay">
         <view class="recognize-visual">
-          <image class="recognize-bg" src="{{previewImage}}" mode="aspectFit"></image>
+          <image class="recognize-bg" src="{{previewImage}}" mode="aspectFit" bindtap="handlePreviewImage" data-image-url="{{previewImage}}"></image>
           <view class="recognize-frame">
             <view class="recognize-corner top-left"></view>
             <view class="recognize-corner top-right"></view>
@@ -35,15 +35,15 @@
             <view class="img-group">
               <view class="img-match-item">
                 <view class="img-title">原图</view>
-                <image class="result-image user-photo" src="{{exhibitDetail.user_image_url}}" mode="aspectFit"></image>
+                <image class="result-image user-photo" src="{{exhibitDetail.user_image_url}}" mode="aspectFit" bindtap="handlePreviewImage" data-image-url="{{exhibitDetail.user_image_url}}"></image>
               </view>
               <view class="img-match-item">
                 <view class="img-title">抠图</view>
-                <image class="result-image cut-photo" src="{{exhibitDetail.cutout_image_url}}" mode="aspectFit"></image>
+                <image class="result-image cut-photo" src="{{exhibitDetail.cutout_image_url}}" mode="aspectFit" bindtap="handlePreviewImage" data-image-url="{{exhibitDetail.cutout_image_url}}"></image>
               </view>
               <view class="img-match-item">
                 <view class="img-title">匹配图</view>
-              <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
+              <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit" bindtap="handlePreviewImage" data-image-url="{{exhibitDetail.image_url}}"></image>
               </view>
             </view>
             
@@ -80,7 +80,7 @@
             <view class="more-results-title">更多匹配结果</view>
             <block wx:for="{{artifactList}}" wx:key="artifact_id" wx:for-index="index">
               <view wx:if="{{index !== 0}}" class="artifact-card">
-                <image class="artifact-card-image" src="{{item.image_url}}" mode="aspectFit"></image>
+                <image class="artifact-card-image" src="{{item.image_url}}" mode="aspectFit" bindtap="handlePreviewImage" data-image-url="{{item.image_url}}"></image>
                 <view class="artifact-card-info">
                   <view class="artifact-card-title-row">
                     <text class="artifact-card-title">{{item.name}}</text>
@@ -115,7 +115,7 @@
       <view class="fankui-area" wx:if="{{showFeedbackForm}}">
         <scroll-view scroll-y="{{true}}" class="fankui-scroll">
           <view class="fankui-title">记录「考古」，分享给更多岛民</view>
-          <image class="fankui-preview" src="{{exhibitDetail.image_url || previewImage}}" mode="aspectFit"></image>
+          <image class="fankui-preview" src="{{exhibitDetail.image_url || previewImage}}" mode="aspectFit" bindtap="handlePreviewImage" data-image-url="{{exhibitDetail.image_url || previewImage}}"></image>
           <view class="fankui-textbox">
             <textarea
               class="fankui-textarea"
@@ -128,7 +128,7 @@
             <view class="fankui-upload-list">
               <block wx:for="{{feedbackImages}}" wx:key="*this">
                 <view class="upload-thumb">
-                  <image src="{{item}}" mode="aspectFill"></image>
+                  <image src="{{item}}" mode="aspectFill" bindtap="handlePreviewImage" data-image-url="{{item}}"></image>
                   <view class="upload-remove" bindtap="handleRemoveFeedbackImage" data-index="{{index}}">×</view>
                 </view>
               </block>
@@ -158,6 +158,8 @@
             class="feedback-success-image"
             src="/static/images/airobot.png"
             mode="aspectFit"
+            bindtap="handlePreviewImage"
+            data-image-url="/static/images/airobot.png"
           ></image>
           <text class="feedback-success-title">已将鉴定请求发送给博物岛屿平台，努力丰富宝藏库中，谢谢理解～</text>
           <view

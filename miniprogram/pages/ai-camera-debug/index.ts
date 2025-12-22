@@ -86,6 +86,20 @@ Page({
     // this.handleOpenMore();
   },
 
+  handlePreviewImage(e: WechatMiniprogram.BaseEvent) {
+    const imageUrl = e.currentTarget?.dataset?.imageUrl;
+    if (!imageUrl) {
+      return;
+    }
+    const urls = Array.isArray(e.currentTarget?.dataset?.imageList)
+      ? e.currentTarget.dataset.imageList
+      : [imageUrl];
+    wx.previewImage({
+      current: imageUrl,
+      urls,
+    });
+  },
+
   handleConfirmExhibitFeedback() {
     const firstMatchId = this.data.artifactList?.[0]?.image_id || null;
     this.setData({
