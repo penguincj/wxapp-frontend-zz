@@ -340,6 +340,7 @@ Page({
               score: payload.score,
               cutout_image_url: data?.cutout_image_url || '',
               user_image_url: data?.user_image_url || this.data.previewImage,
+              source: payload.source,
             }
           : null,
         exhibitImageId: exhibit_image_id,

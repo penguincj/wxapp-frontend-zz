@@ -51,6 +51,8 @@
             
           </view>
           <view class="match-score">匹配分数：{{exhibitDetail.score}}</view>
+          <view class="artifact-card-source" wx:if="{{exhibitDetail.source}}">来源：{{exhibitDetail.source}}</view>
+
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
             <!-- <view class="title-group">
               <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
@@ -90,6 +92,7 @@
                     {{item.dynasty}}{{item.dynasty && item.museum ? ' · ' : ''}}{{item.museum}}
                   </view>
                   <view class="artifact-card-desc">{{item.description}}</view>
+                  <view class="artifact-card-source" wx:if="{{item.source}}">来源：{{item.source}}</view>
                 </view>
               </view>
             </block>
