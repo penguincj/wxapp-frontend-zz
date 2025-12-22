@@ -50,7 +50,7 @@
             <view class="result-title">{{exhibitDetail.name}}</view>
             
           </view>
-          <view wx:if="{{showMatchScore}}" class="match-score">匹配分数：{{exhibitDetail.score}}</view>
+          <view class="match-score">匹配分数：{{exhibitDetail.score}}</view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
             <!-- <view class="title-group">
               <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
@@ -84,7 +84,7 @@
                 <view class="artifact-card-info">
                   <view class="artifact-card-title-row">
                     <text class="artifact-card-title">{{item.name}}</text>
-                    <text wx:if="{{showMatchScore && item.score}}" class="match-score">匹配分数：{{item.score}}</text>
+                    <text wx:if="{{ item.score}}" class="match-score">匹配分数：{{item.score}}</text>
                   </view>
                   <view class="artifact-card-meta">
                     {{item.dynasty}}{{item.dynasty && item.museum ? ' · ' : ''}}{{item.museum}}
@@ -204,7 +204,7 @@
                 >
                   <text class="feedback-match-item-name">{{item.name}}</text>
                   <text class="feedback-match-item-meta">{{item.dynasty}}{{item.dynasty && item.museum ? ' · ' : ''}}{{item.museum}}</text>
-                  <text wx:if="{{showMatchScore && item.score}}" class="feedback-match-item-score">匹配分数：{{item.score}}</text>
+                  <text class="feedback-match-item-score">，分数：{{item.score}}</text>
                 </view>
               </block>
             </view>
