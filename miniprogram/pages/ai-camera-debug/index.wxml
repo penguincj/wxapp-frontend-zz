@@ -237,6 +237,12 @@
           </view>
         </view>
       </view>
+      <canvas
+        canvas-id="compressCanvas"
+        width="{{compressCanvasWidth}}"
+        height="{{compressCanvasHeight}}"
+        style="width: {{compressCanvasWidth}}px; height: {{compressCanvasHeight}}px; position: absolute; left: -9999rpx; top: -9999rpx;"
+      ></canvas>
     </view>
 
   </view>

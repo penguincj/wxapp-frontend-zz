@@ -11,11 +11,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/ai-camera-debug/index",
+          "pathName": "pages/ai-camera-debug/index",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/exhibitlist/index",
           "pathName": "pages/exhibitlist/index",
           "query": "exhibition_id=393&package_id=26",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/share-poster/index",

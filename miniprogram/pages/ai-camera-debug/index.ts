@@ -24,6 +24,8 @@ Page({
     search_res: {} as any,
     showMatchScore: false,
     artifactList: [] as any[],
+    compressCanvasWidth: 1,
+    compressCanvasHeight: 1,
     userImageUrl: '',
     feedbackModalVisible: false,
     feedbackModalContent: '',
@@ -236,9 +238,23 @@ Page({
           return;
         }
         const filePath = file.tempFilePath;
-        this.setData({
-          previewImage: filePath,
-          lastPhoto: filePath,
+        let uploadPath = filePath;
+        try {
+          uploadPath = await this.ensureImageUnderLimit(filePath);
+          const info = await this.getFileInfoAsync(uploadPath);
+          const sizeInMB = ((info?.size || 0) / 1024 / 1024).toFixed(2);
+          console.log('准备上传的图片大小', `${sizeInMB} MB`, uploadPath);
+        } catch (error) {
+          console.error('ensureImageUnderLimit error', error);
+          wx.showToast({
+            title: '处理图片失败，请重试',
+            icon: 'none',
+          });
+          uploadPath = filePath;
+        }
+    this.setData({
+      previewImage: filePath,
+      lastPhoto: filePath,
           recognitionResult: null,
           recognitionError: '',
           exhibitResult: null,
@@ -252,12 +268,12 @@ Page({
           artifactList: [],
           userImageUrl: '',
         });
-        this.processImage(filePath);
+        this.processImage(uploadPath);
       },
-      fail: (error) => {
-        if (error.errMsg.includes('auth deny')) {
-          // 用户拒绝了相机权限
-          wx.showToast({
+        fail: (error) => {
+          if (error.errMsg.includes('auth deny')) {
+            // 用户拒绝了相机权限
+            wx.showToast({
             title: '需要相机权限',
             icon: 'none'
           })
@@ -272,6 +288,129 @@ Page({
           icon: 'none',
         });
       },
+    });
+  },
+
+  async getFileInfoAsync(filePath: string) {
+    return new Promise<WechatMiniprogram.GetFileInfoSuccessCallbackResult>((resolve, reject) => {
+      const fs = wx.getFileSystemManager();
+      fs.getFileInfo({
+        filePath,
+        success: resolve,
+        fail: reject,
+      });
+    });
+  },
+
+  async getImageInfoAsync(src: string) {
+    return new Promise<WechatMiniprogram.GetImageInfoSuccessCallbackResult>((resolve, reject) => {
+      wx.getImageInfo({
+        src,
+        success: resolve,
+        fail: reject,
+      });
+    });
+  },
+
+  async updateCanvasSize(width: number, height: number) {
+    return new Promise<void>((resolve) => {
+      this.setData(
+        {
+          compressCanvasWidth: width,
+          compressCanvasHeight: height,
+        },
+        () => resolve(),
+      );
+    });
+  },
+
+  async compressImageToQuality(src: string, quality: number) {
+    return new Promise<WechatMiniprogram.CompressImageSuccessCallbackResult>((resolve, reject) => {
+      wx.compressImage({
+        src,
+        quality,
+        success: resolve,
+        fail: reject,
+      });
+    });
+  },
+
+  async ensureImageUnderLimit(
+    filePath: string,
+    maxSize: number = 2 * 1024 * 1024,
+    attempt: number = 0,
+  ) {
+    const fileInfo = await this.getFileInfoAsync(filePath);
+    if (!fileInfo || typeof fileInfo.size !== 'number') {
+      return filePath;
+    }
+    if (fileInfo.size <= maxSize) {
+      return filePath;
+    }
+    const qualities = [90, 80, 70, 60, 50, 40, 30, 25, 20, 15, 10, 5];
+    let currentPath = filePath;
+    for (const quality of qualities) {
+      const compressed = await this.compressImageToQuality(currentPath, quality);
+      if (!compressed || !compressed.tempFilePath) {
+        continue;
+      }
+      const compressedInfo = await this.getFileInfoAsync(compressed.tempFilePath);
+      if (!compressedInfo || typeof compressedInfo.size !== 'number') {
+        continue;
+      }
+      currentPath = compressed.tempFilePath;
+      if (compressedInfo.size <= maxSize) {
+        return currentPath;
+      }
+    }
+    const finalInfo = await this.getFileInfoAsync(currentPath);
+    if (
+      attempt < 1 &&
+      finalInfo &&
+      typeof finalInfo.size === 'number' &&
+      finalInfo.size > maxSize
+    ) {
+      try {
+        const resized = await this.resizeImageToFit(currentPath);
+        return this.ensureImageUnderLimit(resized, maxSize, attempt + 1);
+      } catch (resizeError) {
+        console.warn('resizeImageToFit error', resizeError);
+      }
+    }
+    return currentPath;
+  },
+
+  async resizeImageToFit(
+    filePath: string,
+    maxWidth = 1200,
+    maxHeight = 1200,
+    quality = 70,
+  ) {
+    const imageInfo = await this.getImageInfoAsync(filePath);
+    const sourceWidth = imageInfo?.width || maxWidth;
+    const sourceHeight = imageInfo?.height || maxHeight;
+    const ratio = Math.min(1, maxWidth / sourceWidth, maxHeight / sourceHeight);
+    const width = Math.max(1, Math.round(sourceWidth * ratio));
+    const height = Math.max(1, Math.round(sourceHeight * ratio));
+    await this.updateCanvasSize(width, height);
+    return new Promise<string>((resolve, reject) => {
+      const ctx = wx.createCanvasContext('compressCanvas', this);
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(filePath, 0, 0, width, height);
+      ctx.draw(false, () => {
+        wx.canvasToTempFilePath({
+          canvasId: 'compressCanvas',
+          width,
+          height,
+          destWidth: width,
+          destHeight: height,
+          quality: Math.min(Math.max(quality / 100, 0.05), 1),
+          success: (res) => {
+            resolve(res.tempFilePath);
+          },
+          fail: reject,
+        });
+      });
     });
   },
 
