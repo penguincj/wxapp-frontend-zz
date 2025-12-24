@@ -137,10 +137,13 @@
           </view>
         </view>
       </view>
-      
+      <canvas
+        canvas-id="compressCanvas"
+        width="{{compressCanvasWidth}}"
+        height="{{compressCanvasHeight}}"
+        style="width: {{compressCanvasWidth}}px; height: {{compressCanvasHeight}}px; position: absolute; left: -9999px; top: -9999px;"
+      ></canvas>
     </view>
-
   </view>
-
   <custom-tab-bar></custom-tab-bar>
 </page-meta>

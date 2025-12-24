@@ -23,6 +23,8 @@ Page({
     showFeedbackSuccessOverlay: false,
     search_res: {} as any,
     showMatchScore: false,
+    compressCanvasWidth: 1,
+    compressCanvasHeight: 1,
   },
 
   onShow() {
@@ -120,8 +122,20 @@ Page({
           feedbackImages: [],
           submittingFeedback: false,
           dailyListenExhibit: null,
+          isRecognizing: true,
         });
-        this.processImage(filePath);
+
+        let uploadPath = filePath;
+        try {
+          uploadPath = await this.ensureImageUnderLimit(filePath);
+        } catch (error) {
+          wx.showToast({
+            title: '处理图片失败，请重试',
+            icon: 'none',
+          });
+          uploadPath = filePath;
+        }
+        this.processImage(uploadPath);
       },
       fail: (error) => {
         if (error.errMsg.includes('auth deny')) {
@@ -135,7 +149,6 @@ Page({
         if (error?.errMsg?.includes('cancel')) {
           return;
         }
-        console.error('chooseMedia error', error);
         wx.showToast({
           title: '无法打开相机/相册',
           icon: 'none',
@@ -144,6 +157,130 @@ Page({
     });
   },
 
+  async getFileInfoAsync(filePath: string) {
+    return new Promise<WechatMiniprogram.GetFileInfoSuccessCallbackResult>((resolve, reject) => {
+      const fs = wx.getFileSystemManager();
+      fs.getFileInfo({
+        filePath,
+        success: resolve,
+        fail: reject,
+      });
+    });
+  },
+
+  async getImageInfoAsync(src: string) {
+    return new Promise<WechatMiniprogram.GetImageInfoSuccessCallbackResult>((resolve, reject) => {
+      wx.getImageInfo({
+        src,
+        success: resolve,
+        fail: reject,
+      });
+    });
+  },
+
+  async updateCanvasSize(width: number, height: number) {
+    return new Promise<void>((resolve) => {
+      this.setData(
+        {
+          compressCanvasWidth: width,
+          compressCanvasHeight: height,
+        },
+        () => resolve(),
+      );
+    });
+  },
+
+  async compressImageToQuality(src: string, quality: number) {
+    return new Promise<WechatMiniprogram.CompressImageSuccessCallbackResult>((resolve, reject) => {
+      wx.compressImage({
+        src,
+        quality,
+        success: resolve,
+        fail: reject,
+      });
+    });
+  },
+
+  async ensureImageUnderLimit(
+    filePath: string,
+    maxSize: number = 1.8 * 1024 * 1024,
+    attempt: number = 0,
+  ) {
+    const fileInfo = await this.getFileInfoAsync(filePath);
+    if (!fileInfo || typeof fileInfo.size !== 'number') {
+      return filePath;
+    }
+    if (fileInfo.size <= maxSize) {
+      return filePath;
+    }
+    const qualities = [90, 80, 70, 60, 50, 40, 30, 25, 20, 15, 10, 5];
+    let currentPath = filePath;
+    for (const quality of qualities) {
+      const compressed = await this.compressImageToQuality(currentPath, quality);
+      if (!compressed?.tempFilePath) {
+        continue;
+      }
+      const compressedInfo = await this.getFileInfoAsync(compressed.tempFilePath);
+      if (!compressedInfo || typeof compressedInfo.size !== 'number') {
+        continue;
+      }
+      currentPath = compressed.tempFilePath;
+      if (compressedInfo.size <= maxSize) {
+        return currentPath;
+      }
+    }
+    const finalInfo = await this.getFileInfoAsync(currentPath);
+    if (
+      attempt < 1 &&
+      finalInfo &&
+      typeof finalInfo.size === 'number' &&
+      finalInfo.size > maxSize
+    ) {
+      try {
+        const resized = await this.resizeImageToFit(currentPath);
+        return this.ensureImageUnderLimit(resized, maxSize, attempt + 1);
+      } catch (resizeError) {
+      }
+    }
+    return currentPath;
+  },
+
+  async resizeImageToFit(
+    filePath: string,
+    maxWidth = 1200,
+    maxHeight = 1200,
+    quality = 70,
+  ) {
+    const imageInfo = await this.getImageInfoAsync(filePath);
+    const sourceWidth = imageInfo?.width || maxWidth;
+    const sourceHeight = imageInfo?.height || maxHeight;
+    const ratio = Math.min(1, maxWidth / sourceWidth, maxHeight / sourceHeight);
+    const width = Math.max(1, Math.round(sourceWidth * ratio));
+    const height = Math.max(1, Math.round(sourceHeight * ratio));
+    await this.updateCanvasSize(width, height);
+    return new Promise<string>((resolve, reject) => {
+      const ctx = wx.createCanvasContext('compressCanvas', this);
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(filePath, 0, 0, width, height);
+      ctx.draw(false, () => {
+        wx.canvasToTempFilePath({
+          canvasId: 'compressCanvas',
+          width,
+          height,
+          destWidth: width,
+          destHeight: height,
+          quality: Math.min(Math.max(quality / 100, 0.05), 1),
+          component: this,
+          success: (res) => {
+            resolve(res.tempFilePath);
+          },
+          fail: (error) => {
+            reject(error);
+          },
+        });
+      });
+    });
+  },
   async processImage(filePath: string) {
     this.setData({
       isRecognizing: true,
@@ -219,7 +356,6 @@ Page({
           : null,
       });
     } catch (error: any) {
-      console.log(error)
       const errMsg = error?.message || error?.errMsg || '识别失败，请稍后重试';
       this.setData({
         recognitionError: errMsg,
@@ -261,7 +397,6 @@ Page({
         const decoded = decodeURIComponent(escape(rawData));
         return JSON.parse(decoded);
       } catch (decodeError) {
-        console.warn('无法解析上传返回数据', rawData, decodeError);
         return {
           message: rawData,
         };
@@ -444,7 +579,6 @@ Page({
         showFeedbackSuccessOverlay: true,
       });
     } catch (error) {
-      console.error('handleSubmitFeedback error', error);
       wx.showToast({
         title: '提交失败，请稍后重试',
         icon: 'none',
