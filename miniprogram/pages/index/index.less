@@ -19,35 +19,31 @@
 
 .full-height {
   position: absolute;
-  height: 100vh;
+  height: calc(100vh - 400rpx);
   width: 100%;
   top: 0;
   left: 0;
 }
 .index-page {
+  padding: 32rpx;
   .banner-area {
     width: 750rpx;
     height: 550rpx;
   }
+  .title {
+    font-size: 36rpx;
+    font-weight: 600;
+    margin-bottom: 10rpx;
+  }
+  .paihangbang-area {
+    margin-top: 200rpx;
+  }
   .exhibition-area {
-    position: absolute;
-    left: 0;
-    top: 374rpx;
-    width: 100%;
-    height: calc(68rpx + 388rpx);
-    // padding-bottom: calc(68rpx + 388rpx);
-
-    z-index: 100;
-    .title {
-      font-family: MySimSun;
-      color: #FFFFFF;
-      font-size: 38rpx;
-      height: 40rpx;
-      padding-left: 40rpx;
-    }
+    margin-top: 60rpx;
+   
     .exhibition-list-area {
-      margin-top: 30rpx;
-      margin-left: 40rpx;
+      // margin-top: 30rpx;
+      // margin-left: 40rpx;
     }
   }
   .daily-listen-area {

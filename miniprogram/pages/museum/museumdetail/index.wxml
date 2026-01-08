@@ -29,6 +29,9 @@
   <view class="note-area" style="background-color: {{navIsTransparent ? '#D9D9D9': '#FFFFFF'}}">
     <scroll-note list="{{noteList}}" bindSelectItem="handleSelectNoteItem" selectedId="{{selectedNoteId}}"></scroll-note>
   </view>
+  <view class="exhibit-ranklist-area">
+    <swiper-card3 title="热门博物馆" len="{{exhibitRankList.length}}" list="{{exhibitRankList}}" smalllist="{{exhibitRankList}}" bindClickItem="handleMuseumClickItem"></swiper-card3>
+  </view>
   <view class="sticky-area" style="top: 100px">
     <view class="swiper-unit-area" wx:if="{{listConfig.length}}">
       <swiper-unit3 list="{{listConfig}}" selectedId="{{topSwiperSelectIdx}}" bindChangeUnit="handleChangePannelId"></swiper-unit3>

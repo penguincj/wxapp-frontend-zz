@@ -11,11 +11,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/ai-camera/index",
-          "pathName": "pages/ai-camera/index",
+          "name": "pages/museum-ranklist/index",
+          "pathName": "pages/museum-ranklist/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages/ai-camera/index",
+          "pathName": "pages/ai-camera/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/ai-camera-debug/index",

@@ -19,6 +19,7 @@
     "pages/feedback/index",
     "pages/logs/logs",
     "pages/museumlist/index",
+    "pages/museum-ranklist/index",
     "pages/editcomment/index",
     "pages/commentdetail/index",
     "pages/gridview/index",
