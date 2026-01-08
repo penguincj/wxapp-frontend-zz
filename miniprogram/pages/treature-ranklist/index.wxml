@@ -1,0 +1,45 @@
+<page-meta page-style="overflow: hidden;">
+  <navigation-bar back title="文物排行榜" color="black" background="#FFF" styleType="dark" style="text-align: center;" />
+  <scroll-view
+    class="page-scroll"
+    scroll-y="{{true}}"
+    show-scrollbar="{{false}}"
+    enhanced="{{true}}"
+  >
+    <view class="page-treature-ranklist">
+      <view class="hero">
+        <scroll-view
+          class="hero-scroll"
+          scroll-x="{{true}}"
+          show-scrollbar="{{false}}"
+          enhanced="{{true}}"
+        >
+          <view class="hero-track">
+            <block wx:for="{{topRows}}" wx:key="index">
+              <view class="thumb-row">
+                <block wx:for="{{item}}" wx:key="*this">
+                  <view class="thumb">
+                    <image class="thumb-img" src="{{item}}" mode="aspectFill" />
+                  </view>
+                </block>
+              </view>
+            </block>
+          </view>
+        </scroll-view>
+      </view>
+
+      <view class="rank-list">
+        <block wx:for="{{rankList}}" wx:key="id">
+          <view class="rank-item">
+            <image class="rank-image" src="{{item.image}}" mode="aspectFill" />
+            <view class="rank-info">
+              <view class="rank-title">{{index + 1}}.{{item.name}}</view>
+              <view class="rank-subtitle">{{item.location}}</view>
+            </view>
+            <view class="rank-btn">查看</view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </scroll-view>
+</page-meta>

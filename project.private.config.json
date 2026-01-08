@@ -11,11 +11,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/museum-ranklist/index",
-          "pathName": "pages/museum-ranklist/index",
+          "name": "pages/treature-ranklist/index",
+          "pathName": "pages/treature-ranklist/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages/museum-ranklist/index",
+          "pathName": "pages/museum-ranklist/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/ai-camera/index",
