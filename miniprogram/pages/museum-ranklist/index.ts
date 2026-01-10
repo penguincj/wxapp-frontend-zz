@@ -59,33 +59,9 @@ Page({
     const targetPage = "pages/exhibitlist/index";
     backToTargetPage(targetPage);
   },
-  async initPage() {
+  async initPage(_cityid: any) {
     try {
-      const city = await getCurrentCity();
-      const citylist:any = await getCityList();
-      let city_item = ((citylist || {}).cities || []).find((i: any) => i.name === city);
-      this.setData({
-        cityList: citylist.cities 
-      })
-      let city_id = -1;
-
-      if(city_item && city_item.name) {
-        city_id = city_item.id;
-        this.generateSelectCityList(city_item, citylist.cities);
-        this.setData({
-          curCityId: city_id,
-        })
-      } else {
-        city_item = ((citylist || {}).cities || []).find((i: any) => i.name === '北京市');
-        city_id = city_item.id;
-        this.generateSelectCityList(city_item, citylist.cities);
-        this.setData({
-          curCityId: city_id,
-        })
-      }
-      console.log(city_item);
-      await this.getMuseumList(city_id)
-      
+      await this.getMuseumList(_cityid)
     } catch (error) {
       console.log(error);
       
@@ -106,7 +82,7 @@ Page({
 
   onLoad(options) {
     console.log('museumlist onLoad', options);
-    if (options && options.cityid) {
+    if (options && options.city_id) {
       this.setData({
         curCityId: Number(options.city_id),
       })
@@ -115,7 +91,7 @@ Page({
       showLoading: true,
     })
 
-    this.initPage();
+    this.initPage(options.city_id);
     
   },
   onShow() {    

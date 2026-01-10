@@ -1,3 +1,5 @@
+import { generateNewUrlParams, getCurrentPageUrl } from "../../utils/util";
+
 Component({
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -13,6 +15,10 @@ Component({
     totalLen: {
       type: Number,
       value: 0,
+    },
+    museum: {
+      type: Object,
+      value: {},
     }
   },
   /**
@@ -45,15 +51,28 @@ Component({
       console.log(e)
     },
 
+    selectMuseumItem(e: any) {
+      console.log(e);
+      const { idx } = e.currentTarget.dataset;
+      const url_params = generateNewUrlParams({
+        city_id: idx,
+      })
+      wx.navigateTo({
+        url: '/pages/museum-ranklist/index'+ url_params
+      })
+    },
+
     selectItem(e: any) {
       console.log('selectItem', e.currentTarget.dataset);
-      const { idx } = e.currentTarget.dataset;
+      const { idx, slug, scopeType } = e.currentTarget.dataset;
         // this.setData({
         //   selectId: id,
         //   selectName: name,
         // });
         this.triggerEvent('ClickItem', {
           selectId: idx,
+          slug,
+          scopeType,
           // selectName: name,
         })
     },

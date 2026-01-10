@@ -1,10 +1,6 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "swiper-banner": "/components/swiper-banner/swiper-banner",
-    "daily-listen": "/components/daily-listen/daily-listen",
-    "swiper-card3": "/components/swiper-card3/swiper-card3",
-    "comment-list": "/components/comment-list/comment-list",
     "loc-select3": "/components/loc-select3/loc-select3",
     "exhibition-scroll": "/components/exhibition-scroll/exhibition-scroll",
     "paihangbang-scroll": "/components/paihangbang-scroll/paihangbang-scroll"

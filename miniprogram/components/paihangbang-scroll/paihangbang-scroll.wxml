@@ -3,37 +3,36 @@
     <view class="page-section-spacing">
       <scroll-view class="scroll-view_H" scroll-x="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" style="width: 100%;">
         <view 
-            class="item-group" 
-            data-idx="dd" 
-            bindtap="selectMuseumItem"
-            >
-            <view class="item-bg" style="background-image: url('/static/images/bwg-bg.png')"></view>
-            <view class="text-group">
-              <view class="item-txt">北京博物馆排行</view>
-            
-            </view>
+          class="item-group" 
+          data-idx="{{museum.city_id}}" 
+          bindtap="selectMuseumItem"
+          >
+          <view class="item-bg" style="background-image: url('{{museum.cover_img}}')"></view>
+          <view class="text-group">
+            <view class="item-txt">{{museum.city_name}}博物馆排行</view>
           </view>
-        <block wx:for="{{list}}">
+        </view>
+        <block wx:for="{{list}}" wx:key="id">
           <view 
             class="item-group" 
             data-idx="{{item.id}}" 
+            data-slug="{{item.slug}}"
+            data-scope-type="{{item.scope_type}}"
             data-is-catch-event="{{true}}" 
             data-event-id="index_paihangbang_e2"
-            data-event-params="{{ {name: item.exhibition_name, id: item.id ,is_new: item.is_new_flag} }}"
+            data-event-params="{{ {name: item.title || item.exhibition_name, id: item.id, scope_type: item.scope_type} }}"
             bindtap="selectItem"
             >
-            <view class="item-bg" style="background-image: url({{item.img}})"></view>
-            <image src="/static/images/play-index.png" class="play-item-icon" mode="aspectFit" />
-            <image wx:if="{{item.is_new_flag}}" src="/static/images/index-new.png" class="tag-item-icon" mode="aspectFit" />
+            <view class="item-bg" style="background-image: url({{item.cover_image_cdn_url || item.img}})"></view>
             <view class="text-group">
-              <view class="item-txt">{{item.exhibition_name}}</view>
-              <view class="item-detail" wx:if="{{item.exhibition_name.length < 7}}">
+              <view class="item-txt">{{item.title || item.exhibition_name}}</view>
+              <view class="item-detail" wx:if="{{item.museum_name}}">
                 {{item.museum_name}}
               </view>
             </view>
           </view>
         </block>
-        <view wx:if="{{totalLen > 15}}" class="more-ex" bindtap="handleClickMore">更多展览 ></view>
+        <view wx:if="{{totalLen > 15}}" class="more-ex" bindtap="handleClickMore">更多排行 ></view>
       </scroll-view>
     </view>
   </view>

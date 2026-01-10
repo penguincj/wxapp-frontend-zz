@@ -391,3 +391,9 @@ export const getPackageExhibitById = (_packageid: any, _exhibitid: any) => {
 export const getCityByLoc = (_lat: any, _lng: any) => {
     return request(`/${base_api}/v1/city-by-location?location=${_lng},${_lat}`);
 }
+
+
+// 首页改版 index 无city参数
+export const getIndexDataV2 = (_lat: any, _lng: any) => {
+    return request(`/${base_api}/v2/index?lat=${_lat}&lon=${_lng}`)
+}

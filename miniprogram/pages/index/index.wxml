@@ -19,11 +19,11 @@
  
   <view class="index-page page-section page-section-spacing full-height">
       <!-- <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscrolltolower="handleScrolltolower" style="height: calc(100vh - 200rpx)"> -->
-      <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscrolltolower="handleScrolltolower">
+      <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}">
         <view class="paihangbang-area">
           <view class="title">排行榜 ></view>
           <view class="paihangbang-list-area">
-            <paihangbang-scroll list="{{showExhibitionList}}" totalLen="{{exhibitionList.length}}" bindClickItem="handleExClickItem" bindClickMore="handleClickMoreExh"></paihangbang-scroll>
+            <paihangbang-scroll list="{{rankingList}}" museum="{{cityMuseum}}" totalLen="{{rankingList.length}}" bindClickItem="handleRankClickItem" bindClickMore="handleClickMoreRank"></paihangbang-scroll>
           </view>
         </view>
 
