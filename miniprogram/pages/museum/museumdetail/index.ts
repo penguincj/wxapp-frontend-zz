@@ -1,4 +1,4 @@
-import { getMuseumById, getTreatureList, getMuseumInfoById, getRecoExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList, getPostersOfMuseum, getAlbumsFeedList } from "../../../api/api";
+import { getMuseumById, getTreatureList, getMuseumInfoById, getRecoExhibitionList, getLongExhibitionList, getPastExhibitionList, getFutureExhibitionList, getPostersOfMuseum, getAlbumsFeedList, getRankingsByMuseumId } from "../../../api/api";
 import { generateNewUrlParams, backToTargetPage, getCurrentPageParamStr } from "../../../utils/util";
 const listConfig = [
   {
@@ -35,6 +35,7 @@ Page({
     showPosterBtn: false,
     museumGuideInfo: [] as any,
     noteList: [], //
+    museumRankList: [] as any,
 
     leftList: [] as any,   // 左列数据
     rightList: [] as any,  // 右列数据
@@ -120,6 +121,14 @@ Page({
     return [];
   },
 
+  chunkRankings(list: any[], size = 3) {
+    const result = [] as any[];
+    for (let i = 0; i < list.length; i += size) {
+      result.push(list.slice(i, i + size));
+    }
+    return result;
+  },
+
   async initPage(_museumid: any) {
     this.setData({
       loading: true
@@ -138,6 +147,7 @@ Page({
       })
 
       await this.getMuseumInfo();
+      await this.getMuseumRankList(this.data.curMuseumId);
       await this.getTreatureListInfo(this.data.curMuseumId);
       if (museumInfo && museumInfo.museum && museumInfo.museum.album_id) {
         await this.getPhotoListInfo(museumInfo.museum.album_id);
@@ -167,6 +177,22 @@ Page({
         loading: false
       })
       wx.hideLoading();
+    }
+  },
+
+  async getMuseumRankList(_museumid: any) {
+    try {
+      const res: any = await getRankingsByMuseumId(_museumid);
+      if (res && res.code === 0) {
+        this.setData({
+          museumRankList: res.rankings,
+        });
+
+      }
+    } catch (error) {
+      this.setData({
+        museumRankList: [],
+      });
     }
   },
 
@@ -440,6 +466,16 @@ Page({
     const url_params = generateNewUrlParams({exhibition_id: id})
     wx.navigateTo({
       url: '/pages/exhibitiondetail/index' + url_params,
+    })
+  },
+  handleRankClickItem(event: any) {
+    const { id } = event.detail;
+    if (!id) return;
+    const url_params = generateNewUrlParams({
+      ranking_id: Number(id),
+    })
+    wx.navigateTo({
+      url: '/pages/treature-ranklist/index' + url_params,
     })
   },
   onLoad(options) {

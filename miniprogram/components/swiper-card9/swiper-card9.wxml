@@ -1,0 +1,53 @@
+<view wx:if="{{list.length}}" class="swiper-card-nine {{len === 1 ? 'nine-pr': ''}}">
+
+  <view wx:if="{{len === 1}}" class="list-wrapper" data-idx="{{list[0].id}}" bindtap="handleClickItem">
+    <view class="group-title">
+      <text class="desc-title">{{list[0].title}}</text>
+      <image class="btn-img" src="/static/images/arrow-bottom.png" mode="aspectFix" />
+    </view>
+    <block wx:for="{{list[0].items}}">
+      <view class="swiper-item" data-idx="{{item.id}}" data-name="{{item.title}}">
+        <image src="{{item.photos[0]}}" class="item-img" mode="aspectFill" />
+        <view class="item-desc-group">
+          <view class="line-one">
+            <text class="desc-title">{{index + 1}}.{{item.name}}</text>
+          </view>
+          <view wx:if="{{item.name.length < 17}}" class="desc-desc">{{item.description}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+	<view wx:else class="page-section page-section-spacing swiper">
+		<swiper
+		 indicator-dots="{{false}}"
+		 autoplay="{{autoplay}}"
+		 interval="{{interval}}"
+		 duration="{{duration}}"
+     next-margin="160rpx"
+		>
+			<block wx:for="{{list}}" wx:for-item="fatheritem" wx:for-index="fatherindex" wx:key="index">
+				<swiper-item>
+          <view class="item-vertical" data-idx="{{fatheritem.id}}" data-name="{{fatheritem.title}}" bindtap="handleClickItem">
+            <view class="group-title">
+              <text class="desc-title">{{fatheritem.title}}</text>
+              <image class="btn-img" src="/static/images/arrow-bottom.png" mode="aspectFix" />
+            </view>
+            <block wx:for="{{fatheritem.items}}">
+              <view class="swiper-item">
+                <image src="{{item.photos[0]}}" class="item-img" mode="aspectFill" />
+                <view class="item-desc-group">
+                  <view class="line-one">
+                    <text class="desc-title">{{item.name}}</text>
+                  </view>
+                  <view wx:if="{{item.name.length < 11}}" class="desc-desc">{{item.description}}</view>
+                </view>
+              </view>
+            </block>
+          </view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+  <!-- <view wx:if="{{list.length>10}}" class="find-more" bindtap="handleClickMore">查看更多</view> -->
+</view>
+

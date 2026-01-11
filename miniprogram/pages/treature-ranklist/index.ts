@@ -1,58 +1,92 @@
+import { getRankingById } from "../../api/api";
+
 Page({
   data: {
-    topRows: [
-      [
-        "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg",
-        "https://gewugo.com/api/v1/storage/image/Frame8@1x-3092466763.webp",
-        "https://gewugo.com/api/v1/storage/image/Union@1x-6352490503.webp",
-        "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg",
-        "https://gewugo.com/api/v1/storage/image/Frame8@1x-3092466763.webp",
-        "https://gewugo.com/api/v1/storage/image/Union@1x-6352490503.webp",
-        "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg",
-        "https://gewugo.com/api/v1/storage/image/Frame8@1x-3092466763.webp"
-      ],
-      [
-        "https://gewugo.com/api/v1/storage/image/Union@1x-6352490503.webp",
-        "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg",
-        "https://gewugo.com/api/v1/storage/image/Frame8@1x-3092466763.webp",
-        "https://gewugo.com/api/v1/storage/image/Union@1x-6352490503.webp",
-        "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg",
-        "https://gewugo.com/api/v1/storage/image/Frame8@1x-3092466763.webp",
-        "https://gewugo.com/api/v1/storage/image/Union@1x-6352490503.webp",
-        "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg"
-      ]
-    ],
-    rankList: [
-      {
-        id: 1,
-        name: "文物名称",
-        location: "展厅·单元",
-        image: "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg"
-      },
-      {
-        id: 2,
-        name: "文物名称",
-        location: "展厅·单元",
-        image: "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg"
-      },
-      {
-        id: 3,
-        name: "文物名称",
-        location: "展厅·单元",
-        image: "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg"
-      },
-      {
-        id: 4,
-        name: "文物名称",
-        location: "展厅·单元",
-        image: "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg"
-      },
-      {
-        id: 5,
-        name: "文物名称",
-        location: "展厅·单元",
-        image: "https://gewugo.com/api/v1/storage/image/share-3639793484.jpg"
+    topRows: [] as string[][],
+    rankList: [] as any[],
+    ranking: {} as any,
+    loading: false
+  },
+
+  onLoad(options: Record<string, string>) {
+    const rankingId = options.ranking_id;
+    if (!rankingId) {
+      wx.showToast({
+        title: "缺少排行榜参数",
+        icon: "none"
+      });
+      return;
+    }
+    this.initPage(rankingId);
+  },
+
+  buildTopRows(images: string[], rowCount = 2, minPerRow = 8) {
+    const rows = Array.from({ length: rowCount }, () => [] as string[]);
+    if (!images.length) {
+      return rows;
+    }
+    const total = Math.max(minPerRow, images.length);
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+      for (let i = 0; i < total; i += 1) {
+        const idx = (i + rowIndex) % images.length;
+        rows[rowIndex].push(images[idx]);
       }
-    ]
+    }
+    return rows;
+  },
+
+  async initPage(rankingId: string) {
+    this.setData({
+      loading: true
+    });
+    wx.showLoading({
+      title: "加载中"
+    });
+    try {
+      const res: any = await getRankingById(rankingId);
+      if (res && res.code === 0) {
+        const items = res.items || [];
+        const rankList = items.map((item: any) => {
+          const image =
+            (item.photos_cdn && item.photos_cdn[0]) ||
+            (item.photos && item.photos[0]) ||
+            "";
+          const location = [item.hall_name, item.location_in_hall]
+            .filter(Boolean)
+            .join("·");
+          return {
+            id: item.id,
+            name: item.name,
+            location: location || item.museum_name || "",
+            image
+          };
+        });
+        const topImages = items
+          .map((item: any) => {
+            return (
+              (item.photos_cdn && item.photos_cdn[0]) ||
+              (item.photos && item.photos[0]) ||
+              ""
+            );
+          })
+          .filter((url: string) => url);
+        this.setData({
+          ranking: res.ranking || {},
+          rankList,
+          topRows: this.buildTopRows(topImages),
+          loading: false
+        });
+      } else {
+        this.setData({
+          loading: false
+        });
+      }
+    } catch (error) {
+      this.setData({
+        loading: false
+      });
+    } finally {
+      wx.hideLoading();
+    }
   }
 });

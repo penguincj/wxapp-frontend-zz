@@ -397,3 +397,13 @@ export const getCityByLoc = (_lat: any, _lng: any) => {
 export const getIndexDataV2 = (_lat: any, _lng: any) => {
     return request(`/${base_api}/v2/index?lat=${_lat}&lon=${_lng}`)
 }
+
+// 获取博物馆排行榜（默认带items）
+export const getRankingsByMuseumId = (_museumid: any, _status = 'published') => {
+    return request(`/${base_api}/v2/rankings?museum_id=${_museumid}&status=${_status}`)
+}
+
+// 获取排行榜详情
+export const getRankingById = (_rankingid: any) => {
+    return request(`/${base_api}/v2/rankings/${_rankingid}`)
+}

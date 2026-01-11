@@ -30,7 +30,8 @@
     <scroll-note list="{{noteList}}" bindSelectItem="handleSelectNoteItem" selectedId="{{selectedNoteId}}"></scroll-note>
   </view>
   <view class="exhibit-ranklist-area">
-    <swiper-card3 title="热门博物馆" len="{{exhibitRankList.length}}" list="{{exhibitRankList}}" smalllist="{{exhibitRankList}}" bindClickItem="handleMuseumClickItem"></swiper-card3>
+    <swiper-card9 title="热门文物榜" len="{{museumRankList.length}}" list="{{museumRankList}}" bindClickItem="handleRankClickItem"></swiper-card9>
+    <view class="zhanwei"></view>
   </view>
   <view class="sticky-area" style="top: 100px">
     <view class="swiper-unit-area" wx:if="{{listConfig.length}}">
