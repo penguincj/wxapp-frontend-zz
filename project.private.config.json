@@ -11,11 +11,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/treature-ranklist/index",
+          "pathName": "pages/treature-ranklist/index",
+          "query": "museum_id=19&ranking_id=2",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/museumlist/index",
           "pathName": "pages/museumlist/index",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/treature-ranklist/index",

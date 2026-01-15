@@ -1,5 +1,6 @@
+<navigation-bar title="文物排行" back="{{true}}" extClass="transparent" styleType="dark" color="black" background="transparent"></navigation-bar>
+
 <page-meta page-style="overflow: hidden;">
-  <navigation-bar back title="文物排行榜" color="black" background="#FFF" styleType="dark" style="text-align: center;" />
   <scroll-view
     class="page-scroll"
     scroll-y="{{true}}"
