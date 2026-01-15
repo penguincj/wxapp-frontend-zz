@@ -37,7 +37,7 @@
               <view class="rank-title">{{index + 1}}.{{item.name}}</view>
               <view class="rank-subtitle">{{item.location}}</view>
             </view>
-            <view class="rank-btn">查看</view>
+            <view class="rank-btn" data-idx="{{item.id}}" bindtap="onClickShowDetail">查看</view>
           </view>
         </block>
       </view>

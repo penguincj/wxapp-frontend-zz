@@ -1,4 +1,5 @@
 import { getRankingById } from "../../api/api";
+import { generateNewUrlParams } from "../../utils/util";
 
 Page({
   data: {
@@ -33,6 +34,16 @@ Page({
       }
     }
     return rows;
+  },
+
+  onClickShowDetail(e: any) {
+    const { idx } = e.currentTarget.dataset;
+    const url_params = generateNewUrlParams({
+      treature_id: idx
+    })
+    wx.navigateTo({
+      url: '/pages/treature-result/index' + url_params,
+    })
   },
 
   async initPage(rankingId: string) {
