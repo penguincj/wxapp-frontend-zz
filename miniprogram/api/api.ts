@@ -394,8 +394,11 @@ export const getCityByLoc = (_lat: any, _lng: any) => {
 
 
 // 首页改版 index 无city参数
-export const getIndexDataV2 = (_lat: any, _lng: any) => {
-    return request(`/${base_api}/v2/index?lat=${_lat}&lon=${_lng}`)
+export const getIndexDataV2 = (params: { lat?: any; lng?: any; city_code?: string | number }) => {
+    if (params && params.city_code) {
+        return request(`/${base_api}/v2/index?city_code=${params.city_code}`)
+    }
+    return request(`/${base_api}/v2/index?lat=${params?.lat}&lon=${params?.lng}`)
 }
 
 // 获取博物馆排行榜（默认带items）

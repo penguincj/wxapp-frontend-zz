@@ -66,11 +66,13 @@ Page({
 
   handleCityChange(event: any) {
     const { selectedId, selectedName } = event.detail;
+    const selectedCity = (this.data.cityList || []).find((item: any) => item.id === selectedId);
+    const cityCode = selectedCity?.city_code || selectedCity?.cityCode || selectedCity?.code;
     this.setData({
       curCityId: selectedId,
       cityName: selectedName
     });
-    this.initPage(selectedId);
+    this.initPage(cityCode);
   },
 
   handleClickReLoc() {
@@ -98,8 +100,8 @@ Page({
     return [];
   },
 
-  async getPageIndex(_lat: any, _lng: any) {
-    const res: any = await getIndexDataV2(_lat, _lng);
+  async getPageIndex(params: { lat?: any; lng?: any; city_code?: string | number }) {
+    const res: any = await getIndexDataV2(params);
     if (res && res.code === 0) {
       const data = res.data || {};
       const rankings = data.rankings || [];
@@ -135,25 +137,29 @@ Page({
     }
   },
 
-  async initPage() {
+  async initPage(cityCode?: string | number) {
     wx.showLoading({
       title: '加载中',
     });
     this.setData({
       loading: true,
     });
-    const lat = await wx.getStorageSync('latitude');
-    const lng = await wx.getStorageSync('longitude');
     try {
-      if (!lat || !lng) {
-        // @ts-expect-error
-        const { latitude, longitude } = await getLocation();
-        await this.getPageIndex(latitude, longitude);
+      if (cityCode) {
+        await this.getPageIndex({ city_code: cityCode });
       } else {
-        await this.getPageIndex(lat, lng);
+        const lat = await wx.getStorageSync('latitude');
+        const lng = await wx.getStorageSync('longitude');
+        if (!lat || !lng) {
+          // @ts-expect-error
+          const { latitude, longitude } = await getLocation();
+          await this.getPageIndex({ lat: latitude, lng: longitude });
+        } else {
+          await this.getPageIndex({ lat, lng });
+        }
       }
     } catch (error) {
-      await this.getPageIndex(0, 0);
+      await this.getPageIndex({ lat: 0, lng: 0 });
     }
     wx.hideLoading();
     this.setData({
