@@ -39,7 +39,7 @@ Page({
   onClickShowDetail(e: any) {
     const { idx } = e.currentTarget.dataset;
     const url_params = generateNewUrlParams({
-      treature_id: idx
+      item_id: idx
     })
     wx.navigateTo({
       url: '/pages/treature-result/index' + url_params,

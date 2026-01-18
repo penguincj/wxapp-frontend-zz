@@ -1,133 +1,44 @@
 <page-meta page-style="background: #E6E6E6">
   <navigation-bar
-    title="拍照识文物"
+    title="{{navTitle}}"
     back="{{true}}"
     color="black"
     background="#E6E6E6"
     styleType="dark"
-  >
-    <!-- <view slot="right" class="flash-button" bindtap="handleToggleFlash">
-      <text class="flash-icon">⚡</text>
-      <text class="flash-label">{{flashModeLabel}}</text>
-    </view> -->
-  </navigation-bar>
+  ></navigation-bar>
 
   <view class="treature-detail-page">
-    <view class="preview-area">
-      <view class="search-result" wx:if="{{exhibitDetail}}">
-        <view class="search-result-scroll">
-          <view class="result-hero">
-            <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
-            <view class="result-title">{{exhibitDetail.name}}</view>
-            
-          </view>
-          <view wx:if="{{exhibitDetail.content}}" class="result-section">
-            <view class="title-group">
-              <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
-                <text>文物名片</text>
-                <view class="audio-section" wx:if="{{dailyListenExhibit}}">
-                  <listen-simple
-                    title=""
-                    exhibition="{{dailyListenExhibit}}"
-                    bindPlayDailyListen="handlePlayDailyListen"
-                    id="dailyListenPlayer"
-                  ></listen-simple>
-                </view>
-              </view>
-              <image
-                class="section-title-border"
-                src="/static/images/border.png"
-                mode="scaleToFill"
-              ></image>
-            </view>
-            <view class="content-group">
-              <view class="section-desc">{{exhibitDetail.content}}</view>
-             
-            </view>
-            
-          </view>
-          
-          <view class="result-footer">
-            <text>识别内容不准确？欢迎</text>
-            <!-- <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text> -->
-            <text>反馈</text>
-          </view>
-           
-        </view>
-        <view class="exhibit-action-row">
-          <view class="action-buttons">
-            <view class="exhibit-btn primary" bindtap="handleCloseExhibitOverlay">
-              <text>不准确</text>
-            </view>
-            <view class="exhibit-btn primary" bindtap="handleConfirmExhibit">
-              <text>结果正确</text>
-            </view>
-          </view>
-        </view>
+    <scroll-view scroll-y="{{true}}" class="detail-scroll">
+      <view class="result-hero">
+        <image class="result-image" src="{{displayImage}}" mode="aspectFit"></image>
+        <view class="result-title">{{item.name}}</view>
+        <view wx:if="{{ranking.title}}" class="result-subtitle">{{ranking.title}}</view>
+        <view wx:if="{{item.rank_no}}" class="result-rank">第{{item.rank_no}}名</view>
       </view>
-      <view class="fankui-area" wx:if="{{showFeedbackForm}}">
-        <scroll-view scroll-y="{{true}}" class="fankui-scroll">
-          <view class="fankui-title">记录「考古」，分享给更多岛民</view>
-          <image class="fankui-preview" src="{{exhibitDetail.image_url || previewImage}}" mode="aspectFit"></image>
-          <view class="fankui-textbox">
-            <textarea
-              class="fankui-textarea"
-              placeholder="写点鉴定依据吧～我们会更快的丰富藏宝库..."
-              placeholder-class="fankui-placeholder"
-              value="{{feedbackText}}"
-              bindinput="handleFeedbackInput"
-              maxlength="500"
-            ></textarea>
-            <view class="fankui-upload-list">
-              <block wx:for="{{feedbackImages}}" wx:key="*this">
-                <view class="upload-thumb">
-                  <image src="{{item}}" mode="aspectFill"></image>
-                  <view class="upload-remove" bindtap="handleRemoveFeedbackImage" data-index="{{index}}">×</view>
-                </view>
-              </block>
-              <view class="upload-add" bindtap="handleAddFeedbackImage">
-                <text class="upload-add-plus">+</text>
-                <text class="upload-add-label">拍摄展签</text>
-              </view>
-            </view>
-          </view>
-          <view class="feedback-btnlist">
-            <view class="feedback-cancel-btn" bindtap="handleCancelFeedback">取消</view>
-            <view
-            class="feedback-submit-btn"
-            bindtap="handleSubmitFeedback"
-            loading="{{submittingFeedback}}"
-            disabled="{{submittingFeedback}}"
-          >
-            生成鉴定反馈
-          </view>
 
+      <view wx:if="{{detailRows.length || item.description}}" class="result-section">
+        <view class="title-group">
+          <view class="section-title short">
+            <text>文物名片</text>
           </view>
-        </scroll-view>
-      </view>
-      <view wx:if="{{showFeedbackSuccessOverlay}}" class="feedback-success-overlay">
-        <view class="feedback-success-card">
           <image
-            class="feedback-success-image"
-            src="/static/images/airobot.png"
-            mode="aspectFit"
+            class="section-title-border"
+            src="/static/images/border.png"
+            mode="scaleToFill"
           ></image>
-          <text class="feedback-success-title">已将鉴定请求发送给博物岛屿平台，努力丰富宝藏库中，谢谢理解～</text>
-          <view
-            class="feedback-success-button"
-            bindtap="handleFeedbackSuccessReturn"
-          >
-            返回
+        </view>
+        <view class="content-group">
+          <view class="info-row" wx:for="{{detailRows}}" wx:key="label">
+            <text class="info-label">{{item.label}}</text>
+            <text class="info-value">{{item.value}}</text>
+          </view>
+          <view wx:if="{{item.description}}" class="info-desc">
+            <text class="info-label">简介</text>
+            <text class="info-value section-desc">{{item.description}}</text>
           </view>
         </view>
       </view>
-      <canvas
-        canvas-id="compressCanvas"
-        width="{{compressCanvasWidth}}"
-        height="{{compressCanvasHeight}}"
-        style="width: {{compressCanvasWidth}}px; height: {{compressCanvasHeight}}px; position: absolute; left: -9999px; top: -9999px;"
-      ></canvas>
-    </view>
+    </scroll-view>
   </view>
   <custom-tab-bar></custom-tab-bar>
 </page-meta>

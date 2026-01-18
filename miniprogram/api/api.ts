@@ -407,3 +407,8 @@ export const getRankingsByMuseumId = (_museumid: any, _status = 'published') => 
 export const getRankingById = (_rankingid: any) => {
     return request(`/${base_api}/v2/rankings/${_rankingid}`)
 }
+
+// 获取排行榜展品详情
+export const getRankingItemById = (_itemid: any) => {
+    return request(`/${base_api}/v2/ranking-items/${_itemid}`)
+}
