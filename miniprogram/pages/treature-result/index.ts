@@ -23,6 +23,7 @@ Page({
     bubbles: [] as BubbleItem[],
     bubbleDetail: null as null | { title: string; detail: string },
     bubbleDetailLoading: false,
+    bubbleDetailVisible: false,
     bubbleArtifactName: '',
     bubbleArtifactType: '',
   },
@@ -128,8 +129,11 @@ Page({
     const bubbles = (this.data as any).bubbles as BubbleItem[];
     const bubble = bubbles[index];
     if (!bubble) return;
+    const requestId = ((this as any).bubbleDetailRequestId || 0) + 1;
+    (this as any).bubbleDetailRequestId = requestId;
     this.setData({
       bubbleDetailLoading: true,
+      bubbleDetailVisible: true,
       bubbleDetail: null,
     });
     try {
@@ -139,6 +143,9 @@ Page({
         topic_type: bubble.type,
         bubble_title: bubble.title,
       });
+      if ((this as any).bubbleDetailRequestId !== requestId || !(this.data as any).bubbleDetailVisible) {
+        return;
+      }
       if (res && res.code === 0 && res.detail) {
         this.setData({
           bubbleDetail: {
@@ -157,13 +164,22 @@ Page({
         });
       }
     } catch (error) {
-      this.setData({
-        bubbleDetailLoading: false,
-      });
+      if ((this as any).bubbleDetailRequestId !== requestId || !(this.data as any).bubbleDetailVisible) {
+        return;
+      }
+      this.setData({ bubbleDetailLoading: false });
       wx.showToast({
         title: '获取详情失败',
         icon: 'none',
       });
     }
+  },
+
+  closeBubbleDetail() {
+    this.setData({
+      bubbleDetailVisible: false,
+      bubbleDetailLoading: false,
+      bubbleDetail: null,
+    });
   },
 });

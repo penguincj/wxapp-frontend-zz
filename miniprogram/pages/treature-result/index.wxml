@@ -30,11 +30,17 @@
         <view wx:if="{{item.rank_no}}" class="result-rank">第{{item.rank_no}}名</view>
       </view>
 
-      <view wx:if="{{bubbleDetailLoading || bubbleDetail}}" class="bubble-detail-card">
-        <view class="bubble-detail-title">
-          {{bubbleDetail ? bubbleDetail.title : '正在生成问题详情...'}}
+      <view wx:if="{{bubbleDetailVisible}}" class="bubble-detail-overlay">
+        <view class="bubble-detail-mask" bindtap="closeBubbleDetail"></view>
+        <view class="bubble-detail-sheet">
+          <view class="bubble-detail-card">
+            <view class="bubble-detail-close" bindtap="closeBubbleDetail">×</view>
+            <view class="bubble-detail-title">
+              {{bubbleDetail ? bubbleDetail.title : '正在生成问题详情...'}}
+            </view>
+            <view wx:if="{{bubbleDetail}}" class="bubble-detail-text">{{bubbleDetail.detail}}</view>
+          </view>
         </view>
-        <view wx:if="{{bubbleDetail}}" class="bubble-detail-text">{{bubbleDetail.detail}}</view>
       </view>
 
       <view wx:if="{{detailRows.length || item.description}}" class="result-section">
