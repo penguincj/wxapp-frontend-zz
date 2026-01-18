@@ -10,10 +10,31 @@
   <view class="treature-detail-page">
     <scroll-view scroll-y="{{true}}" class="detail-scroll">
       <view class="result-hero">
-        <image class="result-image" src="{{displayImage}}" mode="aspectFit"></image>
+        <view class="result-image-wrap">
+          <image class="result-image" src="{{displayImage}}" mode="aspectFit"></image>
+          <view wx:if="{{bubbles.length}}" class="bubble-layer">
+            <block wx:for="{{bubbles}}" wx:key="title">
+              <view
+                class="bubble-item bubble-item-{{index}}"
+                bindtap="handleBubbleTap"
+                data-index="{{index}}"
+              >
+                <view class="bubble-icon">{{item.emoji}}</view>
+                <view class="bubble-text">{{item.title}}</view>
+              </view>
+            </block>
+          </view>
+        </view>
         <view class="result-title">{{item.name}}</view>
         <view wx:if="{{ranking.title}}" class="result-subtitle">{{ranking.title}}</view>
         <view wx:if="{{item.rank_no}}" class="result-rank">第{{item.rank_no}}名</view>
+      </view>
+
+      <view wx:if="{{bubbleDetailLoading || bubbleDetail}}" class="bubble-detail-card">
+        <view class="bubble-detail-title">
+          {{bubbleDetail ? bubbleDetail.title : '正在生成问题详情...'}}
+        </view>
+        <view wx:if="{{bubbleDetail}}" class="bubble-detail-text">{{bubbleDetail.detail}}</view>
       </view>
 
       <view wx:if="{{detailRows.length || item.description}}" class="result-section">

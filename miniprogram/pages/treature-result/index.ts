@@ -1,8 +1,15 @@
-import { getRankingItemById } from '../../api/api';
+import { getBubbleDetail, getBubbleList, getRankingItemById } from '../../api/api';
 
 type DetailRow = {
   label: string;
   value: string;
+};
+
+type BubbleItem = {
+  type: string;
+  emoji: string;
+  title: string;
+  detail?: string | null;
 };
 
 Page({
@@ -13,6 +20,11 @@ Page({
     item: {} as any,
     displayImage: '',
     detailRows: [] as DetailRow[],
+    bubbles: [] as BubbleItem[],
+    bubbleDetail: null as null | { title: string; detail: string },
+    bubbleDetailLoading: false,
+    bubbleArtifactName: '',
+    bubbleArtifactType: '',
   },
 
   onLoad(options: Record<string, string>) {
@@ -60,6 +72,10 @@ Page({
           detailRows,
           loading: false,
         });
+        const bubbleName = item.name || ranking.title;
+        if (bubbleName) {
+          this.fetchBubbles(bubbleName, item.artifact_type);
+        }
       } else {
         this.setData({
           loading: false,
@@ -79,6 +95,75 @@ Page({
       });
     } finally {
       wx.hideLoading();
+    }
+  },
+
+  async fetchBubbles(artifactName: string, artifactType?: string) {
+    try {
+      const res: any = await getBubbleList({
+        query: artifactName,
+        artifact_type: artifactType,
+        include_detail: false,
+      });
+      if (res && res.code === 0 && Array.isArray(res.bubbles)) {
+        this.setData({
+          bubbles: res.bubbles.slice(0, 3),
+          bubbleArtifactName: res.artifact_name || artifactName,
+          bubbleArtifactType: res.artifact_type || artifactType || '',
+        });
+      } else {
+        this.setData({
+          bubbles: [],
+        });
+      }
+    } catch (error) {
+      this.setData({
+        bubbles: [],
+      });
+    }
+  },
+
+  async handleBubbleTap(e: WechatMiniprogram.BaseEvent) {
+    const index = Number(e.currentTarget.dataset.index);
+    const bubbles = (this.data as any).bubbles as BubbleItem[];
+    const bubble = bubbles[index];
+    if (!bubble) return;
+    this.setData({
+      bubbleDetailLoading: true,
+      bubbleDetail: null,
+    });
+    try {
+      const res: any = await getBubbleDetail({
+        artifact_name: (this.data as any).bubbleArtifactName || (this.data as any).item.name || (this.data as any).ranking.title,
+        artifact_type: (this.data as any).bubbleArtifactType,
+        topic_type: bubble.type,
+        bubble_title: bubble.title,
+      });
+      if (res && res.code === 0 && res.detail) {
+        this.setData({
+          bubbleDetail: {
+            title: res.bubble_title || bubble.title,
+            detail: res.detail,
+          },
+          bubbleDetailLoading: false,
+        });
+      } else {
+        this.setData({
+          bubbleDetailLoading: false,
+        });
+        wx.showToast({
+          title: '暂无详情',
+          icon: 'none',
+        });
+      }
+    } catch (error) {
+      this.setData({
+        bubbleDetailLoading: false,
+      });
+      wx.showToast({
+        title: '获取详情失败',
+        icon: 'none',
+      });
     }
   },
 });

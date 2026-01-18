@@ -412,3 +412,18 @@ export const getRankingById = (_rankingid: any) => {
 export const getRankingItemById = (_itemid: any) => {
     return request(`/${base_api}/v2/ranking-items/${_itemid}`)
 }
+
+// 气泡联想
+export const getBubbleList = (data: { query: string; artifact_type?: string; include_detail?: boolean }) => {
+    return request(`/${base_api}/v2/bubble`, {
+        method: 'POST',
+        data,
+    })
+}
+
+export const getBubbleDetail = (data: { artifact_name: string; artifact_type?: string; topic_type: string; bubble_title: string }) => {
+    return request(`/${base_api}/v2/bubble/detail`, {
+        method: 'POST',
+        data,
+    })
+}
