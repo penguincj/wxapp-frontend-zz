@@ -38,6 +38,8 @@ Page({
     bubbleDetailVisible: false,
     bubbleArtifactName: '',
     bubbleArtifactType: '',
+    otherResults: [] as any[],
+    showOtherResults: false,
   },
 
   onShow() {
@@ -77,23 +79,6 @@ Page({
     this.setData({
       showMatchScore: enabled,
     });
-  },
-
-  handleConfirmExhibit() {
-    wx.showToast({
-      title: '太棒了，你离鉴藏家又更进一步！',
-      icon: 'none',
-      duration: 3000,
-    })
-  },
-
-  handleCloseExhibitOverlay() {
-    wx.showToast({
-      title: '感谢您的反馈建议～',
-      icon: 'none',
-      duration: 3000,
-    })
-    // this.handleOpenMore();
   },
 
   handleOpenAlbum() {
@@ -143,6 +128,8 @@ Page({
           bubbleDetailText: '',
           bubbleDetailLoading: false,
           bubbleDetailVisible: false,
+          otherResults: [],
+          showOtherResults: false,
         });
 
         let uploadPath = filePath;
@@ -308,15 +295,19 @@ Page({
     try {
       const response = await this.uploadImage(filePath);
       
-      const { code, artifact, message } = response || {};
-      if (code !== undefined && code !== 0 && !artifact) {
+      const { code, data, message } = response || {};
+      if (code !== undefined && code !== 0) {
         throw new Error(message || '识别失败');
       }
-      const payload = artifact || {};
+      const artifacts = Array.isArray(data?.artifacts) ? data.artifacts : [];
+      debugger
+      const payload = artifacts[0] || {};
+      if (!payload.name) {
+        throw new Error('识别失败');
+      }
       const title = payload.name || '识别结果';
       const desc =
-        payload.description ||
-        'AI识别完成';
+        payload.description;
       const detailContentParts: string[] = [];
       if (payload.dynasty) {
         detailContentParts.push('时期：'+payload.dynasty);
@@ -346,21 +337,21 @@ Page({
           desc,
         },
         recognitionError: '',
-        exhibitResult: payload.uploaded_image_url
+        exhibitResult: data?.user_image_url
           ? {
               name: payload.name || title,
-              image: payload.uploaded_image_url,
+              image: data.user_image_url,
             }
           : null,
         showResultPage: true,
         exhibitDetail: title
           ? {
               name: title,
-              image_url: payload.uploaded_image_url || this.data.previewImage,
+              image_url: payload.image_url || data?.cutout_image_url || data?.user_image_url || this.data.previewImage,
               description: desc,
               content: detailContent,
               audio: audioInfo || undefined,
-              score: artifact.score,
+              score: payload.score,
             }
           : null,
         exhibitImageId: exhibit_image_id,
@@ -374,6 +365,11 @@ Page({
               // audio_url: audioInfo.audio_url,
             }
           : null,
+        otherResults: artifacts.slice(1, 4).map((item: any) => ({
+          ...item,
+          scorePercent: Math.round((item.score || 0) * 100),
+        })),
+        showOtherResults: false,
       });
       if (title) {
         this.fetchBubbles(title);
@@ -397,6 +393,8 @@ Page({
         bubbleDetailText: '',
         bubbleDetailLoading: false,
         bubbleDetailVisible: false,
+        otherResults: [],
+        showOtherResults: false,
       });
       if (!error?.errMsg?.includes('cancel')) {
         wx.showToast({
@@ -451,7 +449,7 @@ Page({
     const { latitude, longitude } = await this.getLatestLatLng();
     return new Promise<any>((resolve, reject) => {
       wx.uploadFile({
-        url: `${base_url}/api/v1/imageSearch`,
+        url: `${base_url}/api/v1/artifactCheck`,
         header: {
           'Content-Type': 'multipart/form-data',
           'Accept': 'application/json',  
@@ -480,6 +478,25 @@ Page({
     this.setData({
       showFeedbackForm: true,
       showResultPage: false,
+    });
+  },
+
+  handleOpenOtherResults() {
+    if (!this.data.otherResults.length) {
+      wx.showToast({
+        title: '暂无其他结果',
+        icon: 'none',
+      });
+      return;
+    }
+    this.setData({
+      showOtherResults: true,
+    });
+  },
+
+  closeOtherResults() {
+    this.setData({
+      showOtherResults: false,
     });
   },
 

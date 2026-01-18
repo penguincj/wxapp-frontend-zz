@@ -345,7 +345,6 @@
 
 .result-title {
   font-size: 48rpx;
-  // font-weight: 600;
   line-height: 150%;
   color: #000;
 }
@@ -466,6 +465,118 @@
   font-size: 26rpx;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.75);
+}
+
+.other-results-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.other-results-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.other-results-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f2fbff;
+  border-top-left-radius: 36rpx;
+  border-top-right-radius: 36rpx;
+  padding: 24rpx 32rpx calc(env(safe-area-inset-bottom) + 32rpx);
+  max-height: 70vh;
+  overflow: hidden;
+  animation: bubbleSheetUp 0.28s ease-out;
+}
+
+.other-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 12rpx 0 24rpx;
+}
+
+.other-results-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.other-results-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 34rpx;
+}
+
+.other-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  overflow-y: auto;
+  max-height: 56vh;
+  padding-bottom: 12rpx;
+}
+
+.other-result-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  box-shadow: 0 10rpx 24rpx rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.other-result-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 24rpx;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.other-result-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.other-result-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.other-result-meta {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #8c8f96;
+}
+
+.other-result-score {
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+  background: #fff1df;
+  color: #f57c00;
+  font-size: 22rpx;
+  font-weight: 600;
 }
 
 .result-section {

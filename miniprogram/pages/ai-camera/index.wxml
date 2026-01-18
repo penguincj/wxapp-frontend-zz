@@ -33,7 +33,7 @@
         <view class="search-result-scroll">
           <view class="result-hero">
             <view class="result-title">{{exhibitDetail.name}}</view>
-            <view class="result-other">识别内容不准确？查看其他结果 ></view>
+            <view class="result-other" bindtap="handleOpenOtherResults">识别内容不准确？查看其他结果 ></view>
             <view class="result-image-wrap">
               <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
               <view wx:if="{{bubbles.length}}" class="bubble-layer">
@@ -62,6 +62,29 @@
                 <view class="bubble-detail-text">
                   {{bubbleDetailText || (bubbleDetailLoading ? '正在生成内容...' : '')}}
                 </view>
+              </view>
+            </view>
+          </view>
+          <view wx:if="{{showOtherResults}}" class="other-results-overlay">
+            <view class="other-results-mask" bindtap="closeOtherResults"></view>
+            <view class="other-results-sheet">
+              <view class="other-results-header">
+                <view class="other-results-title">请选择识别结果</view>
+                <view class="other-results-close" bindtap="closeOtherResults">×</view>
+              </view>
+              <view class="other-results-list">
+                <block wx:for="{{otherResults}}" wx:key="image_id">
+                  <view class="other-result-card">
+                    <image class="other-result-image" src="{{item.image_url}}" mode="aspectFill"></image>
+                    <view class="other-result-body">
+                      <view class="other-result-name">{{item.name}}</view>
+                      <view class="other-result-meta">
+                        {{item.museum || '博物馆'}}·展厅·单元
+                      </view>
+                    </view>
+                    <view class="other-result-score">匹配度{{item.scorePercent}}%</view>
+                  </view>
+                </block>
               </view>
             </view>
           </view>
