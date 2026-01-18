@@ -1,10 +1,10 @@
-<page-meta page-style="background: #242424;">
+<page-meta page-style="background: #E6E6E6;">
   <navigation-bar
     title="AI识别文物"
     back="{{true}}"
-    color="white"
-    background="#242424"
-    styleType="light"
+    color="black"
+    background="#E6E6E6"
+    styleType="dark"
   >
     <!-- <view slot="right" class="flash-button" bindtap="handleToggleFlash">
       <text class="flash-icon">⚡</text>
@@ -32,14 +32,41 @@
       <view class="search-result" wx:if="{{showResultPage && exhibitDetail}}">
         <view class="search-result-scroll">
           <view class="result-hero">
-            <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
+            <view class="result-image-wrap">
+              <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
+              <view wx:if="{{bubbles.length}}" class="bubble-layer">
+                <block wx:for="{{bubbles}}" wx:key="title">
+                  <view
+                    class="bubble-item bubble-item-{{index}}"
+                    bindtap="handleBubbleTap"
+                    data-index="{{index}}"
+                  >
+                    <view class="bubble-icon">{{item.emoji}}</view>
+                    <view class="bubble-text">{{item.title}}</view>
+                  </view>
+                </block>
+              </view>
+            </view>
             <view class="result-title">{{exhibitDetail.name}}</view>
-            
+          </view>
+          <view wx:if="{{bubbleDetailVisible}}" class="bubble-detail-overlay">
+            <view class="bubble-detail-mask" bindtap="closeBubbleDetail"></view>
+            <view class="bubble-detail-sheet">
+              <view class="bubble-detail-card">
+                <view class="bubble-detail-close" bindtap="closeBubbleDetail">×</view>
+                <view class="bubble-detail-title">
+                  {{bubbleDetailTitle || '正在生成问题详情...'}}
+                </view>
+                <view class="bubble-detail-text">
+                  {{bubbleDetailText || (bubbleDetailLoading ? '正在生成内容...' : '')}}
+                </view>
+              </view>
+            </view>
           </view>
           <view wx:if="{{showMatchScore}}" class="match-score">匹配分数：{{exhibitDetail.score}}</view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
-            <view class="title-group">
-              <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
+            <view class="title-group" style="background-image: url('/static/images/mingpian_title.png')">
+              <!-- <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
                 <text>文物名片</text>
                 <view class="audio-section" wx:if="{{dailyListenExhibit}}">
                   <listen-simple
@@ -54,9 +81,9 @@
                 class="section-title-border"
                 src="/static/images/border.png"
                 mode="scaleToFill"
-              ></image>
+              ></image> -->
             </view>
-            <view class="content-group">
+            <view class="content-group" style="background-image: url('/static/images/mingpian_bg.jpg')">
               <view class="section-desc">{{exhibitDetail.content}}</view>
              
             </view>

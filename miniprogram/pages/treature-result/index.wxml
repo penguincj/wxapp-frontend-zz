@@ -26,8 +26,8 @@
           </view>
         </view>
         <view class="result-title">{{item.name}}</view>
-        <view wx:if="{{ranking.title}}" class="result-subtitle">{{ranking.title}}</view>
-        <view wx:if="{{item.rank_no}}" class="result-rank">第{{item.rank_no}}名</view>
+        <!-- <view wx:if="{{ranking.title}}" class="result-subtitle">{{ranking.title}}</view>
+        <view wx:if="{{item.rank_no}}" class="result-rank">第{{item.rank_no}}名</view> -->
       </view>
 
       <view wx:if="{{bubbleDetailVisible}}" class="bubble-detail-overlay">
