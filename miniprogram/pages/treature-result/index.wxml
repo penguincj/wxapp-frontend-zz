@@ -36,9 +36,11 @@
           <view class="bubble-detail-card">
             <view class="bubble-detail-close" bindtap="closeBubbleDetail">×</view>
             <view class="bubble-detail-title">
-              {{bubbleDetail ? bubbleDetail.title : '正在生成问题详情...'}}
+              {{bubbleDetailTitle || '正在生成问题详情...'}}
             </view>
-            <view wx:if="{{bubbleDetail}}" class="bubble-detail-text">{{bubbleDetail.detail}}</view>
+            <view class="bubble-detail-text">
+              {{bubbleDetailText || (bubbleDetailLoading ? '正在生成内容...' : '')}}
+            </view>
           </view>
         </view>
       </view>

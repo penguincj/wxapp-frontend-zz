@@ -1,4 +1,5 @@
-import { getBubbleDetail, getBubbleList, getRankingItemById } from '../../api/api';
+import { base_api, getBubbleList, getRankingItemById } from '../../api/api';
+import { base_url, getLoginStatus } from '../../utils/util';
 
 type DetailRow = {
   label: string;
@@ -21,7 +22,8 @@ Page({
     displayImage: '',
     detailRows: [] as DetailRow[],
     bubbles: [] as BubbleItem[],
-    bubbleDetail: null as null | { title: string; detail: string },
+    bubbleDetailTitle: '',
+    bubbleDetailText: '',
     bubbleDetailLoading: false,
     bubbleDetailVisible: false,
     bubbleArtifactName: '',
@@ -131,38 +133,23 @@ Page({
     if (!bubble) return;
     const requestId = ((this as any).bubbleDetailRequestId || 0) + 1;
     (this as any).bubbleDetailRequestId = requestId;
+    this.abortBubbleStream();
     this.setData({
       bubbleDetailLoading: true,
       bubbleDetailVisible: true,
-      bubbleDetail: null,
+      bubbleDetailTitle: bubble.title,
+      bubbleDetailText: '',
     });
     try {
-      const res: any = await getBubbleDetail({
-        artifact_name: (this.data as any).bubbleArtifactName || (this.data as any).item.name || (this.data as any).ranking.title,
-        artifact_type: (this.data as any).bubbleArtifactType,
-        topic_type: bubble.type,
-        bubble_title: bubble.title,
-      });
-      if ((this as any).bubbleDetailRequestId !== requestId || !(this.data as any).bubbleDetailVisible) {
-        return;
-      }
-      if (res && res.code === 0 && res.detail) {
-        this.setData({
-          bubbleDetail: {
-            title: res.bubble_title || bubble.title,
-            detail: res.detail,
-          },
-          bubbleDetailLoading: false,
-        });
-      } else {
-        this.setData({
-          bubbleDetailLoading: false,
-        });
-        wx.showToast({
-          title: '暂无详情',
-          icon: 'none',
-        });
-      }
+      await this.startBubbleStream(
+        {
+          artifact_name: (this.data as any).bubbleArtifactName || (this.data as any).item.name || (this.data as any).ranking.title,
+          artifact_type: (this.data as any).bubbleArtifactType,
+          topic_type: bubble.type,
+          bubble_title: bubble.title,
+        },
+        requestId,
+      );
     } catch (error) {
       if ((this as any).bubbleDetailRequestId !== requestId || !(this.data as any).bubbleDetailVisible) {
         return;
@@ -176,10 +163,170 @@ Page({
   },
 
   closeBubbleDetail() {
+    this.abortBubbleStream();
     this.setData({
       bubbleDetailVisible: false,
       bubbleDetailLoading: false,
-      bubbleDetail: null,
+      bubbleDetailTitle: '',
+      bubbleDetailText: '',
     });
+  },
+
+  async startBubbleStream(payload: { artifact_name: string; artifact_type?: string; topic_type: string; bubble_title: string }, requestId: number) {
+    const token = await this.ensureToken();
+    const url = `${base_url}/${base_api}/v2/bubble/detail/stream`;
+    (this as any).bubbleStreamBuffer = '';
+    (this as any).bubbleDetailPending = '';
+    this.startTypewriter();
+    const task = wx.request({
+      url,
+      method: 'POST',
+      data: payload,
+      responseType: 'text',
+      enableChunked: true,
+      header: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      success: (res) => {
+        if ((this as any).bubbleDetailRequestId !== requestId || !(this.data as any).bubbleDetailVisible) {
+          return;
+        }
+        if (res && typeof res.data === 'string') {
+          this.consumeBubbleChunk(`${res.data}\n`, requestId);
+        }
+        this.setData({ bubbleDetailLoading: false });
+      },
+      fail: () => {
+        if ((this as any).bubbleDetailRequestId !== requestId || !(this.data as any).bubbleDetailVisible) {
+          return;
+        }
+        this.setData({ bubbleDetailLoading: false });
+        wx.showToast({
+          title: '获取详情失败',
+          icon: 'none',
+        });
+      },
+    });
+    (this as any).bubbleStreamTask = task;
+    if (typeof task.onChunkReceived === 'function') {
+      task.onChunkReceived((res) => {
+        if ((this as any).bubbleDetailRequestId !== requestId || !(this.data as any).bubbleDetailVisible) {
+          return;
+        }
+        this.consumeBubbleChunk(this.decodeChunk(res.data), requestId);
+      });
+    }
+  },
+
+  decodeChunk(data: ArrayBuffer) {
+    try {
+      if (typeof TextDecoder !== 'undefined') {
+        return new TextDecoder('utf-8').decode(data);
+      }
+    } catch (error) {
+      return '';
+    }
+    const uint8 = new Uint8Array(data);
+    let result = '';
+    for (let i = 0; i < uint8.length; i += 1) {
+      result += String.fromCharCode(uint8[i]);
+    }
+    try {
+      return decodeURIComponent(escape(result));
+    } catch (error) {
+      return result;
+    }
+  },
+
+  consumeBubbleChunk(chunkText: string, requestId: number) {
+    if (!chunkText) return;
+    const buffer = ((this as any).bubbleStreamBuffer || '') + chunkText;
+    const lines = buffer.split('\n');
+    (this as any).bubbleStreamBuffer = lines.pop() || '';
+    lines.forEach((line: string) => {
+      const trimmed = line.trim();
+      if (!trimmed) return;
+      try {
+        const payload = JSON.parse(trimmed);
+        if (payload.error) {
+          this.setData({ bubbleDetailLoading: false });
+          wx.showToast({
+            title: payload.error,
+            icon: 'none',
+          });
+          return;
+        }
+        if (payload.bubble_title) {
+          this.setData({
+            bubbleDetailTitle: payload.bubble_title,
+          });
+        }
+        if (payload.detail) {
+          (this as any).bubbleDetailPending =
+            ((this as any).bubbleDetailPending || '') + payload.detail;
+          this.startTypewriter();
+        }
+      } catch (error) {
+        return;
+      }
+    });
+    if ((this as any).bubbleDetailRequestId !== requestId) {
+      return;
+    }
+  },
+
+  startTypewriter() {
+    if ((this as any).bubbleTypeTimer) {
+      return;
+    }
+    (this as any).bubbleTypeTimer = setInterval(() => {
+      if (!(this.data as any).bubbleDetailVisible) {
+        this.stopTypewriter();
+        return;
+      }
+      const pending = (this as any).bubbleDetailPending || '';
+      if (!pending) {
+        if (!(this.data as any).bubbleDetailLoading) {
+          this.stopTypewriter();
+        }
+        return;
+      }
+      const nextChar = pending.slice(0, 1);
+      (this as any).bubbleDetailPending = pending.slice(1);
+      this.setData({
+        bubbleDetailText: ((this.data as any).bubbleDetailText || '') + nextChar,
+      });
+    }, 30);
+  },
+
+  stopTypewriter() {
+    if ((this as any).bubbleTypeTimer) {
+      clearInterval((this as any).bubbleTypeTimer);
+      (this as any).bubbleTypeTimer = null;
+    }
+  },
+
+  abortBubbleStream() {
+    if ((this as any).bubbleStreamTask) {
+      try {
+        (this as any).bubbleStreamTask.abort();
+      } catch (error) {
+        // ignore abort error
+      }
+      (this as any).bubbleStreamTask = null;
+    }
+    (this as any).bubbleStreamBuffer = '';
+    (this as any).bubbleDetailPending = '';
+    this.stopTypewriter();
+  },
+
+  async ensureToken() {
+    let token = wx.getStorageSync('token');
+    if (!token) {
+      const res: any = await getLoginStatus();
+      token = res.token;
+    }
+    return token;
   },
 });
