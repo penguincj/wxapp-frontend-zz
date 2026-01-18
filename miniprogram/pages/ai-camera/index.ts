@@ -40,6 +40,7 @@ Page({
     bubbleArtifactType: '',
     otherResults: [] as any[],
     showOtherResults: false,
+    allArtifacts: [] as any[],
   },
 
   onShow() {
@@ -130,6 +131,7 @@ Page({
           bubbleDetailVisible: false,
           otherResults: [],
           showOtherResults: false,
+          allArtifacts: [],
         });
 
         let uploadPath = filePath;
@@ -299,8 +301,7 @@ Page({
       if (code !== undefined && code !== 0) {
         throw new Error(message || '识别失败');
       }
-      const artifacts = Array.isArray(data?.artifacts) ? data.artifacts : [];
-      debugger
+      const artifacts = Array.isArray(data?.artifacts) ? data.artifacts.slice(0, 4) : [];
       const payload = artifacts[0] || {};
       if (!payload.name) {
         throw new Error('识别失败');
@@ -370,6 +371,7 @@ Page({
           scorePercent: Math.round((item.score || 0) * 100),
         })),
         showOtherResults: false,
+        allArtifacts: artifacts,
       });
       if (title) {
         this.fetchBubbles(title);
@@ -395,6 +397,7 @@ Page({
         bubbleDetailVisible: false,
         otherResults: [],
         showOtherResults: false,
+        allArtifacts: [],
       });
       if (!error?.errMsg?.includes('cancel')) {
         wx.showToast({
@@ -498,6 +501,45 @@ Page({
     this.setData({
       showOtherResults: false,
     });
+  },
+
+  handleSelectOtherResult(e: WechatMiniprogram.BaseEvent) {
+    const index = Number(e.currentTarget.dataset.index);
+    const artifact = (this.data.otherResults || [])[index];
+    if (!artifact) {
+      this.setData({ showOtherResults: false });
+      return;
+    }
+    this.abortBubbleStream();
+    const title = artifact.name || '识别结果';
+    const desc = artifact.description ? ('描述：'+ artifact.description):'' ;
+    const detailContentParts: string[] = [];
+    if (artifact.dynasty) {
+      detailContentParts.push(`时期：${artifact.dynasty}`);
+    }
+    if (artifact.museum) {
+      detailContentParts.push(`收藏在${artifact.museum}。`);
+    }
+    const detailContent = detailContentParts.length
+      ? `${detailContentParts.join('，')}${desc}`
+      : desc;
+    this.setData({
+      exhibitDetail: {
+        name: title,
+        image_url: artifact.image_url || this.data.exhibitDetail?.image_url || this.data.previewImage,
+        description: desc,
+        content: detailContent,
+        score: artifact.score,
+      },
+      exhibitImageId: artifact.image_id || null,
+      showOtherResults: false,
+      bubbles: [],
+      bubbleDetailTitle: '',
+      bubbleDetailText: '',
+      bubbleDetailLoading: false,
+      bubbleDetailVisible: false,
+    });
+    this.fetchBubbles(title);
   },
 
   handleCancelFeedback() {

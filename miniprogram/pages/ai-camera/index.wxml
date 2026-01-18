@@ -74,7 +74,7 @@
               </view>
               <view class="other-results-list">
                 <block wx:for="{{otherResults}}" wx:key="image_id">
-                  <view class="other-result-card">
+                  <view class="other-result-card" bindtap="handleSelectOtherResult" data-index="{{index}}">
                     <image class="other-result-image" src="{{item.image_url}}" mode="aspectFill"></image>
                     <view class="other-result-body">
                       <view class="other-result-name">{{item.name}}</view>
