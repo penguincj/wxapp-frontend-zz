@@ -1,6 +1,6 @@
 <page-meta page-style="background: #E6E6E6;">
   <navigation-bar
-    title="AI识别文物"
+    title="拍照识文物"
     back="{{true}}"
     color="black"
     background="#E6E6E6"
@@ -32,6 +32,8 @@
       <view class="search-result" wx:if="{{showResultPage && exhibitDetail}}">
         <view class="search-result-scroll">
           <view class="result-hero">
+            <view class="result-title">{{exhibitDetail.name}}</view>
+            <view class="result-other">识别内容不准确？查看其他结果 ></view>
             <view class="result-image-wrap">
               <image class="result-image" src="{{exhibitDetail.image_url}}" mode="aspectFit"></image>
               <view wx:if="{{bubbles.length}}" class="bubble-layer">
@@ -47,7 +49,7 @@
                 </block>
               </view>
             </view>
-            <view class="result-title">{{exhibitDetail.name}}</view>
+            
           </view>
           <view wx:if="{{bubbleDetailVisible}}" class="bubble-detail-overlay">
             <view class="bubble-detail-mask" bindtap="closeBubbleDetail"></view>
@@ -90,14 +92,14 @@
             
           </view>
           
-          <view class="result-footer">
+          <!-- <view class="result-footer">
             <text>识别内容不准确？欢迎</text>
-            <!-- <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text> -->
+            <text class="footer-link" bindtap="handleOpenMore">拍摄展签</text>
             <text>反馈</text>
-          </view>
+          </view> -->
            
         </view>
-        <view class="exhibit-action-row">
+        <!-- <view class="exhibit-action-row">
           <view class="action-buttons">
             <view class="exhibit-btn primary" bindtap="handleCloseExhibitOverlay">
               <text>不准确</text>
@@ -106,7 +108,7 @@
               <text>结果正确</text>
             </view>
           </view>
-        </view>
+        </view> -->
       </view>
       <view class="fankui-area" wx:if="{{showFeedbackForm}}">
         <scroll-view scroll-y="{{true}}" class="fankui-scroll">

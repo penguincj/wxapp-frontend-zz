@@ -1,0 +1,76 @@
+v1/artifactCheck的response如下所示：
+
+{
+"code":0,
+"data":{
+   "user_image_url":"https://cdn.gewugo.com/test-storage/artifact-check/image/GoulnKChawJ3057375c9f3084aaf7cb5a1665c3519c2-5231798345.jpg?auth_key=1768738464-0-0-472143cad16ae0b6b67c445f9fb988c0",
+   "cutout_image_url":"https://cdn.gewugo.com/test-storage/artifact-check/image/GoulnKChawJ3057375c9f3084aaf7cb5a1665c3519c2-5231798345-nobg.jpg?auth_key=1768738464-0-0-890d7e38113de87b3fcb45b357213f5d",
+   "artifacts":[
+      {
+         "image_id":47985,
+         "artifact_id":4210,
+         "name":"name",
+         "museum":"museum",
+         "oss_path":"opensearch/test/birefnet/dd_9687.webp",
+         "img_type":"birefnet",
+         "dynasty":"",
+         "description":"xxx",
+         "score":0.747725,
+         "source":"crawler",
+         "image_url":"https://cdn.gewugo.com/opensearch/test/birefnet/%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2/%E7%94%B0%E5%91%8A%E6%96%B9%E9%BC%8E_9687.webp?auth_key=1768738464-0-0-8fc9e9e62308db3c50f5b78318ba1aef"
+      },
+      {
+         "image_id":9687,
+         "artifact_id":4210,
+         "name":"name",
+         "museum":"museum",
+         "oss_path":"opensearch/raw/name_7a31f1ea/images/img_0.jpg",
+         "img_type":"raw",
+         "dynasty":"",
+         "description":"xx",
+         "score":0.709836,
+         "source":"crawler",
+         "image_url":"https://cdn.gewugo.com/opensearch/raw/%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2/%E7%94%B0%E5%91%8A%E6%96%B9%E9%BC%8E_7a31f1ea/images/img_0.jpg?auth_key=1768738464-0-0-637d225d91b744156a1c161a43e09196"
+      },
+      {
+         "image_id":46565,
+         "artifact_id":5561,
+         "name":"name",
+         "museum":"museum",
+         "oss_path":"opensearch/test/birefnet/dd_12075.webp",
+         "img_type":"birefnet",
+         "dynasty":"",
+         "description":"xx",
+         "score":0.705856,
+         "source":"crawler",
+         "image_url":"https://cdn.gewugo.com/opensearch/test/birefnet/%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2/%E7%BE%8A%E7%88%B6%E4%B8%81%E6%96%B9%E9%BC%8E_12075.webp?auth_key=1768738464-0-0-f7e1d94e5a4d440350eb016f381b796c"
+      },
+      {
+         "image_id":1759,
+         "artifact_id":876,
+         "name":"name",
+         "museum":"museum",
+         "oss_path":"opensearch/raw/museum/name_1d7258d2/images/img_0.jpg",
+         "img_type":"raw",
+         "dynasty":"",
+         "description":"ddd",
+         "score":0.674171,
+         "source":"crawler",
+         "image_url":"https://cdn.gewugo.com/opensearch/raw/%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2/%E5%85%BD%E9%9D%A2%E7%BA%B9%E7%94%97_1d7258d2/images/img_0.jpg?auth_key=1768738464-0-0-8dfe621563ff9437ec5c7607c06f22ec"
+      },
+      {
+         "image_id":1758,
+         "artifact_id":876,
+         "name":"aa",
+         "museum":"museum",
+         "oss_path":"opensearch/raw/museum/aa/images/img_1.jpg",
+         "img_type":"raw",
+         "dynasty":"",
+         "description":"dd",
+         "score":0.674171,
+         "source":"crawler",
+         "image_url":"https://cdn.gewugo.com/opensearch/raw/%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2/%E5%85%BD%E9%9D%A2%E7%BA%B9%E7%94%97_1d7258d2/images/img_1.jpg?auth_key=1768738464-0-0-1dc986735f4129a5a69ac6598493cb7e"
+      }
+   ]
+}
+}
