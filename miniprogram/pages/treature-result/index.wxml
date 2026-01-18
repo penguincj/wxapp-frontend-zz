@@ -46,17 +46,17 @@
       </view>
 
       <view wx:if="{{detailRows.length || item.description}}" class="result-section">
-        <view class="title-group">
-          <view class="section-title short">
+        <view class="title-group" style="background-image: url('/static/images/mingpian_title.png')">
+          <!-- <view class="section-title short">
             <text>文物名片</text>
           </view>
           <image
             class="section-title-border"
             src="/static/images/border.png"
             mode="scaleToFill"
-          ></image>
+          ></image> -->
         </view>
-        <view class="content-group">
+        <view class="content-group"  style="background-image: url('/static/images/mingpian_bg.jpg')" >
           <view class="info-row" wx:for="{{detailRows}}" wx:key="label">
             <text class="info-label">{{item.label}}</text>
             <text class="info-value">{{item.value}}</text>
