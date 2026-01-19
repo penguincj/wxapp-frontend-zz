@@ -4,9 +4,11 @@ import { generateNewUrlParams } from "../../utils/util";
 Page({
   data: {
     topRows: [] as string[][],
+    topRowsLoop: [] as string[][],
     rankList: [] as any[],
     ranking: {} as any,
-    loading: false
+    loading: false,
+    heroScrollLeft: 0
   },
 
   onLoad(options: Record<string, string>) {
@@ -19,6 +21,18 @@ Page({
       return;
     }
     this.initPage(rankingId);
+  },
+
+  onShow() {
+    this.startHeroScroll();
+  },
+
+  onHide() {
+    this.stopHeroScroll();
+  },
+
+  onUnload() {
+    this.stopHeroScroll();
   },
 
   buildTopRows(images: string[], rowCount = 2, minPerRow = 8) {
@@ -34,6 +48,49 @@ Page({
       }
     }
     return rows;
+  },
+
+  buildLoopRows(rows: string[][]) {
+    return rows.map((row) => row.concat(row));
+  },
+
+  calcHeroLoopWidthPx(rowLength: number) {
+    if (!rowLength) {
+      return 0;
+    }
+    const systemInfo = wx.getSystemInfoSync();
+    const rpx2px = systemInfo.windowWidth / 750;
+    const itemWidthRpx = 96;
+    const itemGapRpx = 16;
+    return (itemWidthRpx + itemGapRpx) * rowLength * rpx2px;
+  },
+
+  startHeroScroll() {
+    const loopWidth = (this as any).heroLoopWidthPx || 0;
+    if (!loopWidth) {
+      return;
+    }
+    if ((this as any).heroScrollTimer) {
+      return;
+    }
+    const step = 1;
+    (this as any).heroScrollTimer = setInterval(() => {
+      let nextLeft = (this.data.heroScrollLeft || 0) + step;
+      if (nextLeft >= loopWidth) {
+        nextLeft = 0;
+      }
+      this.setData({
+        heroScrollLeft: nextLeft
+      });
+    }, 30);
+  },
+
+  stopHeroScroll() {
+    const timer = (this as any).heroScrollTimer;
+    if (timer) {
+      clearInterval(timer);
+      (this as any).heroScrollTimer = null;
+    }
   },
 
   onClickShowDetail(e: any) {
@@ -81,11 +138,19 @@ Page({
             );
           })
           .filter((url: string) => url);
+        const topRows = this.buildTopRows(topImages);
+        const topRowsLoop = this.buildLoopRows(topRows);
+        (this as any).heroLoopWidthPx = this.calcHeroLoopWidthPx(topRows[0]?.length || 0);
         this.setData({
           ranking: res.ranking || {},
           rankList,
-          topRows: this.buildTopRows(topImages),
+          topRows,
+          topRowsLoop,
+          heroScrollLeft: 0,
           loading: false
+        }, () => {
+          this.stopHeroScroll();
+          this.startHeroScroll();
         });
       } else {
         this.setData({

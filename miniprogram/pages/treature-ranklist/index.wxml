@@ -14,13 +14,15 @@
           scroll-x="{{true}}"
           show-scrollbar="{{false}}"
           enhanced="{{true}}"
+          scroll-left="{{heroScrollLeft}}"
+          scroll-with-animation="{{false}}"
         >
           <view class="hero-track">
-            <block wx:for="{{topRows}}" wx:key="index">
+            <block wx:for="{{topRowsLoop}}" wx:key="index">
               <view class="thumb-row">
-                <block wx:for="{{item}}" wx:key="*this">
+                <block wx:for="{{item}}" wx:for-item="thumb" wx:for-index="thumbIndex" wx:key="thumbIndex">
                   <view class="thumb">
-                    <image class="thumb-img" src="{{item}}" mode="aspectFill" />
+                    <image class="thumb-img" src="{{thumb}}" mode="aspectFill" />
                   </view>
                 </block>
               </view>

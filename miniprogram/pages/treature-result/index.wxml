@@ -8,7 +8,7 @@
   ></navigation-bar>
 
   <view class="treature-detail-page">
-    <scroll-view scroll-y="{{true}}" class="detail-scroll">
+    <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" class="detail-scroll" >
       <view class="result-hero">
         <view class="result-image-wrap">
           <image class="result-image" src="{{displayImage}}" mode="aspectFit"></image>
