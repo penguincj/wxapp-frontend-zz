@@ -18,7 +18,9 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, #8fe1dc 0%, #46b8c1 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  // background: linear-gradient(135deg, #8fe1dc 0%, #46b8c1 100%);
   padding: 24rpx 0 32rpx;
   padding-top: 200rpx;
 }
@@ -102,11 +104,17 @@
 }
 
 .rank-btn {
-  background: #62c7c1;
+  // background: #62c7c1;
+  background: linear-gradient(135deg, #63D6D7 0%, #50A6A7 100%);
   color: #fff;
   font-size: 28rpx;
-  padding: 14rpx 28rpx;
+  // padding: 14rpx 28rpx;
   border-radius: 16rpx;
-  flex-shrink: 0;
   margin-left: 16rpx;
+  width: 132rpx;
+  height: 72rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

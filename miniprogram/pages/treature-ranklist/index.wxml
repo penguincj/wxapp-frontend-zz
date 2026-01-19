@@ -8,7 +8,7 @@
     enhanced="{{true}}"
   >
     <view class="page-treature-ranklist">
-      <view class="hero">
+      <view class="hero" style="background-image: url('/static/images/ranklist-bg.jpg')">
         <scroll-view
           class="hero-scroll"
           scroll-x="{{true}}"
