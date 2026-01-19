@@ -149,7 +149,7 @@ Page({
         cityName,
         cityMuseum: {
           city_id: data.current_city_id,
-          cover_img: '/static/images/bwg-bg.png',
+          cover_img: '/static/images/bwg-bg.jpg',
           city_name: cityName,
         }
       });

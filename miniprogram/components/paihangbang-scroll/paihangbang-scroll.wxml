@@ -7,7 +7,9 @@
           data-idx="{{museum.city_id}}" 
           bindtap="selectMuseumItem"
           >
-          <view class="item-bg" style="background-image: url('{{museum.cover_img}}')"></view>
+          <!-- <view class="item-bg" style="background-image: url('{{museum.cover_img}}')"></view> -->
+          <!-- <view class="item-bg" style="background-image: url('/static/images/bwg-bg.jpg')"></view> -->
+          <image class="item-bg-image" src="/static/images/bwg-bg.jpg" mode="aspectFill" />
           <view class="item-bg-mask"></view>
           <view class="text-group">
             <view class="item-txt">{{museum.city_name}}博物馆排行</view>

@@ -6,7 +6,7 @@ const getEnablePhotoRecognition = () => {
   return app?.globalData?.enablePhotoRecognition === true;
 };
 const buildIcons = (enablePhotoRecognition: boolean) => {
-  if (enablePhotoRecognition) {
+  if (true || enablePhotoRecognition) {
     return itemConfig;
   }
   return itemConfig.filter(i => i.id !== 2);
@@ -15,8 +15,8 @@ const itemConfig = [
   {
     id: 0,
     name: '发现',
-    icon: '/static/images/ishouye.png',
-    iconClicked: '/static/images/ishouye-c.png',
+    icon: '/static/images/index-b-shouye.png',
+    iconClicked: '/static/images/index-b-shouye-c.png',
     link: '/pages/index/index',
   },
   // {
@@ -29,8 +29,8 @@ const itemConfig = [
   {
     id: 2,
     name: '拍照识文物',
-    icon: '/static/images/ijiangjie.png',
-    iconClicked: '/static/images/ijiangjie-c.png',
+    icon: '/static/images/index-b-camera.png',
+    iconClicked: '/static/images/index-b-camera.png',
     link: '/pages/ai-camera/index',
   },
   // {
@@ -43,8 +43,8 @@ const itemConfig = [
   {
     id: 4,
     name: '我的',
-    icon: '/static/images/iwode.png',
-    iconClicked: '/static/images/iwode-c.png',
+    icon: '/static/images/index-b-wode.png',
+    iconClicked: '/static/images/index-b-wode-c.png',
     link: '/pages/profile/index',
   },
 ]

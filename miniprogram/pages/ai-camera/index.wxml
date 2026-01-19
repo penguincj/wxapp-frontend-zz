@@ -90,7 +90,7 @@
           </view>
           <view wx:if="{{showMatchScore}}" class="match-score">匹配分数：{{exhibitDetail.score}}</view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
-            <view class="title-group" style="background-image: url('/static/images/mingpian_title.png')">
+            <view class="title-group" style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/mingpian_title.png')">
               <!-- <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
                 <text>文物名片</text>
                 <view class="audio-section" wx:if="{{dailyListenExhibit}}">
@@ -108,7 +108,7 @@
                 mode="scaleToFill"
               ></image> -->
             </view>
-            <view class="content-group" style="background-image: url('/static/images/mingpian_bg.jpg')">
+            <view class="content-group" style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/mingpian_bg.jpg')">
               <view class="section-desc">{{exhibitDetail.content}}</view>
              
             </view>

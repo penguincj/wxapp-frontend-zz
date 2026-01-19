@@ -47,7 +47,7 @@
       </view>
 
       <view wx:if="{{detailRows.length || item.description}}" class="result-section">
-        <view class="title-group" style="background-image: url('/static/images/mingpian_title.png')">
+        <view class="title-group" style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/mingpian_title.png')">
           <!-- <view class="section-title short">
             <text>文物名片</text>
           </view>
@@ -57,7 +57,7 @@
             mode="scaleToFill"
           ></image> -->
         </view>
-        <view class="content-group"  style="background-image: url('/static/images/mingpian_bg.jpg')" >
+        <view class="content-group"  style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/mingpian_bg.jpg')" >
           <view class="info-row" wx:for="{{detailRows}}" wx:key="label">
             <text class="info-label">{{item.label}}</text>
             <text class="info-value">{{item.value}}</text>

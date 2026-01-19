@@ -8,7 +8,7 @@
     enhanced="{{true}}"
   >
     <view class="page-treature-ranklist">
-      <view class="hero" style="background-image: url('/static/images/ranklist-bg.jpg')">
+      <view class="hero" style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/ranklist-bg.jpg')">
         <view class="hero-scroll-wrap">
           <scroll-view
             class="hero-scroll"
