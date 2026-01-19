@@ -103,6 +103,10 @@ Page({
     })
   },
 
+  onHeroTouchMove() {
+    return false;
+  },
+
   async initPage(rankingId: string) {
     this.setData({
       loading: true

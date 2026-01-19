@@ -25,9 +25,24 @@
   padding-top: 200rpx;
 }
 
+.hero-scroll-wrap {
+  position: relative;
+}
+
 .hero-scroll {
   height: 228rpx;
   padding-left: 28rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-scroll-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
 }
 
 .hero-track {
@@ -79,8 +94,8 @@
 }
 
 .rank-image {
-  width: 160rpx;
-  height: 120rpx;
+  width: 180rpx;
+  height: 180rpx;
   border-radius: 16rpx;
   margin-right: 20rpx;
   flex-shrink: 0;

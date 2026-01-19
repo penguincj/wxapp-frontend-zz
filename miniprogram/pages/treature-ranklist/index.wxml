@@ -9,26 +9,34 @@
   >
     <view class="page-treature-ranklist">
       <view class="hero" style="background-image: url('/static/images/ranklist-bg.jpg')">
-        <scroll-view
-          class="hero-scroll"
-          scroll-x="{{true}}"
-          show-scrollbar="{{false}}"
-          enhanced="{{true}}"
-          scroll-left="{{heroScrollLeft}}"
-          scroll-with-animation="{{false}}"
-        >
-          <view class="hero-track">
-            <block wx:for="{{topRowsLoop}}" wx:key="index">
-              <view class="thumb-row">
-                <block wx:for="{{item}}" wx:for-item="thumb" wx:for-index="thumbIndex" wx:key="thumbIndex">
-                  <view class="thumb">
-                    <image class="thumb-img" src="{{thumb}}" mode="aspectFill" />
-                  </view>
-                </block>
-              </view>
-            </block>
-          </view>
-        </scroll-view>
+        <view class="hero-scroll-wrap">
+          <scroll-view
+            class="hero-scroll"
+            scroll-x="{{true}}"
+            show-scrollbar="{{false}}"
+            enhanced="{{true}}"
+            scroll-left="{{heroScrollLeft}}"
+            scroll-with-animation="{{false}}"
+          >
+            <view class="hero-track">
+              <block wx:for="{{topRowsLoop}}" wx:key="index">
+                <view class="thumb-row">
+                  <block wx:for="{{item}}" wx:for-item="thumb" wx:for-index="thumbIndex" wx:key="thumbIndex">
+                    <view class="thumb">
+                      <image class="thumb-img" src="{{thumb}}" mode="aspectFill" />
+                    </view>
+                  </block>
+                </view>
+              </block>
+            </view>
+          </scroll-view>
+          <view
+            class="hero-scroll-mask"
+            catchtouchstart="onHeroTouchMove"
+            catchtouchmove="onHeroTouchMove"
+            catchtouchend="onHeroTouchMove"
+          ></view>
+        </view>
       </view>
 
       <view class="rank-list">
