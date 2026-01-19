@@ -93,7 +93,7 @@
       {
         "current": 0,
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": "发现",
         "iconPath": "/static/images/ishouye.png",
         "selectedIconPath": "/static/images/ishouye-c.png"
       },

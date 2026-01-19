@@ -12,8 +12,8 @@
             bindtap="selectItem"
             >
             <view class="item-bg" style="background-image: url({{item.img}})"></view>
-            <image src="/static/images/play-index.png" class="play-item-icon" mode="aspectFit" />
-            <image wx:if="{{item.is_new_flag}}" src="/static/images/index-new.png" class="tag-item-icon" mode="aspectFit" />
+            <image src="/static/images/index-play-new.png" class="play-item-icon" mode="aspectFit" />
+            <image wx:if="{{item.is_new_flag}}" src="/static/images/index-new-flag.png" class="tag-item-icon" mode="aspectFit" />
             <view class="text-group">
               <view class="item-txt">{{item.exhibition_name}}</view>
               <view class="item-detail" wx:if="{{item.exhibition_name.length < 7}}">

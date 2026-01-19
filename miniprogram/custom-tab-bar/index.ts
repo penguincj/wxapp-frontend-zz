@@ -14,18 +14,18 @@ const buildIcons = (enablePhotoRecognition: boolean) => {
 const itemConfig = [
   {
     id: 0,
-    name: '首页',
+    name: '发现',
     icon: '/static/images/ishouye.png',
     iconClicked: '/static/images/ishouye-c.png',
     link: '/pages/index/index',
   },
-  {
-    id: 1,
-    name: '博物馆',
-    icon: '/static/images/ichangguan.png',
-    iconClicked: '/static/images/ichangguan-c.png',
-    link: '/pages/museumlist/index',
-  },
+  // {
+  //   id: 1,
+  //   name: '博物馆',
+  //   icon: '/static/images/ichangguan.png',
+  //   iconClicked: '/static/images/ichangguan-c.png',
+  //   link: '/pages/museumlist/index',
+  // },
   {
     id: 2,
     name: '拍照识文物',
@@ -33,13 +33,13 @@ const itemConfig = [
     iconClicked: '/static/images/ijiangjie-c.png',
     link: '/pages/ai-camera/index',
   },
-  {
-    id: 3,
-    name: '展览',
-    icon: '/static/images/izhanlan.png',
-    iconClicked: '/static/images/izhanlan-c.png',
-    link: '/pages/gridview/index',
-  },
+  // {
+  //   id: 3,
+  //   name: '展览',
+  //   icon: '/static/images/izhanlan.png',
+  //   iconClicked: '/static/images/izhanlan-c.png',
+  //   link: '/pages/gridview/index',
+  // },
   {
     id: 4,
     name: '我的',

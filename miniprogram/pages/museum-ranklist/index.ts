@@ -41,8 +41,13 @@ Page({
       const museum_res: any = await getMuseumList(_cityid);
 
       if (museum_res && museum_res.museums) {
+        const sortedMuseums = [...museum_res.museums].sort((a: any, b: any) => {
+          const rankA = Number(a?.ranking) || 0;
+          const rankB = Number(b?.ranking) || 0;
+          return rankA - rankB;
+        });
         this.setData({
-          museumList: museum_res.museums,
+          museumList: sortedMuseums,
         })
       }
       this.setData({
