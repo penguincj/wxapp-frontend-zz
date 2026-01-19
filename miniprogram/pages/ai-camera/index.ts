@@ -695,7 +695,7 @@ Page({
         artifact_type: artifactType,
         include_detail: false,
       });
-      if (res && res.code === 0 && Array.isArray(res.bubbles)) {
+      if (res && Array.isArray(res.bubbles)) {
         this.setData({
           bubbles: res.bubbles.slice(0, 3),
           bubbleArtifactName: res.artifact_name || artifactName,
@@ -757,7 +757,7 @@ Page({
 
   async startBubbleStream(payload: { artifact_name: string; artifact_type?: string; topic_type: string; bubble_title: string }, requestId: number) {
     const token = await this.ensureToken();
-    const url = `${base_url}/${base_api}/v2/bubble/detail/stream`;
+    const url = `${base_url}/${base_api}/v2/bubble/llm/detail/stream`;
     (this as any).bubbleStreamBuffer = '';
     (this as any).bubbleDetailPending = '';
     this.startTypewriter();
@@ -822,6 +822,16 @@ Page({
     }
   },
 
+  normalizeStreamText(text: string) {
+    if (!text) return '';
+    try {
+      const decoded = decodeURIComponent(escape(text));
+      return decoded || text;
+    } catch (error) {
+      return text;
+    }
+  },
+
   consumeBubbleChunk(chunkText: string, requestId: number) {
     if (!chunkText) return;
     const buffer = ((this as any).bubbleStreamBuffer || '') + chunkText;
@@ -845,9 +855,10 @@ Page({
             bubbleDetailTitle: payload.bubble_title,
           });
         }
-        if (payload.detail) {
+        const detailText = this.normalizeStreamText(payload.detail || payload.response || '');
+        if (detailText) {
           (this as any).bubbleDetailPending =
-            ((this as any).bubbleDetailPending || '') + payload.detail;
+            ((this as any).bubbleDetailPending || '') + detailText;
           this.startTypewriter();
         }
       } catch (error) {

@@ -418,14 +418,14 @@ export const getRankingItemById = (_itemid: any) => {
 
 // 气泡联想
 export const getBubbleList = (data: { query: string; artifact_type?: string; include_detail?: boolean }) => {
-    return request(`/${base_api}/v2/bubble`, {
+    return request(`/${base_api}/v2/bubble/llm`, {
         method: 'POST',
         data,
     })
 }
 
 export const getBubbleDetail = (data: { artifact_name: string; artifact_type?: string; topic_type: string; bubble_title: string }) => {
-    return request(`/${base_api}/v2/bubble/detail`, {
+    return request(`/${base_api}/v2/bubble/llm/detail`, {
         method: 'POST',
         data,
     })
