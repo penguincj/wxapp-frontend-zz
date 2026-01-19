@@ -39,6 +39,13 @@
       border-radius: 10rpx;
     }
 
+    .item-bg-mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.0001) 100%);
+    }
+
     .item-img {
       position: absolute;
       left: 0;
@@ -67,7 +74,7 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      height: 106rpx;
+      // height: 106rpx;
       // background: #F7F8F9;
       padding: 12rpx 16rpx;
       word-wrap: break-word;
@@ -78,7 +85,7 @@
         font-size: 42rpx;
         line-height: 150%;
         color: #FFFFFF;
-        width: 100%;
+        width: 70%;
         white-space: break-spaces;
         word-break: break-all;
         text-overflow: ellipsis;
@@ -86,6 +93,7 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2; 
         overflow: hidden;
+        text-align: left;
       }
       .item-detail{
         font-size: 24rpx;

@@ -88,6 +88,17 @@ Page({
     }));
   },
 
+  getCityCode(city: any) {
+    return city?.city_code || city?.cityCode || city?.code;
+  },
+
+  getFallbackCity(cityList: any[]) {
+    return cityList.find((item: any) => {
+      const name = item?.name || item?.d_name || item?.city_name || "";
+      return String(name).includes("北京");
+    });
+  },
+
   async fetchCityList() {
     try {
       const res: any = await getCityList();
@@ -109,6 +120,14 @@ Page({
       const showExhibitionList = exhibitionList.slice(0, 15);
       const cityList = data.city_list ? generateCityList(data.city_list) : await this.fetchCityList();
       const city = cityList.find((i: any) => i.id === data.current_city_id);
+      if (!city) {
+        const fallbackCity = this.getFallbackCity(cityList);
+        const fallbackCityCode = this.getCityCode(fallbackCity);
+        if (fallbackCityCode && params.city_code !== fallbackCityCode) {
+          await this.getPageIndex({ city_code: fallbackCityCode });
+          return;
+        }
+      }
       const cityName = city ? city.d_name : this.data.cityName;
       const serverEnablePhotoRecognition = !!data.enable_photo_recognition;
       const storageEnablePhotoRecognition = !!wx.getStorageSync(BETA_MODE_STORAGE_KEY);

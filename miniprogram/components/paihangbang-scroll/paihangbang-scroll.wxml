@@ -8,6 +8,7 @@
           bindtap="selectMuseumItem"
           >
           <view class="item-bg" style="background-image: url('{{museum.cover_img}}')"></view>
+          <view class="item-bg-mask"></view>
           <view class="text-group">
             <view class="item-txt">{{museum.city_name}}博物馆排行</view>
           </view>
@@ -24,11 +25,12 @@
             bindtap="selectItem"
             >
             <view class="item-bg" style="background-image: url({{item.cover_image_cdn_url || item.img}})"></view>
+            <view class="item-bg-mask"></view>
             <view class="text-group">
               <view class="item-txt">{{item.title || item.exhibition_name}}</view>
-              <view class="item-detail" wx:if="{{item.museum_name}}">
+              <!-- <view class="item-detail" wx:if="{{item.museum_name}}">
                 {{item.museum_name}}
-              </view>
+              </view> -->
             </view>
           </view>
         </block>
