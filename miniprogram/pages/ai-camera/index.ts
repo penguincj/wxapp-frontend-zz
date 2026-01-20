@@ -757,7 +757,7 @@ Page({
 
   async startBubbleStream(payload: { artifact_name: string; artifact_type?: string; topic_type: string; bubble_title: string }, requestId: number) {
     const token = await this.ensureToken();
-    const url = `${base_url}/${base_api}/v2/bubble/llm/detail/stream`;
+    const url = `${base_url}/${base_api}/v2/bubble/detail/stream`;
     (this as any).bubbleStreamBuffer = '';
     (this as any).bubbleDetailPending = '';
     this.startTypewriter();

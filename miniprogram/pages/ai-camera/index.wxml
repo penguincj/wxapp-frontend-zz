@@ -18,14 +18,17 @@
       <view wx:if="{{isRecognizing}}" class="recognizing-overlay">
         <view class="recognize-visual">
           <image class="recognize-bg" src="{{previewImage}}" mode="aspectFit"></image>
-          <view class="recognize-frame">
-            <view class="recognize-corner top-left"></view>
-            <view class="recognize-corner top-right"></view>
-            <view class="recognize-corner bottom-left"></view>
-            <view class="recognize-corner bottom-right"></view>
-            <view class="recognize-scan-line"></view>
+          <view class="re-bg-mask"></view>
+          <view class="text-re-group">
+            <view class="recognize-frame">
+              <view class="recognize-corner top-left"></view>
+              <view class="recognize-corner top-right"></view>
+              <view class="recognize-corner bottom-left"></view>
+              <view class="recognize-corner bottom-right"></view>
+              <view class="recognize-scan-line"></view>
+            </view>
+            <text class="recognize-hint">AI 正在识别这件宝物，请稍候…</text>
           </view>
-          <text class="recognize-hint">AI 正在识别这件宝物，请稍候…</text>
         </view>
       </view>
      
@@ -91,22 +94,7 @@
           <view wx:if="{{showMatchScore}}" class="match-score">匹配分数：{{exhibitDetail.score}}</view>
           <view wx:if="{{exhibitDetail.content}}" class="result-section">
             <view class="title-group" style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/mingpian_title.png')">
-              <!-- <view class="section-title {{dailyListenExhibit? 'long': 'short'}}">
-                <text>文物名片</text>
-                <view class="audio-section" wx:if="{{dailyListenExhibit}}">
-                  <listen-simple
-                    title=""
-                    exhibition="{{dailyListenExhibit}}"
-                    bindPlayDailyListen="handlePlayDailyListen"
-                    id="dailyListenPlayer"
-                  ></listen-simple>
-                </view>
-              </view>
-              <image
-                class="section-title-border"
-                src="/static/images/border.png"
-                mode="scaleToFill"
-              ></image> -->
+              
             </view>
             <view class="content-group" style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/mingpian_bg.jpg')">
               <view class="section-desc">{{exhibitDetail.content}}</view>
