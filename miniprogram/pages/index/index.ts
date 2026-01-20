@@ -66,11 +66,12 @@ Page({
 
   handleCityChange(event: any) {
     const { selectedId, selectedName } = event.detail;
-    const selectedCity = (this.data.cityList || []).find((item: any) => item.id === selectedId);
+    const normalizedSelectedId = Number(selectedId);
+    const selectedCity = (this.data.cityList || []).find((item: any) => Number(item.id) === normalizedSelectedId);
     const cityCode = selectedCity?.city_code || selectedCity?.cityCode || selectedCity?.code;
     this.setData({
-      curCityId: selectedId,
-      cityName: selectedName
+      curCityId: Number.isNaN(normalizedSelectedId) ? selectedId : normalizedSelectedId,
+      cityName: selectedCity?.d_name || selectedName
     });
     this.initPage(cityCode);
   },
