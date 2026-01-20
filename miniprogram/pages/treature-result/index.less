@@ -408,8 +408,10 @@
 
 .bubble-detail-mask {
   position: absolute;
-  inset: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.55);
+  z-index: 1000;
 }
 
 .bubble-detail-sheet {
@@ -421,6 +423,7 @@
   background: linear-gradient(180deg, rgba(230, 230, 230, 0) 0%, rgba(230, 230, 230, 0.75) 40%, #E6E6E6 100%);
   animation: bubbleSheetUp 0.28s ease-out;
   pointer-events: none;
+  z-index: 1001;
 }
 
 .bubble-detail-card {
