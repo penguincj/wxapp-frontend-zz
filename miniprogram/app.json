@@ -54,6 +54,12 @@
       ]
     }
   ],
+  "plugins": {
+    "QCloudAIVoice": {
+        "version": "2.3.12",
+        "provider": "wx3e17776051baf153"
+    }
+  },
   "usingComponents": {
     "player-comp": "components/player-comp",
     "agent-ui":"/components/agent-ui"
