@@ -219,7 +219,7 @@ Page({
           return;
         }
         if (res && typeof res.data === 'string') {
-          this.consumeBubbleChunk(`${res.data}\n`, requestId);
+          this.consumeBubbleChunk(res.data, requestId);
         }
         this.setData({ bubbleDetailLoading: false });
       },
@@ -280,11 +280,13 @@ Page({
     const buffer = ((this as any).bubbleStreamBuffer || '') + chunkText;
     const lines = buffer.split('\n');
     (this as any).bubbleStreamBuffer = lines.pop() || '';
+    let handledJson = false;
     lines.forEach((line: string) => {
       const trimmed = line.trim();
       if (!trimmed) return;
       try {
         const payload = JSON.parse(trimmed);
+        handledJson = true;
         if (payload.error) {
           this.setData({ bubbleDetailLoading: false });
           wx.showToast({
@@ -305,9 +307,24 @@ Page({
           this.startTypewriter();
         }
       } catch (error) {
-        return;
+        const text = this.normalizeStreamText(line);
+        if (text) {
+          (this as any).bubbleDetailPending =
+            ((this as any).bubbleDetailPending || '') + text;
+          this.startTypewriter();
+        }
       }
     });
+    const remaining = ((this as any).bubbleStreamBuffer || '').trim();
+    if (!handledJson && remaining && !remaining.startsWith('{')) {
+      const text = this.normalizeStreamText((this as any).bubbleStreamBuffer || '');
+      (this as any).bubbleStreamBuffer = '';
+      if (text) {
+        (this as any).bubbleDetailPending =
+          ((this as any).bubbleDetailPending || '') + text;
+        this.startTypewriter();
+      }
+    }
     if ((this as any).bubbleDetailRequestId !== requestId) {
       return;
     }
