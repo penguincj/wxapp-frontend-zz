@@ -14,7 +14,7 @@
 
 .detail-scroll {
   height: calc(100vh - 88px);
-  padding: 40rpx 32rpx 40rpx;
+  padding: 40rpx 32rpx 0rpx;
   box-sizing: border-box;
 }
 
@@ -335,14 +335,16 @@
 .result-image-wrap {
   position: relative;
   width: 100%;
-  height: 400rpx;
+  min-height: 800rpx;
   margin-bottom: 24rpx;
   margin-top: 40rpx;
+  display: flex;
+  align-items: center;
 }
 
 .result-image {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   border-radius: 24rpx;
   object-fit: cover;
 }
@@ -547,6 +549,7 @@
   margin-top: -12rpx;
   color: #000000;
   box-sizing: border-box;
+  margin-bottom: 40rpx;
   // padding-bottom: 120rpx;
 }
 

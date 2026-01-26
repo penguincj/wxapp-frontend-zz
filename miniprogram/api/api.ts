@@ -417,7 +417,7 @@ export const getRankingItemById = (_itemid: any) => {
 }
 
 // 气泡联想
-export const getBubbleList = (data: { query: string; artifact_type?: string; include_detail?: boolean }) => {
+export const getBubbleList = (data: { query: string; artifact_type?: string; include_detail?: boolean; top_k?: number }) => {
     return request(`/${base_api}/v2/bubble/llm`, {
         method: 'POST',
         data,

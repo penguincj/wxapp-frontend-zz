@@ -79,7 +79,14 @@ Page({
         });
         const bubbleName = item.name || ranking.title;
         if (bubbleName) {
-          this.fetchBubbles(bubbleName, item.artifact_type);
+          const rankingBubbles = Array.isArray(res.bubbles)
+            ? res.bubbles
+            : Array.isArray(item.bubbles)
+              ? item.bubbles
+              : Array.isArray(ranking.bubbles)
+                ? ranking.bubbles
+                : [];
+          this.fetchBubbles(bubbleName, item.artifact_type, rankingBubbles);
         }
       } else {
         this.setData({
@@ -103,27 +110,44 @@ Page({
     }
   },
 
-  async fetchBubbles(artifactName: string, artifactType?: string) {
+  async fetchBubbles(artifactName: string, artifactType?: string, initialBubbles: BubbleItem[] = []) {
+    const baseBubbles = Array.isArray(initialBubbles) ? initialBubbles.filter(Boolean) : [];
+    const seedBubbles = baseBubbles.slice(0, 3);
+    if (seedBubbles.length >= 3) {
+      this.setData({
+        bubbles: seedBubbles,
+        bubbleArtifactName: artifactName,
+        bubbleArtifactType: artifactType || '',
+      });
+      return;
+    }
+    const needed = 3 - seedBubbles.length;
     try {
       const res: any = await getBubbleList({
         query: artifactName,
         artifact_type: artifactType,
         include_detail: false,
+        top_k: needed,
       });
       if (res && Array.isArray(res.bubbles)) {
+        const mergedBubbles = seedBubbles.concat(res.bubbles).slice(0, 3);
         this.setData({
-          bubbles: res.bubbles.slice(0, 3),
+          bubbles: mergedBubbles,
           bubbleArtifactName: res.artifact_name || artifactName,
           bubbleArtifactType: res.artifact_type || artifactType || '',
         });
       } else {
         this.setData({
-          bubbles: [],
+          bubbles: seedBubbles,
+          bubbleArtifactName: artifactName,
+          bubbleArtifactType: artifactType || '',
         });
       }
     } catch (error) {
       this.setData({
-        bubbles: [],
+        bubbles: seedBubbles,
+        bubbleArtifactName: artifactName,
+        bubbleArtifactType: artifactType || '',
       });
     }
   },
