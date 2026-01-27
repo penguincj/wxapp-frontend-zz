@@ -11,14 +11,14 @@
       <view class="hero" style="background-image: url('https://bowudaoyu-public.oss-cn-beijing.aliyuncs.com/storage/user/image/ranklist-bg.jpg')">
         <view class="hero-scroll-wrap">
           <scroll-view
-            class="hero-scroll"
+            class="hero-scroll {{heroRowCount === 1 ? 'hero-scroll-single' : ''}}"
             scroll-x="{{true}}"
             show-scrollbar="{{false}}"
             enhanced="{{true}}"
             scroll-left="{{heroScrollLeft}}"
             scroll-with-animation="{{false}}"
           >
-            <view class="hero-track">
+            <view class="hero-track {{heroRowCount === 1 ? 'hero-track-single' : ''}}">
               <block wx:for="{{topRowsLoop}}" wx:key="index">
                 <view class="thumb-row">
                   <block wx:for="{{item}}" wx:for-item="thumb" wx:for-index="thumbIndex" wx:key="thumbIndex">

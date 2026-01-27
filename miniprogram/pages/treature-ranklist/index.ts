@@ -8,7 +8,8 @@ Page({
     rankList: [] as any[],
     ranking: {} as any,
     loading: false,
-    heroScrollLeft: 0
+    heroScrollLeft: 0,
+    heroRowCount: 2
   },
 
   onLoad(options: Record<string, string>) {
@@ -142,7 +143,8 @@ Page({
             );
           })
           .filter((url: string) => url);
-        const topRows = this.buildTopRows(topImages);
+        const heroRowCount = topImages.length >= 16 ? 2 : 1;
+        const topRows = this.buildTopRows(topImages, heroRowCount);
         const topRowsLoop = this.buildLoopRows(topRows);
         (this as any).heroLoopWidthPx = this.calcHeroLoopWidthPx(topRows[0]?.length || 0);
         this.setData({
@@ -151,6 +153,7 @@ Page({
           topRows,
           topRowsLoop,
           heroScrollLeft: 0,
+          heroRowCount,
           loading: false
         }, () => {
           this.stopHeroScroll();

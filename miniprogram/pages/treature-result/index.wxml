@@ -1,6 +1,6 @@
 <page-meta page-style="background: #E6E6E6">
   <navigation-bar
-    title="{{navTitle}}"
+    title=""
     back="{{true}}"
     color="black"
     background="#E6E6E6"
