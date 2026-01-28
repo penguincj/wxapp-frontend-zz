@@ -17,19 +17,37 @@
     </view>
   </navigation-bar>
 
-  <view class="index-page page-section page-section-spacing full-height">
-    <map
-      class="map-container"
-      latitude="{{latitude}}"
-      longitude="{{longitude}}"
-      scale="{{scale}}"
-      show-location="{{showLocation}}"
-      enable-scroll="{{true}}"
-      enable-zoom="{{true}}"
-      enable-rotate="{{false}}"
-      enable-satellite="{{false}}"
-      enable-traffic="{{false}}"
-    />
+  <view class="index-page">
+    <!-- 地图区域 70% -->
+    <view class="map-area">
+      <map
+        class="map-container"
+        latitude="{{latitude}}"
+        longitude="{{longitude}}"
+        scale="{{scale}}"
+        markers="{{markers}}"
+        show-location="{{showLocation}}"
+        enable-scroll="{{true}}"
+        enable-zoom="{{true}}"
+        enable-rotate="{{false}}"
+        bindmarkertap="handleMarkerTap"
+      />
+    </view>
+
+    <!-- 种植信息卡片区域 30% -->
+    <view class="card-area">
+      <view class="card" wx:if="{{selectedPlanting}}">
+        <view class="card-emoji">{{selectedPlanting.emoji}}</view>
+        <view class="card-info">
+          <view class="card-name">{{selectedPlanting.name}}</view>
+          <view class="card-grower">种植者: {{selectedPlanting.grower}}</view>
+          <view class="card-distance">距离: {{selectedPlanting.distance}}</view>
+        </view>
+      </view>
+      <view class="card card-empty" wx:else>
+        <view class="card-empty-text">点击地图上的标记查看种植信息</view>
+      </view>
+    </view>
   </view>
 
   <view>
