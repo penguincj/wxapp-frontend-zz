@@ -2,30 +2,25 @@
   height: 64rpx;
   width: 750rpx;
 }
+
 .page-section {
-  // height: 100vh;
   background: white;
   position: relative;
 }
 
 .full-height {
   position: absolute;
-  height: calc(100vh - 400rpx);
+  height: calc(100vh - 200rpx); // 减去导航栏和底部TabBar的高度
   width: 100%;
   top: 0;
   left: 0;
 }
+
 .index-page {
-  padding: 32rpx;
-  .title {
-    font-size: 36rpx;
-    font-weight: 600;
-    margin-bottom: 10rpx;
-  }
-  .paihangbang-area {
-    margin-top: 180rpx;
-  }
-  .exhibition-area {
-    margin-top: 60rpx;
+  padding: 0;
+
+  .map-container {
+    width: 100%;
+    height: 100%;
   }
 }

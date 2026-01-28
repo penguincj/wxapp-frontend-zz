@@ -3,12 +3,12 @@
   <navigation-bar back="{{false}}" extClass="transparent" color="black" background="#FFF" style="text-align: center;">
     <view slot="left">
       <view class="loc-area">
-        <loc-select3 
-          locStyle="margin: 0 40rpx;" 
-          pannelStyle="padding: 30rpx 20rpx; margin-top: 24rpx; " 
-          selectedId="{{curCityId}}" 
-          selectedName="{{cityName}}" 
-          list="{{cityList}}" 
+        <loc-select3
+          locStyle="margin: 0 40rpx;"
+          pannelStyle="padding: 30rpx 20rpx; margin-top: 24rpx; "
+          selectedId="{{curCityId}}"
+          selectedName="{{cityName}}"
+          list="{{cityList}}"
           bindCityChange="handleCityChange"
           bindClickReLoc="handleClickReLoc"
           bindCityPannelOpenStateChange="handleCityPannelOpenStateChange"
@@ -16,27 +16,24 @@
       </view>
     </view>
   </navigation-bar>
- 
-  <view class="index-page page-section page-section-spacing full-height">
-      <!-- <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscrolltolower="handleScrolltolower" style="height: calc(100vh - 200rpx)"> -->
-      <scroll-view scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}">
-        <view class="paihangbang-area">
-          <view class="title">排行榜 ></view>
-          <view class="paihangbang-list-area">
-            <paihangbang-scroll list="{{rankingList}}" museum="{{cityMuseum}}" totalLen="{{rankingList.length}}" bindClickItem="handleRankClickItem" bindClickMore="handleClickMoreRank"></paihangbang-scroll>
-          </view>
-        </view>
 
-        <view class="exhibition-area">
-          <view class="title">热门展览 ></view>
-          <view class="exhibition-list-area">
-            <exhibition-scroll list="{{showExhibitionList}}" totalLen="{{exhibitionList.length}}" bindClickItem="handleExClickItem" bindClickMore="handleClickMoreExh"></exhibition-scroll>
-          </view>
-        </view>
-      </scroll-view>
-    </view>
+  <view class="index-page page-section page-section-spacing full-height">
+    <map
+      class="map-container"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      scale="{{scale}}"
+      show-location="{{showLocation}}"
+      enable-scroll="{{true}}"
+      enable-zoom="{{true}}"
+      enable-rotate="{{false}}"
+      enable-satellite="{{false}}"
+      enable-traffic="{{false}}"
+    />
+  </view>
+
   <view>
     <custom-tab-bar></custom-tab-bar>
   </view>
-  
+
 </page-meta>

@@ -1,20 +1,26 @@
-import { getCityList, getIndexDataV2 } from "../../api/api";
-import { generateCityList, getLocation, generateNewUrlParams } from "../../utils/util";
+import { getCityList } from "../../api/api";
+import { generateCityList, getLocation } from "../../utils/util";
+// @ts-ignore
+const QQMapWX = require("../../utils/qqmap-wx-jssdk.js");
 
-const BETA_MODE_STORAGE_KEY = 'BetaModeEnabled';
+// TODO: 请替换为你的腾讯位置服务API Key
+const QQMAP_KEY = "CTABZ-C6YCW-AJRRG-3AXYI-Q2HW6-G6FV4";
 
 Page({
   data: {
     loading: false,
-    exhibitionList: [] as any,
-    showExhibitionList: [] as any,
-    rankingList: [] as any,
     cityList: [] as any,
     curCityId: 1,
     cityName: "",
     lastLocationAuthorized: null as null | boolean,
-    cityMuseum: {} as any,
+    // 地图相关数据
+    latitude: 39.908823,  // 默认北京天安门
+    longitude: 116.397470,
+    scale: 13,  // 地图缩放级别
+    showLocation: true,  // 显示用户位置
   },
+
+  qqmapsdk: null as any,
 
   async updateLocationAuthState() {
     try {
@@ -27,79 +33,53 @@ Page({
     }
   },
 
-  handleExClickItem(e: any) {
-    const { selectId } = e.detail;
-    if (selectId) {
-      const urlParams = generateNewUrlParams({
-        exhibition_id: Number(selectId)
-      });
-      wx.navigateTo({
-        url: '/pages/exhibitiondetail/index' + urlParams,
-      });
-    }
-  },
-
-  handleRankClickItem(e: any) {
-    const { selectId, slug, scopeType } = e.detail;
-    if (!selectId) return;
-    const urlParams = generateNewUrlParams({
-      ranking_id: Number(selectId),
-      slug,
-      scope_type: scopeType,
-    });
-    wx.navigateTo({
-      url: '/pages/treature-ranklist/index' + urlParams,
-    });
-  },
-
-  handleClickMoreExh() {
-    wx.switchTab({
-      url: '/pages/gridview/index'
-    });
-  },
-
-  handleClickMoreRank() {
-    wx.navigateTo({
-      url: '/pages/treature-ranklist/index'
-    });
-  },
-
   handleCityChange(event: any) {
     const { selectedId, selectedName } = event.detail;
     const normalizedSelectedId = Number(selectedId);
     const selectedCity = (this.data.cityList || []).find((item: any) => Number(item.id) === normalizedSelectedId);
-    const cityCode = selectedCity?.city_code || selectedCity?.cityCode || selectedCity?.code;
+
     this.setData({
       curCityId: Number.isNaN(normalizedSelectedId) ? selectedId : normalizedSelectedId,
       cityName: selectedCity?.d_name || selectedName
     });
-    this.initPage(cityCode);
+
+    // 切换城市时，更新地图中心到对应城市
+    this.moveToCityCenter(selectedCity?.d_name || selectedName);
   },
 
   handleClickReLoc() {
-    this.initPage();
+    this.initLocation();
   },
 
   handleCityPannelOpenStateChange() {},
 
-  formatExhibitionList(list: any[]) {
-    return list.map((item: any) => ({
-      ...item,
-      is_new_flag: Array.isArray(item.tags) && item.tags.includes('NEW'),
-    }));
-  },
+  /**
+   * 使用腾讯位置服务将城市名转换为坐标，并移动地图中心
+   */
+  moveToCityCenter(cityName: string) {
+    if (!this.qqmapsdk || !cityName) return;
 
-  getCityCode(city: any) {
-    return city?.city_code || city?.cityCode || city?.code;
-  },
-
-  getFallbackCity(cityList: any[]) {
-    return cityList.find((item: any) => {
-      const name = item?.name || item?.d_name || item?.city_name || "";
-      return String(name).includes("北京");
+    this.qqmapsdk.geocoder({
+      address: cityName,
+      success: (res: any) => {
+        if (res.result && res.result.location) {
+          const { lat, lng } = res.result.location;
+          this.setData({
+            latitude: lat,
+            longitude: lng,
+            scale: 12
+          });
+        }
+      },
+      fail: (err: any) => {
+        console.error('腾讯位置服务地址解析失败:', err);
+      }
     });
   },
 
+  /**
+   * 获取城市列表
+   */
   async fetchCityList() {
     try {
       const res: any = await getCityList();
@@ -112,79 +92,113 @@ Page({
     return [];
   },
 
-  async getPageIndex(params: { lat?: any; lng?: any; city_code?: string | number }) {
-    const res: any = await getIndexDataV2(params);
-    if (res && res.code === 0) {
-      const data = res.data || {};
-      const rankings = data.rankings || [];
-      const exhibitionList = this.formatExhibitionList(data.exhibition_list || []);
-      const showExhibitionList = exhibitionList.slice(0, 15);
-      const cityList = data.city_list ? generateCityList(data.city_list) : await this.fetchCityList();
-      const city = cityList.find((i: any) => i.id === data.current_city_id);
-      if (!city) {
-        const fallbackCity = this.getFallbackCity(cityList);
-        const fallbackCityCode = this.getCityCode(fallbackCity);
-        if (fallbackCityCode && params.city_code !== fallbackCityCode) {
-          await this.getPageIndex({ city_code: fallbackCityCode });
-          return;
-        }
-      }
-      const cityName = city ? city.d_name : this.data.cityName;
-      const serverEnablePhotoRecognition = !!data.enable_photo_recognition;
-      const storageEnablePhotoRecognition = !!wx.getStorageSync(BETA_MODE_STORAGE_KEY);
-      const enablePhotoRecognition = serverEnablePhotoRecognition || storageEnablePhotoRecognition;
-      const app = getApp<IAppOption>();
-      app.globalData.enablePhotoRecognition = enablePhotoRecognition;
-      app.globalData.enablePhotoRecognitionFromServer = serverEnablePhotoRecognition;
-      if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-        const tab = this.getTabBar();
-        tab?.updateIconList?.(enablePhotoRecognition);
+  /**
+   * 获取当前城市信息
+   */
+  getCityFromLocation(latitude: number, longitude: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      if (!this.qqmapsdk) {
+        reject('QQMapSDK未初始化');
+        return;
       }
 
-      this.setData({
-        exhibitionList,
-        showExhibitionList,
-        rankingList: rankings,
-        curCityId: data.current_city_id || this.data.curCityId,
-        cityList,
-        cityName,
-        cityMuseum: {
-          city_id: data.current_city_id,
-          cover_img: '/static/images/bwg-bg.jpg',
-          city_name: cityName,
+      this.qqmapsdk.reverseGeocoder({
+        location: { latitude, longitude },
+        success: (res: any) => {
+          if (res.result && res.result.address_component) {
+            const city = res.result.address_component.city || '';
+            resolve(city.replace('市', ''));
+          } else {
+            resolve('');
+          }
+        },
+        fail: (err: any) => {
+          console.error('逆地址解析失败:', err);
+          reject(err);
         }
       });
-    }
+    });
   },
 
-  async initPage(cityCode?: string | number) {
-    wx.showLoading({
-      title: '加载中',
-    });
-    this.setData({
-      loading: true,
-    });
+  /**
+   * 初始化位置
+   */
+  async initLocation() {
+    wx.showLoading({ title: '定位中' });
+    this.setData({ loading: true });
+
     try {
-      if (cityCode) {
-        await this.getPageIndex({ city_code: cityCode });
-      } else {
-        const lat = await wx.getStorageSync('latitude');
-        const lng = await wx.getStorageSync('longitude');
-        if (!lat || !lng) {
-          // @ts-expect-error
-          const { latitude, longitude } = await getLocation();
-          await this.getPageIndex({ lat: latitude, lng: longitude });
-        } else {
-          await this.getPageIndex({ lat, lng });
-        }
+      // 先尝试从缓存获取位置
+      let latitude = wx.getStorageSync('latitude');
+      let longitude = wx.getStorageSync('longitude');
+
+      // 如果缓存没有，重新获取位置
+      if (!latitude || !longitude) {
+        // @ts-expect-error
+        const location = await getLocation();
+        latitude = location.latitude;
+        longitude = location.longitude;
       }
+
+      // 更新地图中心
+      this.setData({
+        latitude,
+        longitude,
+        scale: 13
+      });
+
+      // 使用腾讯位置服务获取当前城市名称
+      try {
+        const cityName = await this.getCityFromLocation(latitude, longitude);
+        if (cityName) {
+          // 在城市列表中查找匹配的城市
+          const matchedCity = (this.data.cityList || []).find((item: any) => {
+            const name = item?.name || item?.d_name || "";
+            return name.includes(cityName) || cityName.includes(name.replace('市', ''));
+          });
+          if (matchedCity) {
+            this.setData({
+              curCityId: matchedCity.id,
+              cityName: matchedCity.d_name
+            });
+          } else {
+            this.setData({ cityName });
+          }
+        }
+      } catch (e) {
+        console.error('获取城市名称失败:', e);
+      }
+
     } catch (error) {
-      await this.getPageIndex({ lat: 0, lng: 0 });
+      console.error('获取位置失败:', error);
+      // 使用默认位置（北京）
+      this.setData({
+        latitude: 39.908823,
+        longitude: 116.397470,
+        scale: 12,
+        cityName: '北京'
+      });
     }
+
     wx.hideLoading();
-    this.setData({
-      loading: false
+    this.setData({ loading: false });
+  },
+
+  /**
+   * 初始化页面
+   */
+  async initPage() {
+    // 初始化腾讯位置服务SDK
+    this.qqmapsdk = new QQMapWX({
+      key: QQMAP_KEY
     });
+
+    // 获取城市列表
+    const cityList = await this.fetchCityList();
+    this.setData({ cityList });
+
+    // 初始化位置
+    await this.initLocation();
   },
 
   onLoad() {
@@ -196,7 +210,7 @@ Page({
     const prevAuth = this.data.lastLocationAuthorized;
     this.updateLocationAuthState().then((authorized) => {
       if (prevAuth === false && authorized) {
-        this.initPage();
+        this.initLocation();
       }
     });
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
