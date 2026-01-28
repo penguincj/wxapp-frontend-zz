@@ -46,11 +46,15 @@ interface MarkerType {
   longitude: number;
   width: number;
   height: number;
-  label: {
+  iconPath: string;
+  callout: {
     content: string;
     fontSize: number;
-    anchorX: number;
-    anchorY: number;
+    borderRadius: number;
+    padding: number;
+    display: string;
+    bgColor: string;
+    color: string;
   };
 }
 
@@ -109,13 +113,17 @@ Page({
       id: item.id,
       latitude: item.latitude,
       longitude: item.longitude,
-      width: 40,
-      height: 40,
-      label: {
+      width: 1,
+      height: 1,
+      iconPath: '/static/images/transparent.png',
+      callout: {
         content: VEGETABLE_EMOJI[item.type] || '🌱',
-        fontSize: 28,
-        anchorX: -8,
-        anchorY: -45,
+        fontSize: 32,
+        borderRadius: 8,
+        padding: 8,
+        display: 'ALWAYS',
+        bgColor: '#ffffff',
+        color: '#333333',
       },
     }));
   },
@@ -124,7 +132,7 @@ Page({
    * 点击地图标记
    */
   handleMarkerTap(e: any) {
-    const markerId = e.detail.markerId;
+    const markerId = Number(e.detail.markerId);
     const planting = this.data.plantingList.find(item => item.id === markerId);
 
     if (planting) {
