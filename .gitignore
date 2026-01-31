@@ -5,5 +5,4 @@ miniprogram/miniprogram_npm
 .DS_Store
 miniprogram/.DS_Store
 miniprogram/static/.DS_Store
-project.config.json
 project.private.config.json
