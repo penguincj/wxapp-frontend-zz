@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "styleIsolation": "apply-shared",
-  "usingComponents": {
-    "swiper-card8": "/components/swiper-card8/swiper-card8"
-  }
-}

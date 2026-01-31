@@ -1,4 +1,4 @@
-import { getCurrentPageUrl, getCurrentPageParam } from "./util";
+import { getCurrentPageUrl, getCurrentPageParam, base_url } from "./util";
 
 class Tracker {
     timer: any;
@@ -38,7 +38,7 @@ class Tracker {
         time_stamp: Date.now(),
       }
       wx.request({
-        url: 'https://gewugo.com/api/report/log/batch',
+        url: `${base_url}/api/report/log/batch`,
         method: 'POST',
         header: {
           'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ class Tracker {
       if (_logs.length === 0) return
       try {
         await wx.request({
-          url: 'https://gewugo.com/api/report/log/batch',
+          url: `${base_url}/api/report/log/batch`,
           method: 'POST',
           header: {
             'Content-Type': 'application/json',

@@ -2,40 +2,16 @@
   "pages": [
     "pages/index/index",
     "pages/ai-camera/index",
-    "pages/ai-camera-debug/index",
-    "pages/we-debug/index",
     "pages/take-photo/index",
     "pages/citylist/index",
-    "pages/exhibitlist/index",
-    "pages/exhibitdetail/index",
     "pages/login/index",
-    "pages/loginpage/index",
     "pages/profile/index",
     "pages/personalinfo/index",
     "pages/setting/index",
-    "pages/exhibitiondetail/index",
-    "pages/exhibitionlist/index",
-    "pages/exhibitionall/index",
     "pages/feedback/index",
-    "pages/logs/logs",
-    "pages/museumlist/index",
-    "pages/museum-ranklist/index",
-    "pages/treature-ranklist/index",
-    "pages/editcomment/index",
-    "pages/commentdetail/index",
-    "pages/gridview/index",
     "pages/guidepage/index",
-    "pages/poster/index",
-    "pages/bglist/index",
-    "pages/treaturedetail/index",
     "pages/searchpage/index",
-    "pages/narrationlist/index",
-    "pages/narration-again/index",
-    "pages/agent/index",
-    "pages/customize-explanation/index",
-    "pages/share-poster/index", 
-    "pages/treature-result/index", 
-    "pages/share-image-list/index"
+    "pages/agent/index"
   ],
   "subpackages": [
     {
@@ -45,24 +21,10 @@
         "collectionlist/index",
         "likelist/index"
       ]
-    },
-    {
-      "root": "pages/museum",
-      "pages": [
-        "museumdetail/index"
-       
-      ]
     }
   ],
-  "plugins": {
-    "QCloudAIVoice": {
-        "version": "2.3.12",
-        "provider": "wx3e17776051baf153"
-    }
-  },
   "usingComponents": {
-    "player-comp": "components/player-comp",
-    "agent-ui":"/components/agent-ui"
+    "agent-ui": "/components/agent-ui"
   },
   "window": {
     "navigationBarTextStyle": "black",
@@ -92,38 +54,17 @@
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
-  "requiredBackgroundModes": ["audio", "backgroundAudioManager", "location"],
+  "requiredBackgroundModes": ["location"],
   "tabBar": {
     "custom": true,
     "list": [
       {
-        "current": 0,
         "pagePath": "pages/index/index",
-        "text": "发现",
-        "iconPath": "/static/images/ishouye.png",
-        "selectedIconPath": "/static/images/ishouye-c.png"
+        "text": "首页"
       },
       {
-        "current": 1,
-        "pagePath": "pages/museumlist/index",
-        "text": "博物馆",
-        "iconPath": "/static/images/ichangguan.png",
-        "selectedIconPath": "/static/images/ichangguan-c.png"
-      },
-      
-      {
-        "current": 3,
-        "pagePath": "pages/gridview/index",
-        "text": "展览",
-        "iconPath": "/static/images/izhanlan.png",
-        "selectedIconPath": "/static/images/izhanlan-c.png"
-      },
-      {
-        "current": 4,
         "pagePath": "pages/profile/index",
-        "text": "我的",
-        "iconPath": "/static/images/iwode.png",
-        "selectedIconPath": "/static/images/iwode-c.png"
+        "text": "我的"
       }
     ]
   }
